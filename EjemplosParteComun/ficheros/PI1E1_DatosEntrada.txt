@@ -1,0 +1,13 @@
+//determine si hay ALGUNA palabra que contenga una vocal abierta (a, e, o) y que su longitud sea par. 
+//Predicate<String> vocal_abierta
+//Function<String, Integer> getLength
+//Predicate<Integer> esPar
+Ingreso
+Ingresos
+Ingreso,Ingresos
+ejercicios,practica,propuesta
+pim,pam,pum
+cadena,recomendar,definir
+elemento,implementar,sol
+ala,map,public,static
+Aplicación, Rod, Palomitas de maíz, Machine, Pizza, Hormigas, Ingresos, Ayuda, Celebración, Hijo, Ejemplo, Tres, Significación, Gancho, Mujeres, Gracias, Aprobación, Extensión, Ropa, Rey, Ansiedad, Guante, Carne, Volumen, Pasta de dientes, Calendario, Llave, Unidad, Lectura, Locket, Necesidad, Tela, Reunión, Parche, Tanque, Entrada, Naranja, Lenguaje, Mono, Bote

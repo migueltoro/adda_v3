@@ -1,0 +1,7 @@
+A(B,C)#D
+A(B,C)#C
+A(B,C)#A
+A(B(C,D),E(F,_))#H
+A(B(C,D),E(F,_))#D
+A(B(C,D(E,F(G,H))),I(J,K))#H
+A(B(C,D(E,F(G,H))),I(J,K))#C

@@ -1,0 +1,7 @@
+pepe(pepa, pepe)
+pepe(pepa, pep)
+ada(eda(ola,ale),eda(ele,ale))
+ada(eda(ola,ale),eda(ele,al))
+cafe(taza(bote,bolsa),perro(gato,leon))
+cafe(taza(bote,bolsa),perro(gato,_))
+cafe(taza(bote,bolsa),perro(gato,tortuga))

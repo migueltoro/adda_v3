@@ -1,0 +1,21 @@
+strict digraph G {
+  1 [ label="Sevilla0" ];
+  2 [ label="Huelva1" ];
+  3 [ label="Cordoba2" ];
+  4 [ label="Cadiz3" ];
+  5 [ label="Antequera4" ];
+  6 [ label="Jaen5" ];
+  7 [ label="Granada6" ];
+  8 [ label="Algeciras7" ];
+  9 [ label="Malaga8" ];
+  10 [ label="Almeria9" ];
+  1 -> 2 [ label="92.85" ];
+  1 -> 3 [ label="140.54" ];
+  1 -> 4 [ label="121.07" ];
+  1 -> 5 [ label="159.95" ];
+  3 -> 6 [ label="108.12" ];
+  3 -> 7 [ label="207.84" ];
+  4 -> 8 [ label="104.21" ];
+  5 -> 9 [ label="51.52" ];
+  5 -> 10 [ label="260.42" ];
+}

@@ -1,0 +1,39 @@
+\ Model _copy
+\ LP format - for model browsing. Use MPS format to capture full model detail.
+Maximize
+ 
+Subject To
+ a0: x_0 + x_1 + x_4 + x_5 + x_6 + x_7 + x_8 + x_11 + x_12 + x_13 + x_14
+   + x_16 + x_17 + x_18 + x_19 = 4
+ b0: 5 x_0 = 1
+ b1: 5 x_1 = 1
+ b4: 5 x_4 = 1
+ b5: 5 x_5 = 1
+ b6: 5 x_6 = 1
+ b7: 5 x_7 = 1
+ b8: 5 x_8 = 1
+ b11: 5 x_11 = 1
+ b12: 5 x_12 = 1
+ b13: 5 x_13 = 1
+ b14: 5 x_14 = 1
+ b16: 5 x_16 = 1
+ b17: 5 x_17 = 1
+ b18: 5 x_18 = 1
+ b19: 5 x_19 = 1
+Bounds
+ x_0 free
+ x_1 free
+ x_4 free
+ x_5 free
+ x_6 free
+ x_7 free
+ x_8 free
+ x_11 free
+ x_12 free
+ x_13 free
+ x_14 free
+ x_16 free
+ x_17 free
+ x_18 free
+ x_19 free
+End
