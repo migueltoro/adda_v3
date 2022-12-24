@@ -10,4 +10,5 @@ public record RobotEdge(RobotVertex source, RobotVertex target, Integer action, 
 		return new RobotEdge(c1, c2, action,(double)(c2.getX().get(3)-c1.getX().get(3)));
 	}
 
+
 }
