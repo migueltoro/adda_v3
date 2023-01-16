@@ -6,8 +6,6 @@ import java.util.Optional;
 
 import org.jgrapht.GraphPath;
 
-import us.lsi.colors.GraphColors;
-import us.lsi.colors.GraphColors.Color;
 import us.lsi.graphs.alg.BT;
 import us.lsi.graphs.virtual.EGraph;
 import us.lsi.graphs.virtual.EGraph.Type;
@@ -22,14 +20,17 @@ public class TestBT {
 		EGraph<RobotVertex, RobotEdge> graph = 
 				EGraph.virtual(v0,v->v.goal(), PathType.Sum, Type.Max)
 				.edgeWeight(e->e.weight())
-				.heuristic((v1,p,v2)->3.*(RobotVertex.N-v1.getT()))
+				.heuristic((v1,p,v2)->3.*(RobotVertex.N-v1.t()))
 				.solutionNumber(4)
 				.build();
 
 		
 		BT<RobotVertex, RobotEdge,RobotSolution> ms = BT.of(graph,RobotSolution::of,null, null,true);	
 		
+		Long t0 = System.nanoTime();
 		Optional<GraphPath<RobotVertex,RobotEdge>> path = ms.search();
+		Long t1 = System.nanoTime();
+		System.out.println(t1-t0);
 		System.out.println(RobotSolution.of(path.get()));
 		System.out.println(ms.bestValue);
 		

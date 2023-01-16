@@ -22,13 +22,16 @@ public class TestPDR {
 		EGraph<RobotVertex, RobotEdge> graph = 
 				EGraph.virtual(v0,v->v.goal(), PathType.Sum, Type.Max)	
 				.edgeWeight(e->e.weight())
-				.heuristic((v1,p,v2)->3.*(RobotVertex.N-v1.getT()))
+				.heuristic((v1,p,v2)->3.*(RobotVertex.N-v1.t()))
 				.build();
 		
 		
 		DPR<RobotVertex,RobotEdge,RobotSolution> ms = DPR.of(graph,RobotSolution::of, null, null,true);
 		
+		Long t0 = System.nanoTime();
 		Optional<GraphPath<RobotVertex,RobotEdge>> path = ms.search();
+		Long t1 = System.nanoTime();
+		System.out.println(t1-t0);
 		System.out.println(RobotSolution.of(path.get()));
 		
 //		GraphColors.toDot(ms.outGraph(),"ficheros/RobotsPDR.gv",

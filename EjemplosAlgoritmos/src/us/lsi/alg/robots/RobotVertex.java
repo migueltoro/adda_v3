@@ -3,13 +3,13 @@ package us.lsi.alg.robots;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
-import java.util.Objects;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 import us.lsi.graphs.virtual.VirtualVertex;
 
-public class RobotVertex implements VirtualVertex<RobotVertex,RobotEdge,Integer> {
+public record RobotVertex(List<Integer> r, List<Integer> x, Integer t) 
+		implements VirtualVertex<RobotVertex,RobotEdge,Integer> {
 	
 	public static Integer[][] mt1 = {{4,0,0,0},{2,0,0,0},{3,14,0,0},{3,0,7,0}};
 	public static Integer[][] mt2 = {{2,0,0,0},{3,0,0,0},{3,8,0,0},{3,0,12,0}};
@@ -23,31 +23,9 @@ public class RobotVertex implements VirtualVertex<RobotVertex,RobotEdge,Integer>
 	public static RobotVertex of(List<Integer> r, List<Integer> x, Integer t) {
 		return new RobotVertex(r, x, t);
 	}
-
-	private List<Integer> r;
-	private List<Integer> x;
-	private Integer t;
+	
 	public static Integer n = 4;
 	public static Integer N = 24;
-	
-	private RobotVertex(List<Integer> r, List<Integer> x, Integer t) {
-		super();
-		this.r = new ArrayList<>(r);
-		this.x = new ArrayList<>(x);
-		this.t = t;
-	}
-
-	public List<Integer> getR() {
-		return r;
-	}
-
-	public List<Integer> getX() {
-		return x;
-	}
-
-	public Integer getT() {
-		return t;
-	}
 
 	public Integer mt(Integer i, Integer j) {
 		return mt1[i][j];
@@ -106,22 +84,6 @@ public class RobotVertex implements VirtualVertex<RobotVertex,RobotEdge,Integer>
 		return this.r + "," + this.x + "," + this.t;
 	}
 
-	@Override
-	public int hashCode() {
-		return Objects.hash(r, x);
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		RobotVertex other = (RobotVertex) obj;
-		return Objects.equals(r, other.r) && Objects.equals(x, other.x);
-	}
-
 	
 }
+
