@@ -1,9 +1,6 @@
 package us.lsi.flowgraph;
 
 import org.jgrapht.graph.SimpleDirectedGraph;
-
-import us.lsi.colors.GraphColors;
-import us.lsi.colors.GraphColors.Style;
 import us.lsi.common.Preconditions;
 import us.lsi.graphs.GraphsReader;
 import us.lsi.graphs.views.IntegerVertexGraphView;
@@ -12,8 +9,8 @@ import us.lsi.graphs.views.IntegerVertexGraphView;
 /**
  * @author Miguel Toro
  * 
- * Un grafo simple dirigido y sin peso. La información de la red está
- * guardada en los vértices y las aristas que son de los tipos 
+ * Un grafo simple dirigido y sin peso. La informaciï¿½n de la red estï¿½
+ * guardada en los vï¿½rtices y las aristas que son de los tipos 
  * FlowVertex y FlowEdge.
  *
  */
@@ -28,8 +25,8 @@ public class FlowGraph extends SimpleDirectedGraph<FlowVertex, FlowEdge> {
 	private static final long serialVersionUID = 1L;
 	
 	/**
-	 * Un vértice de una red de Flujo puede ser una Fuente, un Sumidero o
-	 * un vértice intermedio
+	 * Un vï¿½rtice de una red de Flujo puede ser una Fuente, un Sumidero o
+	 * un vï¿½rtice intermedio
 	 *
 	 */
 	public enum FGType{Max,Min}	
@@ -78,36 +75,19 @@ public class FlowGraph extends SimpleDirectedGraph<FlowVertex, FlowEdge> {
 		String r = "";
 		for(FlowVertex v: fg.vertexSet()){
 			if(v.isSource() && !fg.incomingEdgesOf(v).isEmpty()) {
-				r = String.format("El vértice %s es source pero tiene aristas de entrada", v);
+				r = String.format("El vï¿½rtice %s es source pero tiene aristas de entrada", v);
 				break;
 			}
 			if(v.isSink() && !fg.outgoingEdgesOf(v).isEmpty()){
-				r = String.format("El vértice %s es sumidero pero tiene aristas de salida", v);
+				r = String.format("El vï¿½rtice %s es sumidero pero tiene aristas de salida", v);
 				break;
 			} 
 			if(v.isIntermediate() && (fg.incomingEdgesOf(v).isEmpty() || fg.outgoingEdgesOf(v).isEmpty())){
-				r = String.format("El vértice %s es intermedio pero o no tiene aristas de entrada o de salida", v);
+				r = String.format("El vï¿½rtice %s es intermedio pero o no tiene aristas de entrada o de salida", v);
 				break;
 			}
 		}
 		return r;
-	}
-	
-	
-	public void toDot(String file) {
-		GraphColors.<FlowVertex, FlowEdge>toDot(this, file, 
-				v->v.name,
-				e->e.name,
-				v->GraphColors.color(v.getColor()), 
-				e->GraphColors.style(Style.solid));
-	}
-	
-	public void toDotIndex(String file) {
-		GraphColors.<FlowVertex, FlowEdge>toDot(this, file, 
-				v->this.vertexIndex(v).toString(),
-				e->e.name,
-				v->GraphColors.color(v.getColor()), 
-				e->GraphColors.style(Style.solid));
 	}
 	
 	public IntegerVertexGraphView<FlowVertex, FlowEdge> integerGraph() {
@@ -231,7 +211,5 @@ public class FlowGraph extends SimpleDirectedGraph<FlowVertex, FlowEdge> {
 		FlowVertex v = this.vertex(Integer.parseInt(partes[1]));
 		return v;
 	}
-	
-	
 
 }

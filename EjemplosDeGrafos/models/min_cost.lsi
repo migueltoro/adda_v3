@@ -22,5 +22,5 @@ sum(y[i,j], j in 0 .. n | containsEdge(i,j)) - x[i] = 0,  i in 0 .. n | isSource
 
 bounds section
 
-y[i,j] <= edgeMax(i,j), i in 0 .. n, j in 0 .. n | containsEdge(i,j)
-y[i,j] >= edgeMin(i,j), i in 0 .. n, j in 0 .. n | containsEdge(i,j) && edgeMin(i,j) > 0
+y[i,j] <= edgeMax(i,j), i in 0 .. n, j in 0 .. n | containsEdge(i,j) && edgeHasMax(i,j)
+y[i,j] >= edgeMin(i,j), i in 0 .. n, j in 0 .. n | containsEdge(i,j) && edgeHasMin(i,j)
