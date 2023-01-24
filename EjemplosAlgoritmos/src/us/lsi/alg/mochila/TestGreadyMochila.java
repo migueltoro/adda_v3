@@ -51,7 +51,8 @@ public class TestGreadyMochila {
 //				MochilaVertex::greedyEdgeHeuristic,
 //				e->e.equals(e2));
 //		System.out.println(rr.weightToEnd());
-
+		System.out.println("________________");
+		System.out.println(GreedyOnGraph.getPath(graph).getWeight());
 	}
 
 }

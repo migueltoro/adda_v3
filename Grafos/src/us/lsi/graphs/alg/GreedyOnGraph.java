@@ -1,11 +1,14 @@
 package us.lsi.graphs.alg;
 
+import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Optional;
 import java.util.function.Function;
 import java.util.stream.Stream;
 
 import org.jgrapht.GraphPath;
+import org.jgrapht.graph.GraphWalk;
 
 import us.lsi.common.List2;
 import us.lsi.graphs.virtual.EGraph;
@@ -14,6 +17,20 @@ import us.lsi.streams.Stream2;
 import us.lsi.graphs.alg.GreedyOnGraph.Gog;
 
 public class GreedyOnGraph<V,E> implements  Iterator<Gog<V,E>>, Iterable<Gog<V,E>> {
+	
+	public static <V,E> GraphPath<V,E> getPath(EGraph<V,E> graph) {
+		V v = graph.startVertex();
+		List<V> vertices = new ArrayList<>();
+		vertices.add(v);
+		Double weight = 0.;
+		while(!graph.goal().test(v)) {
+			E edge = graph.greedyEdge().apply(v);
+			weight += graph.getEdgeWeight(edge);
+			v = graph.oppositeVertex(edge, v);
+			vertices.add(v);
+		}
+		return new GraphWalk<V,E>(graph,vertices,weight);
+	}
 	
 	public static <V,E> GreedyOnGraph<V,E> of(EGraph<V,E> graph,Function<V,E> greedyEdge) {
 		return new GreedyOnGraph<V,E>(graph, greedyEdge);

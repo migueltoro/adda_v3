@@ -14,7 +14,7 @@ import us.lsi.path.EGraphPath.PathType;
 public class TestGreedy {
 
 	public static void main(String[] args) {
-		Locale.setDefault(new Locale("en", "US"));
+		Locale.setDefault(Locale.of("en", "US"));
 		MonedaVertex.datosIniciales("ficheros/monedas2.txt", 402);
 		System.out.println(Moneda.monedas);
 		System.out.println(Moneda.monedas.size());
