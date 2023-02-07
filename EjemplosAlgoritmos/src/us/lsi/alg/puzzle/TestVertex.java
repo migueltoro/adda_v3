@@ -11,11 +11,11 @@ public class TestVertex {
 //		System.out.printf("_________\n%s\n%s\n",end,end.blackPosition());
 		System.out.printf("_________\n%.0f\n",HeuristicaPuzzle.heuristicaManhattan(v1, null, end));
 		System.out.printf("_________\n%s\n",v1.actions());
-		VertexPuzzle v2 = v1.neighbor(ActionPuzzle.of("Right"));
+		VertexPuzzle v2 = v1.neighbor(ActionPuzzle.valueOf("Right"));
 		System.out.printf("_________\n%s\n",v2);
 		System.out.printf("_________\n%s\n",v2.actions());
 		System.out.printf("_________\n%.0f\n",HeuristicaPuzzle.heuristicaManhattan(v2, null, end));
-		VertexPuzzle v3 = v2.neighbor(ActionPuzzle.of("Left"));
+		VertexPuzzle v3 = v2.neighbor(ActionPuzzle.valueOf("Left"));
 		System.out.printf("_________\n%s\n",v3);
 		System.out.printf("_________\n%.0f\n",HeuristicaPuzzle.heuristicaManhattan(v3, null, end));
 		System.out.printf("_________\n%s\n",end);

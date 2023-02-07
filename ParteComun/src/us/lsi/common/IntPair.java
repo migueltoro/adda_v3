@@ -33,16 +33,13 @@ public record IntPair(Integer first,Integer second) {
 		return IntPair.of(e*this.first(), e*this.second());
 	}
 	
-	public Integer sumAbs() {
-		return Math.abs(this.first())+Math.abs(this.second());
-	}
-	
 	public Double module() {
 		return Math.sqrt(this.first()*this.first()+this.second()*this.second());
 	}
 	
 	public Integer manhattan(IntPair p) {
-		return this.minus(p).sumAbs();
+		IntPair r = this.minus(p);
+		return Math.abs(r.first())+Math.abs(r.second());
 	}
 	
 	public Integer size() {
