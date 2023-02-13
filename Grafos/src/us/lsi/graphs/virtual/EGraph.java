@@ -73,9 +73,10 @@ public interface EGraph<V, E> extends Graph<V, E> {
 		return this.initialPath().add(vertexActual, acumulateValue, nextEdge, lastEdge);
 	}
 
-	public default Double boundedValue(V vertexActual, Double acumulateValue, E edge) {
+	public default Double boundedValue(V vertexActual, Double acumulateValue, E edge,
+			TriFunction<V, Predicate<V>, V, Double> heuristic) {
 		return this.initialPath().boundedValue(vertexActual, acumulateValue, edge, this.goal(), this.endVertex(),
-				this.heuristic());
+				heuristic);
 	}
 
 	public default Double estimatedWeightToEnd(V vertexActual, Double acumulateValue) {

@@ -19,7 +19,7 @@ public class TestAStarMochila {
 
 	
 	public static void main(String[] args) {
-		Locale.setDefault(new Locale("en", "US"));
+		Locale.setDefault(Locale.of("en", "US"));
 		DatosMochila.iniDatos("ficheros/objetosMochila.txt");
 //		Integer n = DatosMochila.numeroDeObjetos;
 //		MochilaVertex.capacidadInicial = 2457;

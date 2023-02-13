@@ -26,10 +26,10 @@ public class TestPDRMochila {
 	
 	
 	public static void main(String[] args) {
-		Locale.setDefault(new Locale("en", "US"));
+		Locale.setDefault(Locale.of("en", "US"));
 		DatosMochila.iniDatos("ficheros/objetosMochila.txt");
-//		MochilaVertex.capacidadInicial = 78;
-		MochilaVertex.capacidadInicial = 457;
+		MochilaVertex.capacidadInicial = 78;
+//		MochilaVertex.capacidadInicial = 457;
 		MochilaVertex e1 = MochilaVertex.initialVertex();
 		
 		EGraph<MochilaVertex, MochilaEdge> graph = 

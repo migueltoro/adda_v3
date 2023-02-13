@@ -81,7 +81,8 @@ public class BT<V,E,S> {
 	protected Boolean forget(State<V,E> state, E edge) {
 		Boolean r = false;
 		if(graph.type().equals(Type.All) || graph.type().equals(Type.One))  return false;
-		Double w = state.getGraph().boundedValue(state.getActualVertex(),state.getAccumulateValue(),edge);
+		Double w = state.getGraph().boundedValue(state.getActualVertex(),state.getAccumulateValue(),
+				edge,graph.heuristic());
 		if(this.bestValue != null) r = comparator.compare(w,this.bestValue) >= 0;
 		return r;
 	}

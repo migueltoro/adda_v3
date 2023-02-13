@@ -47,8 +47,8 @@ public class Data<V,E> {
 		return cmp;
 	}
 	
-	public static <V extends HyperVertex2<V, E, A, ?>, E extends HyperEdge2<V, E, A, ?>, A> SimpleDirectedGraph<Union<V, E>, DefaultEdge> graph(
-			SetMultimap<V, Sp<E>> vertices) {
+	public static <V extends HyperVertex2<V, E, A, ?>, E extends HyperEdge2<V, E, A, ?>, A> 
+		SimpleDirectedGraph<Union<V, E>, DefaultEdge> graph(SetMultimap<V, Sp<E>> vertices) {
 
 		SimpleDirectedGraph<Union<V, E>, DefaultEdge> graph = new SimpleDirectedGraph<Union<V, E>, DefaultEdge>(null,
 				() -> new DefaultEdge(), true);

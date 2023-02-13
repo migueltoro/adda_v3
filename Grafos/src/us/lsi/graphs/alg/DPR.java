@@ -86,11 +86,20 @@ public class DPR<V, E, S> {
 	private Boolean forget(E edge, V actual,Double accumulateValue,Predicate<V> goal,V end) {
 		Boolean r = false;
 		if(graph.type().equals(Type.All) || graph.type().equals(Type.One))  return false;
-		Double w = this.graph.boundedValue(actual, accumulateValue, edge);
+		Double w = this.graph.boundedValue(actual, accumulateValue,edge,(v1,p,v2)->this.newHeuristic(v1,p,v2));
 		if(this.bestValue != null) r = comparator.compare(w, this.bestValue) >= 0;
 		return r;
 	}
 	
+	private Double newHeuristic(V v1, Predicate<V> p, V v2) {
+		Double r;
+		if (this.solutionsTree.containsKey(v1))
+			r = this.solutionsTree.get(v1).weight();
+		else
+			r = graph.heuristic().apply(v1, p, v2);
+		return r;
+	}
+
 	protected void update(V actual, Double accumulateValue) {
 		if (graph.goalHasSolution().test(actual)) {
 			switch(this.type) {
@@ -171,8 +180,10 @@ public class DPR<V, E, S> {
 				}
 				addGraph(actual, edge);
 			}
-			r = rs.stream().filter(s->s!=null).min(this.comparatorEdges).orElse(null);
-			this.solutionsTree.put(actual, r);
+			if (!rs.isEmpty()) {
+				r = rs.stream().filter(s -> s != null).min(this.comparatorEdges).orElse(null);
+				this.solutionsTree.put(actual, r);
+			}
 		}
 		this.actualPath.remove(actual);
 		return r;
