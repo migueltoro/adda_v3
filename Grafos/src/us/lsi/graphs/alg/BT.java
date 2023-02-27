@@ -34,6 +34,12 @@ public class BT<V,E,S> {
 	}
 	
 	public static <V, E, S> BT<V, E, S> of(
+			EGraph<V, E> graph,
+			Function<GraphPath<V, E>, S> fsolution) {
+		return BT.of(graph, fsolution, null, null, false);
+	}
+	
+	public static <V, E, S> BT<V, E, S> of(
 			EGraph<V, E> graph) {
 		return BT.of(graph, null, null, null, false);
 	}
