@@ -14,8 +14,4 @@ public enum ActionPuzzle {
 		};
 	}
 	
-	public static Boolean isValid(VertexPuzzle v, ActionPuzzle a) {
-		IntPair p = v.blackPosition().add(ActionPuzzle.direction(a));
-		return VertexPuzzle.validPosition(p);
-	}
 }

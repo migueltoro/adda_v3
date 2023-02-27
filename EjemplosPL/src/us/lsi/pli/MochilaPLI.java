@@ -39,8 +39,9 @@ public class MochilaPLI {
 		n = objetos.size();
 		AuxGrammar.generate(MochilaPLI.class,"models/mochila.lsi","ficheros/mochila.lp");
 		GurobiSolution solution = GurobiLp.gurobi("ficheros/mochila.lp");
-		Locale.setDefault(new Locale("en", "US"));
+		Locale.setDefault(Locale.of("en", "US"));
 		System.out.println(solution.toString((s,d)->d>0.));
+		System.out.println(objetos);
 	}
 	
 	public static void main(String[] args) throws IOException {	

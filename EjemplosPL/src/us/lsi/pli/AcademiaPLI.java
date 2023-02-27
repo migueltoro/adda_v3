@@ -55,12 +55,12 @@ public class AcademiaPLI {
 	public static void academia() throws IOException {		
 		DatosAlumno.iniDatos("data/academia.txt");
 		System.out.println("Afinidad (0, 0): "+DatosAlumno.afinidad(0,0));
-		System.out.println("Número de alumnos: "+DatosAlumno.getNumeroAlumnos());
-		System.out.println("Número de Grupos: "+DatosAlumno.getNumeroGrupos());
+		System.out.println("Nï¿½mero de alumnos: "+DatosAlumno.getNumeroAlumnos());
+		System.out.println("Nï¿½mero de Grupos: "+DatosAlumno.getNumeroGrupos());
 	   
 		AuxGrammar.generate(DatosAlumno.class, "models/academia.lsi", "ficheros/academia.lp");
 		
-		Locale.setDefault(new Locale("en", "US"));
+		Locale.setDefault(Locale.of("en", "US"));
 		GurobiSolution solution = GurobiLp.gurobi("ficheros/academia.lp");
 		System.out.println(solution.toString((s, d) -> d > 0.));
 	}

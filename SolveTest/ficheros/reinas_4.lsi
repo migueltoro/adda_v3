@@ -1,10 +1,10 @@
 head section
 
-Integer n = 100
+Integer n = 10
 
 goal section
 
-min sum(x[i], i in 0 .. 1)
+min x[0]
 
 constraints section
 
@@ -14,7 +14,7 @@ permutation(x[i]+i, i in 0 .. n; k, k in 0 .. 2*n-1)
 
 bounds section
 
-x[i] <= n-1, i in 0 .. n
+x[i] < n, i in 0 .. n
 
 int  
 

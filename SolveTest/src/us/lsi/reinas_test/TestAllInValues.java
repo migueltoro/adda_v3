@@ -50,11 +50,15 @@ public class TestAllInValues {
 				.collect(Collectors.joining("\n")));
 		String2.toConsole("%d,%d",s1.size(),s2.size());
 	}
+	
+	public static void test2(String file) throws IOException {
+		AuxGrammar2.generate(DataMochila.class,"ficheros/"+file+".lsi","ficheros/"+file+".lp");
+	}
 
 	public static void main(String[] args) throws IOException {
-		Locale.setDefault(new Locale("en", "US"));
+		Locale.setDefault(Locale.of("en", "US"));
 		Long a = System.nanoTime();
-		test1("reinas_3");
+		test2("reinas_3");
 		Long b = System.nanoTime();
 		String2.toConsole("%d",b-a);
 	}

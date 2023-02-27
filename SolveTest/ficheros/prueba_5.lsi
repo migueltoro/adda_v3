@@ -8,13 +8,13 @@ max  x[0] + x[1] + x[2]
 
 constraints section
 
-allDifferentInValues(x[i], i in 0 .. 3; 0, 2, 3)
+allDifferentInValues(x[i], i in 0 .. 3; j, j in 0, 2, 3)
 x[3] = ABS (sum(-1 x[i], i in 0 .. 2) + 4)
 x[4] = MAX (x[i], i in 0 .. 3)
 
 bounds section
 
-x[i] <= 100, i in 0 .. n
+x[i] < 100, i in 0 .. n
 
 
 int  

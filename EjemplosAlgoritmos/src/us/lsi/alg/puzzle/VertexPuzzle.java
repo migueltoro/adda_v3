@@ -99,22 +99,27 @@ public record VertexPuzzle(IntPair blackPosition,Integer[][] datos)
 	@Override
 	public List<ActionPuzzle> actions() {
     	return Stream.of(ActionPuzzle.values())
-				.filter(a->ActionPuzzle.isValid(this,a))
+				.filter(a->VertexPuzzle.validPosition(this.blackPosition().add(ActionPuzzle.direction(a))))
 				.collect(Collectors.toList());
 	}
 	
 	@Override
 	public VertexPuzzle neighbor(ActionPuzzle a) {
-		Preconditions.checkArgument(ActionPuzzle.isValid(this,a), String.format("La acci�n %s no es aplicable",a.toString()));
+		Preconditions.checkArgument(
+				VertexPuzzle.validPosition(this.blackPosition().add(ActionPuzzle.direction(a))), 
+				String.format("La acci�n %s no es aplicable",a.toString()));
+		VertexPuzzle v = this.swap(this.blackPosition().add(ActionPuzzle.direction(a)));
+		Preconditions.checkState(!this.equals(v),String.format("No deben ser iguales %s \n %s \n %s",a.toString(),this.toString(),v.toString()));
+		return v;
+	}
+	
+	public VertexPuzzle swap(IntPair np) {
 		IntPair op = this.blackPosition();
-		IntPair np = op.add(ActionPuzzle.direction(a));
-//		System.out.printf("\n%s,%s,%s\n",op,a,np);
 		Integer dd[][] = Arrays2.copyArray(this.datos());
 		Integer value = dd[np.first()][np.second()];
 		dd[op.first()][op.second()] = value;
 		dd[np.first()][np.second()] = 0;
 		VertexPuzzle v  = VertexPuzzle.of(dd,np);
-		Preconditions.checkState(!this.equals(v),String.format("No deben ser iguales %s \n %s \n %s",a.toString(),this.toString(),v.toString()));
 		return v;
 	}
 	

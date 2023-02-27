@@ -494,7 +494,7 @@ public class AuxGrammar {
 	    String answer = asString(tree.accept(new PLIModelVisitorC()));
 	    System.out.println("\n ==================== \n"
 	    		+ "Tenga en cuenta que el formato intermedio LP no distingue entre desigualdades estrictas y no estrictas en las restricciones "
-				+ "\nPor lo que, por ejemplo, < y <= son equivalentes. \n ==================== \n");
+				+ "\nPor lo que, por ejemplo, < y <= son equivalentes a <=. \n ==================== \n");
 	    Files2.toFile(answer,outFile);
 	}
 	
