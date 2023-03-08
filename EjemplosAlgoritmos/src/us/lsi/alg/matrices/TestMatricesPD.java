@@ -10,7 +10,7 @@ import us.lsi.hypergraphs.SimpleVirtualHyperGraph;
 public class TestMatricesPD {
 
 	public static void main(String[] args) {
-		Locale.setDefault(new Locale("en", "US"));
+		Locale.setDefault(Locale.of("en", "US"));
 		Auxiliar.leeFichero("./ficheros/matrices.txt");
 		
 		MatrixVertex initial = MatrixVertex.initial();

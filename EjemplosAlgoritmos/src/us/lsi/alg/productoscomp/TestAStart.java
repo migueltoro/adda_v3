@@ -19,7 +19,7 @@ public class TestAStart {
 	public static void main(String[] args) {
 
 		// Set up
-		Locale.setDefault(new Locale("en", "US"));
+		Locale.setDefault(Locale.of("en", "US"));
 		
 		for (Integer i = 0; i < 2; i++) {
 

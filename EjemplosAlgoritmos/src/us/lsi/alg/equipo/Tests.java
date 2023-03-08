@@ -15,7 +15,7 @@ import us.lsi.path.EGraphPath.PathType;
 
 public class Tests {
 	public static void main(String[] args) {
-		Locale.setDefault(new Locale("en", "US"));
+		Locale.setDefault(Locale.of("en", "US"));
 		
 		tests("ficheros/DatosEquipo1.txt");
 		tests("ficheros/DatosEquipo2.txt");

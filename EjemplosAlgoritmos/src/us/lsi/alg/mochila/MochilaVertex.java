@@ -88,7 +88,8 @@ public record MochilaVertex(Integer index, Integer capacidadRestante)
 	public MochilaVertex neighbor(Integer a) {
 		MochilaVertex r;
 		Integer cr = capacidadRestante - a * DatosMochila.getPeso(index);
-		if (this.index == MochilaVertex.n - 1 || this.capacidadRestante == 0.) r = MochilaVertex.of(index + 1, cr);
+		if (this.index == MochilaVertex.n - 1 || this.capacidadRestante == 0.) 
+			r = MochilaVertex.of(MochilaVertex.n, cr);
 		else r = MochilaVertex.of(index + 1, cr);
 		return r;
 	}

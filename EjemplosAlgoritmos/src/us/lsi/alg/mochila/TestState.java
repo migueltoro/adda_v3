@@ -13,7 +13,7 @@ import us.lsi.graphs.alg.BT.StatePath;
 public class TestState {
 
 	public static void main(String[] args) {
-		Locale.setDefault(new Locale("en", "US"));
+		Locale.setDefault(Locale.of("en", "US"));
 		DatosMochila.iniDatos("ficheros/objetosMochila.txt");
 		MochilaVertex.capacidadInicial = 78;
 		MochilaVertex v1 = MochilaVertex.initialVertex();

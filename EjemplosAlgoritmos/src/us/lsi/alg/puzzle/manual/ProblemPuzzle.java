@@ -6,8 +6,9 @@ import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
+import java.util.stream.Stream;
 
-import us.lsi.alg.puzzle.VertexPuzzle;
+
 import us.lsi.common.Arrays2;
 import us.lsi.common.IntPair;
 import us.lsi.common.Preconditions;
@@ -22,12 +23,12 @@ public record ProblemPuzzle(IntPair blackPosition,Integer[][] datos) {
 	public static ProblemPuzzle of(Integer[][] datos, IntPair blackPosition) {
 		Integer[][] dt = Arrays2.copyArray(datos);
 		ProblemPuzzle r = new ProblemPuzzle(blackPosition,dt);
-		Preconditions.checkArgument(r.isValid(),"No es válido");
+		Preconditions.checkArgument(r.isValid(),"No es vï¿½lido");
 		return r;
 	}
 	
 	public static ProblemPuzzle of(Integer... d) {	
-		Integer dt[][] = Arrays2.toMultiArray(d, VertexPuzzle.n, VertexPuzzle.n);	
+		Integer dt[][] = Arrays2.toMultiArray(d, ProblemPuzzle.n, ProblemPuzzle.n);	
 		IntPair bp = Arrays2.findPosition(dt, e->e==0);
 		Preconditions.checkArgument(isValid(dt),"No es valido");
 		return ProblemPuzzle.of(dt,bp);
@@ -42,7 +43,7 @@ public record ProblemPuzzle(IntPair blackPosition,Integer[][] datos) {
 	}
 	
 	public Integer getDato(IntPair p) {
-		Preconditions.checkArgument(validPosition(p),"No se cumple la precondición");
+		Preconditions.checkArgument(validPosition(p),"No se cumple la precondiciï¿½n");
 		return datos[p.first()][p.second()];
 	}
 	
@@ -54,7 +55,7 @@ public record ProblemPuzzle(IntPair blackPosition,Integer[][] datos) {
 		return 0<=d && d < ProblemPuzzle.numFilas*ProblemPuzzle.numFilas;
 	}
 	
-	public boolean validPosition(IntPair p) {
+	public static boolean validPosition(IntPair p) {
 		return p.first()>=0 && p.first()< ProblemPuzzle.numFilas && p.second()>=0 && 
 				p.second()<ProblemPuzzle.numFilas;
 	}
@@ -69,26 +70,31 @@ public record ProblemPuzzle(IntPair blackPosition,Integer[][] datos) {
 	}
 	
 	public Map<Integer,IntPair> positions(){
-		return Stream2.allPairs(0,VertexPuzzle.n,0,VertexPuzzle.n)
+		return Stream2.allPairs(0,ProblemPuzzle.n,0,ProblemPuzzle.n)
 				.collect(Collectors.toMap(p->datos()[p.first()][p.second()],p->p));
 	}
 	
 	public List<ActionPuzzle> actions() {
-    	return ActionPuzzle.actions.stream()
-				.filter(a->a.isApplicable(this))
+		return Stream.of(ActionPuzzle.values())
+				.filter(a->ProblemPuzzle.validPosition(this.blackPosition().add(ActionPuzzle.direction(a))))
 				.collect(Collectors.toList());
 	}
 	
-	public ProblemPuzzle neighbor(ActionPuzzle a) {
-		Preconditions.checkArgument(a.isApplicable(this), String.format("La acción %s no es aplicable",a.toString()));
+	public ProblemPuzzle swap(IntPair np) {
 		IntPair op = this.blackPosition();
-		IntPair np = op.add(a.direction());
-//		System.out.printf("\n%s,%s,%s\n",op,a,np);
 		Integer dd[][] = Arrays2.copyArray(this.datos());
 		Integer value = dd[np.first()][np.second()];
 		dd[op.first()][op.second()] = value;
 		dd[np.first()][np.second()] = 0;
 		ProblemPuzzle v  = ProblemPuzzle.of(dd,np);
+		return v;
+	}
+	
+	public ProblemPuzzle neighbor(ActionPuzzle a) {
+		Preconditions.checkArgument(
+				ProblemPuzzle.validPosition(this.blackPosition().add(ActionPuzzle.direction(a))), 
+				String.format("La acciï¿½n %s no es aplicable",a.toString()));
+		ProblemPuzzle v = this.swap(this.blackPosition().add(ActionPuzzle.direction(a)));
 		Preconditions.checkState(!this.equals(v),String.format("No deben ser iguales %s \n %s \n %s",a.toString(),this.toString(),v.toString()));
 		return v;
 	}

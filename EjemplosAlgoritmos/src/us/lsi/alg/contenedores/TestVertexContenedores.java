@@ -8,7 +8,7 @@ import java.util.stream.IntStream;
 public class TestVertexContenedores {
 
 	public static void main(String[] args) {
-		Locale.setDefault(new Locale("en", "US"));
+		Locale.setDefault(Locale.of("en", "US"));
 
 		for (Integer i = 1; i < 2; i++) {
 
@@ -16,7 +16,7 @@ public class TestVertexContenedores {
 			DatosContenedores.toConsole();
 			System.out.println("\n\n>\tResultados para el test " + i + "\n");
 
-			// Vértices clave
+			// Vï¿½rtices clave
 
 			VertexContenedores start = VertexContenedores.initial();
 			Predicate<VertexContenedores> goal = VertexContenedores.goal();

@@ -78,7 +78,7 @@ public class MonedaPD {
 	}
 	
 	public static void main(String[] args) {
-		Locale.setDefault(new Locale("en", "US"));
+		Locale.setDefault(Locale.of("en", "US"));
 		MonedaProblem.datosIniciales("ficheros/monedas3.txt", 36);
 		String2.toConsole("%s",Moneda.monedas);
 //		MonedaProblem v1 = MonedaProblem.of(0, MonedaProblem.valorInicial);

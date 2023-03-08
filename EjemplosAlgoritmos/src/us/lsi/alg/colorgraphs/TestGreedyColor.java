@@ -30,7 +30,7 @@ public class TestGreedyColor {
 	
 	public static void main(String[] args) {
 		
-		Locale.setDefault(new Locale("en", "US"));
+		Locale.setDefault(Locale.of("en", "US"));
 		
 		SimpleWeightedGraph<Ciudad, Carretera> g0 = leeGrafo("./ficheros/andalucia.txt");
 		

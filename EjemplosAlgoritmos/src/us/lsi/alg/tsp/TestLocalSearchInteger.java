@@ -15,7 +15,7 @@ import org.jgrapht.Graph;
 public class TestLocalSearchInteger {
 
 	public static void main(String[] args) {
-		Locale.setDefault(new Locale("en", "US"));
+		Locale.setDefault(Locale.of("en", "US"));
 		
 		Graph<Integer,SimpleEdge<Integer>> graph = AuxiliaryTsp.generate(100);
 		TravelVertexInteger.graph = graph;

@@ -22,7 +22,7 @@ public class BinaryTreesTest {
 		return switch (tree) {
 		case BEmpty<E>  t-> 0;
 		case BLeaf<E>  t -> 1;
-		case BTree<E> t -> 1 + size(t.left()) + size(t.right());
+		case BTree<E>  t -> 1 + size(t.left()) + size(t.right());
 		};
 	}
 	

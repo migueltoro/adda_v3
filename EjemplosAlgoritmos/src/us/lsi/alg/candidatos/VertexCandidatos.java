@@ -63,7 +63,7 @@ public record VertexCandidatos(Integer index,Set<Integer>seleccion,Integer pRest
 
 	@Override
 	public String toString() {
-		Locale.setDefault(new Locale("en", "US"));
+		Locale.setDefault(Locale.of("en", "US"));
 		return String.format("%d,%d,%.0f",index,this.cualidadesCubiertas().size(),
 				CandidatosHeuristic.heuristic(this,VertexCandidatos.goal(), null));
 	}

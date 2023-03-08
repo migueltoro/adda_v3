@@ -11,11 +11,11 @@ import us.lsi.common.String2;
 public class DatosSudoku {
 	
 	/**
-	 * Tamaño de un subcuadro
+	 * Tamaï¿½o de un subcuadro
 	 */
 	public static Integer tamSubCuadro = 3;
 	/**
-	 * Número de filas
+	 * Nï¿½mero de filas
 	 */
 	public static Integer numeroDeFilas = tamSubCuadro*tamSubCuadro;
 	/**
@@ -60,7 +60,7 @@ public class DatosSudoku {
 	
 	
 	public static void main(String[] args) {
-		Locale.setDefault(new Locale("en", "US"));
+		Locale.setDefault(Locale.of("en", "US"));
 		DatosSudoku.tamSubCuadro = 3;
 		DatosSudoku.iniDatos("ficheros/sudoku2.txt");
 		System.out.println(DatosSudoku.sudoku);

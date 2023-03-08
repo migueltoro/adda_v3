@@ -16,7 +16,7 @@ import us.lsi.graphs.virtual.EGraph;
 public class TestSudokuBTRandom {
 
 	public static void main(String[] args) {
-		Locale.setDefault(new Locale("en", "US"));
+		Locale.setDefault(Locale.of("en", "US"));
 		DatosSudoku.iniDatos("ficheros/sudoku2.txt");
 		SudokuVertex e1 = SudokuVertex.first(DatosSudoku.sudoku);
 		Predicate<SudokuVertex> goal = SudokuVertex.goal();

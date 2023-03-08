@@ -62,7 +62,7 @@ public class DatosSubconjuntos {
 	// Test de la lectura del fichero
 	public static void main(String[] args) {
 		// Set up
-		Locale.setDefault(new Locale("en", "US"));
+		Locale.setDefault(Locale.of("en", "US"));
 
 		for (Integer id_fichero = 1; id_fichero < 3; id_fichero++) {
 

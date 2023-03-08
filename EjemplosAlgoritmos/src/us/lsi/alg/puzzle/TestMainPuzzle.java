@@ -12,7 +12,7 @@ import us.lsi.graphs.virtual.EGraph;
 public class TestMainPuzzle {
 	
 	public static void main(String[] args) {
-		Locale.setDefault(new Locale("en", "US"));
+		Locale.setDefault(Locale.of("en", "US"));
 		
 		VertexPuzzle v1 = VertexPuzzle.of(1,2,3,4,5,0,6,7,8);
 		VertexPuzzle v2 = VertexPuzzle.of(1,2,3,4,0,5,6,7,8);

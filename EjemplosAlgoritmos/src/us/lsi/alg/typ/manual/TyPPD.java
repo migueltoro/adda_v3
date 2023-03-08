@@ -84,7 +84,7 @@ public class TyPPD {
 	}
 	
 	public static void main(String[] args) {
-		Locale.setDefault(new Locale("en", "US"));
+		Locale.setDefault(Locale.of("en", "US"));
 		DatosTyP.datos("ficheros/tareas.txt",5);
 		DatosTyP.toConsole();
 		TyPProblem v1 = TyPProblem.first();

@@ -14,7 +14,7 @@ import us.lsi.path.EGraphPath.PathType;
 public class TestAstar {
 
 	public static void main(String[] args) {
-		Locale.setDefault(new Locale("en", "us"));
+		Locale.setDefault(Locale.of("en", "us"));
 		String fichero = "ficheros/asignaturas.txt";
 
 		DatosAsignaturas.iniciarDatos(fichero);

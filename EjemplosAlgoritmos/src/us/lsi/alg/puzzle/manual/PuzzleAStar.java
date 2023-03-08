@@ -12,7 +12,6 @@ import org.jheaps.tree.FibonacciHeap;
 
 import us.lsi.common.String2;
 
-
 public class PuzzleAStar {
 	
 	public static record AStarPuzzle(ProblemPuzzle vertex,ActionPuzzle a,ProblemPuzzle lastVertex,
@@ -100,7 +99,7 @@ public class PuzzleAStar {
 	
 
 	public static void main(String[] args) {
-		Locale.setDefault(new Locale("en", "US"));
+		Locale.setDefault(Locale.of("en", "US"));
 		ProblemPuzzle v1 = ProblemPuzzle.of(1, 2, 3, 4, 5, 0, 6, 7, 8);
 		ProblemPuzzle end = ProblemPuzzle.of(8,1,3,4,0,2,7,6,5);
 //		System.out.printf("_________\n%.0f\n",HeuristicaPuzzle.heuristicaManhattan(v1, null, end));

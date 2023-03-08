@@ -9,32 +9,7 @@ import us.lsi.common.List2;
 
 public class ReinasBTRandom {
 	
-	public static class StateReinas {
-		ReinasProblem vertice;
-		List<ReinasProblem> vertices;
-		
-		public StateReinas(ReinasProblem vertice, List<ReinasProblem> vertices) {
-			super();
-			this.vertice = vertice;
-			this.vertices = vertices;
-		}
-
-		void forward(Integer a) {
-			ReinasProblem nv = vertice.vecino(a);
-			this.vertices.add(nv);
-			this.vertice = nv;
-		}
-		
-		void back(Integer a) {
-			this.vertices.remove(this.vertices.size()-1);
-			this.vertice = this.vertices.get(this.vertices.size()-1);		
-		}
-		
-		SolucionReinas solucion() {
-			return SolucionReinas.of(this.vertice);
-		}
-		
-	}
+	
 	
 	public static ReinasProblem start;
 	public static StateReinas estado;
@@ -78,7 +53,7 @@ public class ReinasBTRandom {
 	}
 
 	public static void main(String[] args) {
-		Locale.setDefault(new Locale("en", "US"));
+		Locale.setDefault(Locale.of("en", "US"));
 		Integer n = 120;
 		ReinasBTRandom.threshold = 15;
 		long startTime = System.nanoTime();

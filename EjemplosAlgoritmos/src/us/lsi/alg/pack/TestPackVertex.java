@@ -10,7 +10,7 @@ import us.lsi.path.EGraphPath.PathType;
 public class TestPackVertex {
 
 	public static void main(String[] args) {
-		Locale.setDefault(new Locale("en", "US"));
+		Locale.setDefault(Locale.of("en", "US"));
 		Data.data("ficheros/pack.txt");
 		PackVertex e1 = PackVertex.first();
 //		Predicate<PackVertex> goal  = PackVertex.goal;

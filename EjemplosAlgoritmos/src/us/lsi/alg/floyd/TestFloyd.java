@@ -34,7 +34,7 @@ public class TestFloyd {
 	
 	public static void main(String[] args) {
 		
-		Locale.setDefault(new Locale("en", "US"));
+		Locale.setDefault(Locale.of("en", "US"));
 		
 		SimpleWeightedGraph<Ciudad, Carretera> graph = leeDatos("./ficheros/andalucia.txt");
 		IntegerVertexGraphView<Ciudad,Carretera> graph2 = IntegerVertexGraphView.of(graph);

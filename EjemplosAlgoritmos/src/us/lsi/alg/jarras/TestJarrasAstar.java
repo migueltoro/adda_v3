@@ -12,7 +12,7 @@ import us.lsi.graphs.virtual.EGraph;
 public class TestJarrasAstar {
 
 		public static void main(String[] args) {
-			Locale.setDefault(new Locale("en", "US"));
+			Locale.setDefault(Locale.of("en", "US"));
 			
 			JarrasVertex.data(3,5,0,0,3,7);;
 			JarrasVertex e1 = JarrasVertex.first();

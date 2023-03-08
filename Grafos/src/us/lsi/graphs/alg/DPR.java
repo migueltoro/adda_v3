@@ -39,7 +39,10 @@ public class DPR<V, E, S> {
 	}
 	
 	public static <V, E, S> DPR<V, E, S> of(
-			EGraph<V, E> graph, Function<GraphPath<V, E>, S> fsolution, Double bestValue, GraphPath<V, E> optimalPath, Boolean withGraph) {
+			EGraph<V, E> graph, 
+			Function<GraphPath<V, E>, S> fsolution, 
+			Double bestValue, GraphPath<V, E> optimalPath, 
+			Boolean withGraph) {
 		return new DPR<V, E, S>(graph,fsolution,bestValue,optimalPath,withGraph);
 	}
 

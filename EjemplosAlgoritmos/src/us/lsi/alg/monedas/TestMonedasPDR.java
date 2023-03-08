@@ -19,7 +19,7 @@ import us.lsi.path.EGraphPath.PathType;
 public class TestMonedasPDR {
 
 	public static void main(String[] args) {
-		Locale.setDefault(new Locale("en", "US"));
+		Locale.setDefault(Locale.of("en", "US"));
 		MonedaVertex.datosIniciales("ficheros/monedas2.txt", 400);
 
 		MonedaVertex e1 = MonedaVertex.first();

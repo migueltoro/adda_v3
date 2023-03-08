@@ -160,7 +160,7 @@ public class FloydPD {
 	
 	
 	public static void main(String[] args) {
-		Locale.setDefault(new Locale("en", "US"));
+		Locale.setDefault(Locale.of("en", "US"));
 		
 		SimpleWeightedGraph<Ciudad, Carretera> g = leeDatos("./ficheros/andalucia.txt");
 		IntegerVertexGraphView<Ciudad, Carretera> g2 = IntegerVertexGraphView.of(g);

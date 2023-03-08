@@ -20,7 +20,7 @@ public class TestSimulatedAnnealingInteger {
 	
 	
 	public static void main(String[] args) {
-		Locale.setDefault(new Locale("en", "US"));
+		Locale.setDefault(Locale.of("en", "US"));
 		
 		SA.numPorIntento = 100;
 		SA.numMismaTemperatura = 1;

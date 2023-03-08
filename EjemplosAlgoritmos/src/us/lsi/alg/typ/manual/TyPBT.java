@@ -1,55 +1,14 @@
 package us.lsi.alg.typ.manual;
 
-import java.util.ArrayList;
+
 import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Set;
 
-import us.lsi.common.List2;
-
 public class TyPBT {
 	
-	public static class StateTyP {
-		
-		TyPProblem vertice; 
-		Integer valorAcumulado; 
-		List<Integer> acciones; 
-		List<TyPProblem> vertices;
-		
-		public StateTyP(TyPProblem vertice, Integer valorAcumulado, List<Integer> acciones, List<TyPProblem> vertices) {
-			super();
-			this.vertice = vertice;
-			this.valorAcumulado = valorAcumulado;
-			this.acciones = acciones;
-			this.vertices = vertices;
-		}
-		
-		public static StateTyP of(TyPProblem vertex) {
-			List<TyPProblem> vt = List2.of(vertex);
-			return new StateTyP(vertex,0,new ArrayList<>(),vt);
-		}
-
-		void forward(Integer a) {
-			this.acciones.add(a);
-			TyPProblem vcn = this.vertice.vecino(a);		
-			this.vertices.add(vcn);
-			this.valorAcumulado =  vcn.maxCarga(); 
-			this.vertice = vcn;
-		}
-
-		void back(Integer a) {
-			this.acciones.remove(this.acciones.size()-1);
-			this.vertices.remove(this.vertices.size()-1);
-			this.vertice = this.vertices.get(this.vertices.size()-1);
-			this.valorAcumulado = this.vertice.maxCarga(); 
-		}
-		
-		SolucionTyP solucion() {
-			return SolucionTyP.of(start,this.vertice.acciones());
-		}
-	}
 	
 	public static TyPProblem start;
 	public static StateTyP estado;
@@ -93,7 +52,7 @@ public class TyPBT {
 	}
 
 	public static void main(String[] args) {
-		Locale.setDefault(new Locale("en", "US"));
+		Locale.setDefault(Locale.of("en", "US"));
 		DatosTyP.datos("ficheros/tareas.txt",5);
 		TyPProblem v1 = TyPProblem.first();
 		SolucionTyP s = Heuristica.solucionVoraz(v1);

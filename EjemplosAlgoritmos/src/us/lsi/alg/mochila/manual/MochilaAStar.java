@@ -90,7 +90,7 @@ public class MochilaAStar {
 	
 
 	public static void main(String[] args) {
-		Locale.setDefault(new Locale("en", "US"));
+		Locale.setDefault(Locale.of("en", "US"));
 		DatosMochila.datos("ficheros/objetosMochila.txt");
 		DatosMochila.capacidadInicial = 78;
 		MochilaProblem v1 = MochilaProblem.of(0, DatosMochila.capacidadInicial);

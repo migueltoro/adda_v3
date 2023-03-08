@@ -19,7 +19,7 @@ public class TestBT {
 	public static void main(String[] args) {
 
 		// Set up
-		Locale.setDefault(new Locale("en", "US"));
+		Locale.setDefault(Locale.of("en", "US"));
 
 		for (Integer id_fichero = 0; id_fichero < 2; id_fichero++) {
 

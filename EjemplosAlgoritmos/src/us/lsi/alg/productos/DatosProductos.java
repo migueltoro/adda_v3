@@ -65,14 +65,14 @@ public class DatosProductos {
 	private static String mem;
 	public static void toConsole() {
 		String2.toConsole("Funcionalidades a cubrir: "+funciones);
-		mem = "Nº de productos: "+NUM_PRODUCTOS;
+		mem = "Nï¿½ de productos: "+NUM_PRODUCTOS;
 		productos.forEach(a->mem += ("\n"+a.toString()));
 		String2.toConsole(mem);
 	}	
 	
 	// Test de la lectura del fichero
 	public static void main(String[] args) {
-		Locale.setDefault(new Locale("en", "US"));
+		Locale.setDefault(Locale.of("en", "US"));
 		iniDatos("ficheros/productos2.txt");
 		toConsole();
 		String2.toConsole(DatosProductos.getProducto(0).toString());

@@ -16,7 +16,7 @@ public class TestCamino {
 	}
 
 	public static void main(String[] args) {
-		Locale.setDefault(new Locale("en", "US"));
+		Locale.setDefault(Locale.of("en", "US"));
 		Graph<Ciudad,Carretera> graph1 = AuxiliaryTsp.leeGraph("ficheros/andalucia.txt");
 		Graph<Ciudad,Carretera> graph2 = AuxiliaryTsp.completeGraph(graph1);
 

@@ -15,7 +15,7 @@ import us.lsi.path.EGraphPath.PathType;
 public class TestAStar {
 
 	public static void main(String[] args) {
-		Locale.setDefault(new Locale("en", "US"));
+		Locale.setDefault(Locale.of("en", "US"));
 		Data.data("ficheros/pack1.txt");
 		PackVertex e1 = PackVertex.first();
 		

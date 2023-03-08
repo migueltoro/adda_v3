@@ -12,7 +12,7 @@ public class TestSeqAStar {
 
 	public static void main(String[] args) {
 		
-		Locale.setDefault(new Locale("en", "US"));
+		Locale.setDefault(Locale.of("en", "US"));
 		
 		SeqVertex.data("cbrrrarreterb", "carretera");
 		SeqVertex e1 = SeqVertex.first();

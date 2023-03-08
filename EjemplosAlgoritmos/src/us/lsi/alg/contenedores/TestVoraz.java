@@ -12,7 +12,7 @@ import us.lsi.path.EGraphPath.PathType;
 public class TestVoraz {
 
 	public static void main(String[] args) {
-		Locale.setDefault(new Locale("en", "US"));
+		Locale.setDefault(Locale.of("en", "US"));
 
 		for (Integer id_fichero = 1; id_fichero < 2; id_fichero++) {
 

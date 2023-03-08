@@ -18,7 +18,7 @@ public class TestAStar {
 	public static void main(String[] args) {
 
 		// Set up
-		Locale.setDefault(new Locale("en", "US"));
+		Locale.setDefault(Locale.of("en", "US"));
 		
 		for (Integer i = 1; i < 2; i++) {
 

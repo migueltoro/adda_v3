@@ -11,7 +11,7 @@ import us.lsi.graphs.virtual.EGraph;
 public class Test3 {
 	
 	public static void test(String file) {
-		Locale.setDefault(new Locale("en", "US"));
+		Locale.setDefault(Locale.of("en", "US"));
 		
 		DatosEquipo.iniDatos(file);
 		

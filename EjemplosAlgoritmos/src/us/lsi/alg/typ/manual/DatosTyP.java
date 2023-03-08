@@ -42,7 +42,7 @@ public class DatosTyP {
 	}
 
 	public static void main(String[] args) {
-		Locale.setDefault(new Locale("en", "US"));
+		Locale.setDefault(Locale.of("en", "US"));
 		DatosTyP.datos("ficheros/tareas.txt",5);
 		toConsole();
 	}

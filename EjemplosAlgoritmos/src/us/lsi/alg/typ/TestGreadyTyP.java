@@ -15,7 +15,7 @@ public class TestGreadyTyP {
 	
 
 	public static void main(String[] args) {
-		Locale.setDefault(new Locale("en", "US"));
+		Locale.setDefault(Locale.of("en", "US"));
 		TyPVertex.datos("ficheros/tareas.txt",5);
 		TyPVertex e1 = TyPVertex.first();
 //		TyPVertex e2 = TyPVertex.last();
