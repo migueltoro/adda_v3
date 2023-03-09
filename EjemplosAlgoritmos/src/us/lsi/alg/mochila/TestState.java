@@ -22,7 +22,7 @@ public class TestState {
 		EGraph<MochilaVertex, MochilaEdge> graph = 
 				EGraph.virtual(v1,MochilaVertex.goal(), PathType.Sum, Type.Max)
 				.greedyEdge(MochilaVertex::greedyEdge)
-				.heuristic(MochilaHeuristic::heuristic)
+				.heuristic(MochilaHeuristic::heuristic1)
 				.build();
 		
 		

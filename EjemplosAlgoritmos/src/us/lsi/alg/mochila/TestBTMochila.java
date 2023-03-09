@@ -23,13 +23,13 @@ public class TestBTMochila {
 	public static void main(String[] args) {
 		Locale.setDefault(Locale.of("en", "US"));
 		DatosMochila.iniDatos("ficheros/objetosMochila.txt");
-		MochilaVertex.capacidadInicial = 101;
+		MochilaVertex.capacidadInicial = 78;
 		MochilaVertex e1 = MochilaVertex.initialVertex();
 		
 		EGraph<MochilaVertex, MochilaEdge> graph = 
 				EGraph.virtual(e1,MochilaVertex.goal(), PathType.Sum, Type.Max)
 				.greedyEdge(MochilaVertex::greedyEdge)
-				.heuristic(MochilaHeuristic::heuristic)
+				.heuristic(MochilaHeuristic::heuristic1)
 				.build();	
 		
 		GreedyOnGraph<MochilaVertex, MochilaEdge> rr = GreedyOnGraph.of(graph);

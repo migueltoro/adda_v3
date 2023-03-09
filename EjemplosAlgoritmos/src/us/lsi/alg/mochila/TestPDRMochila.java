@@ -35,7 +35,7 @@ public class TestPDRMochila {
 		EGraph<MochilaVertex, MochilaEdge> graph = 
 				EGraph.virtual(e1,MochilaVertex.goal(), PathType.Sum, Type.Max)
 				.greedyEdge(MochilaVertex::greedyEdge)
-				.heuristic(MochilaHeuristic::heuristic)
+				.heuristic(MochilaHeuristic::heuristic1)
 				.build();	
 		
 		GreedyOnGraph<MochilaVertex, MochilaEdge> rr = GreedyOnGraph.of(graph);

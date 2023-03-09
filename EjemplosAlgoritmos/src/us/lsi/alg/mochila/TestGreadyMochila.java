@@ -17,19 +17,21 @@ public class TestGreadyMochila {
 	public static void main(String[] args) {
 		Locale.setDefault(Locale.of("en", "US"));
 		DatosMochila.iniDatos("ficheros/objetosMochila.txt");
-		MochilaVertex.capacidadInicial = 457;
+		MochilaVertex.capacidadInicial = 78;
 		MochilaVertex v1 = MochilaVertex.initialVertex();
 //		MochilaVertex v2 = MochilaVertex.lastVertex();
 //		Predicate<MochilaVertex> goal = v->v.equals(v2);
 //		System.out.println(e1);
 //		System.out.println(e2);			
-		Double r2 = MochilaHeuristic.heuristic(v1,MochilaVertex.goal(),null);
-		System.out.println("H "+r2);
+		Double r2 = MochilaHeuristic.heuristic1(v1,MochilaVertex.goal(),null);
+		System.out.println("H1 "+r2);
+		r2 = MochilaHeuristic.heuristic2(v1,MochilaVertex.goal(),null);
+		System.out.println("H2 "+r2);
 		
 		EGraph<MochilaVertex, MochilaEdge> graph = 
 				EGraph.virtual(v1,MochilaVertex.goal(), PathType.Sum, Type.Max)
 				.greedyEdge(MochilaVertex::greedyEdge)
-				.heuristic(MochilaHeuristic::heuristic)
+				.heuristic(MochilaHeuristic::heuristic1)
 				.build();
 		
 		GreedyOnGraph<MochilaVertex, MochilaEdge> gs = GreedyOnGraph.of(graph);
