@@ -1,13 +1,9 @@
 package us.lsi.alg.matrices2;
 
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
-
-import us.lsi.graphs.alg.DP.Sp;
 import us.lsi.hypergraphs2.HyperVertex2;
 	
 public record MatrixVertex2(Integer i,Integer j) 
@@ -22,7 +18,6 @@ public record MatrixVertex2(Integer i,Integer j)
 			return new MatrixVertex2(0, n);
 		}
 		
-		public static Map<MatrixVertex2,Sp<MatrixEdge2>> memory = new HashMap<>();
 		public static List<MatrixInf> matrices;
 		public static Integer n;
 

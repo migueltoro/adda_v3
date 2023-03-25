@@ -15,7 +15,7 @@ public record MatrixEdge2(MatrixVertex2 source,List<MatrixVertex2> targets,Integ
 	}
 
 	@Override
-	public Double edgeWeight(List<Double> solutions) {		
+	public Double weight(List<Double> solutions) {		
 		Double weight = solutions.get(0)+solutions.get(1);
 		Integer i = source.i();
 		Integer a = action();
@@ -31,9 +31,6 @@ public record MatrixEdge2(MatrixVertex2 source,List<MatrixVertex2> targets,Integ
 
 	@Override
 	public String toString() {
-		return this.action().toString();
+		return String.format("%s",this.action());
 	}
-	
-	
-
 }

@@ -16,7 +16,7 @@ public record FloydEdge2(FloydVertex2 source, List<FloydVertex2> targets, Boolea
 	}
 
 	@Override
-	public Double edgeWeight(List<Double> solutions) {
+	public Double weight(List<Double> solutions) {
 		Double weight = null;
 		if (!action()) weight = solutions.get(0);
 		else weight = solutions.get(0) + solutions.get(1);
@@ -42,7 +42,5 @@ public record FloydEdge2(FloydVertex2 source, List<FloydVertex2> targets, Boolea
 	public String toString() {
 		return this.action()?"T":"F";
 	}
-	
-	
 
 }

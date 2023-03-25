@@ -37,7 +37,7 @@ public class Data<V,E> {
 	
 	private Data() {
 		Comparator<Sp<E>> cmp = Data.type.equals(Data.DpType.Min) ? 
-		Comparator.naturalOrder() : Comparator.reverseOrder();
+				Comparator.naturalOrder() : Comparator.reverseOrder();
 		this.cmp = cmp;
 		this.memory = new HashMap<>();
 		this.memoryAll = SetMultimap.create();
@@ -45,6 +45,19 @@ public class Data<V,E> {
 	
 	public Comparator<Sp<E>> order(){
 		return cmp;
+	}
+	
+	public Boolean solved(V vertex) {
+		return Data.<V,E>of().memory.containsKey(vertex);
+	}
+	public Sp<E> sp(V vertex) {
+		return Data.<V,E>of().memory.get(vertex);
+	}
+	public void setSp(V vertex, Sp<E> sp) {
+		Data.<V,E>of().memory.put(vertex,sp);
+	}
+	public void setAllSp(V vertex,Sp<E> data) {
+		Data.<V,E>of().memoryAll.put(vertex,data);
 	}
 	
 	public static <V extends HyperVertex2<V, E, A, ?>, E extends HyperEdge2<V, E, A, ?>, A> 
@@ -79,12 +92,12 @@ public class Data<V,E> {
 	
 	public static <V,E> String stv(Union<V,E> un) {
 		if(un.isA()) return un.a().toString();
-		else return un.b().toString().substring(0, 1).toUpperCase();
+		else return un.b().toString();
 	}
 	
 	public static <V,E> String ste(Union<V,E> un) {
 		if(un.isA()) return un.a().toString();
-		else return un.b().toString().substring(0, 1).toUpperCase();
+		else return un.b().toString();
 	}
 	
 	public static <V extends HyperVertex2<V, E, A, ?>, E extends HyperEdge2<V,E,A,?>, A> 
@@ -102,7 +115,7 @@ public class Data<V,E> {
 
 		GraphColors.toDot(g, file, 
 				x -> stv(x),
-				x -> g.getEdgeSource(x).isA() ? g.getEdgeTarget(x).b().toString().substring(0, 1).toUpperCase() : "",
+				x -> g.getEdgeSource(x).isA() ? g.getEdgeTarget(x).b().toString() : "",
 				x -> GraphColors.all(GraphColors.shapeIf(Shape.point, x.isB()),
 						GraphColors.colorIf(Color.red, vt.contains(x))),
 				e -> GraphColors.all(GraphColors.arrowHead(ArrowHead.none),

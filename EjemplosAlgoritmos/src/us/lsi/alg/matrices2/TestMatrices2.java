@@ -19,9 +19,11 @@ public class TestMatrices2 {
 			MatrixVertex2 p = MatrixVertex2.initial();
 			String s = p.solution();
 			String2.toConsole(s);
-			GraphTree2<MatrixVertex2, MatrixEdge2, Integer, String> t = p.graphTree();
+			GraphTree2<MatrixVertex2, MatrixEdge2, Integer> t = p.graphTree();
 			String2.toConsole(t.toString());
-			String2.toConsole(t.string());
+			String2.toConsole(t.children().toString());
+			String2.toConsole(t.allVertices().toString());
+			String2.toConsole(t.allEdges().toString());
 			
 			SimpleDirectedGraph<Union<MatrixVertex2, MatrixEdge2>, DefaultEdge> g = 
 					Data.graph(Data.<MatrixVertex2, MatrixEdge2>of().memoryAll);

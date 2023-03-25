@@ -4,72 +4,95 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
+import us.lsi.hypergraphs2.GraphTree2.Gtb;
+import us.lsi.hypergraphs2.GraphTree2.Gtr;
 
-import us.lsi.common.Preconditions;
+public sealed interface GraphTree2<V extends HyperVertex2<V, E, A, ?>, E extends HyperEdge2<V, E, A,?>, A> 
+		permits Gtb<V,E,A>,Gtr<V,E,A>{
 
-public record GraphTree2<V extends HyperVertex2<V, E, A, S>, 
-		E extends HyperEdge2<V, E, A, S>, A, S> (V vertex) {
-
-	public static <V extends HyperVertex2<V, E, A, S>, E extends HyperEdge2<V, E, A, S>, A, S> 
-			GraphTree2<V, E, A, S> of(V v) {
-		return new GraphTree2<>(v);
+	public static <V extends HyperVertex2<V, E, A, ?>, E extends HyperEdge2<V, E, A, ?>, A> 
+		GraphTree2<V, E, A> tb(V v) {
+		return new Gtb<V, E, A>(v);
 	}
 	
-	public Boolean isLeaf() {
-		return this.vertex().isBaseCase();
+	public static <V extends HyperVertex2<V, E, A, ?>, E extends HyperEdge2<V, E, A, ?>, A> 
+		GraphTree2<V, E, A> tr(V v,A a,List<GraphTree2<V,E,A>> children) {
+		return new Gtr<V, E, A>(v,a,children);
 	}
 	
-	public A action() {
-		Preconditions.checkArgument(!this.isLeaf(),"El un árbol hoja");
-		return this.vertex().vertexWeight().edge().action();
+	public static <V extends HyperVertex2<V, E, A, ?>, E extends HyperEdge2<V, E, A, ?>, A, S> 
+		GraphTree2<V, E, A> optimalTree(V v) {
+		if (v.isBaseCase()) {
+			return new Gtb<V, E, A>(v);
+		} else {
+			A a = v.sp().edge().action();
+			List<GraphTree2<V,E,A>> children = v.neighbors(a).stream()
+					.map(g->GraphTree2.optimalTree(g))
+					.toList();					
+			return new Gtr<V, E, A>(v,a,children);
+		}
 	}
 	
-	public E edge() {
-		Preconditions.checkArgument(!this.isLeaf(),"El un árbol hoja");
-		return this.vertex().vertexWeight().edge();
+	public V vertex();
+
+	public Boolean isLeaf();
+
+	public default Double weight() {
+		return this.vertex().weight();
 	}
 
-	public Double weight() {
-		return this.vertex().vertexWeight().weight();
-	}
-
-	public S solution() {
-		return this.vertex().solution();
-	}
-
-	public List<GraphTree2<V, E, A, S>> children() {
-		if(this.action() == null ) return List.of();
-		return this.vertex()
-				.neighbors(this.action())
-				.stream()
-				.filter(v->!v.isBaseCase())
-				.map(v ->GraphTree2.of(v))
-				.toList();
-	}
+	public List<GraphTree2<V, E, A>> children(); 
 	
-	public Set<V> allVertices(){
+	public default Set<V> allVertices() {
 		Set<V> s = new HashSet<>();
 		s.add(this.vertex());
 		this.children().stream().forEach(t->s.addAll(t.allVertices()));
 		return s;
 	}
-	public Set<E> allEdges(){
-		Set<E> s = new HashSet<>();
-		s.add(this.edge());
-		this.children().stream().forEach(t->s.addAll(t.allEdges()));
-		return s;
+
+	public Set<E> allEdges();
+
+	public static record Gtb<V extends HyperVertex2<V, E, A, ?>, E extends HyperEdge2<V, E, A, ?>, A>(V vertex) 
+	     implements GraphTree2<V, E, A>{
+		public Boolean isLeaf() {
+			return true;
+		}
+		public List<GraphTree2<V, E, A>> children() {
+			return List.of();
+		}
+		@Override
+		public String toString() {
+			return String.format("(%s)",this.vertex());
+		}
+		public Set<E> allEdges() {
+			return Set.of();
+		}
 	}
-	public String string() {
-		String label;
-		if (vertex().isBaseCase())
-			label = "[" + vertex().toString() + "]";
-		else {
-			label = "[" + vertex().toString() + "," + action().toString() + "]";
-			label += this.children().stream()
-					.map(g -> g.string())
+	
+	public record Gtr<V extends HyperVertex2<V, E, A, ?>, E extends HyperEdge2<V, E, A, ?>, A>
+				(V vertex, A action, List<GraphTree2<V,E,A>> children) implements GraphTree2<V, E, A>{
+		public Boolean isLeaf() {
+			return false;
+		}
+		public E edge() {
+			return this.vertex().edge(this.action());
+		}
+
+		@Override
+		public String toString() {
+			String lb = String.format("(%s,%s)",this.vertex(),this.action());
+			return  lb+this.children().stream()
+					.map(g -> g.toString())
 					.collect(Collectors.joining(",", "(", ")"));
 		}
-		return label;
+
+		public Set<E> allEdges() {
+			Set<E> s = new HashSet<>();
+			s.add(this.edge());
+			this.children().stream().forEach(t -> s.addAll(t.allEdges()));
+			return s;
+		}
+		
 	}
 
 }

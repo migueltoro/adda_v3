@@ -20,8 +20,8 @@ public class Auxiliar2 {
 		}
 		MatrixVertex2.matrices = r;
 		MatrixVertex2.n = r.size();
-		System.out.println(r);
-		System.out.println(n);
+		System.out.println("Matrices = "+r);
+		System.out.println("n = "+n);
 	}
 	
 	public static void main(String[] args) {

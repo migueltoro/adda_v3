@@ -5,7 +5,6 @@ import java.util.Locale;
 import org.jgrapht.Graph;
 import org.jgrapht.GraphPath;
 import org.jgrapht.graph.DefaultEdge;
-import org.jgrapht.graph.GraphWalk;
 import org.jgrapht.graph.SimpleDirectedGraph;
 import org.jgrapht.graph.SimpleWeightedGraph;
 import us.lsi.common.String2;
@@ -51,13 +50,14 @@ public class TestFloy2 {
 		FloydVertex2 p = FloydVertex2.initial(origen,destino);
 		
 //		GraphPath<Integer,SimpleEdge<Integer>> gp = p.solution();
-		String2.toConsole(FloydVertex2.n.toString());
-//		String2.toConsole(p.solutionWeight().toString());
+		String2.toConsole("21 = "+FloydVertex2.n.toString());
+//		String2.toConsole(p.weight().toString());
+		String2.toConsole("2 = "+Data.of().memory.toString());
 		GraphPath<Integer, SimpleEdge<Integer>> gp = p.solution();
-		GraphTree2<FloydVertex2, FloydEdge2, Boolean, GraphWalk<Integer, SimpleEdge<Integer>>> t = p.graphTree();
+		GraphTree2<FloydVertex2, FloydEdge2, Boolean> t = p.graphTree();
 		
-		String2.toConsole(gp.getVertexList().stream().map(i->graph2.vertex(i)).toList().toString());
-		String2.toConsole(t.string());
+		String2.toConsole("3 = "+gp.getVertexList().stream().map(i->graph2.vertex(i)).toList().toString());
+		String2.toConsole("4 = "+t.toString());
 		SimpleDirectedGraph<Union<FloydVertex2,FloydEdge2>, DefaultEdge> g = 
 				Data.graph(Data.<FloydVertex2,FloydEdge2>of().memoryAll);
 		

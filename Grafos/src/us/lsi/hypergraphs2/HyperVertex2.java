@@ -1,10 +1,10 @@
 package us.lsi.hypergraphs2;
 
 
+import java.util.Comparator;
 import java.util.List;
 
 public interface HyperVertex2<V extends HyperVertex2<V,E,A,S>, E extends HyperEdge2<V,E,A,S>,A,S> {
-	
 	
 	List<A> actions();
 	Boolean isBaseCase();
@@ -12,49 +12,64 @@ public interface HyperVertex2<V extends HyperVertex2<V,E,A,S>, E extends HyperEd
 	S baseCaseSolution();
 	V me();
 	List<V> neighbors(A a);
-	E edge(A a); 
+	E edge(A a);
 	
-	public default Sp<E> data() {
-		return Data.<V,E>of().memory.getOrDefault(this.me(), null);
+	public static <V,E> Data<V,E> data() {
+		return Data.<V,E>of();
+	}	
+	public default Boolean solved() {
+		return Data.<V,E>of().solved(this.me());
 	}
-	public default void setData(Sp<E> data) {
-		Data.<V,E>of().memory.put(this.me(),data);
+	public default Sp<E> spData() {
+		return Data.<V,E>of().sp(this.me());
 	}
-	public default void setDataAll(Sp<E> data) {
-		Data.<V,E>of().memoryAll.put(this.me(),data);
+	public default void setSpData(Sp<E> sp) {
+		Data.<V,E>of().setSp(this.me(),sp);
+	}
+	public default void setAllSpData(Sp<E> sp) {
+		Data.<V,E>of().setAllSp(this.me(),sp);
+	}
+	public default Comparator<Sp<E>> orderData() {
+		return Data.<V,E>of().order();
 	}
 	
-	public default Sp<E> vertexWeight() {
-		Sp<E> r;
-		if (this.data() != null)
-			r = this.data();
+	public default Double weight() {
+		if(this.sp() != null)
+			return this.sp().weight();
+		else 
+			return null;
+	}
+	
+	public default Sp<E> sp() {
+		Sp<E> r = null;
+		if (this.solved())
+			r = this.spData();
 		else {
-			r = null;
 			if (this.isBaseCase()) {
 				Double br = baseCaseWeight();
-				if (br != null) r = Sp.of(br, null);
-			} else if (!this.edgesOf().isEmpty()) {
+				if (br != null) r = Sp.of(br,null);
+			} else {
 				r = this.edgesOf().stream()
-						.map(e->e.edgeWeight())
-						.peek(e->this.setDataAll(e))
+						.map(e->e.sp())
+						.peek(e->this.setAllSpData(e))
 						.filter(s -> s != null)	
-						.min(Data.<V,E>of().order())
+						.min(this.orderData())
 						.orElse(null);
 			}
-			this.setData(r);
+			this.setSpData(r);
 		}
 		return r;
 	}
 
+	default Boolean hasSolution() {
+		return this.sp() != null;
+	}
+	
 	default public S solution() {
-		Sp<E> sp = this.vertexWeight();
-		S r;
 		if (this.isBaseCase())
-			r = this.baseCaseSolution();
-		else {
-			r = sp.edge().solution();
-		}
-		return r;
+			return this.baseCaseSolution();
+		else 
+			return  this.sp().edge().solution();
 	}
 
 	/**
@@ -71,7 +86,7 @@ public interface HyperVertex2<V extends HyperVertex2<V,E,A,S>, E extends HyperEd
 		return this.edge(a).targets();
 	}
 
-	default GraphTree2<V, E, A, S> graphTree() {
-		return GraphTree2.of(this.me());
+	default GraphTree2<V, E, A> graphTree() {
+		return GraphTree2.optimalTree(this.me());
 	}
 }

@@ -6,20 +6,24 @@ public interface HyperEdge2<V extends HyperVertex2<V, E, A, S>,
 		E extends HyperEdge2<V,E,A,S>, A, S> {
 	V source();
 	A action();
-	Double edgeWeight(List<Double> solutions);
+	Double weight(List<Double> weights);
 	S solution(List<S> solutions);
 	E me();
 	
+	default Double weight() {
+		if(this.sp() == null) return null;
+		else return this.sp().weight();
+	}
 	default List<V> targets() {
 		return this.source().neighbors(this.action());
 	}
-	default Sp<E> edgeWeight() {
-		Sp<E> r;
-		List<Sp<E>> ls = this.targets().stream().map(v -> v.vertexWeight()).toList();
-		if (ls.contains(null))
-			return null;
-		else {
-			Double weight = this.edgeWeight(ls.stream().map(e -> e.weight()).toList());
+	default Boolean hasSolution() {
+		return this.targets().stream().allMatch(v->v.hasSolution());
+	}
+	default Sp<E> sp() {
+		Sp<E> r = null;
+		if(this.hasSolution()) {
+			Double weight = this.weight(this.targets().stream().map(v -> v.weight()).toList());
 			r = Sp.of(weight, me());
 		}
 		return r;
