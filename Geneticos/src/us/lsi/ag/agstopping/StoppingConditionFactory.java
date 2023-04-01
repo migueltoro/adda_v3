@@ -4,8 +4,6 @@ import org.apache.commons.math3.genetics.FixedElapsedTime;
 import org.apache.commons.math3.genetics.FixedGenerationCount;
 import org.apache.commons.math3.genetics.StoppingCondition;
 
-import us.lsi.common.Preconditions;
-
 
 
 public class StoppingConditionFactory {
@@ -15,8 +13,8 @@ public class StoppingConditionFactory {
 	 * 
 	 * <ul>
 	 * <li> ElapsedTime: Para cuando el tiempo transcurrido se el especificado en <code> elapsedTime </code>.
-	 * <li> GenerationCount: Para cuando el número de generaciones sea igual al especificado en <code> NUM_GENERATIONS </code>
-	 * <li> SolutionsNumber: Para cuando en una generación encuentra al menos SOLUTIONS_NUMBER de cromososmas 
+	 * <li> GenerationCount: Para cuando el nï¿½mero de generaciones sea igual al especificado en <code> NUM_GENERATIONS </code>
+	 * <li> SolutionsNumber: Para cuando en una generaciï¿½n encuentra al menos SOLUTIONS_NUMBER de cromososmas 
 	 * con <code> fitness</code>  igual o mayor <code> FITNESS </code> o <code> NUM_GENERATIONS </code> ha sido superado.
 	 * </ul> 
 	 *
@@ -24,35 +22,36 @@ public class StoppingConditionFactory {
 	public enum StoppingConditionType{ElapsedTime,GenerationCount,SolutionsNumber};
 	
 	/**
-	 * Condición de parada
+	 * Condiciï¿½n de parada
 	 */
-	public static StoppingConditionType stoppingConditionType = StoppingConditionType.GenerationCount;
+	public static StoppingConditionType stoppingConditionType = StoppingConditionType.SolutionsNumber;
 	/**
-	 * Número de soluciones a encontrar si fijamos el criterio de parada en SolutionsNumber
+	 * Nï¿½mero de soluciones a encontrar si fijamos el criterio de parada en SolutionsNumber
 	 */
 	public static int SOLUTIONS_NUMBER_MIN = 1;
 	/**
-	 * Tiempo máximo transcurrido para finalizar el algoritmo si usamos la condición de finalización ElapsedTime.
+	 * Tiempo mï¿½ximo transcurrido para finalizar el algoritmo si usamos la condiciï¿½n de finalizaciï¿½n ElapsedTime.
 	 */
-	public static long MAX_ELAPSEDTIME = Long.MAX_VALUE;
+	public static long MAX_ELAPSEDTIME = 1000000000;
 	
 	/**
-	 * Valor mínimo de la fitness de los cromosomas en las soluciones que vamos buscando si fijamos el criterio de parada en SolutionsNumber
+	 * Valor mï¿½nimo de la fitness de los cromosomas en las soluciones que vamos buscando si fijamos el criterio de parada en SolutionsNumber
 	 */
 	public static double FITNESS_MIN = 0.;	
 	/**
-	 * Número de generaciones máximo para fijar le criterio de parada
+	 * Nï¿½mero de generaciones mï¿½ximo para fijar le criterio de parada
 	 */
 	public static int NUM_GENERATIONS = Integer.MAX_VALUE;
 	
 	public static StoppingCondition getStoppingCondition(){
-		StoppingCondition stopCond = null;
-		switch(stoppingConditionType){
-		case ElapsedTime: stopCond = new FixedElapsedTime(MAX_ELAPSEDTIME);break;
-		case GenerationCount: stopCond = new FixedGenerationCount(NUM_GENERATIONS); break;
-		case SolutionsNumber: stopCond = new SolutionsNumber(SOLUTIONS_NUMBER_MIN,NUM_GENERATIONS); break;
-		}
-		Preconditions.checkState(stopCond!=null);
-		return stopCond;
+		return switch(stoppingConditionType){
+		case ElapsedTime -> new FixedElapsedTime(StoppingConditionFactory.MAX_ELAPSEDTIME);
+		case GenerationCount -> new FixedGenerationCount(StoppingConditionFactory.NUM_GENERATIONS);
+		case SolutionsNumber -> 
+		new SolutionsNumber(StoppingConditionFactory.MAX_ELAPSEDTIME,
+				StoppingConditionFactory.NUM_GENERATIONS,
+				StoppingConditionFactory.SOLUTIONS_NUMBER_MIN,
+				StoppingConditionFactory.FITNESS_MIN);
+		};
 	}	
 }

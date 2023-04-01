@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.util.List;
 
 import us.lsi.ag.agchromosomes.AlgoritmoAG;
-import us.lsi.ag.agstopping.SolutionsNumber;
 import us.lsi.ag.agstopping.StoppingConditionFactory;
 import us.lsi.grafos.datos.Ciudad;
 
@@ -32,7 +31,7 @@ public class TestTspAG {
 		System.out.println(ap.getBestChromosome().fitness());
 		System.out.println(ap.bestSolution());
 		System.out.println("================================");
-		System.out.println(SolutionsNumber.numeroDeGeneraciones);
+		System.out.println(ap.stoppingCondition());
 	}
 
 }

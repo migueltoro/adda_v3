@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.Locale;
 
 import us.lsi.ag.agchromosomes.AlgoritmoAG;
-import us.lsi.ag.agstopping.SolutionsNumber;
 import us.lsi.ag.agstopping.StoppingConditionFactory;
 import us.lsi.mochila.datos.DatosMochila;
 import us.lsi.mochila.datos.SolucionMochila;
@@ -21,7 +20,7 @@ public class TestMochilaAGRange {
 		AlgoritmoAG.MUTATION_RATE = 0.7;
 		AlgoritmoAG.POPULATION_SIZE = 50;
 		
-		StoppingConditionFactory.NUM_GENERATIONS = 510000;
+		StoppingConditionFactory.NUM_GENERATIONS = 500000;
 		StoppingConditionFactory.SOLUTIONS_NUMBER_MIN = 1;
 		StoppingConditionFactory.FITNESS_MIN = 623;
 		StoppingConditionFactory.stoppingConditionType = 
@@ -39,7 +38,7 @@ public class TestMochilaAGRange {
 		System.out.println(dc);
 		System.out.println(ap.bestSolution());
 		System.out.println("================================");
-		System.out.println(SolutionsNumber.numeroDeGeneraciones);
+		System.out.println(ap.stoppingCondition());
 	}
 
 }

@@ -3,7 +3,6 @@ package us.lsi.ag.mochila;
 import java.util.List;
 
 import us.lsi.ag.agchromosomes.AlgoritmoAG;
-import us.lsi.ag.agstopping.SolutionsNumber;
 import us.lsi.ag.agstopping.StoppingConditionFactory;
 import us.lsi.mochila.datos.DatosMochila;
 import us.lsi.mochila.datos.SolucionMochila;
@@ -34,7 +33,7 @@ public static void main(String[] args) {
 		System.out.println(dc);
 		System.out.println(ap.bestSolution());
 		System.out.println("================================");
-		System.out.println(SolutionsNumber.numeroDeGeneraciones);
+		System.out.println(ap.stoppingCondition());
 	}
 
 

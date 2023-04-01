@@ -21,7 +21,7 @@ import us.lsi.ag.agstopping.StoppingConditionFactory;
 import us.lsi.common.Preconditions;
 
 /**
- * <p> Implementación de un Algoritmo Genético </p>
+ * <p> Implementaciï¿½n de un Algoritmo Genï¿½tico </p>
  * 
  * 
  * @author Miguel Toro
@@ -40,23 +40,23 @@ public class AlgoritmoAG<E,S> {
 	}
 	
 	/**
-	 * Tamaño de la población. Usualmente de un valor cercano a la DIMENSION de los cromosomas o mayor
+	 * Tamaï¿½o de la poblaciï¿½n. Usualmente de un valor cercano a la DIMENSION de los cromosomas o mayor
 	 */
 	public static int POPULATION_SIZE = 30;
 	
 	/**
-	 * Tasa de elitismo. El porcentaje especificado de los mejores cromosomas pasa a la siguiente generación sin cambio
+	 * Tasa de elitismo. El porcentaje especificado de los mejores cromosomas pasa a la siguiente generaciï¿½n sin cambio
 	 */
 	public static double ELITISM_RATE = 0.2;
 	
 	/**
-	 * Tasa de cruce: Indica con qué frecuencia se va a realizar la cruce. 
+	 * Tasa de cruce: Indica con quï¿½ frecuencia se va a realizar la cruce. 
 	 * Si no hay un cruce, la descendencia es copia exacta de los padres. 
-	 * Si hay un cruce, la descendencia está hecha de partes del cromosoma de los padres. 
+	 * Si hay un cruce, la descendencia estï¿½ hecha de partes del cromosoma de los padres. 
 	 * Si la probabilidad de cruce es 100%, entonces todos los hijos se hacen mediante cruce de los padres
-	 * Si es 0%, la nueva generación se hace de copias exactas de los cromosomas de los padres.
-	 * El cruce se hace con la esperanza de que los nuevos cromosomas tendrán las partes buenas de los padres
-	 * y tal vez los nuevos cromosomas serán mejores. Sin embargo, es bueno dejar una cierta parte de la población sobrevivir a la siguiente generación.
+	 * Si es 0%, la nueva generaciï¿½n se hace de copias exactas de los cromosomas de los padres.
+	 * El cruce se hace con la esperanza de que los nuevos cromosomas tendrï¿½n las partes buenas de los padres
+	 * y tal vez los nuevos cromosomas serï¿½n mejores. Sin embargo, es bueno dejar una cierta parte de la poblaciï¿½n sobrevivir a la siguiente generaciï¿½n.
 	 * 
 	 * <br>
 	 * Tasa de cruce. Valores usuales entre  0,.8 y 0.95
@@ -65,19 +65,20 @@ public class AlgoritmoAG<E,S> {
 	public static double CROSSOVER_RATE = 0.8;
 	
 	/**
-	 * La tasa de de mutación indica con qué frecuencia serán mutados cada uno de los cromosomas mutados. 
-	 * Si no hay mutación, la descendencia se toma después de cruce sin ningún cambio. 
-	 * Si se lleva a cabo la mutación, se cambia una parte del cromosoma. 
-	 * Si probabilidad de mutación es 100%, toda cromosoma se cambia, si es 0%, no se cambia ninguno. 
-	 * La mutación se hace para evitar que se caiga en un máximo local.
+	 * La tasa de de mutaciï¿½n indica con quï¿½ frecuencia serï¿½n mutados cada uno de los cromosomas mutados. 
+	 * Si no hay mutaciï¿½n, la descendencia se toma despuï¿½s de cruce sin ningï¿½n cambio. 
+	 * Si se lleva a cabo la mutaciï¿½n, se cambia una parte del cromosoma. 
+	 * Si probabilidad de mutaciï¿½n es 100%, toda cromosoma se cambia, si es 0%, no se cambia ninguno. 
+	 * La mutaciï¿½n se hace para evitar que se caiga en un mï¿½ximo local.
 	 * 
 	 * 
-	 * Tasa de mutación. Valores usales entre 0.5 y 1.
+	 * Tasa de mutaciï¿½n. Valores usales entre 0.5 y 1.
 	 */
 	public static double MUTATION_RATE = 0.6;
 	
 
 	public static long INITIAL_TIME;
+	public static long FINAL_TIME;
 	
 	
 	public ChromosomeData<E,S>  data;
@@ -85,12 +86,12 @@ public class AlgoritmoAG<E,S> {
 	public static CrossoverPolicy crossOverPolicy;
 	public static MutationPolicy mutationPolicy;
 	public static SelectionPolicy selectionPolicy;
-	public static StoppingCondition stopCond;
+	private StoppingCondition stopCond;
 		
 	
 
 	/**
-	 * Lista con los mejores cromosomas de cada una de la generaciones si se usa la condición de parada SolutionsNumbers.
+	 * Lista con los mejores cromosomas de cada una de la generaciones si se usa la condiciï¿½n de parada SolutionsNumbers.
 	 * En otro caso null.
  	 */
 	public static List<org.apache.commons.math3.genetics.Chromosome> bestChromosomes;
@@ -101,6 +102,7 @@ public class AlgoritmoAG<E,S> {
 	
 	protected static org.apache.commons.math3.genetics.Chromosome bestFinal;
 	protected static Population finalPopulation;
+	public static Double bestFitNess;
 	
 	public static JDKRandomGenerator random;
 	
@@ -110,20 +112,20 @@ public class AlgoritmoAG<E,S> {
 	 */
 	public AlgoritmoAG(ChromosomeData<E,S> data) {
 		super();
-		random = new JDKRandomGenerator();		
-		random.setSeed((int)System.currentTimeMillis());
+		AlgoritmoAG.random = new JDKRandomGenerator();		
+		AlgoritmoAG.random.setSeed((int)System.currentTimeMillis());
 		GeneticAlgorithm.setRandomGenerator(random);
 		this.data = data;
 		AlgoritmoAG.tipo = data.type();				
 		AlgoritmoAG.selectionPolicy =  ChromosomeFactory.getSelectionPolicy();
 		AlgoritmoAG.mutationPolicy = ChromosomeFactory.getMutationPolicy(tipo);
 		AlgoritmoAG.crossOverPolicy = ChromosomeFactory.getCrossoverPolicy(tipo);
-		AlgoritmoAG.stopCond = StoppingConditionFactory.getStoppingCondition();
+		this.stopCond = StoppingConditionFactory.getStoppingCondition();
 		ChromosomeFactory.iniValues(data,tipo);
 	}
 
 	/**
-	 * Inicializa aleatoriamente la población.
+	 * Inicializa aleatoriamente la poblaciï¿½n.
 	 */
 	public ElitisticListPopulation randomPopulation() {
 		List<org.apache.commons.math3.genetics.Chromosome> popList = new LinkedList<>();
@@ -140,7 +142,7 @@ public class AlgoritmoAG<E,S> {
 	 * Ejecuta el algoritmo
 	 */
 	public void ejecuta() {
-		INITIAL_TIME = System.currentTimeMillis();
+		AlgoritmoAG.INITIAL_TIME = System.currentTimeMillis();
 		AlgoritmoAG.initialPopulation = randomPopulation();
 		Preconditions.checkNotNull(AlgoritmoAG.initialPopulation);		
 		
@@ -151,24 +153,30 @@ public class AlgoritmoAG<E,S> {
 				MUTATION_RATE, 
 				selectionPolicy);	
 		
-		AlgoritmoAG.finalPopulation = ga.evolve(AlgoritmoAG.initialPopulation, AlgoritmoAG.stopCond);		
+		AlgoritmoAG.finalPopulation = ga.evolve(AlgoritmoAG.initialPopulation, this.stopCond);		
 		Preconditions.checkNotNull(AlgoritmoAG.finalPopulation);
 		AlgoritmoAG.bestFinal = AlgoritmoAG.finalPopulation.getFittestChromosome();
+		AlgoritmoAG.bestFitNess = this.getBestFitness();
+		AlgoritmoAG.FINAL_TIME = System.currentTimeMillis();
 	}
 
 	/**
-	 * @return Población inicial
+	 * @return Poblaciï¿½n inicial
 	 */
 	public Population getInitialPopulation() {
 		return initialPopulation;
 	}
 
 	/**
-	 * @return El mejor cromosoma en la población final
+	 * @return El mejor cromosoma en la poblaciï¿½n final
 	 */
 	@SuppressWarnings("unchecked")
 	public Chromosome<E> getBestChromosome() {
 		return (Chromosome<E>)bestFinal;
+	}
+	
+	public Double getBestFitness() {
+		return bestFinal.fitness();
 	}
 	
 	@SuppressWarnings("unchecked")
@@ -184,7 +192,7 @@ public class AlgoritmoAG<E,S> {
 	}
 
 	/**
-	 * @return Población final
+	 * @return Poblaciï¿½n final
 	 */
 	public Population getFinalPopulation() {
 		return finalPopulation;
@@ -197,6 +205,15 @@ public class AlgoritmoAG<E,S> {
 	public Set<S> bestSolutions() {
 		ChromosomeData<E,S> d = this.getBestChromosomeData();
 		return this.getBestChromosomes().stream().map(c->d.solucion(c.decode())).collect(Collectors.toSet());
+	} 
+	
+	public StoppingCondition stoppingCondition() {
+		return this.stopCond;
 	}
+	
+	public static Long time() {
+		return (AlgoritmoAG.FINAL_TIME - AlgoritmoAG.INITIAL_TIME);
+	}
+
 	
 }
