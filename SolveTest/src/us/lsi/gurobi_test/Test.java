@@ -1,6 +1,6 @@
 package us.lsi.gurobi_test;
 
-import java.util.Arrays;
+
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 

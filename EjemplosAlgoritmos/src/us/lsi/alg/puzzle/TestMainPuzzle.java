@@ -7,6 +7,8 @@ import org.jgrapht.GraphPath;
 
 import us.lsi.graphs.alg.AStar;
 import us.lsi.graphs.virtual.EGraph;
+import us.lsi.graphs.virtual.EGraph.Type;
+import us.lsi.path.EGraphPath.PathType;
 
 
 public class TestMainPuzzle {
@@ -28,7 +30,7 @@ public class TestMainPuzzle {
 		System.out.println(VertexPuzzle.isSolvable2(e1.datos(),e2.datos()));
 		
 		EGraph<VertexPuzzle, EdgePuzzle> graph = 
-				EGraph.virtual(e1,x->x.equals(e2))
+				EGraph.virtual(e1,x->x.equals(e2),PathType.Sum, Type.Min)
 				.edgeWeight(x->x.weight())
 				.endVertex(e2)
 				.heuristic(HeuristicaPuzzle::heuristica)
