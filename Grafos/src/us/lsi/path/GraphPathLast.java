@@ -73,9 +73,10 @@ public class GraphPathLast<V, E> extends GraphPath2<V,E> implements EGraphPath<V
 	}
 	
 	@Override
-	public GraphPathLast<V,E> remove(E edge) {
+	public GraphPathLast<V,E> remove() {
+		E edge = List2.last(super.edgeList);
 		Preconditions.checkNotNull(edge,"La arista no puede ser null");
-		V vertexActual = List2.last(vertexList);
+		V vertexActual = List2.last(super.vertexList);
 		Preconditions.checkNotNull(vertexActual,"El v�rtice actual no puede ser null");
 		super.edgeList.remove(super.edgeList.size()-1);
 		super.vertexList.remove(super.vertexList.size()-1);
@@ -84,7 +85,7 @@ public class GraphPathLast<V, E> extends GraphPath2<V,E> implements EGraphPath<V
 	}
 	
 	@Override
-	public Double add(V vertexActual, Double acumulateValue, E edge, E lastEdge) {
+	public Double add(E edge, V vertexActual, Double acumulateValue, E lastEdge) {
 		Preconditions.checkNotNull(edge, "La arista no puede ser null");
 		V target = Graphs.getOppositeVertex(graph, edge, vertexActual);
 		return graph.getVertexWeight(target);

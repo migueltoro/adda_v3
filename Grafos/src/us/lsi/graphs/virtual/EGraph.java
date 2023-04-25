@@ -70,7 +70,7 @@ public interface EGraph<V, E> extends Graph<V, E> {
 	Integer solutionNumber();
 		
 	public default Double add(V vertexActual, Double acumulateValue, E nextEdge, E lastEdge) {
-		return this.initialPath().add(vertexActual, acumulateValue, nextEdge, lastEdge);
+		return this.initialPath().add(nextEdge, vertexActual, acumulateValue, lastEdge);
 	}
 
 	public default Double boundedValue(V vertexActual, Double acumulateValue, E edge,
@@ -89,6 +89,6 @@ public interface EGraph<V, E> extends Graph<V, E> {
 	}
 
 	public default Double fromNeighbordSolution(V vertexActual, Double weight, E edge, E lastEdge) {
-		 return pathType().equals(PathType.Sum) ? initialPath().add(vertexActual, weight, edge, lastEdge) : weight;
+		 return pathType().equals(PathType.Sum) ? initialPath().add(edge, vertexActual, weight, lastEdge) : weight;
 	}
 }

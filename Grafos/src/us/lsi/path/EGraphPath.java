@@ -12,8 +12,8 @@ import us.lsi.graphs.virtual.EGraph;
 public interface EGraphPath<V, E> extends GraphPath<V, E> {	
 	E lastEdge();
 	EGraphPath<V, E> add(E edge);
-	EGraphPath<V, E> remove(E edge);
-	Double add(V vertexActual, Double acumulateValue, E edge, E lastEdge);
+	EGraphPath<V, E> remove();
+	Double add(E edge, V vertexActual, Double acumulateValue, E lastEdge);
 	EGraphPath<V, E> copy();
 	Double boundedValue(V vertexActual,Double acumulateValue,E edge,Predicate<V> goal,V end,
 			TriFunction<V,Predicate<V>,V,Double> heuristic);
