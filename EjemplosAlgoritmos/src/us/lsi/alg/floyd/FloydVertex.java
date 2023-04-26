@@ -41,7 +41,6 @@ public record FloydVertex(Integer i,Integer j,Integer k) implements VirtualHyper
 	@Override
 	public List<Boolean> actions() {
 		if(this.isBaseCase()) return List.of();
-		if(i == k || k ==j) return List.of(false);
 		else return List.of(false,true);
 	}
 	
@@ -66,12 +65,11 @@ public record FloydVertex(Integer i,Integer j,Integer k) implements VirtualHyper
 	@Override
 	public Double baseCaseSolution() {
 		Double r = null;
-		if(k ==n && FloydVertex.graph.containsEdge(this.i, this.j)){
-			Double w = FloydVertex.graph.getEdge(i, j).weight();
-			r = w;
-		} else if(k ==n && !FloydVertex.graph.containsEdge(this.i, this.j)) {
+		if(i==j) r = 0.;
+		else if(k ==n && FloydVertex.graph.containsEdge(this.i, this.j))
+			r = FloydVertex.graph.getEdge(i, j).weight();
+		else if(k ==n && !FloydVertex.graph.containsEdge(this.i, this.j)) 
 			r = null;
-		}
 		return r;
 	}
 	

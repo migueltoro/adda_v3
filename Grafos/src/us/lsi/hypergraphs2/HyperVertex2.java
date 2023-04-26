@@ -17,7 +17,7 @@ public interface HyperVertex2<V extends HyperVertex2<V,E,A,S>, E extends HyperEd
 	public static <V,E> Data<V,E> data() {
 		return Data.<V,E>of();
 	}	
-	public default Boolean solved() {
+	public default Boolean isSolved() {
 		return Data.<V,E>of().solved(this.me());
 	}
 	public default Sp<E> spData() {
@@ -42,7 +42,7 @@ public interface HyperVertex2<V extends HyperVertex2<V,E,A,S>, E extends HyperEd
 	
 	public default Sp<E> sp() {
 		Sp<E> r = null;
-		if (this.solved())
+		if (this.isSolved())
 			r = this.spData();
 		else {
 			if (this.isBaseCase()) {
