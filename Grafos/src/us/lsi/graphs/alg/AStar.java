@@ -127,7 +127,7 @@ public class AStar<V,E,S> implements Iterator<V>, Iterable<V> {
 		if(forget(actualDistance,  vertexActual)) return null;
 		for (E backEdge : graph.edgesListOf(vertexActual)) {
 			V v = Graphs.getOppositeVertex(graph,backEdge,vertexActual);
-			Double newDistanceToOrigin = graph.add(v,actualDistance,backEdge,edgeToOrigen);
+			Double newDistanceToOrigin = graph.add(backEdge,v,actualDistance,edgeToOrigen);
 			Double newDistanceToEnd =  graph.estimatedWeightToEnd(v,newDistanceToOrigin);
 			if (!tree.containsKey(v)) {
 				Data<V, E> dv = Data.of(v, backEdge, newDistanceToOrigin);

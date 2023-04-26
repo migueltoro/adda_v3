@@ -161,7 +161,7 @@ public class DPR<V, E, S> {
 			r = this.solutionsTree.get(actual);
 		} else if (graph.goal().test(actual)) {
 			if (graph.goalHasSolution().test(actual)) {
-				r = Sp.of(graph.goalSolution(actual), null);
+				r = Sp.of(graph.goalSolutionValue(actual), null);
 				this.solutionsTree.put(actual, r);
 				update(actual,accumulateValue);
 			} else {
@@ -173,11 +173,11 @@ public class DPR<V, E, S> {
 			for (E edge : graph.edgesListOf(actual)) {					
 				if (this.forget(edge,actual,accumulateValue,graph.goal(),graph.endVertex()) || this.stop) continue;
 				V v = Graphs.getOppositeVertex(graph,edge,actual);
-				Double ac = this.graph.add(actual,accumulateValue,edge,edgeToOrigin); 
+				Double ac = this.graph.add(edge,actual,accumulateValue,edgeToOrigin); 
 				Sp<E> s = search(v,ac,edge);
 				if (s!=null) {
 					E lastEdge = this.solutionsTree.get(v).edge;
-					Double spv = this.graph.fromNeighbordSolution(v,s.weight,edge,lastEdge);	
+					Double spv = this.graph.fromNeighbordSolutionValue(v,s.weight,edge,lastEdge);	
 					Sp<E> sp = Sp.of(spv,edge);
 					rs.add(sp);
 				}

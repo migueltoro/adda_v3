@@ -69,7 +69,7 @@ public interface EGraph<V, E> extends Graph<V, E> {
 	
 	Integer solutionNumber();
 		
-	public default Double add(V vertexActual, Double acumulateValue, E nextEdge, E lastEdge) {
+	public default Double add(E nextEdge, V vertexActual, Double acumulateValue, E lastEdge) {
 		return this.initialPath().add(nextEdge, vertexActual, acumulateValue, lastEdge);
 	}
 
@@ -84,11 +84,11 @@ public interface EGraph<V, E> extends Graph<V, E> {
 				this.heuristic());
 	}
 
-	public default Double goalSolution(V vertexActual) {
+	public default Double goalSolutionValue(V vertexActual) {
 		return pathType().equals(PathType.Sum) ? 0. : getVertexWeight(vertexActual);
 	}
 
-	public default Double fromNeighbordSolution(V vertexActual, Double weight, E edge, E lastEdge) {
+	public default Double fromNeighbordSolutionValue(V vertexActual, Double weight, E edge, E lastEdge) {
 		 return pathType().equals(PathType.Sum) ? initialPath().add(edge, vertexActual, weight, lastEdge) : weight;
 	}
 }
