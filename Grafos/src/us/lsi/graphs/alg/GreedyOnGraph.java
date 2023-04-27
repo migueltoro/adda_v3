@@ -65,11 +65,11 @@ public class GreedyOnGraph<V,E> implements  Iterator<Gog<V,E>>, Iterable<Gog<V,E
 	}
 
 	public Stream<V> stream() {
-		return streamPair().map(p->p.vertex());
+		return this.streamPair().map(p->p.vertex());
 	}
 	
 	public Stream<E> streamEdges() {
-		return streamPair().map(p->p.edge()).filter(e->e!=null);
+		return this.streamPair().map(p->p.edge()).filter(e->e!=null);
 	}
 	
 	public Stream<Gog<V,E>> streamPair() {

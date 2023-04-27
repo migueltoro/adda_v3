@@ -17,7 +17,7 @@ import org.jgrapht.GraphPath;
 import org.jgrapht.Graphs;
 import org.jgrapht.graph.GraphWalk;
 import org.jgrapht.graph.SimpleDirectedGraph;
-import org.jheaps.AddressableHeap;
+// import org.jheaps.AddressableHeap;
 import org.jheaps.AddressableHeap.Handle;
 import org.jheaps.tree.FibonacciHeap;
 
@@ -61,7 +61,7 @@ public class AStar<V,E,S> implements Iterator<V>, Iterable<V> {
 	public Comparator<Double> comparator;
 	public EGraph<V,E> graph; 
 	public Map<V,Handle<Double,Data<V,E>>> tree;
-	public AddressableHeap<Double,Data<V,E>> heap; 
+	public FibonacciHeap<Double,Data<V,E>> heap; 
 	private Double bestValue = null; //mejor valor estimado
 	private GraphPath<V, E> optimalPath = null; //mejor camino estimado
 	protected Set<S> solutions;
@@ -154,7 +154,7 @@ public class AStar<V,E,S> implements Iterator<V>, Iterable<V> {
 	}
 	
 	public Optional<GraphPath<V, E>> path(V startVertex, V last) {
-		return path(startVertex,Optional.of(last));
+		return this.path(startVertex,Optional.of(last));
 	}
 	
 	public Optional<GraphPath<V, E>> path(V startVertex, Optional<V> last) {
