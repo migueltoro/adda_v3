@@ -32,9 +32,10 @@ public class TestSudokuBTRandom {
 				BTR.of(
 				graph,
 				SudokuVertex::of,
-				v->DatosSudoku.numeroDeCasillas-v.index());
+				v->DatosSudoku.numeroDeCasillas-v.index(),
+				15);
 		
-		BTR.threshold = 15;
+//		BTR.threshold = 15;
 //		BackTrackingRandom.solutionsNumber = 1;
 		
 		Optional<GraphPath<SudokuVertex, SimpleEdgeAction<SudokuVertex, Integer>>> gp = ms.search();

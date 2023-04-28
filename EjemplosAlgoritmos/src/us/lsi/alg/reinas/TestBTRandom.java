@@ -16,7 +16,7 @@ public class TestBTRandom {
 
 	public static void main(String[] args) {
 			ReinasVertex.n = 110;
-			BTR.threshold = 15;
+//			BTR.threshold = 15;
 			ReinasVertex e1 = ReinasVertex.first();
 			
 			EGraph<ReinasVertex,SimpleEdgeAction<ReinasVertex,Integer>> graph = 
@@ -30,7 +30,8 @@ public class TestBTRandom {
 					BTR.of(
 					graph, 
 					SolucionReinas::of, 
-					v->ReinasVertex.n-v.index());	
+					v->ReinasVertex.n-v.index(),
+					15);	
 			
 			long startTime = System.nanoTime();
 			Optional<GraphPath<ReinasVertex, SimpleEdgeAction<ReinasVertex, Integer>>> gp = ms.search();

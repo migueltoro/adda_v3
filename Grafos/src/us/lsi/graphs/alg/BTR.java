@@ -16,21 +16,25 @@ public class BTR<V,E,S extends Comparable<S>> extends BT<V,E,S> {
 	public static <V, E, S extends Comparable<S>> BTR<V, E, S> of(
 			EGraph<V, E> graph, 
 			Function<GraphPath<V, E>, S> solution, 
-			Function<V, Integer> size) {
-		return new BTR<V, E, S>(graph,solution, size);
+			Function<V, Integer> size,
+			Integer threshold) {
+		return new BTR<V, E, S>(graph,solution, size,threshold);
 	}
 	
-	public static Integer threshold;
+	
 
 	BTR(EGraph<V, E> graph, 
 			Function<GraphPath<V, E>, S> solution,
-			Function<V,Integer> size) {
+			Function<V,Integer> size,
+			Integer threshold) {
 		super(graph, solution, null,null, false);
 		this.size = size;
+		this.threshold = threshold;
 	}
 		
 	protected Function<V,Integer> size;
 	public Integer iterations;
+	public Integer threshold;
 	
 	
 	@Override
@@ -52,7 +56,7 @@ public class BTR<V,E,S extends Comparable<S>> extends BT<V,E,S> {
 			update(state);		
 		else {
 			List<E> edges = graph.edgesListOf(actual);
-			if(size.apply(actual) > BTR.threshold) edges = List2.randomUnitary(edges);
+			if(size.apply(actual) > this.threshold) edges = List2.randomUnitary(edges);
 			for (E edge : edges) {				
 				state.forward(edge);
 				search(state);
