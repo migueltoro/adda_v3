@@ -38,9 +38,9 @@ public class TestMonedasPDR {
 
 		if (rr.isSolution(path1)) {
 			System.out.println("1 = " + SolucionMonedas.of(path1));
-			ms1 = DPR.of(graph, null,path1.getWeight(), path1, false);
+			ms1 = DPR.ofGreedy(graph);
 		} else {
-			ms1 = DPR.of(graph, null,MonedaVoraz.voraz(), null, false);
+			ms1 = DPR.of(graph);
 		}
 		
 		Optional<GraphPath<MonedaVertex, MonedaEdge>> s1 = ms1.search();
@@ -66,9 +66,9 @@ public class TestMonedasPDR {
 
 		if (rr.isSolution(path2)) {
 			System.out.println("3 = " + SolucionMonedas.of(path2));
-			ms2 = DPR.of(graph, null,path2.getWeight(), path2, false);
+			ms2 = DPR.ofGreedy(graph);
 		}else {
-			ms2 = DPR.of(graph, null,MonedaVoraz.voraz(), null, false);
+			ms2 = DPR.of(graph);
 		}
 		Optional<GraphPath<MonedaVertex, MonedaEdge>> s2 = ms2.search();
 		if (s2.isPresent()) System.out.println("4 = " + SolucionMonedas.of(s2.get()));

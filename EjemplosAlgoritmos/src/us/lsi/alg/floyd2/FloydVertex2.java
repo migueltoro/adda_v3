@@ -35,6 +35,7 @@ public record FloydVertex2(Integer i,Integer j,Integer k)
 	@Override
 	public List<Boolean> actions() {
 		if(this.isBaseCase()) return List.of();
+		else if(i==k || k==j) return List.of(false);
 		else return List.of(false,true);
 	}
 	

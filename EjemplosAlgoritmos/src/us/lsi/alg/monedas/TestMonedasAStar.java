@@ -40,9 +40,9 @@ public class TestMonedasAStar {
 		
 		if (rr.isSolution(path1)) {
 			System.out.println("Hay solucion voraz 1 = " +path1.getWeight());
-			ms = AStar.of(graph,null,path1.getWeight(),path1);
+			ms = AStar.ofGreedy(graph);
 		} else {
-			ms = AStar.of(graph,null,MonedaVoraz.voraz(),null);
+			ms = AStar.of(graph);
 		}
 		
 		Optional<GraphPath<MonedaVertex, MonedaEdge>> path = ms.search();
@@ -86,9 +86,9 @@ public class TestMonedasAStar {
 	    
 	    if (rr.isSolution(path2)) {
 			System.out.println("Hay solucion voraz 2 = "+path2.getWeight());
-			ms = AStar.of(graph,null,path2.getWeight(),path2);
+			ms = AStar.ofGreedy(graph);
 		} else {
-			ms = AStar.of(graph,null,MonedaVoraz.voraz(),null);
+			ms = AStar.of(graph);
 		}
 		
 	    path = ms.search();

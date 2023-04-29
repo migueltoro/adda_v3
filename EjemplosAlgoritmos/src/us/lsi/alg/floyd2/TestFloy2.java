@@ -45,6 +45,7 @@ public class TestFloy2 {
 		Integer origen = graph2.getIndex(ciudad(graph,"Sevilla"));
 		Integer destino = graph2.getIndex(ciudad(graph,"Almeria"));
 		
+		
 		FloydVertex2.graph = graph2;
 		FloydVertex2.n = graph2.vertexSet().size();
 		FloydVertex2 p = FloydVertex2.initial(origen,destino);
@@ -53,6 +54,7 @@ public class TestFloy2 {
 		String2.toConsole("21 = "+FloydVertex2.n.toString());
 //		String2.toConsole(p.weight().toString());
 		String2.toConsole("2 = "+Data.of().memory.toString());
+		Data.type = Data.DpType.Min;
 		GraphPath<Integer, SimpleEdge<Integer>> gp = p.solution();
 		GraphTree2<FloydVertex2, FloydEdge2, Boolean> t = p.graphTree();
 		

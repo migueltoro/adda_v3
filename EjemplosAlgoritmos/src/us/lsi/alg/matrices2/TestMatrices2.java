@@ -16,6 +16,7 @@ public class TestMatrices2 {
 		public static void main(String[] args) {
 			Locale.setDefault(Locale.of("en", "US"));
 			Auxiliar2.leeFichero("./ficheros/matrices.txt");
+			Data.type = Data.DpType.Min;
 			MatrixVertex2 p = MatrixVertex2.initial();
 			String s = p.solution();
 			String2.toConsole(s);
