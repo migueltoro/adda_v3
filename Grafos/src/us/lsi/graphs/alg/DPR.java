@@ -25,21 +25,18 @@ import org.jgrapht.graph.SimpleDirectedGraph;
 
 public class DPR<V, E, S> {
 	
-	public static <V, E, S> DPR<V, E, S> ofGreedy(
-			EGraph<V, E> graph) {
+	public static <V, E, S> DPR<V, E, S> ofGreedy(EGraph<V, E> graph) {
 		GreedyOnGraph<V, E> ga = GreedyOnGraph.of(graph);
 		Optional<GraphPath<V, E>> gp = ga.search();
 		if(gp.isPresent()) return DPR.of(graph,null,gp.get().getWeight(),gp.get(),false);
 		else return DPR.of(graph,null,null,null,false);
 	}
 	
-	public static <V, E, S> DPR<V, E, S> of(
-			EGraph<V, E> graph) {
+	public static <V, E, S> DPR<V, E, S> of(EGraph<V, E> graph) {
 		return DPR.of(graph,null,null,null,false);
 	}
 	
-	public static <V, E, S> DPR<V, E, S> of(
-			EGraph<V, E> graph, 
+	public static <V, E, S> DPR<V, E, S> of(EGraph<V, E> graph, 
 			Function<GraphPath<V, E>, S> fsolution, 
 			Double bestValue, GraphPath<V, E> optimalPath, 
 			Boolean withGraph) {
@@ -150,7 +147,8 @@ public class DPR<V, E, S> {
 	public Optional<GraphPath<V, E>> search() {
 		iniciaGraph();
 		this.solutionsTree = new HashMap<>();
-		search(graph.startVertex(),0., null);	
+		Sp<E> r = search(graph.startVertex(),0., null);	
+		if(r == null && this.optimalPath !=null) return Optional.of(this.optimalPath);
 		return pathFrom(graph.startVertex());
 	}
 	
@@ -197,11 +195,9 @@ public class DPR<V, E, S> {
 	}
 
 	private Optional<GraphPath<V, E>> pathFrom(V vertex) {	
-		if(this.solutionsTree.get(vertex) == null && this.optimalPath !=null) 
-			return Optional.of(this.optimalPath);
 		if(this.solutionsTree.get(vertex) == null) return Optional.empty();
 		E edge = this.solutionsTree.get(vertex).edge;	
-		EGraphPath<V,E> ePath = graph.initialPath();
+		EGraphPath<V,E> ePath = EGraphPath.ofVertex(this.graph,vertex,this.graph.pathType());
 		while(edge != null) {
 			ePath.add(edge);
 			vertex = Graphs.getOppositeVertex(graph,edge,vertex);

@@ -8,7 +8,7 @@ import java.util.stream.*;
 
 import org.jgrapht.GraphPath;
 
-import us.lsi.common.List2;
+
 import us.lsi.common.Preconditions;
 import us.lsi.graphs.virtual.VirtualVertex;
 import us.lsi.mochila.datos.SolucionMochila;
