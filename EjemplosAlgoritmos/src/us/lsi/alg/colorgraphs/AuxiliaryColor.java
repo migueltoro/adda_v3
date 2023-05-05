@@ -29,7 +29,7 @@ public class AuxiliaryColor {
 		Boolean r = true;
 		for (int index = 0; index < n; index++) {	
 			Integer c = cav.get(index);
-			Set<Integer> cv = AuxiliaryColor.coloresDeVecinos(index, ColorVertex.graph,cav);
+			Set<Integer> cv = AuxiliaryColor.coloresDeVecinos(index, DatosColor.graph,cav);
 			if(cv.contains(c)){
 				r = false;
 				break;
@@ -43,11 +43,11 @@ public class AuxiliaryColor {
 		Boolean r = true;
 		for (int index = 0; index < n; index++) {	
 			Integer c = cav.get(index);
-			Set<Integer> cv = AuxiliaryColor.coloresDeVecinos(index, ColorVertex.graph,cav);
+			Set<Integer> cv = AuxiliaryColor.coloresDeVecinos(index, DatosColor.graph,cav);
 			System.out.println(String.format("V = %d, Cv = %d, Vs = %15s, CVs = %15s",
 					index,
 					c,
-					AuxiliaryColor.vecinos(index, ColorVertex.graph),
+					AuxiliaryColor.vecinos(index, DatosColor.graph),
 					cv));
 			r = !cv.contains(c);			
 		}
