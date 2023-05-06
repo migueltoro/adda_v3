@@ -36,16 +36,13 @@ public record MatrixVertex(Integer i,Integer j)
 
 	@Override
 	public Double baseCaseWeight() {
-		Double r;
 		Integer d = j-i;
-		switch(d) {
-		case 0: r = 0.; break;
-		case 1: r = 0.; break;
-		case 2: r = (double) DatosMatrices.nf(i)*DatosMatrices.nc(i)*DatosMatrices.nc(j-1); break;
-		default: r = null;
-		
-		}
-		return r;
+		return switch(d) {
+		case 0 -> 0.; 
+		case 1 -> 0.; 
+		case 2 -> (double) DatosMatrices.nf(i)*DatosMatrices.nc(i)*DatosMatrices.nc(j-1); 
+		default ->  null;
+		};
 	}
 
 	@Override

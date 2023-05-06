@@ -9,6 +9,7 @@ import java.util.Map;
 
 import us.lsi.alg.matrices.DatosMatrices;
 import us.lsi.alg.matrices.MatrixVertex;
+import us.lsi.hypergraphsD.Data;
 
 
 public class MatricesPD {
@@ -92,8 +93,7 @@ public class MatricesPD {
 	public static void main(String[] args) {
 		Locale.setDefault(Locale.of("en", "US"));
 		
-		
-		DatosMatrices.leeFichero("./ficheros/matrices.txt");
+		DatosMatrices.leeFichero("./ficheros/matrices.txt",Data.DpType.Min);
 		
 		MatrixVertex start = MatrixVertex.of(0,DatosMatrices.n);
 		

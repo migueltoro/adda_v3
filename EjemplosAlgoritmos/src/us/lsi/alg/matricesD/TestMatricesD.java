@@ -1,33 +1,34 @@
-package us.lsi.alg.matrices2;
+package us.lsi.alg.matricesD;
 
 import java.util.Locale;
 
 import org.jgrapht.graph.DefaultEdge;
 import org.jgrapht.graph.SimpleDirectedGraph;
 
+import us.lsi.alg.matrices.DatosMatrices;
 import us.lsi.common.String2;
 import us.lsi.common.Union;
 import us.lsi.hypergraphsD.Data;
 import us.lsi.hypergraphsD.GraphTreeD;
 
 
-public class TestMatrices2 {
+public class TestMatricesD {
 
 		public static void main(String[] args) {
 			Locale.setDefault(Locale.of("en", "US"));
-			Auxiliar2.leeFichero("./ficheros/matrices.txt");
+			DatosMatrices.leeFichero("./ficheros/matrices.txt",Data.DpType.Min);
 			Data.type = Data.DpType.Min;
-			MatrixVertex2 p = MatrixVertex2.initial();
+			MatrixVertexD p = MatrixVertexD.initial();
 			String s = p.solution();
 			String2.toConsole(s);
-			GraphTreeD<MatrixVertex2, MatrixEdge2, Integer> t = p.graphTree();
+			GraphTreeD<MatrixVertexD, MatrixEdgeD, Integer> t = p.graphTree();
 			String2.toConsole(t.toString());
 			String2.toConsole(t.children().toString());
 			String2.toConsole(t.allVertices().toString());
 			String2.toConsole(t.allEdges().toString());
 			
-			SimpleDirectedGraph<Union<MatrixVertex2, MatrixEdge2>, DefaultEdge> g = 
-					Data.graph(Data.<MatrixVertex2, MatrixEdge2>of().memoryAll);
+			SimpleDirectedGraph<Union<MatrixVertexD, MatrixEdgeD>, DefaultEdge> g = 
+					Data.graph(Data.<MatrixVertexD, MatrixEdgeD>of().memoryAll);
 			
 			Data.toDotHypergraph(g, "ficheros/hiperMatrix.gv", p);
 			Data.toDotAndOr(g, "ficheros/andOrMatrix.gv", p);

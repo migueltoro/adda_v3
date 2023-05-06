@@ -15,10 +15,7 @@ public record MatrixEdge(MatrixVertex source,List<MatrixVertex> targets,Integer 
 	@Override
 	public Double weight(List<Double> solutions) {		
 		Double weight = solutions.get(0)+solutions.get(1);
-		Integer i = source.i();
-		Integer a = action();
-		Integer j = source.j();
-		weight += DatosMatrices.nf(i)*DatosMatrices.nf(a)*DatosMatrices.nc(j-1);
+		weight += DatosMatrices.nf(source.i())*DatosMatrices.nf(action())*DatosMatrices.nc(source.j()-1);
 		return weight;
 	}
 }

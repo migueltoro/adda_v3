@@ -6,14 +6,17 @@ import us.lsi.graphs.alg.DP;
 import us.lsi.graphs.alg.DP.PDType;
 import us.lsi.hypergraphs.GraphTree;
 import us.lsi.hypergraphs.SimpleVirtualHyperGraph;
+import us.lsi.hypergraphsD.Data;
 
 public class TestMatricesPD {
 
 	public static void main(String[] args) {
 		Locale.setDefault(Locale.of("en", "US"));
-		DatosMatrices.leeFichero("./ficheros/matrices.txt");
+		DatosMatrices.leeFichero("./ficheros/matrices.txt",Data.DpType.Min);
 		
 		MatrixVertex initial = MatrixVertex.initial();
+		
+		System.out.println(DatosMatrices.matrices);
 		
 		SimpleVirtualHyperGraph<MatrixVertex,MatrixEdge,Integer> graph = 
 				SimpleVirtualHyperGraph.simpleVirtualHyperGraph(initial);
