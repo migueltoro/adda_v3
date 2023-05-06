@@ -1,9 +1,9 @@
-package us.lsi.hypergraphs2;
+package us.lsi.hypergraphsD;
 
 import java.util.List;
 
-public interface HyperEdge2<V extends HyperVertex2<V, E, A, S>, 
-		E extends HyperEdge2<V,E,A,S>, A, S> {
+public interface HyperEdgeD<V extends HyperVertexD<V, E, A, S>, 
+		E extends HyperEdgeD<V,E,A,S>, A, S> {
 	V source();
 	A action();
 	Double weight(List<Double> weights);

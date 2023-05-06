@@ -8,150 +8,90 @@ import java.util.Locale;
 import java.util.Map;
 
 import org.jgrapht.Graph;
-import org.jgrapht.graph.SimpleWeightedGraph;
+import org.jgrapht.graph.GraphWalk;
 
+import us.lsi.alg.floyd.DatosFloyd;
+import us.lsi.alg.floyd.FloydVertex;
 import us.lsi.grafos.datos.Carretera;
 import us.lsi.grafos.datos.Ciudad;
-import us.lsi.graphs.Graphs2;
-import us.lsi.graphs.GraphsReader;
 import us.lsi.graphs.SimpleEdge;
-import us.lsi.graphs.views.IntegerVertexGraphView;
 
 public class FloydPD {
 	
-	public static record Spf(Boolean a,Double weight) implements Comparable<Spf> {
+	public static record Sp(Boolean action,Double weight) implements Comparable<Sp> {
 		
-		public static Spf of(Boolean a, Double weight) {
-			return new Spf(a, weight);
+		public static Sp of(Boolean a, Double weight) {
+			return new Sp(a, weight);
 		}
 		
 		@Override
-		public int compareTo(Spf sp) {
+		public int compareTo(Sp sp) {
 			return this.weight.compareTo(sp.weight);
 		}
 	}
 	
-//	public static enum ActionFloyd{Yes, No};
+	public static FloydVertex startVertex;
 	
-	public static record FloydProblem(Integer i,Integer j,Integer k) {
-		
-		public static FloydProblem of(Integer i,Integer j) {
-			return new FloydProblem(i,j,0);
-		}
-		
-		public static FloydProblem of(Integer i,Integer j,Integer k) {
-			return new FloydProblem(i,j,k);
-		}
-		
-		public List<Boolean> actions() {
-			if(this.isBaseCase()) return List.of();
-			if(i == k || k ==j) return List.of(false);
-			else return List.of(false,true);
-		}
-		
-		
-		public List<FloydProblem> neighbors(Boolean a) {
-			List<FloydProblem> r=null;
-			if(!a) r = List.of(FloydProblem.of(i,j,k+1)); 
-			else r = List.of(FloydProblem.of(i,k,k+1),FloydProblem.of(k, j, k+1)); 
-			return r;
-		}
-		
-		public Boolean isBaseCase() {
-			return  k == n; //FloydVertex.graph.containsEdge(this.i,this.j) ;
-		}
-		
-		public Double baseCaseSolution() {
-			Double r = null;
-			if(k ==n && FloydPD.graph.containsEdge(this.i, this.j)){
-				Double w = FloydPD.graph.getEdge(i, j).weight();
-				r = w;
-			} else if(k ==n && !FloydPD.graph.containsEdge(this.i, this.j)) {
-				r = null;
-			}
-			return r;
-		}
-	}
-	
-	public static SimpleWeightedGraph<Ciudad, Carretera> leeDatos(String fichero) {
-		SimpleWeightedGraph<Ciudad, Carretera> graph = GraphsReader.newGraph(fichero, 
-				Ciudad::ofFormat, 
-				Carretera::ofFormat,
-				Graphs2::simpleWeightedGraph, 
-				Carretera::km);
-		return graph;
-	}
-	
-	public static Graph<Integer,SimpleEdge<Integer>> graph;
-	public static Integer n;
-	public Map<FloydProblem,Spf> solutionsTree;
-	public static FloydProblem startVertex;
-	
-	public static FloydPD of(FloydProblem startVertex) {
+	public static FloydPD of(FloydVertex startVertex) {
 		return new FloydPD(startVertex);
 	}
 	
-	private FloydPD(FloydProblem startVertex) {
+	private FloydPD(FloydVertex startVertex) {
 		FloydPD.startVertex = startVertex;
-		this.solutionsTree = new HashMap<>();
 	}
 	
-	public List<Integer> search(){
-		search(FloydPD.startVertex);
-		System.out.println(this.solutionsTree);
-		return this.solucion(FloydPD.startVertex);
+	public Map<FloydVertex,Sp> search(){
+		Map<FloydVertex,Sp> memory = new HashMap<>();
+		search(FloydPD.startVertex,memory);
+		return memory;
 	}
 
-	public Spf search(FloydProblem actual) {
-		Spf r = null;
-		if (this.solutionsTree.containsKey(actual)) {
-			r = this.solutionsTree.get(actual);
+	public Sp search(FloydVertex actual, Map<FloydVertex, Sp> memory) {
+		Sp r = null;
+		if (memory.containsKey(actual)) {
+			r = memory.get(actual);
 		} else if (actual.isBaseCase()) {
-			Double w = actual.baseCaseSolution();
-			if(w!=null) r = Spf.of(null,w);
-			else r = null;
-			this.solutionsTree.put(actual, r);
+			Double w = actual.baseCaseWeight();
+			if (w != null)
+				r = Sp.of(null, w);
+			memory.put(actual, r);
 		} else {
-			List<Spf> sps = new ArrayList<>();
-			for (Boolean a:actual.actions()) {
-				List<Spf> spNeighbors = new ArrayList<>();
-				Double s = 0.;
-				for (FloydProblem neighbor : actual.neighbors(a)) {
-					Spf nb = search(neighbor);
-					if (nb == null) {spNeighbors = null; break;}
-					spNeighbors.add(nb);
-					s+=nb.weight();
+			List<Sp> sps = new ArrayList<>();
+			for (Boolean a : actual.actions()) {
+				List<Sp> spsa = new ArrayList<>();
+				for (FloydVertex v : actual.neighbors(a)) {
+					Sp spa = search(v, memory);
+					if (spa == null) {
+						spsa = null;
+						break;
+					}
+					spsa.add(spa);
 				}
-				Spf spa = null;
-				if(spNeighbors != null) {
-					spa = Spf.of(a,s);
+				Sp sp = null;
+				if (spsa!=null && !spsa.isEmpty()) {
+					if(spsa.size() == 1) sp = Sp.of(false,spsa.get(0).weight());
+					else sp = Sp.of(true,spsa.get(0).weight()+spsa.get(1).weight());
 				}
-				sps.add(spa);
+				sps.add(sp);
 			}
 			r = sps.stream().filter(s -> s != null).min(Comparator.naturalOrder()).orElse(null);
-			this.solutionsTree.put(actual, r);
+			memory.put(actual, r);
 		}
 		return r;
 	}
 	
-	public List<Integer> solucion(FloydProblem p) {
-		Spf s = this.solutionsTree.get(p);
-		if(s.a() == null) {
-			List<Integer> r = new ArrayList<>();
-			r.add(p.i());
-			r.add(p.j());
-			return r;
+	public GraphWalk<Integer,SimpleEdge<Integer>> solucion(FloydVertex p, Map<FloydVertex,Sp> memory) {
+		GraphWalk<Integer,SimpleEdge<Integer>> r;
+		Sp sp = memory.get(p);
+		if(sp.action() == null) {
+			r = p.baseCaseSolution();
 		}
 		else {
-			List<FloydProblem> vc = p.neighbors(s.a());
-			List<Integer> ls0 = solucion(vc.get(0));
-			if(s.a()) {
-				List<Integer> ls1 = solucion(vc.get(1));
-				ls0.remove(ls0.size() - 1);
-				ls0.addAll(ls1);
-			}
-			return ls0;
+			List<GraphWalk<Integer, SimpleEdge<Integer>>> b = 
+					p.neighbors(sp.action()).stream().map(v->solucion(v,memory)).toList();
+			r = p.solution(b);
 		}
+		return r;
 	}
 	
 	public static Ciudad ciudad(Graph<Ciudad,Carretera> graph, String nombre) {
@@ -162,25 +102,27 @@ public class FloydPD {
 	public static void main(String[] args) {
 		Locale.setDefault(Locale.of("en", "US"));
 		
-		SimpleWeightedGraph<Ciudad, Carretera> g = leeDatos("./ficheros/andalucia.txt");
-		IntegerVertexGraphView<Ciudad, Carretera> g2 = IntegerVertexGraphView.of(g);
-		 
-		FloydPD.graph = g2;
-		FloydPD.n = g2.vertexSet().size();
+		DatosFloyd.datos();
 		
-		System.out.println(g);
-		System.out.println(FloydPD.graph);
+		System.out.println(DatosFloyd.graph);
+		System.out.println(DatosFloyd.graphI);
 		
-		Integer origen = g2.getIndex(ciudad(g,"Sevilla"));
-		Integer destino = g2.getIndex(ciudad(g,"Almeria"));
+		Integer origen = DatosFloyd.graphI.index(v->v.nombre().equals("Sevilla"));
+		Integer destino = DatosFloyd.graphI.index(v->v.nombre().equals("Almeria"));
 		
-		FloydProblem start = FloydProblem.of(origen,destino);
+		FloydVertex.graph = DatosFloyd.graphI;
+		FloydVertex.n = DatosFloyd.graphI.vertexSet().size();
+		
+		FloydVertex start = FloydVertex.initial(origen,destino);
 		
 		FloydPD a = FloydPD.of(start);
 		
-		List<Integer> ciudades = a.search();
+		Map<FloydVertex, Sp> r = a.search();
 		
-		System.out.println(ciudades.stream().map(i->g2.vertex(i).nombre()).toList());
+		
+		System.out.println(a.solucion(start, r).getVertexList().stream()
+				.map(i->DatosFloyd.graphI.vertex(i))
+				.toList());
 	}
 
 }

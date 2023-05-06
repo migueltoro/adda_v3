@@ -3,15 +3,15 @@ package us.lsi.hypergraphs;
 import java.util.*;
 
 /**
- * <p> Implementación de un hypergrafo virtual simple 
- * Asumimos que los vértices son subtipo de VirtualHyperVertex &lt; V,E &gt;
+ * <p> Implementaciï¿½n de un hypergrafo virtual simple 
+ * Asumimos que los vï¿½rtices son subtipo de VirtualHyperVertex &lt; V,E &gt;
  * Asumimos que las aristas son subtipos de SimpleHyperEdge &lt; V &gt; 
  * </p>
  * 
- * <p> El grafo es inmutable por lo que no están permitadas las operación de modificación. Tampoco
- * están permitidas las operaciones de consulta de todos los vértices o todas las aristas.
- *  Si se invocan alguna de ellas se disparará 
- * la excepción UnsupportedOperationException </p>
+ * <p> El grafo es inmutable por lo que no estï¿½n permitadas las operaciï¿½n de modificaciï¿½n. Tampoco
+ * estï¿½n permitidas las operaciones de consulta de todos los vï¿½rtices o todas las aristas.
+ *  Si se invocan alguna de ellas se dispararï¿½ 
+ * la excepciï¿½n UnsupportedOperationException </p>
  * 
  *
  * 
@@ -19,12 +19,12 @@ import java.util.*;
  * 
  * @author Miguel Toro
  *
- * @param <V> El tipo de los vértices
+ * @param <V> El tipo de los vï¿½rtices
  * @param <E> El tipo de las aristas
  * 
  */
 
-public class SimpleVirtualHyperGraph<V extends VirtualHyperVertex<V,E,A>, E extends SimpleHyperEdge<V,E,A>, A> {
+public class SimpleVirtualHyperGraph<V extends VirtualHyperVertex<V,E,A,?>, E extends SimpleHyperEdge<V,E,A>, A> {
 			
 	
 	private V startVertex;
@@ -67,7 +67,7 @@ public class SimpleVirtualHyperGraph<V extends VirtualHyperVertex<V,E,A>, E exte
 	}	
 	
 	/** 
-	 * @return Conjunto de vértices del grafo que se han hecho explícitos en el constructor.
+	 * @return Conjunto de vï¿½rtices del grafo que se han hecho explï¿½citos en el constructor.
 	 */
 	
 	public Set<V> vertexSet(){
@@ -91,11 +91,11 @@ public class SimpleVirtualHyperGraph<V extends VirtualHyperVertex<V,E,A>, E exte
 		return v.isBaseCase();
 	}
 	
-	public Double baseCaseSolution(V v) {
-		return v.baseCaseSolution();
+	public Double baseCaseWeight(V v) {
+		return v.baseCaseWeight();
 	}
 
-	public static <V extends VirtualHyperVertex<V, E, A>, E extends SimpleHyperEdge<V,E,A>, A> SimpleVirtualHyperGraph<V, E, A> 
+	public static <V extends VirtualHyperVertex<V, E, A, ?>, E extends SimpleHyperEdge<V,E,A>, A> SimpleVirtualHyperGraph<V, E, A> 
 		simpleVirtualHyperGraph(V start) {
 		return new SimpleVirtualHyperGraph<V, E, A>(start);
 	}

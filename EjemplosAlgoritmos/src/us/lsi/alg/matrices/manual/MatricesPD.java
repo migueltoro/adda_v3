@@ -1,165 +1,107 @@
 package us.lsi.alg.matrices.manual;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 
-
-import us.lsi.common.Files2;
+import us.lsi.alg.matrices.DatosMatrices;
+import us.lsi.alg.matrices.MatrixVertex;
 
 
 public class MatricesPD {
 	
-	public static record Spmt(Integer a,Integer weight) implements Comparable<Spmt> {
+	public static record Sp(Integer a,Integer weight) implements Comparable<Sp> {
 		
-		public static Spmt of(Integer a, Integer weight) {
-			return new Spmt(a, weight);
+		public static Sp of(Integer a, Integer weight) {
+			return new Sp(a, weight);
 		}
 		
 		@Override
-		public int compareTo(Spmt sp) {
+		public int compareTo(Sp sp) {
 			return this.weight.compareTo(sp.weight);
 		}
 	}
 	
-	public static record MatrixInf(Integer nf, Integer nc) {
-		public static MatrixInf of(Integer nf, Integer nc) {
-			return new MatrixInf(nf, nc);
-		}
-		
-		public static Integer getWeight(List<MatrixProblem> ls) {	
-			Integer i = ls.get(0).i();
-			Integer a = ls.get(0).j();
-			Integer j = ls.get(1).j();
-			return MatricesPD.matrices.get(i).nf()*MatricesPD.matrices.get(a).nf()*MatricesPD.matrices.get(j-1).nc();
-		}
-		
-	}
-	
-	public static record MatrixProblem(Integer i, Integer j) {
-		
-		public static MatrixProblem of(Integer i, Integer j) {
-			return new MatrixProblem(i,j);
-		}
-		
-		public List<Integer> actions() {
-			return IntStream.range(i+1,j).boxed().collect(Collectors.toList());
-		}
 
-		public Boolean isBaseCase() {
-			return j-i < 3;
-		}
-
-		public Integer baseCaseSolution() {
-			Integer r;
-			Integer d = j-i;
-			switch(d) {
-			case 0: r = 0; break;
-			case 1: r = 0; break;
-			case 2: r = MatricesPD.matrices.get(i).nf()*MatricesPD.matrices.get(i).nc()*MatricesPD.matrices.get(i+1).nf; break;
-			default: r = null;	
-			}
-			return r;
-		}
-
-		public List<MatrixProblem> neighbors(Integer a) {
-			return Arrays.asList(MatrixProblem.of(i, a),MatrixProblem.of(a, j));
-		}
-
-	}
-	
-	public static void leeFichero(String fichero){
-		List<Integer> ls = Files2.streamFromFile(fichero)
-				.map(ln->Integer.parseInt(ln))
-				.collect(Collectors.toList());
-		Integer n = ls.size();
-		List<MatrixInf> r = new ArrayList<>();
-		for(int i = 0; i<n-1;i++) {
-			MatrixInf m = MatrixInf.of(ls.get(i),ls.get(i+1));
-			r.add(m);
-		}
-		MatricesPD.matrices = r;
-		MatricesPD.n = r.size();
-		System.out.println(r);
-	}
-	
-	public static MatricesPD of(MatrixProblem startVertex) {
+	public static MatricesPD of(MatrixVertex startVertex) {
 		return new MatricesPD(startVertex);
 	}
 	
-	public static List<MatrixInf> matrices;
-	public static Integer n;
-	public Map<MatrixProblem,Spmt> solutionsTree;
-	public static MatrixProblem startVertex;
+	private MatrixVertex startVertex;
 	
-	
-	private MatricesPD(MatrixProblem startVertex) {
-		MatricesPD.startVertex = startVertex;
-		this.solutionsTree = new HashMap<>();
+	private MatricesPD(MatrixVertex startVertex) {
+		this.startVertex = startVertex;
 	}
 	
-	public String search(){
-		search(MatricesPD.startVertex);
-		return this.solucion(MatricesPD.startVertex);
+	public Map<MatrixVertex, Sp> search(){
+		Map<MatrixVertex,Sp> memory = new HashMap<>();
+		search(this.startVertex,memory);
+		return memory;
 	}
 
-	public Spmt search(MatrixProblem actual) {
-		Spmt r = null;
-		if (this.solutionsTree.containsKey(actual)) {
-			r = this.solutionsTree.get(actual);
+	private Sp search(MatrixVertex actual, Map<MatrixVertex, Sp> memory) {
+		Sp r = null;
+		if (memory.containsKey(actual)) {
+			r = memory.get(actual);
 		} else if (actual.isBaseCase()) {
-			Integer w = actual.baseCaseSolution();
-			if(w!=null) r = Spmt.of(null,w);
-			else r = null;
-			this.solutionsTree.put(actual, r);
+			Integer w = actual.baseCaseWeight().intValue();
+			if (w != null)
+				r = Sp.of(null, w);
+			memory.put(actual, r);
 		} else {
-			List<Spmt> sps = new ArrayList<>();
+			List<Sp> sps = new ArrayList<>();
 			for (Integer a : actual.actions()) {
-				List<Spmt> spNeighbors = new ArrayList<>();
-				Integer s = 0;
-				for (MatrixProblem neighbor : actual.neighbors(a)) {
-					Spmt nb = search(neighbor);
-					if (nb == null) {spNeighbors = null; break;}
-					spNeighbors.add(nb);
-					s += nb.weight();
+				List<Sp> spsa = new ArrayList<>();
+				for (MatrixVertex v : actual.neighbors(a)) {
+					Sp nba = search(v, memory);
+					if (nba == null) {
+						spsa = null;
+						break;
+					}
+					spsa.add(nba);
 				}
-				Spmt spa = null;
-				if(spNeighbors != null) {
-					spa = Spmt.of(a,s+MatrixInf.getWeight(actual.neighbors(a)));
+				Sp sp = null;
+				if (spsa != null && !spsa.isEmpty()) {
+					Integer weight = (int) (spsa.get(0).weight() + spsa.get(1).weight());
+					weight += DatosMatrices.nf(actual.i()) * DatosMatrices.nf(a) * DatosMatrices.nc(actual.j() - 1);
+					sp = Sp.of(a, weight);
 				}
-				sps.add(spa);
+				sps.add(sp);
 			}
 			r = sps.stream().filter(s -> s != null).min(Comparator.naturalOrder()).orElse(null);
-			this.solutionsTree.put(actual, r);
+			memory.put(actual, r);
 		}
 		return r;
 	}
 	
 
-	public String solucion(MatrixProblem v) {
-		Spmt s = this.solutionsTree.get(v);
-		if(s.a() == null) return String.format("(%d,%d)",v.i(),v.j());
+	public static String solucion(MatrixVertex v, Map<MatrixVertex,Sp> memory) {
+		Sp s = memory.get(v);
+		if(s.a() == null) 
+			return String.format("(%d,%d)",v.i(),v.j());
 		else {
-			List<MatrixProblem> vc = v.neighbors(s.a());
-			return String.format("(%s,%s)",solucion(vc.get(0)),solucion(vc.get(1)));
+			List<MatrixVertex> vc = v.neighbors(s.a());
+			return String.format("(%s,%s)",solucion(vc.get(0),memory),solucion(vc.get(1),memory));
 		}
 	
 	}
 	
 	public static void main(String[] args) {
 		Locale.setDefault(Locale.of("en", "US"));
-		MatricesPD.leeFichero("./ficheros/matrices.txt");
 		
-		MatrixProblem start = MatrixProblem.of(0,MatricesPD.n);
+		
+		DatosMatrices.leeFichero("./ficheros/matrices.txt");
+		
+		MatrixVertex start = MatrixVertex.of(0,DatosMatrices.n);
 		
 		MatricesPD a = MatricesPD.of(start);
-		System.out.println(a.search());
+		
+		Map<MatrixVertex, Sp> r = a.search();
+		
+		System.out.println(MatricesPD.solucion(start, r));
 	}
 
 	

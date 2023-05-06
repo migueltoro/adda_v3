@@ -54,9 +54,7 @@ public class GraphPathLast<V, E> extends GraphPath2<V,E> implements EGraphPath<V
 
 	private EGraph<V,E> graph;
 	
-	protected GraphPathLast(EGraph<V, E> graph,
-			List<V> vertexList, List<E> edgeList,
-			double weight) {
+	protected GraphPathLast(EGraph<V, E> graph, List<V> vertexList, List<E> edgeList, double weight) {
 		super(graph, vertexList, edgeList, weight);
 		this.graph = graph;
 	}
@@ -126,6 +124,11 @@ public class GraphPathLast<V, E> extends GraphPath2<V,E> implements EGraphPath<V
 	@Override
 	public PathType type() {
 		return PathType.Last;
+	}
+
+	@Override
+	public EGraph<V, E> graph() {
+		return this.graph;
 	}
 
 }

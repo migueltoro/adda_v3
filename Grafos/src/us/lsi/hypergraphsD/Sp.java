@@ -1,4 +1,4 @@
-package us.lsi.hypergraphs2;
+package us.lsi.hypergraphsD;
 
 import java.util.Comparator;
 

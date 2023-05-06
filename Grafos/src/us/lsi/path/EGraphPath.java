@@ -10,6 +10,7 @@ import us.lsi.graphs.alg.DPR.Sp;
 import us.lsi.graphs.virtual.EGraph;
 
 public interface EGraphPath<V, E> extends GraphPath<V, E> {	
+	EGraph<V,E> graph();
 	E lastEdge();
 	EGraphPath<V, E> add(E edge);
 	EGraphPath<V, E> remove();
@@ -24,6 +25,7 @@ public interface EGraphPath<V, E> extends GraphPath<V, E> {
 	PathType type();
 	
 	public static enum PathType{Sum,Last}	
+	
 	
 	public static <V,E> Double weight(GraphPath<V,E> path) {
 		return path.getEdgeList().stream().mapToDouble(e->path.getGraph().getEdgeWeight(e)).sum();

@@ -1,10 +1,11 @@
 package us.lsi.alg.matrices2;
 
 import java.util.List;
-import us.lsi.hypergraphs2.HyperEdge2;
+
+import us.lsi.hypergraphsD.HyperEdgeD;
 
 public record MatrixEdge2(MatrixVertex2 source,List<MatrixVertex2> targets,Integer action) 
-           implements HyperEdge2<MatrixVertex2,MatrixEdge2,Integer,String> {
+           implements HyperEdgeD<MatrixVertex2,MatrixEdge2,Integer,String> {
 	
 	public static MatrixEdge2 of(MatrixVertex2 source, List<MatrixVertex2> targets, Integer action) {
 		return new MatrixEdge2(source, targets, action);

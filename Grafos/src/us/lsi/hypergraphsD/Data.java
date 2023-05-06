@@ -1,4 +1,4 @@
-package us.lsi.hypergraphs2;
+package us.lsi.hypergraphsD;
 
 import java.util.Comparator;
 import java.util.HashMap;
@@ -60,7 +60,7 @@ public class Data<V,E> {
 		Data.<V,E>of().memoryAll.put(vertex,data);
 	}
 	
-	public static <V extends HyperVertex2<V, E, A, ?>, E extends HyperEdge2<V, E, A, ?>, A> 
+	public static <V extends HyperVertexD<V, E, A, ?>, E extends HyperEdgeD<V, E, A, ?>, A> 
 		SimpleDirectedGraph<Union<V, E>, DefaultEdge> graph(SetMultimap<V, Sp<E>> vertices) {
 
 		SimpleDirectedGraph<Union<V, E>, DefaultEdge> graph = new SimpleDirectedGraph<Union<V, E>, DefaultEdge>(null,
@@ -100,7 +100,7 @@ public class Data<V,E> {
 		else return un.b().toString();
 	}
 	
-	public static <V extends HyperVertex2<V, E, A, ?>, E extends HyperEdge2<V,E,A,?>, A> 
+	public static <V extends HyperVertexD<V, E, A, ?>, E extends HyperEdgeD<V,E,A,?>, A> 
 		void toDotHypergraph(SimpleDirectedGraph<Union<V,E>, DefaultEdge> g, String file, V initial) {
 
 		Set<Union<V,E>> vt = initial.graphTree().allVertices().stream()
@@ -122,7 +122,7 @@ public class Data<V,E> {
 						GraphColors.colorIf(Color.red, pd.test(e))));
 	}
 	
-	public static <V extends HyperVertex2<V, E, A, ?>, E extends HyperEdge2<V,E,A,?>,A> 
+	public static <V extends HyperVertexD<V, E, A, ?>, E extends HyperEdgeD<V,E,A,?>,A> 
 		void toDotAndOr(SimpleDirectedGraph<Union<V,E>, DefaultEdge> g,
 			String file, V initial) {
 

@@ -7,7 +7,8 @@ import java.util.stream.IntStream;
 
 import us.lsi.hypergraphs.VirtualHyperVertex;
 
-public record MatrixVertex(Integer i,Integer j) implements VirtualHyperVertex<MatrixVertex,MatrixEdge,Integer>{
+public record MatrixVertex(Integer i,Integer j) 
+		implements VirtualHyperVertex<MatrixVertex,MatrixEdge,Integer,String>{
 
 	
 	public static MatrixVertex of(Integer i, Integer j) {
@@ -15,16 +16,12 @@ public record MatrixVertex(Integer i,Integer j) implements VirtualHyperVertex<Ma
 	}
 	
 	public static MatrixVertex initial() {
-		return new MatrixVertex(0, n);
+		return new MatrixVertex(0, DatosMatrices.n);
 	}
-	
-	public static List<MatrixInf> matrices;
-	public static Integer n;
-
 
 	@Override
 	public Boolean isValid() {
-		return 0 <= i && i < n && i < j && j<=n;
+		return 0 <= i && i < DatosMatrices.n && i < j && j<=DatosMatrices.n;
 	}
 
 	@Override
@@ -38,13 +35,13 @@ public record MatrixVertex(Integer i,Integer j) implements VirtualHyperVertex<Ma
 	}
 
 	@Override
-	public Double baseCaseSolution() {
+	public Double baseCaseWeight() {
 		Double r;
 		Integer d = j-i;
 		switch(d) {
 		case 0: r = 0.; break;
 		case 1: r = 0.; break;
-		case 2: r = (double) matrices.get(i).nf*matrices.get(i).nc*matrices.get(i+1).nc; break;
+		case 2: r = (double) DatosMatrices.nf(i)*DatosMatrices.nc(i)*DatosMatrices.nc(j-1); break;
 		default: r = null;
 		
 		}
@@ -60,5 +57,20 @@ public record MatrixVertex(Integer i,Integer j) implements VirtualHyperVertex<Ma
 	public MatrixEdge edge(Integer a) {
 		return MatrixEdge.of(this, this.neighbors(a),a);
 	}
+
+	@Override
+	public String baseCaseSolution() {
+		String r;
+		if(j-i == 1) r = DatosMatrices.matrices.get(i).toString();
+		else r = String.format("(%s * %s)",DatosMatrices.matrices.get(i).toString(),DatosMatrices.matrices.get(i+1).toString());
+		return r;
+	}
+
+	@Override
+	public String solution(List<String> solutions) {
+		return String.format("(%s * %s)",solutions.get(0),solutions.get(1));
+	}
+	
+	
 	
 }

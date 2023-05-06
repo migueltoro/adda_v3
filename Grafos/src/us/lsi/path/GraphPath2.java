@@ -96,5 +96,13 @@ public class GraphPath2<V,E> implements GraphPath<V,E> {
 	public List<E> getEdgeList() {
 		return edgeList;
 	}
+	
+	public GraphPath2<V,E> copy() {
+		return new GraphPath2<V, E>(this.graph, 
+				new ArrayList<>(this.vertexList), 
+				new ArrayList<>(this.edgeList), 
+				this.weight);
+	}
+
 
 }

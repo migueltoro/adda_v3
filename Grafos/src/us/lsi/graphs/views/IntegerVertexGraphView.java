@@ -5,6 +5,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.function.Predicate;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -220,8 +221,16 @@ public class IntegerVertexGraphView<V,E> implements Graph<Integer,SimpleEdge<Int
 		return this.mapIndex.get(v);
 	}
 	
+	public Integer index(Predicate<V> p) {
+		return this.mapIndex.get(this.vertex(p));
+	}
+	
 	public V vertex(Integer i) {
 		return this.vertices.get(i);
+	}
+	
+	public V vertex(Predicate<V> p) {
+		return this.vertices.stream().filter(p).findFirst().get();
 	}
 
 }

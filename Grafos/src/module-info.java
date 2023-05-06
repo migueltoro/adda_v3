@@ -13,7 +13,7 @@ module grafos {
 	exports us.lsi.colors;
 	exports us.lsi.flowgraph;
 	exports us.lsi.hypergraphs;
-	exports us.lsi.hypergraphs2;
+	exports us.lsi.hypergraphsD;
 	exports us.lsi.path;
 	exports us.lsi.graphs.alg;
 	exports us.lsi.graphs.tour;

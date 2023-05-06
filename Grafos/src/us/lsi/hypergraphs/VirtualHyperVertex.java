@@ -2,15 +2,19 @@ package us.lsi.hypergraphs;
 
 import java.util.List;
 
-public interface VirtualHyperVertex<V,E,A> {
+public interface VirtualHyperVertex<V,E,A,S> {
 	
 	public List<A> actions();
 	
 	public Boolean isBaseCase();
 	
-	public Double baseCaseSolution();
+	public Double baseCaseWeight();
 	
 	public Boolean isValid();
+	
+	public S baseCaseSolution();
+
+	public S solution(List<S> solutions);
 	
 	/**
 	 * @param a Una acci&oacute;n

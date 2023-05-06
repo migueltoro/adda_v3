@@ -1,18 +1,18 @@
-package us.lsi.alg.floyd2;
+package us.lsi.alg.floydD;
 
 import java.util.List;
 
 import org.jgrapht.graph.GraphWalk;
 
 import us.lsi.graphs.SimpleEdge;
-import us.lsi.hypergraphs2.HyperEdge2;
+import us.lsi.hypergraphsD.HyperEdgeD;
 import us.lsi.path.EGraphPath;
 
-public record FloydEdge2(FloydVertex2 source, List<FloydVertex2> targets, Boolean action)
-		implements HyperEdge2<FloydVertex2, FloydEdge2, Boolean, GraphWalk<Integer,SimpleEdge<Integer>>> {
+public record FloydEdgeD(FloydVertexD source, List<FloydVertexD> targets, Boolean action)
+		implements HyperEdgeD<FloydVertexD, FloydEdgeD, Boolean, GraphWalk<Integer,SimpleEdge<Integer>>> {
 
-	public static FloydEdge2 of(FloydVertex2 source, List<FloydVertex2> targets, Boolean action) {
-		return new FloydEdge2(source, targets, action);
+	public static FloydEdgeD of(FloydVertexD source, List<FloydVertexD> targets, Boolean action) {
+		return new FloydEdgeD(source, targets, action);
 	}
 
 	@Override
@@ -24,7 +24,7 @@ public record FloydEdge2(FloydVertex2 source, List<FloydVertex2> targets, Boolea
 	}
 
 	@Override
-	public FloydEdge2 me() {
+	public FloydEdgeD me() {
 		return this;
 	}
 

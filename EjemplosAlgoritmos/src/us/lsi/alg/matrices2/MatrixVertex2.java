@@ -4,10 +4,11 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
-import us.lsi.hypergraphs2.HyperVertex2;
+
+import us.lsi.hypergraphsD.HyperVertexD;
 	
 public record MatrixVertex2(Integer i,Integer j) 
-		implements HyperVertex2<MatrixVertex2,MatrixEdge2,Integer,String>{
+		implements HyperVertexD<MatrixVertex2,MatrixEdge2,Integer,String>{
 
 		
 		public static MatrixVertex2 of(Integer i, Integer j) {

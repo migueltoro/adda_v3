@@ -1,33 +1,34 @@
-package us.lsi.hypergraphs2;
+package us.lsi.hypergraphsD;
 
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
-import us.lsi.hypergraphs2.GraphTree2.Gtb;
-import us.lsi.hypergraphs2.GraphTree2.Gtr;
 
-public sealed interface GraphTree2<V extends HyperVertex2<V, E, A, ?>, E extends HyperEdge2<V, E, A,?>, A> 
+import us.lsi.hypergraphsD.GraphTreeD.Gtb;
+import us.lsi.hypergraphsD.GraphTreeD.Gtr;
+
+public sealed interface GraphTreeD<V extends HyperVertexD<V, E, A, ?>, E extends HyperEdgeD<V, E, A,?>, A> 
 		permits Gtb<V,E,A>,Gtr<V,E,A>{
 
-	public static <V extends HyperVertex2<V, E, A, ?>, E extends HyperEdge2<V, E, A, ?>, A> 
-		GraphTree2<V, E, A> tb(V v) {
+	public static <V extends HyperVertexD<V, E, A, ?>, E extends HyperEdgeD<V, E, A, ?>, A> 
+		GraphTreeD<V, E, A> tb(V v) {
 		return new Gtb<V, E, A>(v);
 	}
 	
-	public static <V extends HyperVertex2<V, E, A, ?>, E extends HyperEdge2<V, E, A, ?>, A> 
-		GraphTree2<V, E, A> tr(V v,A a,List<GraphTree2<V,E,A>> children) {
+	public static <V extends HyperVertexD<V, E, A, ?>, E extends HyperEdgeD<V, E, A, ?>, A> 
+		GraphTreeD<V, E, A> tr(V v,A a,List<GraphTreeD<V,E,A>> children) {
 		return new Gtr<V, E, A>(v,a,children);
 	}
 	
-	public static <V extends HyperVertex2<V, E, A, ?>, E extends HyperEdge2<V, E, A, ?>, A, S> 
-		GraphTree2<V, E, A> optimalTree(V v) {
+	public static <V extends HyperVertexD<V, E, A, ?>, E extends HyperEdgeD<V, E, A, ?>, A, S> 
+		GraphTreeD<V, E, A> optimalTree(V v) {
 		if (v.isBaseCase()) {
 			return new Gtb<V, E, A>(v);
 		} else {
 			A a = v.sp().edge().action();
-			List<GraphTree2<V,E,A>> children = v.neighbors(a).stream()
-					.map(g->GraphTree2.optimalTree(g))
+			List<GraphTreeD<V,E,A>> children = v.neighbors(a).stream()
+					.map(g->GraphTreeD.optimalTree(g))
 					.toList();					
 			return new Gtr<V, E, A>(v,a,children);
 		}
@@ -41,7 +42,7 @@ public sealed interface GraphTree2<V extends HyperVertex2<V, E, A, ?>, E extends
 		return this.vertex().weight();
 	}
 
-	public List<GraphTree2<V, E, A>> children(); 
+	public List<GraphTreeD<V, E, A>> children(); 
 	
 	public default Set<V> allVertices() {
 		Set<V> s = new HashSet<>();
@@ -52,12 +53,12 @@ public sealed interface GraphTree2<V extends HyperVertex2<V, E, A, ?>, E extends
 
 	public Set<E> allEdges();
 
-	public static record Gtb<V extends HyperVertex2<V, E, A, ?>, E extends HyperEdge2<V, E, A, ?>, A>(V vertex) 
-	     implements GraphTree2<V, E, A>{
+	public static record Gtb<V extends HyperVertexD<V, E, A, ?>, E extends HyperEdgeD<V, E, A, ?>, A>(V vertex) 
+	     implements GraphTreeD<V, E, A>{
 		public Boolean isLeaf() {
 			return true;
 		}
-		public List<GraphTree2<V, E, A>> children() {
+		public List<GraphTreeD<V, E, A>> children() {
 			return List.of();
 		}
 		@Override
@@ -69,8 +70,8 @@ public sealed interface GraphTree2<V extends HyperVertex2<V, E, A, ?>, E extends
 		}
 	}
 	
-	public record Gtr<V extends HyperVertex2<V, E, A, ?>, E extends HyperEdge2<V, E, A, ?>, A>
-				(V vertex, A action, List<GraphTree2<V,E,A>> children) implements GraphTree2<V, E, A>{
+	public record Gtr<V extends HyperVertexD<V, E, A, ?>, E extends HyperEdgeD<V, E, A, ?>, A>
+				(V vertex, A action, List<GraphTreeD<V,E,A>> children) implements GraphTreeD<V, E, A>{
 		public Boolean isLeaf() {
 			return false;
 		}

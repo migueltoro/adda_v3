@@ -147,5 +147,10 @@ public class GraphPathSum<V, E> extends GraphPath2<V,E> implements EGraphPath<V,
 	public PathType type() {
 		return PathType.Sum;
 	}
+	
+	@Override
+	public EGraph<V, E> graph() {
+		return this.graph;
+	}
 
 }

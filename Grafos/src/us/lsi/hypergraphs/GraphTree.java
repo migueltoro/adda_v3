@@ -6,85 +6,105 @@ import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import us.lsi.common.List2;
-import us.lsi.common.Preconditions;
 import us.lsi.graphs.alg.DP.Sp;
+import us.lsi.hypergraphs.GraphTree.Gtb;
+import us.lsi.hypergraphs.GraphTree.Gtr;
 
+public sealed interface GraphTree<V extends VirtualHyperVertex<V, E, A, S>, E extends SimpleHyperEdge<V, E, A>, A, S> 
+	permits Gtb<V, E, A, S>, Gtr<V, E, A, S> {
 
-public class GraphTree<V, E extends SimpleHyperEdge<V,E,A>, A> {
-	
-	public static <V, E extends SimpleHyperEdge<V, E, A>, A> GraphTree<V, E, A> of(Map<V, Sp<E>> tree,V vertex) {
-		return new GraphTree<V, E, A>(tree,vertex);
+	public static <V extends VirtualHyperVertex<V, E, A, S>, E extends SimpleHyperEdge<V, E, A>, A, S> 
+		GraphTree<V, E, A, S> tb(V v, Double weight) {
+		return new Gtb<V, E, A, S>(v, weight);
 	}
 
-	private Map<V, Sp<E>> tree;
-	private V vertex;
+	public static <V extends VirtualHyperVertex<V, E, A, S>, E extends SimpleHyperEdge<V, E, A>, A, S> 
+		GraphTree<V, E, A, S> tr(V v, A a, Double weight, List<GraphTree<V, E, A,S>> children) {
+		return new Gtr<V, E, A, S>(v, a, weight, children);
+	}
 
-	private GraphTree(Map<V, Sp<E>> tree, V vertex) {
-		super();
-		this.tree = tree;
-		this.vertex = vertex;
-	}
-	
-	public V vertex() {
-		return vertex;
-	}
-	
-	public Double weight() {
-		return tree.get(this.vertex).weight();
-	}
-	
-	public A action() {	
-		A r = null;
-		if(tree.get(this.vertex).edge() != null) r = tree.get(this.vertex).edge().action();
-		return r;
-	}
-	
-	public List<GraphTree<V, E, A>> neighbords() {
-		return tree.get(this.vertex).edge().targets().stream()
-				.map(v->GraphTree.of(tree, v))
-				.collect(Collectors.toList());
-	}
-	
-	public Boolean isBaseCase() {
-		Preconditions.checkNotNull(tree.get(this.vertex),"Es null");
-		return tree.get(this.vertex).edge() == null;
-	}
-	
-	public static <V, E extends SimpleHyperEdge<V,E, A>, A> List<GraphTree<V, E, A>> nextLevel(List<GraphTree<V, E, A>> level){
-		return level.stream()
-				.filter(t->!t.isBaseCase())
-				.flatMap(t->t.neighbords().stream())
-				.collect(Collectors.toList());
-	}
-	
-	private static <V, E extends SimpleHyperEdge<V, E,A>, A> String string(GraphTree<V, E, A> tree) {
-		return String.format("(%s,%s,%.2f)",tree.vertex(),tree.action()==null?"_":tree.action(),tree.weight());
-	}
-	
-	@Override
-	public String toString() {
-		Integer n = 0;
-		String r = String.format("%3d  [%s]",n,string(this));
-		List<GraphTree<V, E, A>> children = nextLevel(List2.of(this));		
-		while(!children.isEmpty()) {
-			n++;
-			r = String.format("%s\n%3d  %s",r,n,children.stream().map(t->string(t)).collect(Collectors.joining(",","[","]")));
-			children = nextLevel(children);			
+	public static <V extends VirtualHyperVertex<V, E, A, S>, E extends SimpleHyperEdge<V, E, A>, A, S> 
+		GraphTree<V, E, A, S> optimalTree(
+			V v, Map<V, Sp<E>> tree) {
+		if (v.isBaseCase()) {
+			return new Gtb<V, E, A, S>(v, tree.get(v).weight());
+		} else {
+			A a = tree.get(v).edge().action();
+			List<GraphTree<V, E, A, S>> children = v.neighbors(a).stream().map(x -> GraphTree.optimalTree(x, tree))
+					.toList();
+			return new Gtr<V, E, A, S>(v, a, tree.get(v).weight(), children);
 		}
-		return r;		
 	}
-	
-	public Set<V> vertices(){
-		Set<V> r = new HashSet<>();
-		r.add(this.vertex());
-		List<GraphTree<V, E, A>> children = nextLevel(List2.of(this));		
-		while(!children.isEmpty()) {
-			Set<V> sl = children.stream().map(t->t.vertex()).collect(Collectors.toSet());
-			r.addAll(sl);
-			children = nextLevel(children);			
+
+	public V vertex();
+
+	public Double weight();
+
+	public Boolean isLeaf();
+
+	public List<GraphTree<V, E, A, S>> children();
+
+	public Set<E> allEdges();
+
+	public default Set<V> vertices() {
+		Set<V> s = new HashSet<>();
+		s.add(this.vertex());
+		this.children().stream().forEach(t->s.addAll(t.vertices()));
+		return s;
+	}
+
+	public default S solution() {
+		return switch(this) {
+		case Gtb<V,E,A,S> t -> t.vertex().baseCaseSolution();
+		case Gtr<V,E,A,S> t -> t.vertex().solution(t.children().stream().<S>map(x->x.solution()).toList());
+		};
+	}
+
+	public static record Gtb<V extends VirtualHyperVertex<V,E,A,S>, E extends SimpleHyperEdge<V, E, A>, A,S>
+			(V vertex,Double weight) implements GraphTree<V, E, A,S> {
+		public Boolean isLeaf() {
+			return true;
 		}
-		return r;
+
+		public List<GraphTree<V, E, A,S>> children() {
+			return List.of();
+		}
+
+		@Override
+		public String toString() {
+			return String.format("(%s)", this.vertex());
+		}
+
+		public Set<E> allEdges() {
+			return Set.of();
+		}
 	}
-	
+
+	public record Gtr<V extends VirtualHyperVertex<V,E,A,S>, E extends SimpleHyperEdge<V, E, A>, A,S>
+			(V vertex, A action, Double weight,List<GraphTree<V, E, A,S>> children) 
+			implements GraphTree<V, E, A,S> {
+		
+		public Boolean isLeaf() {
+			return false;
+		}
+
+		public E edge() {
+			return this.vertex().edge(this.action());
+		}
+
+		@Override
+		public String toString() {
+			String lb = String.format("(%s,%s)", this.vertex(), this.action());
+			return lb + this.children().stream().map(g -> g.toString()).collect(Collectors.joining(",", "(", ")"));
+		}
+
+		public Set<E> allEdges() {
+			Set<E> s = new HashSet<>();
+			s.add(this.edge());
+			this.children().stream().forEach(t -> s.addAll(t.allEdges()));
+			return s;
+		}
+
+	}
+
 }

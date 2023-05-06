@@ -18,7 +18,7 @@ public record MatrixEdge(MatrixVertex source,List<MatrixVertex> targets,Integer 
 		Integer i = source.i();
 		Integer a = action();
 		Integer j = source.j();
-		weight += MatrixVertex.matrices.get(i).nf*MatrixVertex.matrices.get(a).nf*MatrixVertex.matrices.get(j-1).nc;
+		weight += DatosMatrices.nf(i)*DatosMatrices.nf(a)*DatosMatrices.nc(j-1);
 		return weight;
 	}
 }

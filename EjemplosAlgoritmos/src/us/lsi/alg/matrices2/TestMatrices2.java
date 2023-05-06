@@ -7,8 +7,8 @@ import org.jgrapht.graph.SimpleDirectedGraph;
 
 import us.lsi.common.String2;
 import us.lsi.common.Union;
-import us.lsi.hypergraphs2.Data;
-import us.lsi.hypergraphs2.GraphTree2;
+import us.lsi.hypergraphsD.Data;
+import us.lsi.hypergraphsD.GraphTreeD;
 
 
 public class TestMatrices2 {
@@ -20,7 +20,7 @@ public class TestMatrices2 {
 			MatrixVertex2 p = MatrixVertex2.initial();
 			String s = p.solution();
 			String2.toConsole(s);
-			GraphTree2<MatrixVertex2, MatrixEdge2, Integer> t = p.graphTree();
+			GraphTreeD<MatrixVertex2, MatrixEdge2, Integer> t = p.graphTree();
 			String2.toConsole(t.toString());
 			String2.toConsole(t.children().toString());
 			String2.toConsole(t.allVertices().toString());

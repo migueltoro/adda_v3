@@ -1,10 +1,10 @@
-package us.lsi.hypergraphs2;
+package us.lsi.hypergraphsD;
 
 
 import java.util.Comparator;
 import java.util.List;
 
-public interface HyperVertex2<V extends HyperVertex2<V,E,A,S>, E extends HyperEdge2<V,E,A,S>,A,S> {
+public interface HyperVertexD<V extends HyperVertexD<V,E,A,S>, E extends HyperEdgeD<V,E,A,S>,A,S> {
 	
 	List<A> actions();
 	Boolean isBaseCase();
@@ -86,7 +86,7 @@ public interface HyperVertex2<V extends HyperVertex2<V,E,A,S>, E extends HyperEd
 		return this.edge(a).targets();
 	}
 
-	default GraphTree2<V, E, A> graphTree() {
-		return GraphTree2.optimalTree(this.me());
+	default GraphTreeD<V, E, A> graphTree() {
+		return GraphTreeD.optimalTree(this.me());
 	}
 }

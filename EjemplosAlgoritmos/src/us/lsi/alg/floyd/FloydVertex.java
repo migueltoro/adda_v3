@@ -1,21 +1,17 @@
 package us.lsi.alg.floyd;
 
 import java.util.List;
-import java.util.Map;
 
 import org.jgrapht.Graph;
 import org.jgrapht.graph.GraphWalk;
 
 import us.lsi.common.List2;
 import us.lsi.graphs.SimpleEdge;
-import us.lsi.graphs.alg.DP.Sp;
-import us.lsi.hypergraphs.GraphTree;
 import us.lsi.hypergraphs.VirtualHyperVertex;
-import us.lsi.path.EGraphPath;
 
 
-
-public record FloydVertex(Integer i,Integer j,Integer k) implements VirtualHyperVertex<FloydVertex,FloydEdge,Boolean>{
+public record FloydVertex(Integer i,Integer j,Integer k) 
+	implements VirtualHyperVertex<FloydVertex,FloydEdge,Boolean,GraphWalk<Integer,SimpleEdge<Integer>>>{
 
 	
 	public static FloydVertex initial(Integer i,Integer j) {	
@@ -64,7 +60,7 @@ public record FloydVertex(Integer i,Integer j,Integer k) implements VirtualHyper
 	}
 	
 	@Override
-	public Double baseCaseSolution() {
+	public Double baseCaseWeight() {
 		Double r = null;
 		if(i==j) r = 0.;
 		else if(k ==n && FloydVertex.graph.containsEdge(this.i, this.j))
@@ -81,40 +77,24 @@ public record FloydVertex(Integer i,Integer j,Integer k) implements VirtualHyper
 	public Integer getTarget() {
 		return j;
 	}
-
-	public static GraphWalk<Integer,SimpleEdge<Integer>> solution(GraphTree<FloydVertex,FloydEdge,Boolean> tree){
-		GraphWalk<Integer,SimpleEdge<Integer>> gp = null;		
-		if(tree.isBaseCase()) {
-			Integer origen = tree.vertex().i;
-			Integer destino = tree.vertex().j;
-			List<Integer> ls = List2.of(origen,destino);
-			gp = new GraphWalk<>(FloydVertex.graph,ls,tree.weight());
-		} else if(!tree.action()){
-			gp = solution(tree.neighbords().get(0));
-		} else {
-			GraphWalk<Integer,SimpleEdge<Integer>> gp1 = solution(tree.neighbords().get(0));
-			GraphWalk<Integer,SimpleEdge<Integer>> gp2 = solution(tree.neighbords().get(1));
-			gp = gp1.concat(gp2,g->EGraphPath.weight(g));
-		}
-		return gp;
-	}
 	
-	public static GraphWalk<Integer,SimpleEdge<Integer>> solution(Map<FloydVertex, Sp<FloydEdge>> tree,FloydVertex vertex){
-		GraphWalk<Integer,SimpleEdge<Integer>> gp = null;
-		Sp<FloydEdge> s = tree.get(vertex);
-		if(s.edge() == null) {
-			Integer origen = vertex.i;
-			Integer destino = vertex.j;
-			List<Integer> ls = List2.of(origen,destino);
-			gp = new GraphWalk<>(FloydVertex.graph,ls,s.weight());
-		} else if(!s.edge().action()){
-			gp = solution(tree,s.edge().targets().get(0));
+	@Override
+	public GraphWalk<Integer,SimpleEdge<Integer>> baseCaseSolution() {
+		Integer origen = i;
+		Integer destino = j;
+		List<Integer> ls = List2.of(origen,destino);
+		return new GraphWalk<Integer,SimpleEdge<Integer>>(FloydVertex.graph,ls,this.baseCaseWeight());
+	}
+
+	@Override
+	public GraphWalk<Integer,SimpleEdge<Integer>> solution(List<GraphWalk<Integer,SimpleEdge<Integer>>> solutions) {
+		if(solutions.size()==1){
+			return solutions.get(0);
 		} else {
-			GraphWalk<Integer,SimpleEdge<Integer>> gp1 = solution(tree,s.edge().targets().get(0));
-			GraphWalk<Integer,SimpleEdge<Integer>> gp2 = solution(tree,s.edge().targets().get(1));
-			gp = gp1.concat(gp2,g->EGraphPath.weight(g));
+			GraphWalk<Integer,SimpleEdge<Integer>> gp1 = solutions.get(0);
+			GraphWalk<Integer,SimpleEdge<Integer>> gp2 = solutions.get(1);
+			return gp1.concat(gp2,g->g.getWeight()+gp2.getWeight());
 		}
-		return gp;
 	}
 
 }

@@ -21,8 +21,8 @@ import us.lsi.hypergraphs.SimpleVirtualHyperGraph;
 import us.lsi.hypergraphs.VirtualHyperVertex;
 
 
-public class DP<V extends VirtualHyperVertex<V,E,A>,
-			E extends SimpleHyperEdge<V,E,A>,A> {
+public class DP<V extends VirtualHyperVertex<V,E,A,S>,
+			E extends SimpleHyperEdge<V,E,A>,A,S> {
 	
 
 	public enum PDType{Min,Max}
@@ -54,7 +54,7 @@ public class DP<V extends VirtualHyperVertex<V,E,A>,
 		if (this.solutionsTree.containsKey(actual)) {
 			r = this.solutionsTree.get(actual);
 		} else if (graph.isBaseCase(actual)) {
-			Double w = graph.baseCaseSolution(actual);
+			Double w = graph.baseCaseWeight(actual);
 			if(w!=null) r = Sp.of(w,null);
 			else r = null;
 			this.solutionsTree.put(actual, r);
@@ -121,15 +121,15 @@ public class DP<V extends VirtualHyperVertex<V,E,A>,
 		return type;
 	}
 	
-	public GraphTree<V,E,A> searchTree(V vertex){
-		return GraphTree.of(this.solutionsTree,vertex);
+	public GraphTree<V,E,A,S> searchTree(V vertex){
+		return GraphTree.optimalTree(vertex, solutionsTree);
 	}
 	
-	public static <V extends VirtualHyperVertex<V, E, A>, E extends SimpleHyperEdge<V, E, A>, A> 
-		DP<V, E, A> dynamicProgrammingSearch(
+	public static <V extends VirtualHyperVertex<V, E, A,S>, E extends SimpleHyperEdge<V, E, A>, A, S> 
+		DP<V, E, A, S> dynamicProgrammingSearch(
 			SimpleVirtualHyperGraph<V, E, A> graph, 
 			PDType type) {
-		return new DP<V, E, A>(graph, type);
+		return new DP<V, E, A, S>(graph, type);
 	}
 
 	public record Sp<E>(Double weight, E edge) implements Comparable<Sp<E>> {
