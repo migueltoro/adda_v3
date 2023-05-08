@@ -1,4 +1,4 @@
-package us.lsi.alg.typ.manual;
+package us.lsi.alg.typ;
 
 import java.util.Comparator;
 import java.util.List;
@@ -16,12 +16,15 @@ public class DatosTyP {
 			nId++;
 			return new Tarea(id,(int)Double.parseDouble(s));
 		}
+		public String toString() {
+			return String.format("(%d,%d)",id,duracion);
+		}
 	}
 	
 	public static Integer numeroDeProcesadores;
 	public static Integer numeroDeTareas;
 	public static List<Tarea> tareas;
-	public static TyPProblem inicial;
+	public static TyPVertex inicial;
 	public static Integer n;
 	public static Integer m;
 	
@@ -34,6 +37,14 @@ public class DatosTyP {
 		DatosTyP.numeroDeTareas = DatosTyP.tareas.size();
 		DatosTyP.n = numeroDeTareas;
 		DatosTyP.m = np;
+	}
+	
+	public static Tarea tarea(Integer index) {
+		return DatosTyP.tareas.get(index);
+	}
+	
+	public static Integer duracion(Integer index) {
+		return DatosTyP.tareas.get(index).duracion();
 	}
 	
 	public static void toConsole() {

@@ -7,6 +7,11 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
+import us.lsi.alg.mochila.manual.SolucionMochila;
+import us.lsi.alg.monedas.DatosMonedas;
+import us.lsi.alg.monedas.Moneda;
+import us.lsi.alg.monedas.MonedaVertex;
+import us.lsi.alg.monedas.SolucionMonedas;
 import us.lsi.common.String2;
 
 public class MonedaPD {
@@ -23,37 +28,50 @@ public class MonedaPD {
 		}
 	}
 	
-	public static Integer maxValue = Integer.MIN_VALUE;
-	public static MonedaProblem start;
-	public static Map<MonedaProblem,Spm> memory;
-	
-	public static SolucionMonedas pd(Integer initialValue) {
-		MonedaPD.maxValue = Integer.MIN_VALUE;
-		MonedaPD.start = MonedaProblem.of(0,initialValue);
-		MonedaPD.memory = new HashMap<>();
-		pd(start,0,memory);
-		return MonedaPD.solucion();
+	public static MonedaPD of() {
+		return new MonedaPD();
 	}
 	
-	public static Spm pd(MonedaProblem vertex,Integer accumulateValue, Map<MonedaProblem,Spm> memory) {
+	private Integer maxValue;
+	private MonedaVertex start;
+	private Map<MonedaVertex,Spm> memory;
+	private SolucionMonedas solucion;
+	private Long time;
+	
+	private MonedaPD() {
+		super();
+	}
+
+	public SolucionMonedas pd(Integer initialValue,Integer maxValue, SolucionMonedas s) {
+		this.time = System.nanoTime();
+		this.maxValue = maxValue;
+		this.solucion = s;
+		this.start = MonedaVertex.of(0,initialValue);
+		this.memory = new HashMap<>();
+		pd(start,0,memory);
+		this.time = System.nanoTime() - this.time;
+		return this.solucion();
+	}
+	
+	private Spm pd(MonedaVertex vertex,Integer accumulateValue, Map<MonedaVertex,Spm> memory) {
 		Spm r;
 		if(memory.containsKey(vertex)) {
 			r = memory.get(vertex);
-		} else if(vertex.index() == MonedaProblem.n) {
+		} else if(vertex.index() == DatosMonedas.n) {
 			r = null;
-			if (MonedaProblem.goalHasSolution().test(vertex)) {
+			if (MonedaVertex.goalHasSolution().test(vertex)) {
 				r = Spm.of(null, 0);
 				memory.put(vertex, r);
-				if (accumulateValue > MonedaPD.maxValue) MonedaPD.maxValue = accumulateValue;
+				if (accumulateValue > this.maxValue) this.maxValue = accumulateValue;
 			}
 			memory.put(vertex,r);
 		} else {
 			List<Spm> soluciones = new ArrayList<>();
-			for(Integer a:vertex.acciones()) {	
+			for(Integer a:vertex.actions()) {	
 				Double cota = accumulateValue + MonedasHeuristica.cota(vertex,a);
-				if(cota <= MonedaPD.maxValue) continue;	
+				if(cota <= this.maxValue) continue;	
 				Integer ac = accumulateValue+a*Moneda.valor(vertex.index());
-				Spm s = pd(vertex.vecino(a),ac,memory);
+				Spm s = pd(vertex.neighbor(a),ac,memory);
 				if(s!=null) {
 					Spm sp = Spm.of(a,s.weight()+a*Moneda.valor(vertex.index()));
 					soluciones.add(sp);
@@ -65,27 +83,30 @@ public class MonedaPD {
 		return r;
 	}
 	
-	public static SolucionMonedas solucion(){
+	public SolucionMonedas solucion(){
 		List<Integer> acciones = new ArrayList<>();
-		MonedaProblem v = MonedaPD.start;
-		Spm s = MonedaPD.memory.get(v);
+		MonedaVertex v = this.start;
+		Spm s = this.memory.get(v);
+		if(s==null) return this.solucion;
 		while(s.a() != null) {
 			acciones.add(s.a());
-			v = v.vecino(s.a());	
-			s = MonedaPD.memory.get(v);
+			v = v.neighbor(s.a());	
+			s = this.memory.get(v);
 		}
 		return SolucionMonedas.of(acciones);
 	}
 	
 	public static void main(String[] args) {
 		Locale.setDefault(Locale.of("en", "US"));
-		MonedaProblem.datosIniciales("ficheros/monedas3.txt", 36);
+		DatosMonedas.datosIniciales("ficheros/monedas3.txt", 36);
 		String2.toConsole("%s",Moneda.monedas);
-//		MonedaProblem v1 = MonedaProblem.of(0, MonedaProblem.valorInicial);
-//		SolucionMonedas s = MonedasHeuristica.solucionVoraz(v1);	
-		MonedaPD.pd(MonedaProblem.valorInicial);	
-		System.out.println(MonedaPD.solucion());		
+		MonedaVertex v1 = MonedaVertex.of(0, DatosMonedas.valorInicial);
+		SolucionMonedas s = MonedasHeuristica.solucionVoraz(v1);
+		
+		MonedaPD.pd(DatosMonedas.valorInicial);	
+		System.out.println(this.solucion());		
 	}
 
+	
 
 }

@@ -8,52 +8,77 @@ import java.util.Set;
 
 import us.lsi.alg.sudoku.DatosSudoku;
 import us.lsi.alg.sudoku.DatosSudoku.SolucionSudoku;
+import us.lsi.alg.sudoku.Sudoku;
+import us.lsi.alg.sudoku.SudokuVertex;
 import us.lsi.common.List2;
 import us.lsi.common.String2;
 
 public class SudokuBT {
-
-	public static SudokuProblem start;
-	public static StateSudoku estado;
-	public static Set<SolucionSudoku> soluciones;
-	public static Integer iteraciones = 0;
-
-	public static void btm() {
-		SudokuBT.start = SudokuProblem.first(DatosSudoku.sudoku);
-		SudokuBT.estado = StateSudoku.of(start);
-		SudokuBT.soluciones = new HashSet<>();
-		do {
-			SudokuBT.btm_p();
-			iteraciones++;
-		} while (SudokuBT.soluciones.size() == 0);
+	
+	public static SudokuBT of() {
+		return new SudokuBT();
 	}
 
-	public static void btm_p() {
-		if (SudokuBT.estado.vertice().index() == DatosSudoku.numeroDeCasillas) {
-			SolucionSudoku s = SudokuBT.estado.solucion();
+	private StateSudoku estado;
+	private Set<SolucionSudoku> soluciones;
+	private Integer iteraciones = 0;
+	private Long time;
+
+	private SudokuBT() {
+		super();
+	}
+	
+	public Long time() {
+		return time;
+	}
+	
+	public Set<SolucionSudoku> soluciones() {
+		return soluciones;
+	}
+
+	public Integer iteraciones() {
+		return iteraciones;
+	}
+
+	public void bt(SudokuVertex start) {
+		this.time = System.nanoTime();
+		this.estado = StateSudoku.of(start);
+		this.soluciones = new HashSet<>();
+		do {
+			bt();
+			iteraciones++;
+		} while (this.soluciones.size() == 0);
+		this.time = System.nanoTime() - this.time;
+	}
+
+	public void bt() {
+		if (this.estado.vertice().index() == DatosSudoku.numeroDeCasillas) {
+			SolucionSudoku s = this.estado.solucion();
 			if (s.sudoku().errores() == 0)
-				SudokuBT.soluciones.add(s);
+				this.soluciones.add(s);
 		} else {
-			List<Integer> alternativas = SudokuBT.estado.vertice().acciones();
-			if (SudokuBT.estado.vertice().index() < 80)
+			List<Integer> alternativas = this.estado.vertice().actions();
+			if (this.estado.vertice().index() < 80)
 				alternativas = List2.randomUnitary(alternativas);
 			for (Integer a : alternativas) {
-				SudokuBT.estado.forward(a);
-				SudokuBT.btm_p();
-				SudokuBT.estado.back(a);
+				this.estado.forward(a);
+				this.bt();
+				this.estado.back(a);
 			}
 		}
 	}
 
 	public static void main(String[] args) {
 		Locale.setDefault(Locale.of("en", "US"));
-		DatosSudoku.iniDatos("ficheros/sudoku2.txt");
-		long startTime = System.nanoTime();
-		SudokuBT.btm();
-		long endTime = System.nanoTime() - startTime;
-		System.out.println("Tiempo = " + endTime);
-		System.out.println("Iteraciones = " + SudokuBT.iteraciones);
-		String2.toConsole(SudokuBT.soluciones, "Soluciones");
+		DatosSudoku.tamSubCuadro = 3;
+		Sudoku sd = DatosSudoku.leeFichero("ficheros/sudoku2.txt");
+		SudokuBT a = SudokuBT.of();
+		a.bt(SudokuVertex.first(sd));
+		System.out.println("Tiempo = " + a.time());
+		System.out.println("Iteraciones = " + a.iteraciones());
+		String2.toConsole(a.soluciones(), "Soluciones");
 	}
+
+	
 
 }

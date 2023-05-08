@@ -15,7 +15,7 @@ public class TestGreedy {
 
 	public static void main(String[] args) {
 		Locale.setDefault(Locale.of("en", "US"));
-		MonedaVertex.datosIniciales("ficheros/monedas2.txt", 402);
+		DatosMonedas.datosIniciales("ficheros/monedas2.txt", 402);
 		System.out.println(Moneda.monedas);
 		System.out.println(Moneda.monedas.size());
 
@@ -27,9 +27,9 @@ public class TestGreedy {
 		
 		for (int i = 0; i < 5; i++) {
 			
-			MonedaVertex.valorInicial = 400+i;
+			DatosMonedas.valorInicial = 400+i;
 			Collections.sort(Moneda.monedas, Comparator.comparing(m -> -m.pesoUnitario()));
-			System.out.println(MonedaVertex.valorInicial + "--------");
+			System.out.println(DatosMonedas.valorInicial + "--------");
 			MonedaVertex e1 = MonedaVertex.first();
 			//		MonedaVertex e2 = MonedaVertex.last();
 			EGraph<MonedaVertex, MonedaEdge> graph = EGraph.virtual(e1,MonedaVertex.goal(),PathType.Sum,Type.Max)
@@ -39,7 +39,8 @@ public class TestGreedy {
 					.build();	
 			GreedyOnGraph<MonedaVertex, MonedaEdge> rr = GreedyOnGraph.of(graph);
 			GraphPath<MonedaVertex, MonedaEdge> path = rr.path();
-			System.out.println(String.format("%d ,%s,%.2f,%.2f,",i,rr.isSolution(path),MonedaVoraz.voraz(),path.getWeight(),
+			System.out.println(String.format("%d ,%.2f,",i,rr.isSolution(path),
+					path.getWeight(),
 					MonedasHeuristica.heuristic(e1, MonedaVertex.goal(), null)));
 			Collections.sort(Moneda.monedas, Comparator.comparing(m -> m.pesoUnitario()));
 			//		System.out.println(Moneda.monedas);
@@ -51,7 +52,7 @@ public class TestGreedy {
 					.build();	
 			rr = GreedyOnGraph.of(graph, MonedaVertex::aristaVoraz);
 			path = rr.path();
-			System.out.println(String.format("%d ,%s,%.2f,%.2f,",i,rr.isSolution(path),MonedaVoraz.voraz(),path.getWeight(),
+			System.out.println(String.format("%d ,%s,%.2f,",i,rr.isSolution(path),path.getWeight(),
 					MonedasHeuristica.heuristic(e1, MonedaVertex.goal(), null)));
 		}
 	}

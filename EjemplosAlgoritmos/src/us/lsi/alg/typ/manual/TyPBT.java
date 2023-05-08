@@ -1,72 +1,80 @@
 package us.lsi.alg.typ.manual;
 
 
-import java.util.Comparator;
-import java.util.HashSet;
+
 import java.util.List;
 import java.util.Locale;
-import java.util.Set;
+
+import us.lsi.alg.typ.DatosTyP;
+import us.lsi.alg.typ.SolucionTyP;
+import us.lsi.alg.typ.TyPVertex;
 
 public class TyPBT {
 	
 	
-	public static TyPProblem start;
-	public static StateTyP estado;
-	public static Integer minValue;
-	public static Set<SolucionTyP> soluciones;
-	
-	public static void btm(Integer minValue) {
-		TyPBT.start = TyPProblem.first();
-		TyPBT.estado = StateTyP.of(start);
-		TyPBT.minValue = minValue;
-		TyPBT.soluciones = new HashSet<>();
-		btm();
+	public static TyPBT of() {
+		return new TyPBT();
 	}
 	
-	public static void btm(Integer minValue, SolucionTyP s) {
-		TyPBT.start = TyPProblem.first();
-		TyPBT.estado = StateTyP.of(start);
-		TyPBT.minValue = minValue;
-		TyPBT.soluciones = new HashSet<>();
-		TyPBT.soluciones.add(s);
-		btm();
+	private StateTyP estado;
+	private Integer minValue;
+	private SolucionTyP solucion;
+	private Long time;
+
+	private TyPBT() {
+		super();
+	}
+
+	public Long time() {
+		return time;
 	}
 	
-	public static void btm() {
-		if(TyPBT.estado.vertice.index() == DatosTyP.n) {
+	public void bt(TyPVertex start, Integer minValue, SolucionTyP s) {
+		this.time = System.nanoTime();
+		this.estado = StateTyP.of(start);
+		this.minValue = minValue;
+		this.solucion = s;
+		bt();
+		this.time = System.nanoTime() - this.time;
+	}
+	
+	private void bt() {
+		if(this.estado.vertice.index() == DatosTyP.n) {
 			Integer value = estado.valorAcumulado;
-			if(value < TyPBT.minValue) {
-				TyPBT.minValue = value;
-				TyPBT.soluciones.add(TyPBT.estado.solucion());
+			if(this.minValue == null || value < this.minValue) {
+				this.minValue = value;
+				this.solucion = this.estado.solucion();
 			}
 		} else {
-			List<Integer> alternativas = TyPBT.estado.vertice.acciones();
+			List<Integer> alternativas = this.estado.vertice().actions();
 			for(Integer a:alternativas) {	
-				Integer cota = Heuristica.cota(TyPBT.estado.vertice,a);
-				if(cota >= TyPBT.minValue) continue;
-				TyPBT.estado.forward(a);
-				btm();  
-				TyPBT.estado.back(a);
+				Integer cota = Heuristica.cota(this.estado.vertice,a);
+				if(this.minValue != null && cota >= this.minValue) continue;
+				this.estado.forward(a);
+				bt();  
+				this.estado.back(a);
 			}
 		}
 	}
+	
+	public SolucionTyP solucion() {
+		return this.solucion;
+	}
+
 
 	public static void main(String[] args) {
 		Locale.setDefault(Locale.of("en", "US"));
 		DatosTyP.datos("ficheros/tareas.txt",5);
-		TyPProblem v1 = TyPProblem.first();
+		TyPVertex v1 = TyPVertex.first();
 		SolucionTyP s = Heuristica.solucionVoraz(v1);
 		System.out.println(s);
-		long startTime = System.nanoTime();
-		TyPBT.btm(Integer.MAX_VALUE);
-		long endTime = System.nanoTime() - startTime;
-		System.out.println("1 = "+endTime);
-		System.out.println(TyPBT.soluciones.stream().min(Comparator.comparing(x->x.maxCarga())).get());
-		startTime = System.nanoTime();
-		TyPBT.btm(s.maxCarga(),s);
-		long endTime2 = System.nanoTime() - startTime;
-		System.out.println("2 = "+1.*endTime2/endTime);
-		System.out.println(TyPBT.soluciones.stream().min(Comparator.comparing(x->x.maxCarga())).get());
+		TyPBT a = TyPBT.of();
+		a.bt(v1,null,null);
+		System.out.println("1 = "+a.time());
+		System.out.println(a.solucion());
+		a.bt(v1,s.getMaxCarga().intValue(),s);
+		System.out.println("2 = "+a.time());
+		System.out.println(a.solucion());
 	}
 
 }

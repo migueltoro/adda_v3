@@ -23,24 +23,24 @@ public class DatosSudoku {
 	 */
 	public static Integer numeroDeCasillas = numeroDeFilas*numeroDeFilas;
 	
-	public static Sudoku sudoku;
 	
 	/**
 	 * @param nf Fichero de datos
 	 * @post Inicializa las variables del tipo
 	 */
-	public static void iniDatos(String nf) {
+	public static Sudoku leeFichero(String file) {
 		List<Casilla> casillas = new ArrayList<>();
 		IntStream.range(0, DatosSudoku.numeroDeCasillas).forEach(p->casillas.add(Casilla.of(p)));
-		DatosSudoku.sudoku = Sudoku.of(casillas);
-		Files2.streamFromFile(nf)
+		Sudoku sudoku = SudokuI.of(casillas);
+		Files2.streamFromFile(file)
 				.map(ln->Casilla.parse(ln))
-				.forEach(c ->{Casilla co = Sudoku.casillas().get(c.getP()); 
-							   DatosSudoku.sudoku.setValueInCasilla(co,c.getValue());
+				.forEach(c ->{Casilla co = sudoku.casillas().get(c.getP()); 
+							   sudoku.setValueInCasilla(co,c.getValue());
 				 			   co.setInitialValue(true);});
-		DatosSudoku.sudoku.check();
-		DatosSudoku.sudoku.completarValor();
-		DatosSudoku.sudoku.sortIndices(0,DatosSudoku.numeroDeCasillas);		
+		sudoku.check();
+		sudoku.completarValores();
+		sudoku.sortIndices(0,DatosSudoku.numeroDeCasillas);	
+		return sudoku;
 	}
 	
 	public record SolucionSudoku(Sudoku sudoku) implements Comparable<SolucionSudoku>{		
@@ -57,17 +57,15 @@ public class DatosSudoku {
 		
 	}
 	
-	
-	
 	public static void main(String[] args) {
 		Locale.setDefault(Locale.of("en", "US"));
 		DatosSudoku.tamSubCuadro = 3;
-		DatosSudoku.iniDatos("ficheros/sudoku2.txt");
-		System.out.println(DatosSudoku.sudoku);
-		System.out.println(DatosSudoku.sudoku.indices());
+		Sudoku sd = DatosSudoku.leeFichero("ficheros/sudoku2.txt");
+		System.out.println(sd);
+		System.out.println(sd.indices());
 		IntStream.range(0,DatosSudoku.numeroDeCasillas).boxed()
-			.map(i->DatosSudoku.sudoku.casillaIndex(i))
-			.forEach(c->String2.toConsole(String.format("%s, %d",c,DatosSudoku.sudoku.numValoresLibresEnCasilla(c))));
+			.map(i->sd.casillaIndex(i))
+			.forEach(c->String2.toConsole(String.format("%s, %d",c,sd.numValoresLibresEnCasilla(c))));
 		
 //		System.out.println(SudokuProblem.first(DatosSudoku.sudoku));
 	}

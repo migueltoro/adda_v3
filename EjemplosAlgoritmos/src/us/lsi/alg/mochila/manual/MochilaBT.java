@@ -1,50 +1,58 @@
 package us.lsi.alg.mochila.manual;
 
 
-import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
-import java.util.Set;
 
 public class MochilaBT {
 	
-	public static MochilaProblem start;
-	public static StateMochila estado;
-	public static Integer maxValue;
-	public static Set<SolucionMochila> soluciones;
-	
-	public static void btm(Integer capacidadInicial) {
-		MochilaBT.start = MochilaProblem.of(0,capacidadInicial);
-		MochilaBT.estado = StateMochila.of(start);
-		MochilaBT.maxValue = Integer.MIN_VALUE;
-		MochilaBT.soluciones = new HashSet<>();
-		btm();
+	public static MochilaBT of() {
+		return new MochilaBT();
 	}
 	
-	public static void btm(Integer capacidadInicial, Integer maxValue, SolucionMochila s) {
-		MochilaBT.start = MochilaProblem.of(0,capacidadInicial);
-		MochilaBT.estado = StateMochila.of(start);
-		MochilaBT.maxValue = maxValue;
-		MochilaBT.soluciones = new HashSet<>();
-		MochilaBT.soluciones.add(s);
+	private MochilaProblem start;
+	private StateMochila estado;
+	private SolucionMochila solucion;
+	public Integer maxValue;
+	private Long time;
+	
+	private MochilaBT() {
+		super();
+	}
+
+	public void btm(Integer capacidadInicial, Integer maxValue, SolucionMochila s) {
+		this.time = System.nanoTime();
+		this.solucion = s;
+		this.maxValue = maxValue;
+		this.start = MochilaProblem.of(0,capacidadInicial);
+		this.estado = StateMochila.of(start);
 		btm();
+		this.time = System.nanoTime() - this.time;
 	}
 	
-	public static void btm() {
-		if(MochilaBT.estado.vertice().index() == DatosMochila.n) {
+	public Long time() {
+		return time;
+	}
+	
+	public SolucionMochila solucion() {
+		return solucion;
+	}
+
+	public void btm() {
+		if(this.estado.vertice().index() == DatosMochila.n) {
 			Integer value = estado.valorAcumulado();
-			if(value > MochilaBT.maxValue) {
-				MochilaBT.maxValue = value;
-				MochilaBT.soluciones.add(MochilaBT.estado.solucion());
+			if(this.maxValue == null || value > this.maxValue) {
+				this.maxValue = value;
+				this.solucion = SolucionMochila.of(this.start,this.estado.acciones());
 			}
 		} else {
-			List<Integer> alternativas = MochilaBT.estado.vertice().acciones();
+			List<Integer> alternativas = this.estado.vertice().acciones();
 			for(Integer a:alternativas) {	
-				Double cota = MochilaBT.estado.valorAcumulado()+Heuristica.cota(MochilaBT.estado.vertice(),a);
-				if(cota <= MochilaBT.maxValue) continue;
-				MochilaBT.estado.forward(a);
+				Double cota = this.estado.valorAcumulado()+Heuristica.cota(this.estado.vertice(),a);
+				if(this.maxValue != null && cota <= this.maxValue) continue;
+				this.estado.forward(a);
 				btm();  
-				MochilaBT.estado.back(a);
+				this.estado.back(a);
 			}
 		}
 	}
@@ -55,18 +63,15 @@ public class MochilaBT {
 		DatosMochila.capacidadInicial = 78;
 		MochilaProblem v1 = MochilaProblem.of(0, DatosMochila.capacidadInicial);
 		SolucionMochila s = Heuristica.solucionVoraz(v1);
-		long startTime = System.nanoTime();
-		MochilaBT.btm(78);	
-		long endTime = System.nanoTime() - startTime;
-		System.out.println("1 = "+endTime);
-		System.out.println(MochilaBT.soluciones);
-	    startTime = System.nanoTime();
-		MochilaBT.btm(78,s.valor(),s);
-		long endTime2 = System.nanoTime() - startTime;
-		System.out.println("2 = "+endTime2);
-		System.out.println("2 = "+1.*endTime2/endTime);
-		System.out.println(MochilaBT.soluciones);
+		MochilaBT bt = MochilaBT.of();
+		bt.btm(DatosMochila.capacidadInicial,null,null);	
+		System.out.println("1 = "+bt.time());
+		bt.btm(DatosMochila.capacidadInicial,s.valor(),s);
+		System.out.println("2 = "+bt.time());
+		System.out.println(bt.solucion());
 	}
+
+	
 
 
 }

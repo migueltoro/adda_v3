@@ -40,16 +40,16 @@ public class StateMochila {
 		this.valorAcumulado = this.valorAcumulado() - a * DatosMochila.valor(this.vertice.index());
 	}
 
-	SolucionMochila solucion() {
-		return SolucionMochila.of(MochilaBT.start, this.acciones);
-	}
-
 	public MochilaProblem vertice() {
 		return vertice;
 	}
 
 	public Integer valorAcumulado() {
 		return valorAcumulado;
+	}
+
+	public List<Integer> acciones() {
+		return acciones;
 	}
 
 }

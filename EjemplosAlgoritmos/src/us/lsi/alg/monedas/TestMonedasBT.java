@@ -21,7 +21,7 @@ public class TestMonedasBT {
 
 	public static void main(String[] args) {
 		Locale.setDefault(Locale.of("en", "US"));
-		MonedaVertex.datosIniciales("ficheros/monedas2.txt", 400);
+		DatosMonedas.datosIniciales("ficheros/monedas2.txt", 400);
 
 		MonedaVertex e1 = MonedaVertex.first();
 		
@@ -41,7 +41,7 @@ public class TestMonedasBT {
 			System.out.println("Hay solucion voraz 1"+path1.getWeight());
 			ms1 = BT.of(graph,SolucionMonedas::of,path1.getWeight(),path1,true);
 		} else {
-			ms1 = BT.of(graph,SolucionMonedas::of,MonedaVoraz.voraz(),null,true);
+			ms1 = BT.of(graph,SolucionMonedas::of,null,null,true);
 		}
 		
 		ms1.search();
@@ -77,7 +77,7 @@ public class TestMonedasBT {
 			System.out.println("Hay solucion voraz 1"+path1.getWeight());
 			ms1 = BT.of(graph,SolucionMonedas::of,path2.getWeight(),path2,true);
 		} else {
-			ms1 = BT.of(graph,SolucionMonedas::of,MonedaVoraz.voraz(),null,true);
+			ms1 = BT.of(graph,SolucionMonedas::of,null,null,true);
 		}
 		
 		Optional<GraphPath<MonedaVertex, MonedaEdge>> gp = ms1.search();

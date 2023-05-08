@@ -12,6 +12,7 @@ public class StateColor {
 	private Integer valorAcumulado;
 	private List<Integer> acciones;
 	private List<ColorVertex> vertices;
+	
 
 	private StateColor(ColorVertex vertice, Integer valorAcumulado, List<Integer> acciones,
 			List<ColorVertex> vertices) {

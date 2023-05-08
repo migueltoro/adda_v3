@@ -6,38 +6,21 @@ import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
-
 import us.lsi.common.List2;
 import us.lsi.graphs.virtual.SimpleEdgeAction;
 import us.lsi.graphs.virtual.VirtualVertex;
-import us.lsi.tareasyprocesadores.datos.Tarea;
+
 
 public record TyPVertex(Integer index, List<Double> cargas) 
       implements VirtualVertex<TyPVertex, SimpleEdgeAction<TyPVertex,Integer>, Integer>{
 
 	
-	public static Integer numeroDeProcesadores;
-	public static Integer numeroDeTareas;
-	public static TyPVertex inicial;
-	public static Integer n;
-	public static Integer m;
-	
-	public static void datos(String fichero, Integer np) {
-		Tarea.leeTareas(fichero);
-		numeroDeProcesadores = np;
-		numeroDeTareas = Tarea.tareas.size();
-		n = numeroDeTareas;
-		m = numeroDeProcesadores;
-	}
-	
 	public static TyPVertex first() {
-		return new TyPVertex(0,List2.ofTam(0.,m));
+		return new TyPVertex(0,List2.ofTam(0.,DatosTyP.m));
 	}
 	
 	public static TyPVertex last() {
-		n = numeroDeTareas;
-		m = numeroDeProcesadores;
-		return new TyPVertex(n,List2.ofTam(0.,m));
+		return new TyPVertex(DatosTyP.n,List2.ofTam(0.,DatosTyP.m));
 	}
 	
 	public static TyPVertex of(Integer index, List<Double> cargas) {
@@ -46,18 +29,18 @@ public record TyPVertex(Integer index, List<Double> cargas)
 	}
 	
 	public Boolean goal() {
-		return this.index()==TyPVertex.n;
+		return this.index()==DatosTyP.n;
 	}
 	
 	public Integer npMax() {
-		return IntStream.range(0,m)
+		return IntStream.range(0,DatosTyP.m)
 		.boxed()
 		.max(Comparator.comparing(i->this.cargas.get(i)))
 		.get();
 	}
 	
 	public Integer npMin() {
-		return IntStream.range(0,m)
+		return IntStream.range(0,DatosTyP.m)
 				.boxed()
 				.min(Comparator.comparing(i->this.cargas.get(i)))
 				.get();
@@ -76,19 +59,19 @@ public record TyPVertex(Integer index, List<Double> cargas)
 	public List<Integer> actions() {
 		if (this.goal()) return List2.of();
 
-		Map<Double, List<Integer>> s = IntStream.range(0, m).boxed()
+		Map<Double, List<Integer>> s = IntStream.range(0, DatosTyP.m).boxed()
 				.collect(Collectors.groupingBy(p -> this.cargas().get(p)));
 
 		return  s.values().stream().map(ls -> ls.get(0)).collect(Collectors.toList());
 	}
 	
 	public List<Double> cargasDespues(Integer a){
-		Double d = Tarea.getDuracion(this.index) + this.cargas().get(a);
+		Double d = DatosTyP.duracion(this.index) + this.cargas().get(a);
         return List2.setElement(this.cargas(), a, d);
 	}
 	
 	public Integer greadyAction() {
-		return IntStream.range(0,m)
+		return IntStream.range(0,DatosTyP.m)
 				.boxed()
 				.min(Comparator.comparing(a->cargasDespues(a).get(a)))
 				.get();

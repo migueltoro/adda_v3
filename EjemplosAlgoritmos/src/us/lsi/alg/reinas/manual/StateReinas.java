@@ -1,19 +1,29 @@
 package us.lsi.alg.reinas.manual;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import us.lsi.alg.reinas.ReinasVertex;
+import us.lsi.alg.reinas.SolucionReinas;
+
 public class StateReinas {
-	ReinasProblem vertice;
-	List<ReinasProblem> vertices;
 	
-	public StateReinas(ReinasProblem vertice, List<ReinasProblem> vertices) {
+	public static StateReinas of(ReinasVertex vertice) {
+		return new StateReinas(vertice);
+	}
+
+	private ReinasVertex vertice;
+	private List<ReinasVertex> vertices;
+	
+	private StateReinas(ReinasVertex vertice) {
 		super();
 		this.vertice = vertice;
-		this.vertices = vertices;
+		this.vertices = new ArrayList<>();
+		this.vertices.add(vertice);
 	}
 
 	void forward(Integer a) {
-		ReinasProblem nv = vertice.vecino(a);
+		ReinasVertex nv = vertice.neighbor(a);
 		this.vertices.add(nv);
 		this.vertice = nv;
 	}
@@ -23,8 +33,12 @@ public class StateReinas {
 		this.vertice = this.vertices.get(this.vertices.size()-1);		
 	}
 	
-	SolucionReinas solucion() {
+	public SolucionReinas solucion() {
 		return SolucionReinas.of(this.vertice);
 	}
-	
+
+	public ReinasVertex vertice() {
+		return vertice;
+	}
+
 }

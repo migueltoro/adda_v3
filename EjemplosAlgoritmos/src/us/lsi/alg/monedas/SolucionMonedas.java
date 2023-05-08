@@ -1,6 +1,8 @@
 package us.lsi.alg.monedas;
 
 
+import java.util.List;
+
 import org.jgrapht.GraphPath;
 import us.lsi.common.Multiset;
 
@@ -19,6 +21,21 @@ public record SolucionMonedas(Multiset<Moneda> monedas, Integer peso, Integer va
 			monedas.add(m, e.action());
 			peso = peso + e.action() * p;
 			valor = valor + e.action() * v;
+		}
+		return new SolucionMonedas(monedas, peso,valor);
+	}
+	
+	public static SolucionMonedas of(List<Integer> unidades) {	
+		Multiset<Moneda> monedas = Multiset.empty();
+		Integer peso = 0;
+		Integer valor = 0;
+		for (int i =0; i<unidades.size();i++) {
+			Moneda m = Moneda.get(i);
+			Integer p = Moneda.peso(i);
+			Integer v = Moneda.valor(i);
+			monedas.add(m, unidades.get(i));
+			peso = peso + unidades.get(i) * p;
+			valor = valor + unidades.get(i) * v;
 		}
 		return new SolucionMonedas(monedas, peso,valor);
 	}

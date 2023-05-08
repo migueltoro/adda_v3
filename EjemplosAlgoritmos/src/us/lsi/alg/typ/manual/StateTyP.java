@@ -3,17 +3,18 @@ package us.lsi.alg.typ.manual;
 import java.util.ArrayList;
 import java.util.List;
 
-
+import us.lsi.alg.typ.SolucionTyP;
+import us.lsi.alg.typ.TyPVertex;
 import us.lsi.common.List2;
 
 public class StateTyP {
 
-	TyPProblem vertice;
+	TyPVertex vertice;
 	Integer valorAcumulado;
 	List<Integer> acciones;
-	List<TyPProblem> vertices;
+	List<TyPVertex> vertices;
 
-	public StateTyP(TyPProblem vertice, Integer valorAcumulado, List<Integer> acciones, List<TyPProblem> vertices) {
+	public StateTyP(TyPVertex vertice, Integer valorAcumulado, List<Integer> acciones, List<TyPVertex> vertices) {
 		super();
 		this.vertice = vertice;
 		this.valorAcumulado = valorAcumulado;
@@ -21,27 +22,33 @@ public class StateTyP {
 		this.vertices = vertices;
 	}
 
-	public static StateTyP of(TyPProblem vertex) {
-		List<TyPProblem> vt = List2.of(vertex);
+	public static StateTyP of(TyPVertex vertex) {
+		List<TyPVertex> vt = List2.of(vertex);
 		return new StateTyP(vertex, 0, new ArrayList<>(), vt);
 	}
 
-	void forward(Integer a) {
+	public void forward(Integer a) {
 		this.acciones.add(a);
-		TyPProblem vcn = this.vertice.vecino(a);
+		TyPVertex vcn = this.vertice.neighbor(a);
 		this.vertices.add(vcn);
-		this.valorAcumulado = vcn.maxCarga();
+		this.valorAcumulado = vcn.maxCarga().intValue();
 		this.vertice = vcn;
 	}
 
-	void back(Integer a) {
+	public void back(Integer a) {
 		this.acciones.remove(this.acciones.size() - 1);
 		this.vertices.remove(this.vertices.size() - 1);
 		this.vertice = this.vertices.get(this.vertices.size() - 1);
-		this.valorAcumulado = this.vertice.maxCarga();
+		this.valorAcumulado = this.vertice.maxCarga().intValue();
+	}
+	
+
+	public SolucionTyP solucion() {
+		return SolucionTyP.of(TyPVertex.first(), this.acciones);
 	}
 
-	SolucionTyP solucion() {
-		return SolucionTyP.of(TyPBT.start, this.vertice.acciones());
+	public TyPVertex vertice() {
+		return vertice;
 	}
+	
 }

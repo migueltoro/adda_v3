@@ -12,27 +12,37 @@ import us.lsi.alg.colorgraphs.SolucionColor;
 public class BTColor {
 	
 	private StateColor estado;
-	private Integer minValue;
-	private SolucionColor solucion;
+	private Integer minValue = null;
+	private SolucionColor solucion = null;
+	private Long time;
 	
 	public static BTColor of() {
 		return new BTColor();
 	}
 	
 	public SolucionColor solucion() {
-		return solucion;
+		return this.solucion;
+	}
+	
+	public Long time() {
+		return time;
 	}
 
 	private BTColor() {
-		this.estado = StateColor.of(ColorVertex.first());
-		this.minValue = DatosColor.m;
-		this.solucion = null;
 	}
 	
-	public void btm() {
+	public void btm(Integer minValue, SolucionColor s) {
+		this.time = System.nanoTime();
+		this.minValue = minValue;
+		this.estado = StateColor.of(ColorVertex.first());
+		btm();
+		this.time = System.nanoTime() - this.time;
+	}
+	
+	private void btm() {
 		if(this.estado.vertice().index() == DatosColor.n) {
 			Integer value = estado.valorAcumulado();
-			if(value < this.minValue) {
+			if(this.minValue == null || value < this.minValue) {
 				this.minValue = value;
 				this.solucion = this.estado.solucion();
 			}
@@ -40,7 +50,7 @@ public class BTColor {
 			List<Integer> alternativas = this.estado.vertice().actions();
 			for(Integer a:alternativas) {	
 				Integer cota = this.estado.vertice().neighbor(a).nc();
-				if(cota >= this.minValue) continue;
+				if(this.minValue != null && cota >= this.minValue) continue;
 				this.estado.forward(a);
 				btm();  
 				this.estado.back(a);
@@ -53,11 +63,16 @@ public class BTColor {
 	public static void main(String[] args) {
 		Locale.setDefault(Locale.of("en", "US"));
 		
-		DatosColor.data(4,"ficheros/andalucia.txt");
+		DatosColor.data(20,"ficheros/andalucia.txt");
 		
 		BTColor bt = BTColor.of();
 		
-		bt.btm();
+		Integer vr = GreedyColor.valoVoraz(ColorVertex.first());
+		SolucionColor sv = GreedyColor.solucionVoraz(ColorVertex.first());
+		bt.btm(null,null);
+		System.out.println("1 = "+bt.time());
+		bt.btm(vr,sv);
+		System.out.println("2 = "+bt.time());
 		
 		System.out.println("BT = "+ bt.solucion());
 

@@ -1,67 +1,96 @@
 package us.lsi.alg.reinas.manual;
 
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Locale;
 import java.util.Set;
+import java.util.stream.Collectors;
+
+import us.lsi.alg.reinas.ReinasVertex;
+import us.lsi.alg.reinas.SolucionReinas;
 import us.lsi.common.List2;
 
 public class ReinasBTRandom {
 	
+	public static ReinasBTRandom of(Integer nr) {
+		return new ReinasBTRandom(nr);
+	}
+		
+	private ReinasVertex start;
+	private StateReinas estado;
+	private Integer numeroDeSoluciones;
+	private Set<SolucionReinas> soluciones;
+	private Integer threshold;
+	private Integer iteracionesMax;
+	private Integer iteraciones;
+	private Long time;
 	
-	
-	public static ReinasProblem start;
-	public static StateReinas estado;
-	public static Set<SolucionReinas> soluciones;
-	public static Integer threshold;
-	public static Integer iteraciones;
-	
-	public static void btm(Integer nr) {
-		ReinasProblem.n = nr;
-		ReinasBTRandom.iteraciones = 0;
-		do {
-			ReinasBTRandom.start = ReinasProblem.first();
-			List<ReinasProblem> va = new ArrayList<>();
-			va.add(ReinasBTRandom.start);
-			ReinasBTRandom.estado = new StateReinas(ReinasBTRandom.start,va);
-			ReinasBTRandom.soluciones = new HashSet<>();
-			ReinasBTRandom.btm();
-			ReinasBTRandom.iteraciones++;
-		}while(ReinasBTRandom.soluciones.size()==0);
+	private ReinasBTRandom(Integer nr) {
+		super();
+		ReinasVertex.n = nr;
 	}
 	
-	public static void btm() {
-		if(ReinasBTRandom.estado.vertice.index() == ReinasProblem.n) {
-			SolucionReinas s = ReinasBTRandom.estado.solucion();
-			if(s != null) ReinasBTRandom.soluciones.add(s);
+	public Long time() {
+		return time;
+	}
+	
+	public void btr(ReinasVertex start,Integer numeroDeSoluciones,Integer threshold,Integer iteracionesMax) {
+		this.time = System.nanoTime();
+		this.start = start;
+		this.estado = StateReinas.of(start);
+		this.soluciones = new HashSet<>();
+		this.threshold = threshold;
+		this.iteracionesMax = iteracionesMax;
+		this.iteraciones = 0;
+		this.numeroDeSoluciones = numeroDeSoluciones;
+		btr();
+		this.time = System.nanoTime() - this.time;
+	}
+
+	private void btr() {
+		do {
+			if(this.iteraciones >= this.iteracionesMax) break;
+			this.start = ReinasVertex.first();
+			this.estado = StateReinas.of(this.start);
+			this.soluciones = new HashSet<>();
+			this.bt();
+			this.iteraciones++;
+		}while(this.soluciones.size()<this.numeroDeSoluciones);
+	}
+	
+	private void bt() {
+		if(this.estado.vertice().index() == ReinasVertex.n) {
+			SolucionReinas s = this.estado.solucion();
+			if(s != null) this.soluciones.add(s);
 		} else {
-			List<Integer> alternativas = ReinasBTRandom.estado.vertice.acciones();
-			if(ReinasBTRandom.estado.vertice.size() > ReinasBTRandom.threshold) {
+			List<Integer> alternativas = this.estado.vertice().actions();
+			if(this.estado.vertice().size() > this.threshold) {
 				alternativas = List2.randomUnitary(alternativas);
 			}
 			for(Integer a:alternativas) {	
-				ReinasBTRandom.estado.forward(a);
-				ReinasBTRandom.btm();  
-				ReinasBTRandom.estado.back(a);
+				this.estado.forward(a);
+				this.bt();  
+				this.estado.back(a);
 			}
 		}
 	}
 	
-	public static SolucionReinas solucion() {
-		return ReinasBTRandom.soluciones.stream().findFirst().get();
+	public Set<SolucionReinas> soluciones() {
+		return this.soluciones;
+	}
+	
+	public Integer iteraciones() {
+		return iteraciones;
 	}
 
 	public static void main(String[] args) {
-		Locale.setDefault(Locale.of("en", "US"));
-		Integer n = 120;
-		ReinasBTRandom.threshold = 15;
-		long startTime = System.nanoTime();
-		ReinasBTRandom.btm(n);	
-		long endTime = System.nanoTime() - startTime;
-		System.out.println("1 = "+endTime);
-		System.out.println("Iteraciones = "+ReinasBTRandom.iteraciones);
-		System.out.println(ReinasBTRandom.solucion());
+		ReinasBTRandom a = ReinasBTRandom.of(120);
+		a.btr(ReinasVertex.first(),3,15,1000);	
+		System.out.println("Time = "+a.time());
+		System.out.println("Iteraciones = "+a.iteraciones());
+		System.out.println(a.soluciones().size());
+		System.out.println(a.soluciones().stream().map(s->s.toString()).collect(Collectors.joining("\n")));
 	}
+
+	
 
 }

@@ -10,7 +10,7 @@ import us.lsi.alg.colorgraphs.SolucionColor;
 
 public class GreedyColor {
 	
-	public static Integer voraz(ColorVertex v1) {
+	public static Integer valoVoraz(ColorVertex v1) {
 		ColorVertex v = v1;
 		while (v.index() < DatosColor.n) {
 			Integer a = v.greedyAction();
@@ -35,7 +35,7 @@ public class GreedyColor {
 		
 		DatosColor.data(9,"ficheros/andalucia.txt");
 		
-		System.out.println("Voraz = "+voraz(ColorVertex.first()));
+		System.out.println("Voraz = "+valoVoraz(ColorVertex.first()));
 		
 		System.out.println(solucionVoraz(ColorVertex.first()));
 

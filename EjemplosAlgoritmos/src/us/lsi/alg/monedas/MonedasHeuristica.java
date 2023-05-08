@@ -8,11 +8,11 @@ import us.lsi.graphs.alg.Greedy;
 public class MonedasHeuristica {
 	
 	public static Double heuristic_negate(MonedaVertex v1, Predicate<MonedaVertex> goal, MonedaVertex v2) {
-		return -hu(Mnd.of(v1.index(), v1.valorRestante().doubleValue()),v->v.index() == MonedaVertex.n);
+		return -hu(Mnd.of(v1.index(), v1.valorRestante().doubleValue()),v->v.index() == DatosMonedas.n);
 	}
 	
 	public static Double heuristic(MonedaVertex v1, Predicate<MonedaVertex> goal, MonedaVertex v2) {
-		return hu(Mnd.of(v1.index(), v1.valorRestante().doubleValue()),v->v.index() == MonedaVertex.n);
+		return hu(Mnd.of(v1.index(), v1.valorRestante().doubleValue()),v->v.index() == DatosMonedas.n);
 	}
 	
 	public static record Mnd(Integer index, Double vr) {

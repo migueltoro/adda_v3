@@ -26,8 +26,8 @@ public class AStarColor {
 		}	
 	}
 	
-	public static AStarColor of(ColorVertex start) {
-		return new AStarColor(start);
+	public static AStarColor of() {
+		return new AStarColor();
 	}
 	
 	private Map<ColorVertex,Handle<Integer,AStarDataColor>> tree;
@@ -35,18 +35,11 @@ public class AStarColor {
 	private Boolean goal;
 	private Comparator<Integer> cmp;
 	private Integer minValue;
+	private SolucionColor solucion;
+	private Long time;
 	
-	private AStarColor(ColorVertex start) {
+	private AStarColor() {
 		super();
-		Integer distanceToEnd = start.nc();
-		AStarDataColor a = AStarDataColor.of(start,null,null,0);
-		this.cmp = Comparator.naturalOrder();
-		this.heap = new FibonacciHeap<>(cmp);
-		Handle<Integer, AStarDataColor> h = this.heap.insert(distanceToEnd,a);
-		this.tree = new HashMap<>();
-		this.tree.put(start,h);
-		this.goal = false;
-		this.minValue = DatosColor.m;
 	}
 	
 	private List<Integer> acciones(ColorVertex v) {
@@ -60,15 +53,41 @@ public class AStarColor {
 		Collections.reverse(ls);
 		return ls;
 	}
+	
+	public Long time() {
+		return time;
+	}
+	
+	public SolucionColor solucion() {
+		return solucion;
+	}
+
+	public SolucionColor search(ColorVertex start,Integer minValue, SolucionColor s) {
+		this.time = System.nanoTime();
+		Integer distanceToEnd = start.nc();
+		AStarDataColor a = AStarDataColor.of(start,null,null,0);
+		this.cmp = Comparator.naturalOrder();
+		this.heap = new FibonacciHeap<>(cmp);
+		Handle<Integer, AStarDataColor> h = this.heap.insert(distanceToEnd,a);
+		this.tree = new HashMap<>();
+		this.tree.put(start,h);
+		this.goal = false;
+		this.minValue = minValue;
+		this.solucion = s;
+		List<Integer> r = search();		
+		this.time = System.nanoTime() - this.time;
+		if(r==null) return this.solucion;
+		return SolucionColor.of(r);
+	}
 
 	private Boolean forget(ColorVertex v) {
 		Integer w = v.nc();
-		Boolean r = this.cmp.compare(w,this.minValue) >= 0;
+		Boolean r = this.minValue!=null && this.cmp.compare(w,this.minValue) >= 0;
 		if(r) this.tree.remove(v);
 		return r;
 	}
-
-	public List<Integer> search() {
+	
+	private List<Integer> search() {
 		ColorVertex vertexActual = null;
 		while (!heap.isEmpty() && !goal) {
 			Handle<Integer, AStarDataColor> ha = heap.deleteMin();
@@ -92,6 +111,7 @@ public class AStarColor {
 			}
 			this.goal = vertexActual.index() == DatosColor.n;
 		}
+		if(!this.goal) return null;
 		return acciones(vertexActual);
 	}
 	
@@ -99,13 +119,20 @@ public class AStarColor {
 	public static void main(String[] args) {
 		Locale.setDefault(Locale.of("en", "US"));
 		
-		DatosColor.data(4,"ficheros/andalucia.txt");
+		DatosColor.data(10,"ficheros/andalucia.txt");
 		
-		AStarColor as = AStarColor.of(ColorVertex.first());
+		AStarColor as = AStarColor.of();
 		
-		List<Integer> acciones = as.search();
+		SolucionColor sv = GreedyColor.solucionVoraz(ColorVertex.first());
+//		System.out.println(s);
+
+		SolucionColor so = as.search(ColorVertex.first(),null,null);
+		System.out.println(as.time());
+		System.out.println(so);
+		so = as.search(ColorVertex.first(),sv.nc(),sv);
+		System.out.println(as.time());
 		
-		System.out.println("A* = "+ SolucionColor.of(acciones));
+		System.out.println(so);
 
 	}
 }

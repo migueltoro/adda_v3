@@ -4,41 +4,39 @@ import java.util.ArrayList;
 import java.util.List;
 
 import us.lsi.alg.sudoku.DatosSudoku.SolucionSudoku;
+import us.lsi.alg.sudoku.SudokuVertex;
 
 
 public class StateSudoku {
-	private SudokuProblem vertice;
-	private List<SudokuProblem> vertices;
 
-	private StateSudoku(SudokuProblem vertice, List<SudokuProblem> vertices) {
+	private List<SudokuVertex> vertices;
+
+	private StateSudoku(List<SudokuVertex> vertices) {
 		super();
-		this.vertice = vertice;
 		this.vertices = vertices;
 	}
 
-	public static StateSudoku of(SudokuProblem vertex) {
-		List<SudokuProblem> vt = new ArrayList<>();
+	public static StateSudoku of(SudokuVertex vertex) {
+		List<SudokuVertex> vt = new ArrayList<>();
 		vt.add(vertex);
-		return new StateSudoku(vertex, vt);
+		return new StateSudoku(vt);
 	}
 
 	void forward(Integer a) {
-		SudokuProblem vcn = this.vertice().vecino(a);
+		SudokuVertex vcn = this.vertice().neighbor(a);
 		this.vertices.add(vcn);
-		this.vertice = vcn;
 	}
 
 	void back(Integer a) {
 		this.vertices.remove(this.vertices.size() - 1);
-		this.vertice = this.vertices.get(this.vertices.size() - 1);
 	}
 
 	SolucionSudoku solucion() {
-		return new SolucionSudoku(this.vertice.sudoku());
+		return new SolucionSudoku(this.vertice().sudoku());
 	}
 
-	public SudokuProblem vertice() {
-		return vertice;
+	public SudokuVertex vertice() {
+		return this.vertices.get(this.vertices.size() - 1);
 	}
 
 }

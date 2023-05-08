@@ -10,38 +10,36 @@ import java.util.Map;
 import org.jheaps.AddressableHeap.Handle;
 import org.jheaps.tree.FibonacciHeap;
 
+import us.lsi.alg.typ.DatosTyP;
+import us.lsi.alg.typ.SolucionTyP;
+import us.lsi.alg.typ.TyPVertex;
+
 public class TyPAStar {
 	
-	public static record AStarTyP(TyPProblem vertex, Integer a, TyPProblem lastVertex,
+	public static record AStarTyP(TyPVertex vertex, Integer a, TyPVertex lastVertex,
 			Integer distanceToOrigin) {
-		public static AStarTyP of(TyPProblem vertex, Integer a, TyPProblem lastVertex,
+		public static AStarTyP of(TyPVertex vertex, Integer a, TyPVertex lastVertex,
 			Integer distanceToOrigin) {
 			return new AStarTyP(vertex, a, lastVertex,distanceToOrigin);
 		}	
 	}
 	
-	public static TyPAStar of(TyPProblem start) {
-		return new TyPAStar(start);
+	public static TyPAStar of() {
+		return new TyPAStar();
 	}
 	
-	public TyPProblem start;
-	public Map<TyPProblem,Handle<Double,AStarTyP>> tree;
-	public FibonacciHeap<Double,AStarTyP> heap; 
-	public Boolean goal;
+	private Map<TyPVertex,Handle<Double,AStarTyP>> tree;
+	private FibonacciHeap<Double,AStarTyP> heap; 
+	private Boolean goal;
+	private Integer minValue;
+	private SolucionTyP solucion;
+	private Long time;
 	
-	private TyPAStar(TyPProblem start) {
+	private TyPAStar() {
 		super();
-		this.start = start;
-		Double distanceToEnd = (double)Heuristica.heuristica(start);
-		AStarTyP a = AStarTyP.of(start, null,null,0);
-		this.heap = new FibonacciHeap<>();
-		Handle<Double, AStarTyP> h = this.heap.insert(distanceToEnd,a);
-		this.tree = new HashMap<>();
-		this.tree.put(start,h);
-		this.goal = false;
 	}
 	
-	private List<Integer> acciones(TyPProblem v) {
+	private List<Integer> acciones(TyPVertex v) {
 		List<Integer> ls = new ArrayList<>();
 		Integer a = this.tree.get(v).getValue().a();
 		while (a != null) {
@@ -52,17 +50,49 @@ public class TyPAStar {
 		Collections.reverse(ls);
 		return ls;
 	}
+	
+	public Long time() {
+		return time;
+	}
+	
+	public SolucionTyP solucion() {
+		return solucion;
+	}
+	
+	public SolucionTyP search(TyPVertex start,Integer minValue, SolucionTyP s) {
+		this.time = System.nanoTime();
+		Double distanceToEnd = (double)Heuristica.heuristica(start);
+		AStarTyP a = AStarTyP.of(start, null,null,0);
+		this.heap = new FibonacciHeap<>();
+		Handle<Double, AStarTyP> h = this.heap.insert(distanceToEnd,a);
+		this.tree = new HashMap<>();
+		this.tree.put(start,h);
+		this.goal = false;
+		this.minValue = minValue;
+		this.solucion = s;
+		List<Integer> r = search();
+		this.time = System.nanoTime() - this.time;
+		if(r==null) return this.solucion;
+		return SolucionTyP.of(start, r);		
+	}
+	
+	private Boolean forget(TyPVertex v) {
+		Integer w = v.maxCarga().intValue();
+		Boolean r = this.minValue!=null && w >= this.minValue;
+		if(r) this.tree.remove(v);
+		return r;
+	}
 
-
-	public List<Integer> search() {
-		TyPProblem vertexActual = null;
+	private List<Integer> search() {
+		TyPVertex vertexActual = null;
 		while (!heap.isEmpty() && !goal) {
 			Handle<Double, AStarTyP> ha = heap.deleteMin();
 			AStarTyP dataActual = ha.getValue();
 			vertexActual = dataActual.vertex();
-			for (Integer a : vertexActual.acciones()) {
-				TyPProblem v = vertexActual.vecino(a);
-				Integer newDistance = v.maxCarga();
+			if(forget(vertexActual)) continue;
+			for (Integer a : vertexActual.actions()) {
+				TyPVertex v = vertexActual.neighbor(a);
+				Integer newDistance = v.maxCarga().intValue();
 				Integer newDistanceToEnd = Heuristica.heuristica(v);				
 				if (!tree.containsKey(v)) {	
 					AStarTyP ac = AStarTyP.of(v, a, vertexActual, newDistance);
@@ -77,16 +107,19 @@ public class TyPAStar {
 			}
 			this.goal = vertexActual.index() == DatosTyP.n;
 		}
+		if(!this.goal) return null;
 		return acciones(vertexActual);
 	}
 
 	public static void main(String[] args) {
 		Locale.setDefault(Locale.of("en", "US"));
 		DatosTyP.datos("ficheros/tareas.txt",5);
-		TyPProblem e1 = TyPProblem.first();
-		TyPAStar a = of(e1);
-		List<Integer> acciones = a.search();
-		System.out.println(SolucionTyP.of(e1, acciones));
+		TyPVertex e1 = TyPVertex.first();
+		SolucionTyP sv = Heuristica.solucionVoraz(e1);
+		TyPAStar a = of();
+		SolucionTyP s = a.search(e1,sv.getMaxCarga().intValue(),sv);
+		System.out.println(a.time());
+		System.out.println(s);
 	}
 
 }

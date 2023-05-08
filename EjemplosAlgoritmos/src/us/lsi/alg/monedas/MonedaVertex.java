@@ -11,37 +11,26 @@ import java.util.stream.IntStream;
 import us.lsi.graphs.virtual.VirtualVertex;
 
 public record MonedaVertex(Integer index,Integer valorRestante) implements VirtualVertex<MonedaVertex, MonedaEdge, Integer>{
-	
-	
-	public static void datosIniciales(String fichero, Integer valorInicial) {
-		Moneda.datos(fichero);
-		MonedaVertex.valorInicial = valorInicial;
-		MonedaVertex.n = Moneda.monedas.size();
-	}
 
 	public static MonedaVertex of(Integer index, Integer valorRestante) {
 		return new MonedaVertex(index, valorRestante);
 	}
 
-
 	public static MonedaVertex first() {
-		return new MonedaVertex(0,MonedaVertex.valorInicial);
+		return new MonedaVertex(0,DatosMonedas.valorInicial);
 	}
 	
 	public static MonedaVertex last() {
-		return new MonedaVertex(MonedaVertex.n,0);
+		return new MonedaVertex(DatosMonedas.n,0);
 	}
 	
 	public static Predicate<MonedaVertex> goal() {
-		return v->v.index() == MonedaVertex.n;
+		return v->v.index() == DatosMonedas.n;
 	}
 	
 	public static Predicate<MonedaVertex> goalHasSolution() {
 		return v->v.valorRestante() == 0;
 	}
-
-	public static Integer n;
-	public static Integer valorInicial;
 	
 
 	public MonedaVertex copy() {
@@ -49,12 +38,12 @@ public record MonedaVertex(Integer index,Integer valorRestante) implements Virtu
 	}
 	
 	public Integer size() {
-		return MonedaVertex.n - this.index();
+		return DatosMonedas.n - this.index();
 	}
 	
 	@Override
 	public Boolean isValid() {
-		return this.index() >=0 && this.index() <= MonedaVertex.n && this.valorRestante() >=0;
+		return this.index() >=0 && this.index() <= DatosMonedas.n && this.valorRestante() >=0;
 	}
 
 	public MonedaEdge aristaVoraz() {
@@ -65,10 +54,10 @@ public record MonedaVertex(Integer index,Integer valorRestante) implements Virtu
 	@Override
 	public List<Integer> actions() {
 		List<Integer> r;
-		if(this.index() == MonedaVertex.n) r = new ArrayList<>();
-		else if(this.index() == MonedaVertex.n-1 && this.valorRestante%Moneda.valor(this.index) == 0) {
+		if(this.index() == DatosMonedas.n) r = new ArrayList<>();
+		else if(this.index() == DatosMonedas.n-1 && this.valorRestante%Moneda.valor(this.index) == 0) {
 			r = List.of(this.aristaVoraz().action());
-		} else if(this.index() == MonedaVertex.n-1 && this.valorRestante%Moneda.valor(this.index) != 0) {
+		} else if(this.index() == DatosMonedas.n-1 && this.valorRestante%Moneda.valor(this.index) != 0) {
 		    r = new ArrayList<>();
 		} else {
 			Integer nue = this.valorRestante()/Moneda.valor(this.index);
