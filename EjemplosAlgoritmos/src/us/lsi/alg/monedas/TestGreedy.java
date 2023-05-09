@@ -39,7 +39,7 @@ public class TestGreedy {
 					.build();	
 			GreedyOnGraph<MonedaVertex, MonedaEdge> rr = GreedyOnGraph.of(graph);
 			GraphPath<MonedaVertex, MonedaEdge> path = rr.path();
-			System.out.println(String.format("%d ,%.2f,",i,rr.isSolution(path),
+			System.out.println(String.format("%s ,%s,",i,rr.isSolution(path),
 					path.getWeight(),
 					MonedasHeuristica.heuristic(e1, MonedaVertex.goal(), null)));
 			Collections.sort(Moneda.monedas, Comparator.comparing(m -> m.pesoUnitario()));
@@ -52,7 +52,7 @@ public class TestGreedy {
 					.build();	
 			rr = GreedyOnGraph.of(graph, MonedaVertex::aristaVoraz);
 			path = rr.path();
-			System.out.println(String.format("%d ,%s,%.2f,",i,rr.isSolution(path),path.getWeight(),
+			System.out.println(String.format("%s,%s,%.2f,",i,rr.isSolution(path),path.getWeight(),
 					MonedasHeuristica.heuristic(e1, MonedaVertex.goal(), null)));
 		}
 	}

@@ -11,11 +11,15 @@ import java.util.Map;
 import org.jheaps.AddressableHeap.Handle;
 import org.jheaps.tree.FibonacciHeap;
 
+import us.lsi.alg.mochila.MochilaVertex;
+import us.lsi.alg.mochila.SolucionMochila;
+import us.lsi.mochila.datos.DatosMochila;
+
 public class MochilaAStar {
 	
-	public static record AStarMochila(MochilaProblem vertex, Integer a, MochilaProblem lastVertex,
+	public static record AStarMochila(MochilaVertex vertex, Integer a, MochilaVertex lastVertex,
 			Double distanceToOrigin) {
-		public static AStarMochila of(MochilaProblem vertex, Integer a, MochilaProblem lastVertex,
+		public static AStarMochila of(MochilaVertex vertex, Integer a, MochilaVertex lastVertex,
 			Double distanceToOrigin) {
 			return new AStarMochila(vertex, a, lastVertex,distanceToOrigin);
 		}	
@@ -29,10 +33,10 @@ public class MochilaAStar {
 		return time;
 	}
 	
-	private MochilaProblem start;
+	private MochilaVertex start;
 	private Integer maxValue;
 	private SolucionMochila solucion;
-	private Map<MochilaProblem,Handle<Double,AStarMochila>> tree;
+	private Map<MochilaVertex,Handle<Double,AStarMochila>> tree;
 	private FibonacciHeap<Double,AStarMochila> heap; 
 	private Boolean goal;
 	private Comparator<Double> cmp;
@@ -42,7 +46,7 @@ public class MochilaAStar {
 		super();
 	}
 	
-	private List<Integer> acciones(MochilaProblem v) {
+	private List<Integer> acciones(MochilaVertex v) {
 		List<Integer> ls = new ArrayList<>();
 		Integer a = this.tree.get(v).getValue().a();
 		while (a != null) {
@@ -54,7 +58,7 @@ public class MochilaAStar {
 		return ls;
 	}
 
-	public SolucionMochila search(MochilaProblem start, Integer maxValue, SolucionMochila s) {
+	public SolucionMochila search(MochilaVertex start, Integer maxValue, SolucionMochila s) {
 		this.time = System.nanoTime();
 		this.start = start;
 		this.maxValue = maxValue;
@@ -74,15 +78,15 @@ public class MochilaAStar {
 	}
 
 	public List<Integer> search() {		
-		MochilaProblem vertexActual = null;
+		MochilaVertex vertexActual = null;
 		while (!heap.isEmpty() && !goal) {
 			Handle<Double, AStarMochila> ha = heap.deleteMin();
 			AStarMochila dataActual = ha.getValue();
 			vertexActual = dataActual.vertex();
 			if(this.maxValue != null &&  Heuristica.heuristica(vertexActual) <= this.maxValue) continue;
-			for (Integer a : vertexActual.acciones()) {
-				MochilaProblem v = vertexActual.vecino(a);
-				Double newDistance = dataActual.distanceToOrigin()+a*DatosMochila.valor(vertexActual.index());
+			for (Integer a : vertexActual.actions()) {
+				MochilaVertex v = vertexActual.neighbor(a);
+				Double newDistance = dataActual.distanceToOrigin()+a*DatosMochila.getValor(vertexActual.index());
 				Double newDistanceToEnd = newDistance + Heuristica.heuristica(v);				
 				if (!tree.containsKey(v)) {	
 					AStarMochila ac = AStarMochila.of(v, a, vertexActual, newDistance);
@@ -109,9 +113,9 @@ public class MochilaAStar {
 
 	public static void main(String[] args) {
 		Locale.setDefault(Locale.of("en", "US"));
-		DatosMochila.datos("ficheros/objetosMochila.txt");
+		DatosMochila.iniDatos("ficheros/objetosMochila.txt");
 		DatosMochila.capacidadInicial = 78;
-		MochilaProblem v1 = MochilaProblem.of(0, DatosMochila.capacidadInicial);
+		MochilaVertex v1 = MochilaVertex.of(0, DatosMochila.capacidadInicial);
 		SolucionMochila sv = Heuristica.solucionVoraz(v1);
 		MochilaAStar a = MochilaAStar.of();
 		SolucionMochila s = a.search(v1,null,null);

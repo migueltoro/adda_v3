@@ -5,16 +5,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Predicate;
 
-import org.jgrapht.GraphPath;
-
+import us.lsi.alg.monedas.DatosMonedas;
 import us.lsi.alg.monedas.Moneda;
-import us.lsi.alg.monedas.MonedaEdge;
 import us.lsi.alg.monedas.MonedaVertex;
 import us.lsi.alg.monedas.SolucionMonedas;
-import us.lsi.graphs.alg.GreedyOnGraph;
-import us.lsi.graphs.virtual.EGraph;
-import us.lsi.graphs.virtual.EGraph.Type;
-import us.lsi.path.EGraphPath.PathType;
 
 public class MonedasHeuristica {
 
@@ -42,10 +36,13 @@ public class MonedasHeuristica {
 		return a*Moneda.peso(vertex.index())+heuristic(v,MonedaVertex.goal(),MonedaVertex.last());
 	}
 	
-	public static SolucionMonedas solucionVoraz(MonedasVertex v1) {	
+	public static SolucionMonedas solucionVoraz(MonedaVertex v1) {	
 		List<Integer> acciones = new ArrayList<>();
-		for(int index=v1.index(),index < DatosMonedas.n,index++) {
-			Double a = valorRestante / Moneda.valor(index);
+		Integer r = 0;
+		Integer p = 0;
+		Integer valorRestante = v1.valorRestante();
+		for(int index = v1.index(); index < DatosMonedas.n; index++) {
+			Integer a = v1.aristaVoraz().action();
 			r = r + a * Moneda.valor(index);
 			p = p + a * Moneda.peso(index);
 			valorRestante = valorRestante - a * Moneda.valor(index);

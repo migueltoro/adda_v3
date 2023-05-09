@@ -4,13 +4,17 @@ package us.lsi.alg.mochila.manual;
 import java.util.List;
 import java.util.Locale;
 
+import us.lsi.alg.mochila.MochilaVertex;
+import us.lsi.alg.mochila.SolucionMochila;
+import us.lsi.mochila.datos.DatosMochila;
+
 public class MochilaBT {
 	
 	public static MochilaBT of() {
 		return new MochilaBT();
 	}
 	
-	private MochilaProblem start;
+	private MochilaVertex start;
 	private StateMochila estado;
 	private SolucionMochila solucion;
 	public Integer maxValue;
@@ -24,7 +28,7 @@ public class MochilaBT {
 		this.time = System.nanoTime();
 		this.solucion = s;
 		this.maxValue = maxValue;
-		this.start = MochilaProblem.of(0,capacidadInicial);
+		this.start = MochilaVertex.of(0,capacidadInicial);
 		this.estado = StateMochila.of(start);
 		btm();
 		this.time = System.nanoTime() - this.time;
@@ -46,7 +50,7 @@ public class MochilaBT {
 				this.solucion = SolucionMochila.of(this.start,this.estado.acciones());
 			}
 		} else {
-			List<Integer> alternativas = this.estado.vertice().acciones();
+			List<Integer> alternativas = this.estado.vertice().actions();
 			for(Integer a:alternativas) {	
 				Double cota = this.estado.valorAcumulado()+Heuristica.cota(this.estado.vertice(),a);
 				if(this.maxValue != null && cota <= this.maxValue) continue;
@@ -59,9 +63,9 @@ public class MochilaBT {
 
 	public static void main(String[] args) {
 		Locale.setDefault(Locale.of("en", "US"));
-		DatosMochila.datos("ficheros/objetosMochila.txt");
+		DatosMochila.iniDatos("ficheros/objetosMochila.txt");
 		DatosMochila.capacidadInicial = 78;
-		MochilaProblem v1 = MochilaProblem.of(0, DatosMochila.capacidadInicial);
+		MochilaVertex v1 = MochilaVertex.of(0, DatosMochila.capacidadInicial);
 		SolucionMochila s = Heuristica.solucionVoraz(v1);
 		MochilaBT bt = MochilaBT.of();
 		bt.btm(DatosMochila.capacidadInicial,null,null);	

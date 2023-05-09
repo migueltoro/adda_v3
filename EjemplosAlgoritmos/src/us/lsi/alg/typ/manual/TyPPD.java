@@ -7,6 +7,10 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
+import us.lsi.alg.typ.DatosTyP;
+import us.lsi.alg.typ.SolucionTyP;
+import us.lsi.alg.typ.TyPVertex;
+
 
 public class TyPPD {
 
@@ -22,44 +26,55 @@ public class TyPPD {
 		}
 	}
 	
-	public static Integer minValue = Integer.MAX_VALUE;
-	public static TyPProblem start;
-	public static Map<TyPProblem,Sptp> memory;
-	
-	public static SolucionTyP pdr() {
-		TyPPD.minValue = Integer.MAX_VALUE;
-		TyPPD.start = TyPProblem.first();
-		TyPPD.memory = new HashMap<>();
-		pd(start,0,memory);
-		return TyPPD.solucion();
+	public static TyPPD of() {
+		return new TyPPD();
 	}
 	
-	public static SolucionTyP pdr(SolucionTyP s) {
-		TyPPD.minValue = s.maxCarga();
-		TyPPD.start = TyPProblem.first();
-		TyPPD.memory = new HashMap<>();
-		pd(start,0,memory);
-		if(memory.get(start) != null) return TyPPD.solucion();
-		else return s;
+	
+	private TyPPD() {
+		super();
+	}
+
+	private Integer minValue;
+	private SolucionTyP solucion;
+	private TyPVertex start;
+	private Map<TyPVertex,Sptp> memory;
+	private Long time;
+	
+	public Long time() {
+		return time;
 	}
 	
-	private static Sptp pd(TyPProblem vertex,Integer accumulateValue, Map<TyPProblem,Sptp> memory) {
+	public SolucionTyP pdr(TyPVertex start,Integer minValue, SolucionTyP s) {
+		this.time = System.nanoTime();
+		this.start = start;
+		this.solucion = s;
+		this.minValue = minValue;
+		this.start = TyPVertex.first();
+		this.memory = new HashMap<>();
+		pd(start,0,memory);
+		this.time = System.nanoTime() - this.time;
+		if(memory.get(start) != null) return this.solucion();
+		else return this.solucion;
+	}
+	
+	private Sptp pd(TyPVertex vertex,Integer accumulateValue, Map<TyPVertex,Sptp> memory) {
 		Sptp r;
 		if(memory.containsKey(vertex)) {
 			r = memory.get(vertex);
 		} else if(vertex.index() == DatosTyP.n) {
-			r = Sptp.of(null,vertex.maxCarga());
+			r = Sptp.of(null,vertex.maxCarga().intValue());
 			memory.put(vertex,r);
-			if(accumulateValue < TyPPD.minValue) {
-				TyPPD.minValue = accumulateValue;
+			if(this.minValue == null || accumulateValue < this.minValue) {
+				this.minValue = accumulateValue;
 			}
 		} else {
 			List<Sptp> soluciones = new ArrayList<>();
-			for(Integer a:vertex.acciones()) {	
+			for(Integer a:vertex.actions()) {	
 				Integer cota = Heuristica.cota(vertex,a);
-				if(cota >= TyPPD.minValue) continue;	
-				TyPProblem vecino = vertex.vecino(a);
-				Sptp s = pd(vecino,vecino.maxCarga(),memory);
+				if(this.minValue != null && cota >= this.minValue) continue;	
+				TyPVertex vecino = vertex.neighbor(a);
+				Sptp s = pd(vecino,vecino.maxCarga().intValue(),memory);
 				if(s!=null) {
 					Sptp sp = Sptp.of(a,s.weight());
 					soluciones.add(sp);
@@ -71,32 +86,29 @@ public class TyPPD {
 		return r;
 	}
 	
-	public static SolucionTyP solucion(){
+	public SolucionTyP solucion(){
 		List<Integer> acciones = new ArrayList<>();
-		TyPProblem v = TyPPD.start;
-		Sptp s = TyPPD.memory.get(v);
+		TyPVertex v = this.start;
+		Sptp s = this.memory.get(v);
 		while(s.a() != null) {
 			acciones.add(s.a());
-			v = v.vecino(s.a());	
-			s = TyPPD.memory.get(v);
+			v = v.neighbor(s.a());	
+			s = this.memory.get(v);
 		}
-		return SolucionTyP.of(TyPPD.start,acciones);
+		return SolucionTyP.of(this.start,acciones);
 	}
 	
 	public static void main(String[] args) {
 		Locale.setDefault(Locale.of("en", "US"));
 		DatosTyP.datos("ficheros/tareas.txt",5);
 		DatosTyP.toConsole();
-		TyPProblem v1 = TyPProblem.first();
+		TyPVertex v1 = TyPVertex.first();
 		SolucionTyP s = Heuristica.solucionVoraz(v1);	
-		long startTime = System.nanoTime();
-		System.out.println(TyPPD.pdr());
-		long endTime = System.nanoTime() - startTime;
-		System.out.println("1 = "+endTime);
-		startTime = System.nanoTime();
-		System.out.println(TyPPD.pdr(s));
-		long endTime2 = System.nanoTime() - startTime;
-		System.out.println("2 = "+1.*endTime2/endTime);
+		TyPPD a = TyPPD.of();
+		a.pdr(v1,s.getMaxCarga().intValue(),s);
+		System.out.println("1 = "+a.time());
+		a.pdr(v1,null,null);
+		System.out.println("2 = "+a.time());
 	}
 
 

@@ -2,39 +2,29 @@ package us.lsi.alg.monedas;
 
 
 import java.util.function.Predicate;
-import us.lsi.graphs.alg.Greedy;
+import us.lsi.mochila.datos.DatosMochila;
 
 
 public class MonedasHeuristica {
 	
-	public static Double heuristic_negate(MonedaVertex v1, Predicate<MonedaVertex> goal, MonedaVertex v2) {
-		return -hu(Mnd.of(v1.index(), v1.valorRestante().doubleValue()),v->v.index() == DatosMonedas.n);
-	}
-	
 	public static Double heuristic(MonedaVertex v1, Predicate<MonedaVertex> goal, MonedaVertex v2) {
-		return hu(Mnd.of(v1.index(), v1.valorRestante().doubleValue()),v->v.index() == DatosMonedas.n);
+		return heuristic(v1);
 	}
 	
-	public static record Mnd(Integer index, Double vr) {
-		public static Mnd of(Integer index, Double cr) {
-			return new Mnd(index,cr);
+	public static Double heuristic(MonedaVertex v1) {
+		Double r = 0.;
+		Double p = 0.;
+		Integer index = v1.index();
+		Double valorRestante = v1.valorRestante().doubleValue();
+		Integer lastIndex = DatosMochila.n;
+		while (valorRestante> 0 && index < lastIndex) {
+			Double a = valorRestante / Moneda.valor(index);
+			r = r + a * Moneda.valor(index);
+			p = p + a * Moneda.peso(index);
+			valorRestante = valorRestante - a * Moneda.valor(index);
+			index = index + 1;
 		}
-		public Double heuristicAction() {
-			return vr()/Moneda.valor(index());
-		}
-		public Mnd next() {
-			Double a = heuristicAction();
-			return new Mnd(index()+1, vr() - a * Moneda.valor(index()));
-		}
-		public Double weight() {
-			if(this.index >= Moneda.n) return 0.;
-			return heuristicAction()*Moneda.peso(index());
-		}
-	}
-
-	public static Double hu(Mnd v1, Predicate<Mnd> goal) {	
-		Greedy<Mnd> r = Greedy.of(v1,v->v.next(),goal);
-		return r.stream().mapToDouble(v->v.weight()).sum();
+		return p;
 	}
 	
 

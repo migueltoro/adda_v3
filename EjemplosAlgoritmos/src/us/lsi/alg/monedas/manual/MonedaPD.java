@@ -7,7 +7,6 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
-import us.lsi.alg.mochila.manual.SolucionMochila;
 import us.lsi.alg.monedas.DatosMonedas;
 import us.lsi.alg.monedas.Moneda;
 import us.lsi.alg.monedas.MonedaVertex;
@@ -41,8 +40,12 @@ public class MonedaPD {
 	private MonedaPD() {
 		super();
 	}
+	
+	public Long time() {
+		return time;
+	}
 
-	public SolucionMonedas pd(Integer initialValue,Integer maxValue, SolucionMonedas s) {
+	public SolucionMonedas pd(Integer initialValue,Integer maxValue,SolucionMonedas s) {
 		this.time = System.nanoTime();
 		this.maxValue = maxValue;
 		this.solucion = s;
@@ -62,14 +65,14 @@ public class MonedaPD {
 			if (MonedaVertex.goalHasSolution().test(vertex)) {
 				r = Spm.of(null, 0);
 				memory.put(vertex, r);
-				if (accumulateValue > this.maxValue) this.maxValue = accumulateValue;
+				if (this.maxValue == null || accumulateValue > this.maxValue) this.maxValue = accumulateValue;
 			}
 			memory.put(vertex,r);
 		} else {
 			List<Spm> soluciones = new ArrayList<>();
 			for(Integer a:vertex.actions()) {	
 				Double cota = accumulateValue + MonedasHeuristica.cota(vertex,a);
-				if(cota <= this.maxValue) continue;	
+				if(this.maxValue != null && cota <= this.maxValue) continue;	
 				Integer ac = accumulateValue+a*Moneda.valor(vertex.index());
 				Spm s = pd(vertex.neighbor(a),ac,memory);
 				if(s!=null) {
@@ -102,9 +105,10 @@ public class MonedaPD {
 		String2.toConsole("%s",Moneda.monedas);
 		MonedaVertex v1 = MonedaVertex.of(0, DatosMonedas.valorInicial);
 		SolucionMonedas s = MonedasHeuristica.solucionVoraz(v1);
-		
-		MonedaPD.pd(DatosMonedas.valorInicial);	
-		System.out.println(this.solucion());		
+		MonedaPD a = MonedaPD.of();
+		a.pd(DatosMonedas.valorInicial,s.peso(),s);	
+		System.out.println(a.time());
+		System.out.println(a.solucion());		
 	}
 
 	
