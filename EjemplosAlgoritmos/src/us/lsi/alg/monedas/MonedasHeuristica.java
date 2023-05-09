@@ -12,16 +12,16 @@ public class MonedasHeuristica {
 	}
 	
 	public static Double heuristic(MonedaVertex v1) {
+		
 		Double r = 0.;
 		Double p = 0.;
 		Integer index = v1.index();
 		Double valorRestante = v1.valorRestante().doubleValue();
-		Integer lastIndex = DatosMochila.n;
-		while (valorRestante> 0 && index < lastIndex) {
-			Double a = valorRestante / Moneda.valor(index);
-			r = r + a * Moneda.valor(index);
-			p = p + a * Moneda.peso(index);
-			valorRestante = valorRestante - a * Moneda.valor(index);
+		while (valorRestante> 0 && index < DatosMonedas.n) {
+			Double a = valorRestante / DatosMonedas.valor(index);
+			r = r + a * DatosMonedas.valor(index);
+			p = p + a * DatosMonedas.peso(index);
+			valorRestante = valorRestante - a * DatosMonedas.valor(index);
 			index = index + 1;
 		}
 		return p;

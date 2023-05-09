@@ -59,7 +59,7 @@ public class TyPPD {
 	}
 	
 	private Sptp pd(TyPVertex vertex,Integer accumulateValue, Map<TyPVertex,Sptp> memory) {
-		Sptp r;
+		Sptp r=null;
 		if(memory.containsKey(vertex)) {
 			r = memory.get(vertex);
 		} else if(vertex.index() == DatosTyP.n) {
@@ -80,8 +80,10 @@ public class TyPPD {
 					soluciones.add(sp);
 				}
 			}
-			r = soluciones.stream().min(Comparator.naturalOrder()).orElse(null);
-			if(r!=null) memory.put(vertex,r);
+			if (!soluciones.isEmpty()) {
+				r = soluciones.stream().min(Comparator.naturalOrder()).orElse(null);
+				memory.put(vertex, r);
+			}
 		}
 		return r;
 	}

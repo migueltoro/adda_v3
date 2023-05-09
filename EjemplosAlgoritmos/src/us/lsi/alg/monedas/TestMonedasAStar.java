@@ -21,7 +21,7 @@ public class TestMonedasAStar {
 
 	public static void main(String[] args) {
 		Locale.setDefault(Locale.of("en", "US"));
-		DatosMonedas.datosIniciales("ficheros/monedas2.txt", 400);
+		DatosMonedas.datosIniciales("ficheros/monedas2.txt", 401);
 		MonedaVertex e1 = MonedaVertex.first();
 		
 		EGraph<MonedaVertex, MonedaEdge> graph = EGraph.virtual(e1,MonedaVertex.goal(),PathType.Sum,Type.Max)
@@ -67,7 +67,7 @@ public class TestMonedasAStar {
 	
 		System.out.println("_________________________________");
 		
-		Collections.sort(Moneda.monedas, Comparator.comparing(m -> m.pesoUnitario()));
+		Collections.sort(DatosMonedas.monedas, Comparator.comparing(m -> m.pesoUnitario()));
 		
 		MonedaVertex e3 = MonedaVertex.first();
 //		MonedaVertex e4 = MonedaVertex.last();

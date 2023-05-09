@@ -15,9 +15,9 @@ public class TestGreedy {
 
 	public static void main(String[] args) {
 		Locale.setDefault(Locale.of("en", "US"));
-		DatosMonedas.datosIniciales("ficheros/monedas2.txt", 402);
-		System.out.println(Moneda.monedas);
-		System.out.println(Moneda.monedas.size());
+		DatosMonedas.datosIniciales("ficheros/monedas2.txt", 400);
+		System.out.println(DatosMonedas.monedas);
+		System.out.println(DatosMonedas.monedas.size());
 
 //		System.out.println("1 = "+e1);
 //		System.out.println("2 = "+e2);
@@ -28,8 +28,8 @@ public class TestGreedy {
 		for (int i = 0; i < 5; i++) {
 			
 			DatosMonedas.valorInicial = 400+i;
-			Collections.sort(Moneda.monedas, Comparator.comparing(m -> -m.pesoUnitario()));
-			System.out.println(DatosMonedas.valorInicial + "--------");
+			Collections.sort(DatosMonedas.monedas, Comparator.comparing(m ->-m.pesoUnitario()));
+//			System.out.println(DatosMonedas.valorInicial + "--------");
 			MonedaVertex e1 = MonedaVertex.first();
 			//		MonedaVertex e2 = MonedaVertex.last();
 			EGraph<MonedaVertex, MonedaEdge> graph = EGraph.virtual(e1,MonedaVertex.goal(),PathType.Sum,Type.Max)
@@ -39,10 +39,10 @@ public class TestGreedy {
 					.build();	
 			GreedyOnGraph<MonedaVertex, MonedaEdge> rr = GreedyOnGraph.of(graph);
 			GraphPath<MonedaVertex, MonedaEdge> path = rr.path();
-			System.out.println(String.format("%s ,%s,",i,rr.isSolution(path),
+			System.out.println(String.format("%s,%s,%.2f,%.2f,",DatosMonedas.valorInicial,rr.isSolution(path),
 					path.getWeight(),
 					MonedasHeuristica.heuristic(e1, MonedaVertex.goal(), null)));
-			Collections.sort(Moneda.monedas, Comparator.comparing(m -> m.pesoUnitario()));
+			Collections.sort(DatosMonedas.monedas, Comparator.comparing(m -> m.pesoUnitario()));
 			//		System.out.println(Moneda.monedas);
 			e1 = MonedaVertex.first();
 			graph = EGraph.virtual(e1,MonedaVertex.goal(),PathType.Sum,Type.Min)
@@ -52,7 +52,7 @@ public class TestGreedy {
 					.build();	
 			rr = GreedyOnGraph.of(graph, MonedaVertex::aristaVoraz);
 			path = rr.path();
-			System.out.println(String.format("%s,%s,%.2f,",i,rr.isSolution(path),path.getWeight(),
+			System.out.println(String.format("%s,%s,%.2f,%.2f",DatosMonedas.valorInicial,rr.isSolution(path),path.getWeight(),
 					MonedasHeuristica.heuristic(e1, MonedaVertex.goal(), null)));
 		}
 	}

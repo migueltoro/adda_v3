@@ -56,7 +56,7 @@ public class MochilaPD {
 	}
 	
 	private Spm pd(MochilaVertex vertex,Integer accumulateValue, Map<MochilaVertex,Spm> memory) {
-		Spm r;
+		Spm r=null;
 		if(memory.containsKey(vertex)) {
 			r = memory.get(vertex);
 		} else if(vertex.index() == DatosMochila.n) {
@@ -74,8 +74,10 @@ public class MochilaPD {
 					soluciones.add(sp);
 				}
 			}
-			r = soluciones.stream().max(Comparator.naturalOrder()).orElse(null);
-			if(r!=null) memory.put(vertex,r);
+			if (!soluciones.isEmpty()) {
+				r = soluciones.stream().max(Comparator.naturalOrder()).orElse(null);
+				memory.put(vertex, r);
+			}
 		}
 		return r;
 	}

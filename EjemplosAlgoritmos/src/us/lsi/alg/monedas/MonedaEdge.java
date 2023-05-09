@@ -7,7 +7,7 @@ public record MonedaEdge(MonedaVertex source, MonedaVertex target, Integer actio
            implements SimpleEdgeAction<MonedaVertex,Integer> {
 
 	public static MonedaEdge of(MonedaVertex c1, MonedaVertex c2, Integer action) {
-		Double w = (double) (action*Moneda.peso(c1.index()));
+		Double w = (double) (action*DatosMonedas.peso(c1.index()));
 		return new MonedaEdge(c1, c2, action, w);
 	}
 

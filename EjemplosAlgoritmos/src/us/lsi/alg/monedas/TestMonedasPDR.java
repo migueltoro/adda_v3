@@ -48,7 +48,7 @@ public class TestMonedasPDR {
 		if (s1.isPresent()) System.out.println("2 = " + SolucionMonedas.of(s1.get()));
 		else System.out.println("2 = No hay solucion");
 
-		Collections.sort(Moneda.monedas, Comparator.comparing(m -> m.pesoUnitario()));
+		Collections.sort(DatosMonedas.monedas, Comparator.comparing(m -> m.pesoUnitario()));
 
 		MonedaVertex e3 = MonedaVertex.first();
 		

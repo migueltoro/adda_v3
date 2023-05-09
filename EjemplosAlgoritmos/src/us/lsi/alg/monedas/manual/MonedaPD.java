@@ -8,7 +8,6 @@ import java.util.Locale;
 import java.util.Map;
 
 import us.lsi.alg.monedas.DatosMonedas;
-import us.lsi.alg.monedas.Moneda;
 import us.lsi.alg.monedas.MonedaVertex;
 import us.lsi.alg.monedas.SolucionMonedas;
 import us.lsi.common.String2;
@@ -57,7 +56,7 @@ public class MonedaPD {
 	}
 	
 	private Spm pd(MonedaVertex vertex,Integer accumulateValue, Map<MonedaVertex,Spm> memory) {
-		Spm r;
+		Spm r=null;
 		if(memory.containsKey(vertex)) {
 			r = memory.get(vertex);
 		} else if(vertex.index() == DatosMonedas.n) {
@@ -73,15 +72,17 @@ public class MonedaPD {
 			for(Integer a:vertex.actions()) {	
 				Double cota = accumulateValue + MonedasHeuristica.cota(vertex,a);
 				if(this.maxValue != null && cota <= this.maxValue) continue;	
-				Integer ac = accumulateValue+a*Moneda.valor(vertex.index());
+				Integer ac = accumulateValue+a*DatosMonedas.valor(vertex.index());
 				Spm s = pd(vertex.neighbor(a),ac,memory);
 				if(s!=null) {
-					Spm sp = Spm.of(a,s.weight()+a*Moneda.valor(vertex.index()));
+					Spm sp = Spm.of(a,s.weight()+a*DatosMonedas.valor(vertex.index()));
 					soluciones.add(sp);
 				}
 			}
-			r = soluciones.stream().filter(s->s != null).max(Comparator.naturalOrder()).orElse(null);
-			memory.put(vertex,r);
+			if (!soluciones.isEmpty()) {
+				r = soluciones.stream().filter(s -> s != null).max(Comparator.naturalOrder()).orElse(null);
+				memory.put(vertex, r);
+			}
 		}
 		return r;
 	}
@@ -101,12 +102,13 @@ public class MonedaPD {
 	
 	public static void main(String[] args) {
 		Locale.setDefault(Locale.of("en", "US"));
-		DatosMonedas.datosIniciales("ficheros/monedas3.txt", 36);
-		String2.toConsole("%s",Moneda.monedas);
-		MonedaVertex v1 = MonedaVertex.of(0, DatosMonedas.valorInicial);
+		DatosMonedas.datosIniciales("ficheros/monedas3.txt", 400);
+		String2.toConsole("%s",DatosMonedas.monedas);
+		MonedaVertex v1 = MonedaVertex.first();
 		SolucionMonedas s = MonedasHeuristica.solucionVoraz(v1);
+		String2.toConsole("%s",s);
 		MonedaPD a = MonedaPD.of();
-		a.pd(DatosMonedas.valorInicial,s.peso(),s);	
+		a.pd(DatosMonedas.valorInicial,s!=null?s.peso():null,s);	
 		System.out.println(a.time());
 		System.out.println(a.solucion());		
 	}

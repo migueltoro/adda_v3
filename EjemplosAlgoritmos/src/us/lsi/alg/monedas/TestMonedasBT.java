@@ -59,7 +59,7 @@ public class TestMonedasBT {
 		} else
 			System.out.println("2 = No hay solucion");
 
-		Collections.sort(Moneda.monedas, Comparator.comparing(m -> m.pesoUnitario()));
+		Collections.sort(DatosMonedas.monedas, Comparator.comparing(m -> m.pesoUnitario()));
 
 		MonedaVertex e3 = MonedaVertex.first();
 
