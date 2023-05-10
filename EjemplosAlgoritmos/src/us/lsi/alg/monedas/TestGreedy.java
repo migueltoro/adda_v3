@@ -15,7 +15,7 @@ public class TestGreedy {
 
 	public static void main(String[] args) {
 		Locale.setDefault(Locale.of("en", "US"));
-		DatosMonedas.datosIniciales("ficheros/monedas2.txt", 400);
+		DatosMonedas.datosIniciales("ficheros/monedas2.txt");
 		System.out.println(DatosMonedas.monedas);
 		System.out.println(DatosMonedas.monedas.size());
 
@@ -27,24 +27,26 @@ public class TestGreedy {
 		
 		for (int i = 0; i < 5; i++) {
 			
-			DatosMonedas.valorInicial = 400+i;
 			Collections.sort(DatosMonedas.monedas, Comparator.comparing(m ->-m.pesoUnitario()));
 //			System.out.println(DatosMonedas.valorInicial + "--------");
-			MonedaVertex e1 = MonedaVertex.first();
+			MonedaVertex e1 = MonedaVertex.first(400+i);
 			//		MonedaVertex e2 = MonedaVertex.last();
 			EGraph<MonedaVertex, MonedaEdge> graph = EGraph.virtual(e1,MonedaVertex.goal(),PathType.Sum,Type.Max)
 					.goalHasSolution(MonedaVertex.goalHasSolution())
 					.greedyEdge(MonedaVertex::aristaVoraz)
 					.heuristic(MonedasHeuristica::heuristic)
-					.build();	
+					.build();
+		
 			GreedyOnGraph<MonedaVertex, MonedaEdge> rr = GreedyOnGraph.of(graph);
 			GraphPath<MonedaVertex, MonedaEdge> path = rr.path();
-			System.out.println(String.format("%s,%s,%.2f,%.2f,",DatosMonedas.valorInicial,rr.isSolution(path),
+			System.out.println(String.format("%s,%s,%.2f,%.2f,",400+i,rr.isSolution(path),
 					path.getWeight(),
 					MonedasHeuristica.heuristic(e1, MonedaVertex.goal(), null)));
+//			System.out.println(String.format("%s",path.getEdgeList().stream().map(e->e.action()).toList()));
+//			System.out.println(String.format("%s",SolucionMonedas.of(path.getEdgeList().stream().map(e->e.action()).toList())));
 			Collections.sort(DatosMonedas.monedas, Comparator.comparing(m -> m.pesoUnitario()));
 			//		System.out.println(Moneda.monedas);
-			e1 = MonedaVertex.first();
+			e1 = MonedaVertex.first(400+i);
 			graph = EGraph.virtual(e1,MonedaVertex.goal(),PathType.Sum,Type.Min)
 					.goalHasSolution(MonedaVertex.goalHasSolution())
 					.greedyEdge(MonedaVertex::aristaVoraz)
@@ -52,7 +54,7 @@ public class TestGreedy {
 					.build();	
 			rr = GreedyOnGraph.of(graph, MonedaVertex::aristaVoraz);
 			path = rr.path();
-			System.out.println(String.format("%s,%s,%.2f,%.2f",DatosMonedas.valorInicial,rr.isSolution(path),path.getWeight(),
+			System.out.println(String.format("%s,%s,%.2f,%.2f",400+i,rr.isSolution(path),path.getWeight(),
 					MonedasHeuristica.heuristic(e1, MonedaVertex.goal(), null)));
 		}
 	}

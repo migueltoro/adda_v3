@@ -21,9 +21,10 @@ public class TestMonedasBT {
 
 	public static void main(String[] args) {
 		Locale.setDefault(Locale.of("en", "US"));
-		DatosMonedas.datosIniciales("ficheros/monedas2.txt", 400);
+		DatosMonedas.datosIniciales("ficheros/monedas2.txt");
+		Integer valorInicial = 401;
 
-		MonedaVertex e1 = MonedaVertex.first();
+		MonedaVertex e1 = MonedaVertex.first(valorInicial);
 		
 		EGraph<MonedaVertex, MonedaEdge> graph = EGraph.virtual(e1,MonedaVertex.goal(),PathType.Sum,Type.Max)
 				.goalHasSolution(MonedaVertex.goalHasSolution())
@@ -61,7 +62,7 @@ public class TestMonedasBT {
 
 		Collections.sort(DatosMonedas.monedas, Comparator.comparing(m -> m.pesoUnitario()));
 
-		MonedaVertex e3 = MonedaVertex.first();
+		MonedaVertex e3 = MonedaVertex.first(valorInicial);
 
 		graph = EGraph.virtual(e3,MonedaVertex.goal(),PathType.Sum,Type.Min)
 				.goalHasSolution(MonedaVertex.goalHasSolution())

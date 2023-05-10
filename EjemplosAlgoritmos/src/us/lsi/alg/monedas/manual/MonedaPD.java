@@ -32,7 +32,7 @@ public class MonedaPD {
 	
 	private Integer maxValue;
 	private MonedaVertex start;
-	private Map<MonedaVertex,Spm> memory;
+	public Map<MonedaVertex,Spm> memory;
 	private SolucionMonedas solucion;
 	private Long time;
 	
@@ -48,7 +48,7 @@ public class MonedaPD {
 		this.time = System.nanoTime();
 		this.maxValue = maxValue;
 		this.solucion = s;
-		this.start = MonedaVertex.of(0,initialValue);
+		this.start = MonedaVertex.first(initialValue);
 		this.memory = new HashMap<>();
 		pd(start,0,memory);
 		this.time = System.nanoTime() - this.time;
@@ -60,22 +60,22 @@ public class MonedaPD {
 		if(memory.containsKey(vertex)) {
 			r = memory.get(vertex);
 		} else if(vertex.index() == DatosMonedas.n) {
-			r = null;
 			if (MonedaVertex.goalHasSolution().test(vertex)) {
 				r = Spm.of(null, 0);
 				memory.put(vertex, r);
 				if (this.maxValue == null || accumulateValue > this.maxValue) this.maxValue = accumulateValue;
+			} else {
+				memory.put(vertex,null);
 			}
-			memory.put(vertex,r);
 		} else {
 			List<Spm> soluciones = new ArrayList<>();
 			for(Integer a:vertex.actions()) {	
 				Double cota = accumulateValue + MonedasHeuristica.cota(vertex,a);
 				if(this.maxValue != null && cota <= this.maxValue) continue;	
-				Integer ac = accumulateValue+a*DatosMonedas.valor(vertex.index());
+				Integer ac = accumulateValue+a*DatosMonedas.peso(vertex.index());
 				Spm s = pd(vertex.neighbor(a),ac,memory);
 				if(s!=null) {
-					Spm sp = Spm.of(a,s.weight()+a*DatosMonedas.valor(vertex.index()));
+					Spm sp = Spm.of(a,s.weight()+a*DatosMonedas.peso(vertex.index()));
 					soluciones.add(sp);
 				}
 			}
@@ -91,7 +91,8 @@ public class MonedaPD {
 		List<Integer> acciones = new ArrayList<>();
 		MonedaVertex v = this.start;
 		Spm s = this.memory.get(v);
-		if(s==null) return this.solucion;
+		if(s==null && this.solucion!=null) return this.solucion;
+		if(s==null) return null;
 		while(s.a() != null) {
 			acciones.add(s.a());
 			v = v.neighbor(s.a());	
@@ -102,15 +103,22 @@ public class MonedaPD {
 	
 	public static void main(String[] args) {
 		Locale.setDefault(Locale.of("en", "US"));
-		DatosMonedas.datosIniciales("ficheros/monedas3.txt", 400);
+		DatosMonedas.datosIniciales("ficheros/monedas2.txt");
+		Integer valorInicial = 401;
+		String2.toConsole("%s",DatosMonedas.n);
 		String2.toConsole("%s",DatosMonedas.monedas);
-		MonedaVertex v1 = MonedaVertex.first();
-		SolucionMonedas s = MonedasHeuristica.solucionVoraz(v1);
-		String2.toConsole("%s",s);
+		MonedaVertex v1 = MonedaVertex.first(valorInicial);
+		SolucionMonedas s1 = MonedasHeuristica.solucionVoraz(v1);
+		SolucionMonedas s2 = MonedasHeuristica.solucionVoraz2(v1);
 		MonedaPD a = MonedaPD.of();
-		a.pd(DatosMonedas.valorInicial,s!=null?s.peso():null,s);	
+//		a.pd(DatosMonedas.valorInicial,s!=null?s.peso():null,s);	
+//		System.out.println(a.time());
+//		System.out.println(a.solucion());
+		String2.toConsole("1");
+		a.pd(valorInicial,s2.peso(),s1);	
+		String2.toConsole("2");
 		System.out.println(a.time());
-		System.out.println(a.solucion());		
+		System.out.println(a.solucion());
 	}
 
 	

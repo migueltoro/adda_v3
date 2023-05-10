@@ -16,8 +16,8 @@ public record MonedaVertex(Integer index,Integer valorRestante) implements Virtu
 		return new MonedaVertex(index, valorRestante);
 	}
 
-	public static MonedaVertex first() {
-		return new MonedaVertex(0,DatosMonedas.valorInicial);
+	public static MonedaVertex first(Integer valorInicial) {
+		return new MonedaVertex(0,valorInicial);
 	}
 	
 	public static MonedaVertex last() {
@@ -32,7 +32,6 @@ public record MonedaVertex(Integer index,Integer valorRestante) implements Virtu
 		return v->v.valorRestante() == 0;
 	}
 	
-
 	public MonedaVertex copy() {
 		return MonedaVertex.of(this.index(), this.valorRestante());
 	}

@@ -2,7 +2,6 @@ package us.lsi.alg.monedas;
 
 
 import java.util.function.Predicate;
-import us.lsi.mochila.datos.DatosMochila;
 
 
 public class MonedasHeuristica {

@@ -9,15 +9,14 @@ import us.lsi.common.Files2;
 public class DatosMonedas {
 
 	public static Integer n;
-	public static Integer valorInicial;
 	public static List<Moneda> monedas;
 
-	public static void datosIniciales(String fichero, Integer valorInicial) {
+	public static void datosIniciales(String fichero) {
 		Comparator<Moneda> cmp = Comparator.<Moneda, Double>comparing(m -> m.pesoUnitario()).reversed();
 		DatosMonedas.monedas = Files2.streamFromFile(fichero).map(ln -> Moneda.parse(ln)).sorted(cmp)
 				.collect(Collectors.toList());
 		DatosMonedas.n = DatosMonedas.monedas.size();
-		DatosMonedas.valorInicial=valorInicial;DatosMonedas.n=DatosMonedas.monedas.size();
+		DatosMonedas.n=DatosMonedas.monedas.size();
 	}
 
 	public static Double getPesoUnitario(Integer i) {
