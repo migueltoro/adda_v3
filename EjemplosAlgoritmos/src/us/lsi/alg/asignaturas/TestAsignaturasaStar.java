@@ -8,7 +8,7 @@ import org.jgrapht.GraphPath;
 
 import us.lsi.graphs.alg.AStar;
 import us.lsi.graphs.alg.BT;
-import us.lsi.graphs.alg.DPR;
+import us.lsi.graphs.alg.PDR;
 import us.lsi.graphs.virtual.EGraph;
 import us.lsi.graphs.virtual.EGraph.Type;
 import us.lsi.path.EGraphPath.PathType;
@@ -40,8 +40,8 @@ public class TestAsignaturasaStar {
 		
 		System.out.println("___________________");
 
-		DPR<AsignaturasVertice,AsignaturasEdge,SolucionAsignaturas> pd = 
-				DPR.ofGreedy(grafo);
+		PDR<AsignaturasVertice,AsignaturasEdge,SolucionAsignaturas> pd = 
+				PDR.ofGreedy(grafo);
 
 		
 		GraphPath<AsignaturasVertice, AsignaturasEdge> s2 = pd.search().get();

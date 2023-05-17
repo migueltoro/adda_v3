@@ -11,7 +11,7 @@ import org.jgrapht.GraphPath;
 
 import us.lsi.colors.GraphColors;
 import us.lsi.colors.GraphColors.Color;
-import us.lsi.graphs.alg.DPR;
+import us.lsi.graphs.alg.PDR;
 import us.lsi.graphs.alg.GreedyOnGraph;
 import us.lsi.graphs.virtual.EGraph;
 import us.lsi.graphs.virtual.EGraph.Type;
@@ -47,8 +47,8 @@ public class TestPD {
 			System.out.println("\n\n#### PI-7 Ej3 Algoritmo PD ####");
 
 			// Algoritmo PD
-			DPR<VertexProductos, EdgeProductos,?> pdr = 
-					DPR.of(graph, null,path.getWeight(), path, true);
+			PDR<VertexProductos, EdgeProductos,?> pdr = 
+					PDR.of(graph, null,path.getWeight(), path, true);
 			
 			pdr.optimalPath = path;
 			Optional<GraphPath<VertexProductos, EdgeProductos>> gp = pdr.search();

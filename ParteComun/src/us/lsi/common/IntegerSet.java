@@ -5,6 +5,7 @@ import java.util.BitSet;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.Set;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -17,7 +18,7 @@ public class IntegerSet implements Set<Integer> {
 	
 	/**
 	 * @param infLimit Limite inferior del conjunto de enteros
-	 * @param numDigits Número de digitos usados para representar el conjunto
+	 * @param numDigits Nï¿½mero de digitos usados para representar el conjunto
 	 * @return Un RangeIntegerSet
 	 */
 	public static IntegerSet empty(Integer infLimit, Integer numDigits) {
@@ -38,6 +39,23 @@ public class IntegerSet implements Set<Integer> {
 		IntegerSet r = IntegerSet.empty();
 		IntStream.range(from,to).boxed().toList();
 		r.addAll(IntStream.range(from,to).boxed().toList());
+		return r;
+	}
+	
+	public static IntegerSet parse(String s, String sep) {
+		IntegerSet r = IntegerSet.empty();
+		Arrays.stream(s.split("[" + sep + "]"))
+				.filter(e -> e != null && e.length() > 0)
+				.map(e -> Integer.parseInt(e.trim()))
+				.forEach(e->r.add(e));
+		return r;
+	}
+	
+	public static IntegerSet parseSet(String[] tokens) {
+		IntegerSet r = IntegerSet.empty();
+		Arrays.stream(tokens).filter(e -> e != null && e.length() > 0)
+				.map(e -> Integer.parseInt(e.trim()))
+				.forEach(e -> r.add(e));
 		return r;
 	}
 	
@@ -317,6 +335,7 @@ public class IntegerSet implements Set<Integer> {
 		Object[] a = new Integer[s2.size()];
 		System.out.println(Arrays.asList(s2.toArray(a)));
 		System.out.println(Arrays.asList(a));
+		System.out.println(IntegerSet.parse("{0,4,5,4,7,18}","{,}"));
 	}
 
 	@Override

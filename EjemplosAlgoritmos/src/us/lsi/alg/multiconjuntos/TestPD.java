@@ -10,7 +10,7 @@ import org.jgrapht.GraphPath;
 
 import us.lsi.colors.GraphColors;
 import us.lsi.colors.GraphColors.Color;
-import us.lsi.graphs.alg.DPR;
+import us.lsi.graphs.alg.PDR;
 import us.lsi.graphs.alg.GreedyOnGraph;
 import us.lsi.graphs.virtual.EGraph;
 import us.lsi.graphs.virtual.EGraph.Type;
@@ -55,11 +55,11 @@ public class TestPD {
 			
 			System.out.println("Voraz = "+r.getWeight()+"  == "+MulticonjuntoVertex.getSolucion(r));
 			
-			DPR<MulticonjuntoVertex, MulticonjuntoEdge, ?> pdr = DPR
+			PDR<MulticonjuntoVertex, MulticonjuntoEdge, ?> pdr = PDR
 					.of(graph, null,null, null, true);
 
 			if (rr.isSolution(r)) {
-				pdr = DPR.of(graph, null,r.getWeight(), r, true);
+				pdr = PDR.of(graph, null,r.getWeight(), r, true);
 			}
 			
 			

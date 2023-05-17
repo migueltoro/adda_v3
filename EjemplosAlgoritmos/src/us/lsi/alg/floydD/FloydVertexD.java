@@ -11,7 +11,7 @@ import us.lsi.common.List2;
 import us.lsi.grafos.datos.Carretera;
 import us.lsi.grafos.datos.Ciudad;
 import us.lsi.graphs.SimpleEdge;
-import us.lsi.graphs.alg.DP.Sp;
+import us.lsi.graphs.alg.PD.Sp;
 import us.lsi.graphs.views.IntegerVertexGraphView;
 import us.lsi.hypergraphsD.HyperVertexD;
 

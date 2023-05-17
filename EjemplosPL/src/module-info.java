@@ -3,8 +3,8 @@
 
 
 module ejemplos_pl {
-	exports us.lsi.pli;
-	exports us.lsi.pli.equipo;
+	
+	exports us.lsi.pli.reparto;
 
 	requires transitive datos_compartidos;
 	requires transitive solve;

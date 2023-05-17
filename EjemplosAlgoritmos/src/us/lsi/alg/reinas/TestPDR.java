@@ -4,7 +4,7 @@ import java.util.Optional;
 
 import org.jgrapht.GraphPath;
 
-import us.lsi.graphs.alg.DPR;
+import us.lsi.graphs.alg.PDR;
 import us.lsi.graphs.virtual.EGraph;
 import us.lsi.graphs.virtual.SimpleEdgeAction;
 import us.lsi.graphs.virtual.EGraph.Type;
@@ -23,8 +23,8 @@ public class TestPDR {
 				.solutionNumber(1000)
 				.build();			
 		
-		DPR<ReinasVertex, SimpleEdgeAction<ReinasVertex, Integer>, SolucionReinas> ms = 
-				DPR.of(graph,SolucionReinas::of,null,null,false);
+		PDR<ReinasVertex, SimpleEdgeAction<ReinasVertex, Integer>, SolucionReinas> ms = 
+				PDR.of(graph,SolucionReinas::of,null,null,false);
 		
 		Optional<GraphPath<ReinasVertex, SimpleEdgeAction<ReinasVertex, Integer>>> path = ms.search();
 		System.out.println(SolucionReinas.of(path.get()));

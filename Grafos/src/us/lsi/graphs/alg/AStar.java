@@ -52,6 +52,10 @@ public class AStar<V,E,S> implements Iterator<V>, Iterable<V> {
 		return new AStar<V, E, S>(graph,null,null,null);
 	}
 	
+	public static <V, E, S> AStar<V, E, S> of(EGraph<V, E> graph,Double bestValue,GraphPath<V, E> optimalPath) {
+		return new AStar<V, E, S>(graph,null,bestValue,optimalPath);
+	}
+	
 	public static <V, E, S> AStar<V, E, S> of(EGraph<V, E> graph,
 			Function<GraphPath<V, E>, S> fsolution,Double bestValue,GraphPath<V, E> optimalPath) {
 		return new AStar<V, E, S>(graph,fsolution,bestValue,optimalPath);

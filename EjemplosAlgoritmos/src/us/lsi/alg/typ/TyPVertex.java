@@ -16,11 +16,11 @@ public record TyPVertex(Integer index, List<Double> cargas)
 
 	
 	public static TyPVertex first() {
-		return new TyPVertex(0,List2.ofTam(0.,DatosTyP.m));
+		return new TyPVertex(0,List2.nTimes(0.,DatosTyP.m));
 	}
 	
 	public static TyPVertex last() {
-		return new TyPVertex(DatosTyP.n,List2.ofTam(0.,DatosTyP.m));
+		return new TyPVertex(DatosTyP.n,List2.nTimes(0.,DatosTyP.m));
 	}
 	
 	public static TyPVertex of(Integer index, List<Double> cargas) {

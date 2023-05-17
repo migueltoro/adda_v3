@@ -15,16 +15,17 @@ import us.lsi.streams.Stream2;
 
 public class Set2 {
 	
-	public static <E> Set<E> parse(String s, String sep, Function<String,E> f_map) {
+	public static <E> Set<E> parse(String s, String sep, Function<String,E> fMap) {
 		return Arrays.stream(s.split("["+sep+"]"))
 		.filter(e->e!=null && e.length()>0)
-		.map(e->f_map.apply(e.trim())).collect(Collectors.toSet());
+		.map(e->fMap.apply(e.trim()))
+		.collect(Collectors.toSet());
 	}
 	
-	public static <E> Set<E> parseSet(String[] tokens, Function<String,E> f_map) {
+	public static <E> Set<E> parseSet(String[] tokens, Function<String,E> fMap) {
 		return Arrays.stream(tokens)
 		.filter(e->e!=null && e.length()>0)
-		.map(e->f_map.apply(e.trim())).collect(Collectors.toSet());
+		.map(e->fMap.apply(e.trim())).collect(Collectors.toSet());
 	}
 
 	public static Set<Integer> range(Integer a, Integer b, Integer c){		

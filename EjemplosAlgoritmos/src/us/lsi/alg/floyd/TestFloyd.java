@@ -6,8 +6,8 @@ import java.util.Locale;
 import org.jgrapht.graph.GraphWalk;
 import us.lsi.grafos.datos.Ciudad;
 import us.lsi.graphs.SimpleEdge;
-import us.lsi.graphs.alg.DP;
-import us.lsi.graphs.alg.DP.PDType;
+import us.lsi.graphs.alg.PD;
+import us.lsi.graphs.alg.PD.PDType;
 import us.lsi.hypergraphs.GraphTree;
 import us.lsi.hypergraphs.SimpleVirtualHyperGraph;
 
@@ -34,8 +34,8 @@ public class TestFloyd {
 		SimpleVirtualHyperGraph<FloydVertex,FloydEdge,Boolean> graph3 = 
 				SimpleVirtualHyperGraph.simpleVirtualHyperGraph(p);
 		
-		DP<FloydVertex, FloydEdge, Boolean,GraphWalk<Integer,SimpleEdge<Integer>>> a = 
-				DP.dynamicProgrammingSearch(graph3,PDType.Min);
+		PD<FloydVertex, FloydEdge, Boolean,GraphWalk<Integer,SimpleEdge<Integer>>> a = 
+				PD.dynamicProgrammingSearch(graph3,PDType.Min);
 		
 		a.withGraph = true;
 		a.search();

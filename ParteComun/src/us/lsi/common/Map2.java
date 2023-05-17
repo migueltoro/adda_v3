@@ -9,6 +9,12 @@ import java.util.stream.Collectors;
 
 
 public class Map2 {
+	
+	public static <K,V> Map<K,V> put(Map<K,V> m, K key,V value){	
+		Map<K,V> c = new HashMap<>(m);
+		c.put(key, value);
+		return c;
+	}
 		
 	public static <K,V> Entry<K,V> entry(K key,V value){	
 		return new SimpleEntry<>(key,value);
@@ -44,7 +50,7 @@ public class Map2 {
 	/**
 	 * @param <K> tipo de las claves
 	 * @param <V> tipo de los valores
-	 * @param <U> tipo de la colección
+	 * @param <U> tipo de la colecciï¿½n
 	 * @param m Un Map
 	 * @return Un map inverso asumiendo que los elementos en todos los conjuntos imagen son distintos
 	 */
@@ -54,15 +60,13 @@ public class Map2 {
 				.collect(Collectors.toMap(z->z.getValue(), z->z.getKey()));
 	}
 	
-	
-	
 	/**
 	 * @param <K> tipo de las claves
 	 * @param <V> tipo de los valores
 	 * @param <R> nuevo tipo de los valores
-	 * @param f una función
+	 * @param f una funciï¿½n
 	 * @param m Un Map
-	 * @return Un map cambiando los valores imagen aplicandole una función
+	 * @return Un map cambiando los valores imagen aplicandole una funciï¿½n
 	 */
 	public static <K,V,R> Map<K,R> of(Map<K,V> m,Function<V,R> f){
 		return m.entrySet().stream()
@@ -96,8 +100,8 @@ public class Map2 {
 	/**
 	 * @param <K> El tipo de las claves 
 	 * @param <V> El tipo de los valores 
-	 * @param f Una función
-	 * @return Un Map cuyo dominio y valores son los de la función. Este Map sólo tiene disponible el método get.
+	 * @param f Una funciï¿½n
+	 * @return Un Map cuyo dominio y valores son los de la funciï¿½n. Este Map sï¿½lo tiene disponible el mï¿½todo get.
 	 */
 	public static <K,V> Map<K, V> of(Function<K,V> f){
 		MapOfFunction<K,V> r = new Map2.MapOfFunction<>(f);
@@ -109,8 +113,6 @@ public class Map2 {
 		
 		
 	}
-	
-	
 	
 	private static class MapOfFunction<K,V>  extends HashMap<K,V> implements Map<K,V>{
 

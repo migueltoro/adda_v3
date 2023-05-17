@@ -4,7 +4,7 @@ import java.util.Locale;
 
 import org.jgrapht.GraphPath;
 
-import us.lsi.graphs.alg.DPR;
+import us.lsi.graphs.alg.PDR;
 import us.lsi.graphs.alg.GreedyOnGraph;
 import us.lsi.graphs.virtual.SimpleEdgeAction;
 import us.lsi.graphs.virtual.EGraph.Type;
@@ -30,8 +30,8 @@ public class TestPDRTyP {
 		GraphPath<TyPVertex, SimpleEdgeAction<TyPVertex, Integer>> path = rr.path();
 		Double bv = path.getWeight();
 		
-		DPR<TyPVertex,SimpleEdgeAction<TyPVertex,Integer>,?> ms = 
-				DPR.of(graph,null,					
+		PDR<TyPVertex,SimpleEdgeAction<TyPVertex,Integer>,?> ms = 
+				PDR.of(graph,null,					
 						bv,path,true);
 		
 		ms.search();

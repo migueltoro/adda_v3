@@ -57,7 +57,7 @@ public class PDRColor {
 		if(memory.containsKey(vertex)) {
 			r = memory.get(vertex);
 		} else if(vertex.index() == DatosColor.n) {
-			r = Spm.of(null,0);
+			r = Spm.of(null,vertex.nc());
 			memory.put(vertex,r);
 			Integer accumulateValue = vertex.nc();
 			if(this.minValue == null || accumulateValue > this.minValue) this.minValue = accumulateValue;

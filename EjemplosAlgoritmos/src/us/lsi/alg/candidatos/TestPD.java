@@ -6,7 +6,7 @@ import java.util.function.Predicate;
 
 import org.jgrapht.GraphPath;
 
-import us.lsi.graphs.alg.DPR;
+import us.lsi.graphs.alg.PDR;
 import us.lsi.graphs.virtual.EGraph;
 import us.lsi.graphs.virtual.EGraph.Type;
 import us.lsi.path.EGraphPath.PathType;
@@ -39,8 +39,8 @@ public class TestPD {
 			System.out.println("\n\n#### PI-7 Ej3 Algoritmo PD ####");
 
 			// Algoritmo PD
-			DPR<VertexCandidatos, EdgeCandidatos, SolucionCandidatos> pdr = 
-					DPR.ofGreedy(graph);
+			PDR<VertexCandidatos, EdgeCandidatos, SolucionCandidatos> pdr = 
+					PDR.ofGreedy(graph);
 			/*
 			pdr.bestValue = SubconjuntoHeuristic.voraz(start,DatosSubconjunto.getNumSubconjuntos());
 			System.out.println("Best = "+pdr.bestValue);

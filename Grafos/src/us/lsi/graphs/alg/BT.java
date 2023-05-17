@@ -46,6 +46,13 @@ public class BT<V,E,S> {
 	
 	public static <V, E, S> BT<V, E, S> of(
 			EGraph<V, E> graph,
+			Double bestValue,
+			GraphPath<V,E> optimalPath) {
+		return new BT<V, E, S>(graph,null,bestValue,optimalPath,false);
+	}
+	
+	public static <V, E, S> BT<V, E, S> of(
+			EGraph<V, E> graph,
 			Function<GraphPath<V, E>, S> fsolution,
 			Double bestValue,
 			GraphPath<V,E> optimalPath,

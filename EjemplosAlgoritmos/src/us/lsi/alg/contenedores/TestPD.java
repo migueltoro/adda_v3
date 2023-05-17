@@ -8,7 +8,7 @@ import java.util.stream.Collectors;
 
 import org.jgrapht.GraphPath;
 
-import us.lsi.graphs.alg.DPR;
+import us.lsi.graphs.alg.PDR;
 import us.lsi.graphs.virtual.EGraph;
 import us.lsi.graphs.virtual.EGraph.Type;
 import us.lsi.path.EGraphPath.PathType;
@@ -50,8 +50,8 @@ public class TestPD {
 
 
 			// Algoritmo PD
-			DPR<VertexContenedores, EdgeContenedores, ?> pdr = 
-					DPR.ofGreedy(graph);
+			PDR<VertexContenedores, EdgeContenedores, ?> pdr = 
+					PDR.ofGreedy(graph);
 
 
 			Optional<GraphPath<VertexContenedores, EdgeContenedores>> gp = pdr.search();

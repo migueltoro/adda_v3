@@ -7,7 +7,7 @@ import org.jgrapht.GraphPath;
 
 import us.lsi.graphs.alg.AStar;
 import us.lsi.graphs.alg.BT;
-import us.lsi.graphs.alg.DPR;
+import us.lsi.graphs.alg.PDR;
 import us.lsi.graphs.alg.GreedyOnGraph;
 import us.lsi.graphs.virtual.EGraph;
 import us.lsi.graphs.virtual.EGraph.Type;
@@ -39,8 +39,8 @@ public class Tests {
 	private static void testPDR(EGraph<EquipoVertex, EquipoEdge> grafo) {
 		System.out.println("======================== PDR ======================== ");
 		GraphPath<EquipoVertex, EquipoEdge> gp = GreedyOnGraph.random(grafo).path();
-		DPR<EquipoVertex, EquipoEdge, ?> alg_pdr = 
-				DPR.of(grafo,null,gp.getWeight(),gp,false);
+		PDR<EquipoVertex, EquipoEdge, ?> alg_pdr = 
+				PDR.of(grafo,null,gp.getWeight(),gp,false);
 		
 		Optional<GraphPath<EquipoVertex, EquipoEdge>> p = alg_pdr.search();
 		System.out.println(EquipoVertex.getSolucion(p.get()));

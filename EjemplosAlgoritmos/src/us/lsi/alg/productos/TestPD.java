@@ -7,7 +7,7 @@ import java.util.stream.Collectors;
 
 import us.lsi.colors.GraphColors;
 import us.lsi.colors.GraphColors.Color;
-import us.lsi.graphs.alg.DPR;
+import us.lsi.graphs.alg.PDR;
 import us.lsi.graphs.virtual.EGraph;
 
 public class TestPD {
@@ -34,8 +34,8 @@ public class TestPD {
 
 			// Algoritmo PD
 			
-			DPR<ProductosVertex, ProductosEdge,?> pdr = 
-					DPR.of(graph,null,null,null,true);
+			PDR<ProductosVertex, ProductosEdge,?> pdr = 
+					PDR.of(graph,null,null,null,true);
 //			pdr.bestValue = ProductosHeuristic.entero(start,DatosProductos.NUM_PRODUCTOS);
 			List<Integer> gp_pdr = pdr.search().get().getEdgeList().stream().map(x -> x.action())
 					.collect(Collectors.toList()); // getEdgeList();

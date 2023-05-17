@@ -7,7 +7,7 @@ import java.util.function.Predicate;
 
 import org.jgrapht.GraphPath;
 
-import us.lsi.graphs.alg.DPR;
+import us.lsi.graphs.alg.PDR;
 import us.lsi.graphs.alg.GreedyOnGraph;
 import us.lsi.graphs.virtual.EGraph;
 import us.lsi.graphs.virtual.EGraph.Type;
@@ -50,8 +50,8 @@ public class TestPD {
 			System.out.println(bv);
 			
 			// Algoritmo PD
-			DPR<BufeteVertex, BufeteEdge, SolucionBufete> pdr = 
-					DPR.of(graph,
+			PDR<BufeteVertex, BufeteEdge, SolucionBufete> pdr = 
+					PDR.of(graph,
 					SolucionBufete::of,
 					bv,path,false);
 

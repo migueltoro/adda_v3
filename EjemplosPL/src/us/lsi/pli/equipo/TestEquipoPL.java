@@ -19,7 +19,7 @@ public class TestEquipoPL {
 		DatosEquipo.iniDatos(fichero);
 		AuxGrammar.generate(DatosEquipo.class,"models/equipo.lsi","ficheros/equipo.lp");
 		GurobiSolution solution = GurobiLp.gurobi("ficheros/equipo.lp");
-		Locale.setDefault(new Locale("en", "US"));
+		Locale.setDefault(Locale.of("en", "US"));
 		System.out.println(solution.values.keySet()
 				.stream()
 				.filter(k ->k.startsWith("x") && solution.values.get(k)==1)
@@ -30,10 +30,10 @@ public class TestEquipoPL {
 	}
 
 	public static void main(String[] args) throws IOException {	
-		Locale.setDefault(new Locale("en", "US"));
-		equipo_model("ficheros/DatosEquipo1.txt");
-		equipo_model("ficheros/DatosEquipo2.txt");
-		equipo_model("ficheros/DatosEquipo3.txt");
+		Locale.setDefault(Locale.of("en", "US"));
+		equipo_model("ficheros/equipo1.txt");
+		equipo_model("ficheros/equipo2.txt");
+		equipo_model("ficheros/equipo3.txt");
 	}
 
 }

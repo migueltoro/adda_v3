@@ -6,7 +6,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import us.lsi.graphs.alg.DP.Sp;
+import us.lsi.graphs.alg.PD.Sp;
 import us.lsi.hypergraphs.GraphTree.Gtb;
 import us.lsi.hypergraphs.GraphTree.Gtr;
 

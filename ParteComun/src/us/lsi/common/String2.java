@@ -13,7 +13,9 @@ import java.util.stream.IntStream;
 
 public class String2 {
 	
-	
+	public static String line(String c, Integer n) {
+		return IntStream.range(0, n).boxed().map(i->c).collect(Collectors.joining(""));
+	}
 	
 	public static void toFile(String s, String file){
 		try {

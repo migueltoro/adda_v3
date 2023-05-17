@@ -5,7 +5,7 @@ import java.util.Locale;
 import org.jgrapht.GraphPath;
 
 import us.lsi.graphs.alg.GreedyOnGraph;
-import us.lsi.graphs.alg.DPR;
+import us.lsi.graphs.alg.PDR;
 import us.lsi.graphs.virtual.EGraph;
 import us.lsi.graphs.virtual.EGraph.Type;
 import us.lsi.path.EGraphPath.PathType;
@@ -34,7 +34,7 @@ public class TestPDR {
 		System.out.println("Valor Voraz = "+nc);
 		System.out.println("Heuristica = "+Heuristica.heuristic(e1, PackVertex.goal(), null));
 		
-		DPR<PackVertex, PackEdge,?> ms = DPR.of(
+		PDR<PackVertex, PackEdge,?> ms = PDR.of(
 				graph,
 				null,
 				(double) nc,

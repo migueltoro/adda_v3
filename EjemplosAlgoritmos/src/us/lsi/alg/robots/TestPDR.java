@@ -7,7 +7,7 @@ import java.util.Optional;
 import org.jgrapht.GraphPath;
 
 
-import us.lsi.graphs.alg.DPR;
+import us.lsi.graphs.alg.PDR;
 import us.lsi.graphs.virtual.EGraph;
 import us.lsi.graphs.virtual.EGraph.Type;
 import us.lsi.path.EGraphPath.PathType;
@@ -26,7 +26,7 @@ public class TestPDR {
 				.build();
 		
 		
-		DPR<RobotVertex,RobotEdge,RobotSolution> ms = DPR.of(graph,RobotSolution::of, null, null,true);
+		PDR<RobotVertex,RobotEdge,RobotSolution> ms = PDR.of(graph,RobotSolution::of, null, null,true);
 		
 		Long t0 = System.nanoTime();
 		Optional<GraphPath<RobotVertex,RobotEdge>> path = ms.search();

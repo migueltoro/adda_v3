@@ -17,7 +17,7 @@ public record BufeteVertex(Integer index,List<Integer> cargas)
 	}
 
 	public static BufeteVertex initialVertex() {
-		return new BufeteVertex(0,List2.ofTam(0,DatosBufete.NUM_ABOGADOS));
+		return new BufeteVertex(0,List2.nTimes(0,DatosBufete.NUM_ABOGADOS));
 	}
 	
 	public static Predicate<BufeteVertex> goal() {

@@ -175,7 +175,7 @@ public class List2 {
 	 * @param e Elemento a copiar
 	 * @return Devuelve una lista formada por n copias de e
 	 */
-	public static <T> List<T> ofTam(T e, Integer n){
+	public static <T> List<T> nTimes(T e, Integer n){
 	    List<T> v = new ArrayList<T>();
 	    for(int i=0;i<n;i++){
 	       v.add(e);
@@ -209,6 +209,20 @@ public class List2 {
 	public static <T> List<T> copy(List<T> ls){
 	    List<T> r = new ArrayList<T>(ls);
 	    return r;
+	}
+	
+	/**
+	 * @param <T> Tipo de los elementos
+	 * @param ls Una lista de listas de entrada
+	 * @return Devuelve una lista formada por una copia de ls
+	 */
+	public static <T> List<List<T>> copy2(List<List<T>> ls){
+	   List<List<T>> r = new ArrayList<>();
+	   for(List<T> c: ls) {
+		   List<T> cp = List2.copy(c);
+		   r.add(cp);
+	   }
+	   return r;
 	}
 	
 	/**

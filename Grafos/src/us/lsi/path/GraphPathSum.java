@@ -12,7 +12,7 @@ import org.jgrapht.Graphs;
 import us.lsi.common.List2;
 import us.lsi.common.Preconditions;
 import us.lsi.common.TriFunction;
-import us.lsi.graphs.alg.DPR.Sp;
+import us.lsi.graphs.alg.PDR.Sp;
 import us.lsi.graphs.virtual.EGraph;
 
 public class GraphPathSum<V, E> extends GraphPath2<V,E> implements EGraphPath<V,E> {
