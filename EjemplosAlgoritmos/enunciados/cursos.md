@@ -20,18 +20,19 @@ Datos
  - $p_i$: real, precio de inscripción del curso $i$, $i \in [0,n)$
  - $c_{ik}$: boolean, el curso $i$ se imparte en el centro $k$, $i \in [0,n)$, $k \in [0,r)$
 
-Variables $x_i$ que representan si el curso $i$ se ha elegido e $y_k$ si se ha elegido el centro $k$.
+Las variables $x_i$ que representan si el curso $i$ se ha elegido e $y_k$ si se ha elegido el centro $k$.
 
 $$
 \begin{matrix}
-  \min \sum_{i=0}^{n-1} p_i x_i &  \\
-  \sum_{i=0|t_{ij}}^{n-1} x_i \geq 1 & j \in [0,m) \\
-  \sum_{k=0}^{r-1} y_k \le mc & \\
-  x_i \le y_k & i \in [0,n), k \in [0,r) | c_{ik}
-  bin\ x_i,y_k & i\in[0,n),k\in[0,r)
+  \min \sum_{i=0}^{n-1} p_i x_i  \\
+  \sum_{i=0|t_{ij}}^{n-1} x_i \ge 1 \ \ \  j \in [0,m) \\
+  \sum_{k=0}^{r-1} y_k \le mc \\
+  x_i \le y_k  \ \ \ i \in [0,n), k \in [0,r) | c_{ik} \\
+  bin x_i,y_k \ \ \ i \in [0,n),k \in [0,r)
  \end{matrix}
 $$
 
+Un segundo modelo puede definirse con las variables:
 
  - $n$: entero, número de cursos.
  - $m$: entero, número de temáticas
@@ -41,4 +42,14 @@ $$
  - $p_i$: real, precio de inscripción del curso $i$, $i \in [0,n)$
  - $c_i$: entero, el centro donde se imparte el curso $i$, $i \in [0,n)$.
 
-Variables $x_i$ que representan si el curso $i$ se ha elegido e $y_k$ si se ha elegido el centro $k$.
+Las variables $x_i$ que representan si el curso $i$ se ha elegido e $y_k$ si se ha elegido el centro $k$.
+
+
+$$
+\begin{matrix}
+min \sum_{i=0}^{n-1} p_i x_i \\
+|U_{i=0|x_i=1}^{n-1} t_i | = m \\
+{ND}_{i=0|x_i=1}^{n-1}c_i \le mc \\
+bin\ x_i,\ \ \ i \in [0,n)
+\end{matrix}
+$$
