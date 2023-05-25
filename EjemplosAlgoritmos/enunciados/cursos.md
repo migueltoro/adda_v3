@@ -24,7 +24,7 @@ Las variables $x_i$ que representan si el curso $i$ se ha elegido e $y_k$ si se 
 
 $$
 \begin{matrix}
-  \min \sum_{i=0}^{n-1} p_i x_i  \\
+  \min \sum\limits__{i=0}^{n-1} p_i x_i  \\
   \sum_{i=0|t_{ij}}^{n-1} \ x_i \ge 1 \ \ \  j \in [0,m) \\
   \sum_{k=0}^{r-1} \ y_k \le mc \\
   x_i \le y_k  \ \ \ i \in [0,n), \ k \in [0,r) | \ c_{ik} \\
