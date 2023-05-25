@@ -22,15 +22,15 @@ Datos
 
 Las variables $x_i$ que representan si el curso $i$ se ha elegido e $y_k$ si se ha elegido el centro $k$.
 
-$$
+```math
 \begin{matrix}
-  \min \sum_{i=0}^{n-1}{p_i x_i}  \\
+  \min \sum_{i=0}^{n-1} p_i x_i  \\
   \sum_{i=0|t_{ij}}^{n-1} \ x_i \ge 1 \ \ \  j \in [0,m) \\
   \sum_{k=0}^{r-1} \ y_k \le mc \\
   x_i \le y_k  \ \ \ i \in [0,n), \ k \in [0,r) | \ c_{ik} \\
   bin \ x_i,y_k \ \ \ i \in [0,n),\ k \in [0,r)
  \end{matrix}
-$$
+```
 
 Un segundo modelo puede definirse con las variables:
 
@@ -46,10 +46,10 @@ Las variables $x_i$ que representan si el curso $i$ se ha elegido e $y_k$ si se 
 
 
 $$
-\begin{matrix}
+\begin{array} {c}
 min \sum_{i=0}^{n-1} \ p_i x_i \\
 |U_{i=0|x_i=1}^{n-1} \ t_i | = m \\
 {ND}_{i=0|x_i=1}^{n-1} \ c_i \le mc \\
 bin\ x_i,\ \ \ i \in [0,n)
-\end{matrix}
+\end{array}
 $$
