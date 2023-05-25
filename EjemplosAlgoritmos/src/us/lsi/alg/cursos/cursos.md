@@ -9,6 +9,8 @@ Se desea conocer la lista de cursos en los que matricularse, teniendo en cuenta 
  - Entre todos los cursos seleccionados se deben cubrir todas las temáticas
  - No se pueden elegir cursos de más de un número determinado de centros diferentes (maxCentros)
  - Se debe minimizar el precio total de inscripción.
+ 
+
 
 Datos
 

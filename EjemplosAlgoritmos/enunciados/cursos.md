@@ -32,13 +32,20 @@ $$
  \end{matrix}
 $$
 
+
+$$
+\begin{matrix}
+min \sum_{i=0}^{n-1} {p_ix_i}\\\sum_{i=0|t_{ij}}^{n-1}{x_i \geq 1},\ \ j\ \in[0,m)\\\sum_{k=0}^{r-1}y_k\le m c\\x_i\le y_k,\ \ i\in[0,n),k\in[0,r)\ |c_{ik}\\bin\ x_i,y_k,\ \ i\in[0,n),k\in[0,r)\\\end{matrix}
+
+$$
+
 Un segundo modelo puede definirse con las variables:
 
  - $n$: entero, número de cursos.
  - $m$: entero, número de temáticas
  - $r$: entero, número de centros_
  - $mc$: entero, número máximo de centros diferentes
- - $t_i$: Set<Integer>, conjunto de tematicas del curso $i$, i $\in [0,n)$
+ - $t_i$: Set\<Integer\>, conjunto de tematicas del curso $i$, i $\in [0,n)$
  - $p_i$: real, precio de inscripción del curso $i$, $i \in [0,n)$
  - $c_i$: entero, el centro donde se imparte el curso $i$, $i \in [0,n)$.
 
