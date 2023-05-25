@@ -11,7 +11,6 @@ Se desea conocer la lista de cursos en los que matricularse, teniendo en cuenta 
  - Se debe minimizar el precio total de inscripción.
  
 
-
 Datos
 
  - $n$: entero, número de cursos.
