@@ -20,8 +20,7 @@ $g$: es el grafo del problema
 ## Un primer modelo
 
 $$
-\begin{matrix}
-\min \sum\limits_{i=0}^{n-1} b_i - \sum\limits_{i=0}^{n-1} (n - i) \ w(x_i,x_{(i+1)\%n}) \\
+\begin{array} {c}
 P_{i=0}^{n-1}(x_i,i) \\
 x_0=a \\
 CP_{i=0|g}^{n-1}x_i \\
@@ -35,7 +34,7 @@ Podemos usar un cromosoma de permutación de tamaño $n$ y secuencia normal la l
 Un modelo ligeramente retocado es
 
 $$
-\begin{matrix}
+\begin{array} {c}
 \min \sum_{i=0}^{n-1}b_i - \sum_{i=0}^{n-1} (n-i)\ w(x_i,x_{(i+1)\%n}) \\
 P(L_{i=1}^{n-1}x_i,L_{i=0|i \ne a}^{n-1}i) \\
 CP_{i=0|g}^{n-1}x_i \\
