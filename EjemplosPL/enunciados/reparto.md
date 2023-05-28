@@ -20,10 +20,10 @@ $b_i$: double, beneficio del cliente ubicado en el vértice $v_i$, $i \in [0,n)$
 
 $$
 \begin{array} {c}
-\min \sum_{i=0}^{n-1} b_i - \sum_{i=0}^{n-1} (n\ -\ i) \ w(x_i,x_{(i+1)\%n}) \\
+\min \sum\limits_{i=0}^{n-1} b_i - \sum\limits_{i=0}^{n-1} (n\ -\ i) \ w(x_i,x_{(i+1)\%n}) \\
 P_{i=0}^{n-1}(x_i,i) \\
 x_0=a \\
-CP_{i=0|g}^{n-1}x_i \\
+CP_{i=0|g}^{n-1} x_i \\
 x_i<n,\ i\in[0,n) \\
 int\ x_i,\ i\in[0,n)
 \end{array} 
@@ -35,7 +35,7 @@ Un modelo ligeramente retocado es:
 
 $$
 \begin{array} {c}
-\min \sum_{i=0}^{n-1} b_i - \sum_{i=0}^{n-1} (n\ -\ i) \ w(x_i,x_{(i+1)\%n}) \\
+\min \sum\limits_{i=0}^{n-1} b_i - \sum\limits_{i=0}^{n-1} (n\ -\ i) \ w(x_i,x_{(i+1)\%n}) \\
 P(L_{i=1}^{n-1}x_i,L_{i=0|i!=a}^{n-1}i) \\
 CP_{i=0|g}^{n-1}x_i \\
 x_i<n,\ i\in[0,n) \\
@@ -52,9 +52,9 @@ Ahora formulamos un modelo lineal donde la variable $x_i$ indica la posición en
 
 $$
 \begin{array} {c}
-\min \sum_{i=0}^{n-1} b_i -\sum_{i,j=0|(i,j)\in g}^{n-1} (n\ -\ i) y_{ij}\ w(i,j) \\
-\sum_{i=0}^{n-1}y_{ij}=1,\ \ j\in\left[0,n-1\right] \\
-\sum_{j=0}^{n-1}y_{ij}=1,\ \ i\in\left[0,n-1\right] \\
+\min \sum\limits_{i=0}^{n-1} b_i -\sum\limits_{i,j=0|(i,j)\in g}^{n-1} (n\ -\ i) y_{ij}\ w(i,j) \\
+\sum\limits_{i=0}^{n-1}y_{ij}=1,\ \ j\in\left[0,n-1\right] \\
+\sum\limits_{j=0}^{n-1}y_{ij}=1,\ \ i\in\left[0,n-1\right] \\
 x_i-x_j+n\ y_{ij}\le n-1,\ \ i\in\left[1,n-1\right],j\in\left[1,n-1\right]|(i,j)\in g \\
 x_i\le n-1,\ \ \ i\in\left[0,n-1\right] \\
 x_0=a \\
