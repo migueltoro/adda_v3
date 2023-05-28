@@ -4,13 +4,13 @@ Existe un grupo de $n$ investigadores para realizar un conjunto de $m$ trabajos 
 
 ## Datos
 
-$n$: entero, número de investigadores
-$r:$ entero, número de especialidades
-$m$: entero, número de trabajos
-$e_{ik}$: boolean, trabajador $i$ tiene especialidad $k$, $i \in [0,n), k \in [0,r)$
-$dd_i$: entero, días disponibles del trabajador $i$, $i \in [0,n)$
-$dn_{jk}$: entero, días necesarios para el trabajo $j$ de investigador con especialidad $k$ con $j \in [0,m), k \in [0,r)$
-$c_j$: entero, calidad trabajo $j$, $j \in [0,m) $  
+ - $n$: entero, número de investigadores
+ - $r:$ entero, número de especialidades
+ - $m$: entero, número de trabajos
+ - $e_{ik}$: boolean, trabajador $i$ tiene especialidad $k$, $i \in [0,n), k \in [0,r)$
+ - $dd_i$: entero, días disponibles del trabajador $i$, $i \in [0,n)$
+ - $dn_{jk}$: entero, días necesarios para el trabajo $j$ de investigador con especialidad $k$ con $j \in [0,m), k \in [0,r)$
+ - $c_j$: entero, calidad trabajo $j$, $j \in [0,m) $  
 
 ## Primer modelo
 
@@ -19,9 +19,9 @@ Las variables $x_{ij}$ que indican la cantidad de horas del trabajador $i$ en en
 $$
 \begin{array} {c}
 \max \sum\limits_{j=0}^{m-1} c_j y_j \\
-\sum\limits_{j=0}^{m-1} x_{ij} \le {dd}_i,\ \ i \in [0,n) \\
-\sum\limits_{i=0|e_{ik}}^{n-1} x_{ij} = \ y_j\ {dn}_{jk},\ \ j\ \in [0,m),k \ \in [0,r) \\
-int \ x_{ij}, \ bin\ y_j,\ \ i\in[0,n),j\ \in[0,m)  
+\sum\limits_{j=0}^{m-1} x_{ij} \le {dd}_i, i \in [0,n) \\
+\sum\limits_{i=0|e_{ik}}^{n-1} x_{ij} =  y_j\ {dn}_{jk}, j \in [0,m), k \in [0,r) \\
+int \ x_{ij}, \ bin\ y_j, i\in[0,n),j \in[0,m)  
 \end{array}
 $$
 
@@ -32,10 +32,10 @@ Las variables $x_{ij}$ que indican la cantidad de horas del trabajador $i$ en en
 $$
 \begin{array} {c}
 \max \sum\limits_{j=0}^{m-1} c_j y_j \\
-\sum\limits_{j=0}^{m-1} x_{ij} \le {dd}_i,\ \ i\in[0,n) \\
-\sum\limits_{i=0|e_{ik}}^{n-1} x_{ij} = {\ y_j\ dn}_{jk},\ \ j\ \in[0,m),k\ \in[0,r) \\
-y_j={\exists_{i=0}^nx}_{ij}>0?1:0,\ \ j\ \in[0,m) \\
-int\ x_{ij},\ \ i\in[0,n)  
+\sum\limits_{j=0}^{m-1} x_{ij} \le {dd}_i, i\in[0,n) \\
+\sum\limits_{i=0|e_{ik}}^{n-1} x_{ij} =  y_j {dn}_{jk}, j \in[0,m),k \in[0,r) \\
+y_j= {\exists_{i=0}^n x_{ij} \gt 0} ? 1:0, j \in[0,m) \\
+int\ x_{ij},\ i\in[0,n)  
 \end{array}
 $$
 
