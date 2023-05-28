@@ -6,7 +6,6 @@ import java.util.Set;
 
 import us.lsi.colors.GraphColors;
 import us.lsi.colors.GraphColors.Color;
-import us.lsi.colors.GraphColors.Style;
 import us.lsi.graphs.SimpleEdge;
 import us.lsi.gurobi.GurobiLp;
 import us.lsi.gurobi.GurobiSolution;

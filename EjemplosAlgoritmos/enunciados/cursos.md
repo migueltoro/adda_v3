@@ -1,8 +1,6 @@
 # Cursos
 
-Existe una oferta de cursos de verano, en cada uno de los cuales se tratan diversas temáticas, 
-algunas de ellas comunes a varios cursos. Además, de cada curso se conoce su precio de inscripción, 
-y el centro donde se imparte.  
+Existe una oferta de cursos de verano, en cada uno de los cuales se tratan diversas temáticas, algunas de ellas comunes a varios cursos. Además, de cada curso se conoce su precio de inscripción, y el centro donde se imparte.  
 
 Se desea conocer la lista de cursos en los que matricularse, teniendo en cuenta que: 
 
@@ -20,6 +18,8 @@ Datos
  - $p_i$: real, precio de inscripción del curso $i$, $i \in [0,n)$
  - $c_{ik}$: boolean, el curso $i$ se imparte en el centro $k$, $i \in [0,n)$, $k \in [0,r)$
 
+## Un primer modelo
+
 Las variables $x_i$ que representan si el curso $i$ se ha elegido e $y_k$ si se ha elegido el centro $k$.
 
 $$
@@ -32,18 +32,19 @@ $$
  \end{array}
 $$
 
+## Un segundo modelo
+
 Un segundo modelo puede definirse con las variables:
 
  - $n$: entero, número de cursos.
  - $m$: entero, número de temáticas
  - $r$: entero, número de centros_
  - $mc$: entero, número máximo de centros diferentes
- - $t_i$: Set\<Integer\>, conjunto de tematicas del curso $i$, i $\in [0,n)$
+ - $t_i$: IntegerSet, conjunto de temáticas del curso $i$, i $\in [0,n)$
  - $p_i$: real, precio de inscripción del curso $i$, $i \in [0,n)$
  - $c_i$: entero, el centro donde se imparte el curso $i$, $i \in [0,n)$.
 
 Las variables $x_i$ que representan si el curso $i$ se ha elegido e $y_k$ si se ha elegido el centro $k$.
-
 
 $$
 \begin{array} {c}
