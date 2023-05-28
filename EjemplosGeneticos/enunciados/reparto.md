@@ -21,6 +21,7 @@ $g$: es el grafo del problema
 
 $$
 \begin{array} {c}
+\min \sum_{i=0}^{n-1} b_i - \sum_{i=0}^{n-1} (n-i)\ w(x_i,x_{(i+1)\%n}) \\
 P_{i=0}^{n-1}(x_i,i) \\
 x_0=a \\
 CP_{i=0|g}^{n-1}x_i \\
@@ -35,7 +36,7 @@ Un modelo ligeramente retocado es
 
 $$
 \begin{array} {c}
-\min \sum_{i=0}^{n-1}b_i - \sum_{i=0}^{n-1} (n-i)\ w(x_i,x_{(i+1)\%n}) \\
+\min \sum_{i=0}^{n-1} b_i - \sum_{i=0}^{n-1} (n-i)\ w(x_i,x_{(i+1)\%n}) \\
 P(L_{i=1}^{n-1}x_i,L_{i=0|i \ne a}^{n-1}i) \\
 CP_{i=0|g}^{n-1}x_i \\
 x_i<n,\ i\in[0,n) \\
