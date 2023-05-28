@@ -33,7 +33,7 @@ public class SolucionCursos {
 			if(ls.get(i)>0) {
 				this.precio += DatosCursos.getCoste(i);
 				this.cursos.add(DatosCursos.getCurso(i));
-				this.centros = this.centros.addNew(DatosCursos.getCentro(i));
+				this.centros = this.centros.addF(DatosCursos.getCentro(i));
 			}
 		}
 	}

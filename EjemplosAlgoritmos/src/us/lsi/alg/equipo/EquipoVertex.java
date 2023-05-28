@@ -101,7 +101,7 @@ public record EquipoVertex(Integer index,IntegerSet players) implements VirtualV
 
 	@Override
 	public EquipoVertex neighbor(Integer a) {
-		return EquipoVertex.of(index + 1,players.removeNew(a));
+		return EquipoVertex.of(index + 1,players.removeF(a));
 	}
 
 	@Override

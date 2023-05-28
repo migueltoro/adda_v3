@@ -68,8 +68,8 @@ public record ReinasVertex(Integer index, List<Integer> fo, IntegerSet dpo, Inte
 	public ReinasVertex neighbor(Integer a) {
 		Integer index = this.index+1;
 		List<Integer> fo = new ArrayList<>(this.fo); fo.add(a);
-		IntegerSet dpo = this.dpo.addNew(a-this.index);
-		IntegerSet dso = this.dso.addNew(a+this.index);
+		IntegerSet dpo = this.dpo.addF(a-this.index);
+		IntegerSet dso = this.dso.addF(a+this.index);
 		return ReinasVertex.of(index, fo, dpo, dso);
 	}
 

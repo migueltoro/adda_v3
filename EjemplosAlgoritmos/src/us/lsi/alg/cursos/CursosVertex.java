@@ -33,7 +33,7 @@ public record CursosVertex(Integer index, IntegerSet remaining, IntegerSet cente
 			return List2.empty();
 		List<Integer> alternatives = List2.of();
 		Integer c = DatosCursos.cursos.get(this.index()).centro();
-		Boolean r1 = this.centers().addNew(c).size() <= DatosCursos.maxCentros;
+		Boolean r1 = this.centers().addF(c).size() <= DatosCursos.maxCentros;
 		if (r1)
 			r1 = this.remaining().intersection(DatosCursos.getTematicasDelCurso(this.index())).size() > 0;
 		if (r1)
@@ -46,7 +46,7 @@ public record CursosVertex(Integer index, IntegerSet remaining, IntegerSet cente
 	public CursosVertex neighbor(Integer a) {
 		IntegerSet rest = a == 0 ? this.remaining()
 				: this.remaining().difference(DatosCursos.getTematicasDelCurso(index));
-		IntegerSet cs = a == 0 ? this.centers() : this.centers().addNew(DatosCursos.getCentro(index));
+		IntegerSet cs = a == 0 ? this.centers() : this.centers().addF(DatosCursos.getCentro(index));
 		return of(index + 1, rest, cs);
 	}
 	

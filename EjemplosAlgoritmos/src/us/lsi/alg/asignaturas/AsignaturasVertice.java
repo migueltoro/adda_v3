@@ -12,7 +12,7 @@ import us.lsi.graphs.virtual.VirtualVertex;
 public record AsignaturasVertice(Integer index,List<Integer>diasAsignatura,Integer lastAsignatura) implements VirtualVertex<AsignaturasVertice,AsignaturasEdge,Integer> {
 
 	public static AsignaturasVertice inicial() {
-		return new AsignaturasVertice(0,List2.nTimes(0,DatosAsignaturas.NA),null);
+		return new AsignaturasVertice(0,List2.nCopies(0,DatosAsignaturas.NA),null);
 	}
 
 	public static AsignaturasVertice of(Integer index,List<Integer> diasAsignatura,Integer lastAsignatura) {

@@ -136,7 +136,7 @@ public class IntegerSet implements Set<Integer> {
 		return c != this.bits.get(ne);
 	}
 	
-	public IntegerSet addNew(Integer e) {
+	public IntegerSet addF(Integer e) {
 		IntegerSet cp = this.copy();
 		Preconditions.checkArgument(e>=infLimit, "Fuera de rango");
 		Integer ne = e-infLimit;
@@ -155,7 +155,7 @@ public class IntegerSet implements Set<Integer> {
 		return c != this.bits.get(ne);
 	}
 	
-	public IntegerSet removeNew(Object ob) {
+	public IntegerSet removeF(Object ob) {
 		IntegerSet cp = this.copy();
 		Integer e = (int) ob;
 		Preconditions.checkArgument(e>=infLimit, "Fuera de rango");
@@ -315,7 +315,7 @@ public class IntegerSet implements Set<Integer> {
 		System.out.println(s1);
 		System.out.println(s2);
 		System.out.println(s3);
-		System.out.println(s3.addNew(54));
+		System.out.println(s3.addF(54));
 		System.out.println("Union");
 		System.out.println(s2.union(s1));
 		System.out.println("Interseccion");

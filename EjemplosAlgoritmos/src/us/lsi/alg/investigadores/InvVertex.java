@@ -78,7 +78,7 @@ public record InvVertex(Integer index, List<Integer> ldIr, List<List<Integer>> l
 	 * @return Lista de dias disponibles restantes de cada una de las especialidades
 	 */
 	public List<Integer> dEr() {
-		List<Integer> r = List2.nTimes(0, DatosInv.r);
+		List<Integer> r = List2.nCopies(0, DatosInv.r);
 		for(int i = 0; i<DatosInv.n;i++) {
 			Integer s = r.get(this.esp(i))+this.ldIr().get(i);
 			r.set(this.esp(i),s);
