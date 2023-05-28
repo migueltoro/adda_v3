@@ -18,7 +18,7 @@ $b_i$: double, beneficio del cliente ubicado en el vértice $v_i$, $i \in [0,n)$
 
 ## Un primer modelo
 
-Si $g$ es el grafo del problema:
+Si $g$ es el grafo del problema entonces un modelo es:
 
 $$
 \begin{array} {c}
