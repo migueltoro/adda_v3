@@ -96,15 +96,32 @@ $$ int\ x_{ij},\ i\in[0,n) $$
 
 ## Tercer modelo
 
-Eliminado las $y_j$
+Eliminando las $y_j$
 
-$$ \max\sum_{j=0|{\exists_{i=0}^nx}_{ij}>0}^{m-1}c_j $$
+$$ \max\sum_{j=0|\phi(j)}^{m-1}c_j $$
 
-$$ \sum\limits_{j=0}^{m-1}{x_{ij}\le{dd}_i},\ \ i\in[0,n) $$
+$$ \sum\limits_{j=0}^{m-1}{x_{ij} \le {dd}_i},\ \ i\in[0,n) $$
 
-$$ \sum\limits_{i=0|e_{ik}}^{n-1}x_{ij}={dn}_{jk},\ \ j \in [0,m) | \phi(i,j), k\ \in[0,r) $$
-
-$$ \phi(i,j) \equiv \exists_{i=0}^n x_{ij} \lt 0 $$
+$$ \sum\limits_{i=0|e_{ik}}^{n-1}x_{ij}={dn}_{jk},\ \ j \in [0,m) | \phi(j), k\ \in[0,r) $$
 
 $$ int\ x_{ij},\ \ i\in[0,n),j\ \in[0,m) $$
+
+$$ \phi(j) \equiv \exists_{i=0}^n x_{ij} \gt 0 $$
+
+## Grafo obtenido del tercer modelo
+
+### Vértice: Propiedades
+
+
+ - index: indice que recorre los pares $(i,j)$ desde 0 hasta $n*m$, básica
+ - i = index%n, derivada
+ - j = index/n, derivada
+ - k = especialidadDeInvestigador(i);
+ - p = IntPair.of(this.j(),k);
+ - ldIr: diasInvestigadorRestantes: dias restantes de cada trabajador, dIr.get(i) los restantes del trabajador i
+ - tA: El trabajo estaAcabado[j] is true si el trabajo j está acabado
+ - ldEr: diasEspecialidadRestantes[j,k] dias que faltan dedicar al trabajo j de la especialidad k
+ 
+
+
 

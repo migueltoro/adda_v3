@@ -8,8 +8,10 @@ import java.util.Set;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
+import us.lsi.common.IntegerSet;
 import us.lsi.common.List2;
 import us.lsi.graphs.virtual.VirtualVertex;
+import us.lsi.streams.Collectors2;
 
 
 public record ColorVertex(Integer index, Map<Integer,Integer> cav) 
@@ -31,20 +33,20 @@ public record ColorVertex(Integer index, Map<Integer,Integer> cav)
 		return v -> v.index() == DatosColor.n;
 	}
 	
-	public Set<Integer> ca(){
-		return this.cav().values().stream().distinct().collect(Collectors.toSet());
+	public IntegerSet ca(){
+		return this.cav().values().stream().distinct().collect(Collectors2.toIntegerSet());
 	}
 	
 	public Integer nc() {
 		return this.ca().size();
 	}
 	
-	public Set<Integer> cv(){
-		Set<Integer> r;
+	public IntegerSet cv(){
+		IntegerSet r;
 		if (index < DatosColor.n) {
 			r = AuxiliaryColor.coloresDeVecinos(index(), DatosColor.graph, cav());
 		} else {
-			r = new HashSet<>();
+			r = IntegerSet.empty();
 		}
 		return r;
 	}

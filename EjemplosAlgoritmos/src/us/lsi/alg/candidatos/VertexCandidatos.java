@@ -1,25 +1,24 @@
 package us.lsi.alg.candidatos;
 
-import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Set;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
+import us.lsi.common.IntegerSet;
 import us.lsi.common.List2;
-import us.lsi.common.Set2;
 import us.lsi.graphs.virtual.VirtualVertex;
 
-public record VertexCandidatos(Integer index,Set<Integer>seleccion,Integer pRest) 
+public record VertexCandidatos(Integer index,IntegerSet seleccion,Integer pRest) 
     implements VirtualVertex<VertexCandidatos,EdgeCandidatos,Boolean> {
 
-	public static VertexCandidatos of(Integer index,Set<Integer>seleccion,Integer pRest) {
+	public static VertexCandidatos of(Integer index, IntegerSet seleccion,Integer pRest) {
 		return new VertexCandidatos(index,seleccion,pRest);
 	}
 	
 	public static VertexCandidatos initial() {
-		return VertexCandidatos.of(0,new HashSet<>(),DatosCandidatos.getPresupuestoMax());
+		return VertexCandidatos.of(0,IntegerSet.empty(),DatosCandidatos.getPresupuestoMax());
 	}
 
 	public static Predicate<VertexCandidatos> goal() {
@@ -47,7 +46,7 @@ public record VertexCandidatos(Integer index,Set<Integer>seleccion,Integer pRest
 
 	@Override
 	public VertexCandidatos neighbor(Boolean a) {
-		Set<Integer> seleccion2 = Set2.copy(seleccion);
+		IntegerSet seleccion2 = IntegerSet.copy(seleccion);
 		Integer pRest2 = pRest;
 		if (a) {
 		   seleccion2.add(index);

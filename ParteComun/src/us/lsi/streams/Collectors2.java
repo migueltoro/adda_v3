@@ -12,9 +12,11 @@ import java.util.function.Predicate;
 import java.util.function.Supplier;
 import java.util.stream.Collector;
 
+import us.lsi.common.IntegerSet;
 import us.lsi.common.List2;
 import us.lsi.common.Multiset;
 import us.lsi.common.MutableType;
+import us.lsi.common.Set2;
 
 public class Collectors2 {
 	
@@ -36,6 +38,14 @@ public class Collectors2 {
 				(x,e)->x.add(e), 
 				(x,y)->Multiset.add(x, y), 
 				x->x);
+	}
+	
+	public static <E> Collector<Integer,Set<Integer>,IntegerSet> toIntegerSet() {
+		return Collector.of(
+				()->Set2.<Integer>empty(), 
+				(x,e)->x.add(e), 
+				(x,y)->Set2.union(x,y), 
+				x->IntegerSet.of(x));
 	}
 	
 	public static <E> Collector<E,List<E>,List<E>> mergeSort(Comparator<? super E> cmp) {
@@ -65,5 +75,7 @@ public class Collectors2 {
 				(s1,s2)->{Set<E> c = new HashSet<>(s1); c.addAll(s2); return c;}, 
 				s->s.size());
 	}
+	
+	
 
 }

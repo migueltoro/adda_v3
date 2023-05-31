@@ -2,25 +2,27 @@ package us.lsi.alg.colorgraphs;
 
 import java.util.Map;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 
 import org.jgrapht.Graph;
 import org.jgrapht.Graphs;
 
+import us.lsi.common.IntegerSet;
 import us.lsi.graphs.SimpleEdge;
+import us.lsi.streams.Collectors2;
 public class AuxiliaryColor {
 	
-	public static Set<Integer> vecinos(Integer vertex, Graph<Integer,SimpleEdge<Integer>> g){
-		return g.edgesOf(vertex).stream().map(e->Graphs.getOppositeVertex(g,e,vertex)).collect(Collectors.toSet());
+	public static IntegerSet vecinos(Integer vertex, Graph<Integer,SimpleEdge<Integer>> g){
+		return g.edgesOf(vertex).stream().map(e->Graphs.getOppositeVertex(g,e,vertex))
+				.collect(Collectors2.toIntegerSet());
 	}
 	
-	public static Set<Integer> coloresDeVecinos(Integer vertex, Graph<Integer,SimpleEdge<Integer>> g, Map<Integer,Integer> cav){
-		Set<Integer> cv = vecinos(vertex,g)
+	public static IntegerSet coloresDeVecinos(Integer vertex, Graph<Integer,SimpleEdge<Integer>> g, Map<Integer,Integer> cav){
+		IntegerSet cv = vecinos(vertex,g)
 				.stream()
 				.filter(v -> cav.containsKey(v))
 				.map(v -> cav.get(v))
-				.collect(Collectors.toSet());
+				.collect(Collectors2.toIntegerSet());
 		return cv;
 	}
 	

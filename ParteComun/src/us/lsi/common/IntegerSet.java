@@ -5,7 +5,6 @@ import java.util.BitSet;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.Set;
-import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -32,6 +31,14 @@ public class IntegerSet implements Set<Integer> {
 	public static IntegerSet of(Integer... elems) {
 		IntegerSet r = IntegerSet.empty();
 		r.addAll(Arrays.asList(elems));
+		return r;
+	}
+	
+	public static IntegerSet of(Collection<Integer> elems) {
+		IntegerSet r = IntegerSet.empty();
+		for(Integer e:elems) {
+			r = r.addF(e);
+		}
 		return r;
 	}
 	

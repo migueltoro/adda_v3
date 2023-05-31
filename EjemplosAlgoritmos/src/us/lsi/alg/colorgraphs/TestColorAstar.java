@@ -14,7 +14,7 @@ public class TestColorAstar {
 
 	public static void main(String[] args) {
 		
-		DatosColor.data(9,"ficheros/andalucia.txt");
+		DatosColor.data(9,"ficheros/andalucia/andalucia.txt");
 		
 		ColorVertex e1 = ColorVertex.first();
 					
