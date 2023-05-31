@@ -113,14 +113,14 @@ $$ \phi(j) \equiv \exists_{i=0}^n x_{ij} \gt 0 $$
 ### Vértice: Propiedades
 
 
- - index: indice que recorre los pares $(i,j)$ desde 0 hasta $n*m$, básica
- - i = index%n, derivada
- - j = index/n, derivada
- - k = especialidadDeInvestigador(i);
- - p = IntPair.of(this.j(),k);
- - ldIr: diasInvestigadorRestantes: dias restantes de cada trabajador, dIr.get(i) los restantes del trabajador i
- - tA: El trabajo estaAcabado[j] is true si el trabajo j está acabado
- - ldEr: diasEspecialidadRestantes[j,k] dias que faltan dedicar al trabajo j de la especialidad k
+ - $index$: índice que recorre los pares $(i,j)$ desde 0 hasta $n*m$, básica
+ - $i$= $index\%n$, derivada
+ - $j$= $index/n$, derivada
+ - $k$ = $e_i$, derivada
+ - $p$ = $(j,k)$, derivada
+ - $dIr(i)$: días restantes de cada trabajador $i$
+ - $tA(j)$: true si el trabajo $j$ está acabado
+ - $dEr(j,k)$: días que faltan dedicar al trabajo $j$ de la especialidad $k$
  
 
 

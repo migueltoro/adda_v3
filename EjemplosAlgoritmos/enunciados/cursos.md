@@ -42,23 +42,15 @@ Las variables $x_i$ que representan si el curso $i$ se ha elegido e $y_k$ si se 
 
   
 
-$$
+$$ \min \sum\limits_{i=0}^{n-1} p_i x_i $$
 
-\begin{array} {c}
+$$ \sum\limits_{i=0|t_{ij}}^{n-1} \ x_i \ge 1 \ \ \ j \in [0,m) $$
 
-\min \sum\limits_{i=0}^{n-1} p_i x_i \\
+$$ \sum\limits_{k=0}^{r-1} \ y_k \le mc $$
 
-\sum\limits_{i=0|t_{ij}}^{n-1} \ x_i \ge 1 \ \ \ j \in [0,m) \\
+$$ x_i \le y_k \ \ \ i \in [0,n), \ k \in [0,r) | \ c_{ik} $$
 
-\sum\limits_{k=0}^{r-1} \ y_k \le mc \\
-
-x_i \le y_k \ \ \ i \in [0,n), \ k \in [0,r) | \ c_{ik} \\
-
-bin \ x_i,y_k \ \ \ i \in [0,n),\ k \in [0,r)
-
-\end{array}
-
-$$
+$$ bin \ x_i,y_k \ \ \ i \in [0,n),\ k \in [0,r) $$
 
   
 
@@ -90,18 +82,10 @@ Las variables $x_i$ que representan si el curso $i$ se ha elegido e $y_k$ si se 
 
   
 
-$$
+$$ \min \sum\limits_{i=0}^{n-1} \ p_i x_i $$
 
-\begin{array} {c}
+$$ |U_{i=0|x_i=1}^{n-1} \ t_i | = m $$
 
-min \sum\limits_{i=0}^{n-1} \ p_i x_i \\
+$$ {ND}_{i=0|x_i=1}^{n-1} \ c_i \le mc $$
 
-|U_{i=0|x_i=1}^{n-1} \ t_i | = m \\
-
-{ND}_{i=0|x_i=1}^{n-1} \ c_i \le mc \\
-
-bin\ x_i,\ \ \ i \in [0,n)
-
-\end{array}
-
-$$
+$$ bin\ x_i,\ \ \ i \in [0,n) $$

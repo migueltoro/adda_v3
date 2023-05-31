@@ -20,15 +20,18 @@ $g$: el grafo del problema
 
 Un modelo lineal donde la variable $x_i$ indica la posición en la que se visita el vértice $i$ y $y_{ij}$ una variable booleana que indica si el camino va desde el vértice $i$ al $j$.
 
-$$
-\begin{array} {c}
-\min \sum\limits_{i=0}^{n-1} b_i -\sum\limits_{i,j=0|(i,j)\in g}^{n-1} (n\ -\ i) y_{ij}\ w(i,j) \\
-\sum\limits_{i=0}^{n-1}y_{ij}=1,\ \ j\in\left[0,n-1\right] \\
-\sum\limits_{j=0}^{n-1}y_{ij}=1,\ \ i\in\left[0,n-1\right] \\
-x_i-x_j+n\ y_{ij}\le n-1,\ \ i\in\left[1,n-1\right],j\in\left[1,n-1\right]|(i,j)\in g \\
-x_i\le n-1,\ \ \ i\in\left[0,n-1\right] \\
-x_0=a \\
-bin\ y_{ij},\ \ i\in\left[0,n-1\right],j\in\left[0,n-1\right]|(i,j)\in g \\
-int\ x_i,\ \ i\in[0,n)
-\end{array} 
-$$
+$$ \min \sum\limits_{i=0}^{n-1} b_i -\sum\limits_{i,j=0|(i,j)\in g}^{n-1} (n\ -\ i) y_{ij}\ w(i,j) $$
+
+$$ \sum\limits_{i=0}^{n-1}y_{ij}=1,\ \ j\in\left[0,n-1\right] $$
+
+$$ \sum\limits_{j=0}^{n-1}y_{ij}=1,\ \ i\in\left[0,n-1\right] $$
+
+$$ x_i-x_j+n\ y_{ij}\le n-1,\ \ i\in\left[1,n-1\right],j\in\left[1,n-1\right]|(i,j)\in g $$
+
+$$ x_i\le n-1,\ \ \ i\in\left[0,n-1\right] $$
+
+$$x_0=a $$
+
+$$ bin\ y_{ij},\ \ i\in\left[0,n-1\right],j\in\left[0,n-1\right]|(i,j)\in g $$
+
+$$ int\ x_i,\ \ i\in[0,n) $4

@@ -9,22 +9,30 @@ El Problema de Coloreado de Grafos consiste en buscar el mínimo número de colo
  - $n$: Integer, el número de vértices del grafo
  - $m$: Integer, número de colores, obtenido previamente mediante una solución voraz 
  - $N(i)$:  los vértices vecinos del vértice $i$ sin incluir él mismk:o 
- - : el conjunto de los colores de los vértices en $N(i)$.
+ - $S_{k : N(i)} cav.get(k)$: el conjunto de los colores de los vértices en $N(i)$.
 
 ## Primer modelo
 
 $$ min⁡∑_{k=0}^{m-1} y_k $$
+
 $$ ∑_{k=0}^{m-1} x_{ik} = 1,     i \in [0,n-1] $$
+
 $$ x_{ik} \leq y_k,           i \in [0,n-1],k \in [0,m-1] $$
+
 $$ x_{ik}+x_{jk} \leq 1,         (i,j) \in g_e,k\in [0,m-1] $$
+
 $$ bin \  x_{ik},   y_k,      i \in [0,n-1],k \in [0,m-1] $$
 
 ## Segundo modelo
 
 $$ \min⁡ CD_{i=0}^{n-1} x_i $$
+
 $$ x_i \notin S_{k:N(i)} x_k,      i \in [0,n-1] $$
+
 $$ 0 \leq  x_i \lt m,         i \in [0,n-1]$$
+
 $$ int  \ x_i,   i \in [0,n-1] $$
+
 ## Grafo
 
 ### Propiedades del vértice
@@ -34,7 +42,7 @@ $$ int  \ x_i,   i \in [0,n-1] $$
 •	$ca$: IntegerSet, colores ya asignados, derivada, $ca=cav.values()$.
 •	$nc$: Integer, número de colores ya asignados, derivada, $nc = ca.size()$.
 •	$cv$: IntegerSet, colores asignados a los vecinos de $i$ que ya tienen color, derivada. 
-$$cv =  S_{k : N(i) \cap cav.keys()} \ cav.get(k) $$
+	$$cv =  S_{k : N(i) \cap cav.keys()} \ cav.get(k) $$
 
 
 

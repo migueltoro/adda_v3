@@ -17,8 +17,11 @@ Se tienen $n$ tareas y cada una está representada por los siguientes 3 elemento
 ## Modelo
 
 $$ \max \sum_{i=0}^{n-1} g_i x_i $$
+
 $$ x_i +x_j\le 1,\ i,j \in \left[0,n-1\right] \ |\ i \lt j, \ sp\left(i,j\right) \gt 0 $$
+
 $$ bin\ \ \ x_i,\ \ \ \ \ \ i\in\left[0,n-1\right] $$
+
 ## Grafo
 
 ### Propiedades del vértice

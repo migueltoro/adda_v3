@@ -15,9 +15,13 @@ El problema de la Mochila parte de una lista de objetos L de tamaño. Cada objet
 Si $x_i$ es el número de unidades del objeto $i$ en la mochila el problema puede modelarse como:
 
 $$ \max \sum\limits_{i=0}^{n-1} x_i v_i $$
+
 $$ \sum\limits_{i=0}^{n-1} x_i w_i \le C $$
+
 $$ x_i\le m_i,\ \ \ \ i\in\left[0,n-1\right] $$
+
 $$ int\ \ \ x_i,\ \ \ \ \ i\in\left[0,n-1\right] $$
+
 ## Grafo
 
 ### Propiedades del vértice
