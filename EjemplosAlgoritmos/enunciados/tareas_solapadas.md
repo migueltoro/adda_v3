@@ -26,8 +26,8 @@ $$ bin\ \ \ x_i,\ \ \ \ \ \ i\in\left[0,n-1\right] $$
 
 ### Propiedades del vértice
 
-•	$index$: Integer, básica
-•	$te$: IntegerSet, básica, tareas ya escogidas
+ - $index$: Integer, básica
+ - $te$: IntegerSet, básica, tareas ya escogidas
 
 
 	

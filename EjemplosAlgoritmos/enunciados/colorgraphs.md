@@ -15,7 +15,7 @@ El Problema de Coloreado de Grafos consiste en buscar el mínimo número de colo
 
 $$ min⁡∑_{k=0}^{m-1} y_k $$
 
-$$ ∑_{k=0}^{m-1} x_{ik} = 1,     i \in [0,n-1] $$
+$$ \sum\limits_{k=0}^{m-1} x_{ik} = 1,     i \in [0,n-1] $$
 
 $$ x_{ik} \leq y_k,           i \in [0,n-1],k \in [0,m-1] $$
 

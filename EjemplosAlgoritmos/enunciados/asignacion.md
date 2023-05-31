@@ -31,8 +31,8 @@ Construido  a partir del segundo modelo
 
 ### Propiedades del vértice
 
-•	$index$: Integer, básica
-•	$tna$: IntegerSet, tareas no asignadas todavía, básica
+ - $index$: Integer, básica
+ - $tna$: IntegerSet, tareas no asignadas todavía, básica
 
 
 

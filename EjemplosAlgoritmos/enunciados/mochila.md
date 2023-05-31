@@ -26,5 +26,5 @@ $$ int\ \ \ x_i,\ \ \ \ \ i\in\left[0,n-1\right] $$
 
 ### Propiedades del vértice
 
-•	$i$: Integer, básica
-•	$pr$: Integer, peso restante, básica
+ - $i$: Integer, básica
+ - $pr$: Integer, peso restante, básica
