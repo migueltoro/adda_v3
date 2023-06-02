@@ -2,23 +2,23 @@ package us.lsi.alg.subconjuntos;
 
 
 import java.util.Comparator;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.function.Predicate;
 
+import us.lsi.common.IntegerSet;
 import us.lsi.common.Set2;
 import us.lsi.graphs.virtual.VirtualVertex;
 
-public record SubconjuntosVertex(Integer indice, Set<Integer> elementosCubiertos) 
+public record SubconjuntosVertex(Integer indice, IntegerSet elementosCubiertos) 
     implements VirtualVertex<SubconjuntosVertex, SubconjuntosEdge, Integer>{
 	
-	public static SubconjuntosVertex of(Integer indice, Set<Integer> elementosCubiertos) {
+	public static SubconjuntosVertex of(Integer indice, IntegerSet elementosCubiertos) {
 		return new SubconjuntosVertex(indice,elementosCubiertos);
 	}
 	
 	public static SubconjuntosVertex initial() {
-		return SubconjuntosVertex.of(0,new HashSet<>());
+		return SubconjuntosVertex.of(0,IntegerSet.empty());
 	}
 
 	public static Predicate<SubconjuntosVertex> goal() {
@@ -26,7 +26,7 @@ public record SubconjuntosVertex(Integer indice, Set<Integer> elementosCubiertos
 	}
 	
 	public static SubconjuntosVertex copy(SubconjuntosVertex sv) {
-		return SubconjuntosVertex.of(sv.indice(),new HashSet<>(sv.elementosCubiertos()));
+		return SubconjuntosVertex.of(sv.indice(),IntegerSet.copy(sv.elementosCubiertos()));
 	}
 	
 	public String toGraph() {
@@ -76,8 +76,7 @@ public record SubconjuntosVertex(Integer indice, Set<Integer> elementosCubiertos
 	@Override
 	public SubconjuntosVertex neighbor(Integer a) {
 		if(a==0) return SubconjuntosVertex.of(this.cubreUniverso()?DatosSubconjuntos.NUM_SC:this.indice()+1,this.elementosCubiertos());
-		else return SubconjuntosVertex.of(this.indice()+1,
-				Set2.union(DatosSubconjuntos.conjunto(this.indice()),this.elementosCubiertos()));
+		else return SubconjuntosVertex.of(this.indice()+1,this.elementosCubiertos().addF(this.indice()));
 	}
 	@Override
 	public SubconjuntosEdge edge(Integer a) {
