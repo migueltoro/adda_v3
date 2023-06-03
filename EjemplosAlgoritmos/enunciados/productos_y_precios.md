@@ -16,7 +16,12 @@ Sea un conjunto finito de funcionalidades $F$ que podemos representar por una li
 
 Sean las variables binarias $x_i,\ i \in [0,n-1]$ que indica si se ha elegido el producto $i$. 
 Un modelo del problema es
-$$\min{\sum_{i=0}^{n-1}{p_ix_i}}$$$$\sum_{i:\phi(j)} x_i \geq 1,\ j\in [0,m) $$$$ bin\ x_i,\ i\in [0,n)$$
+
+$$\min{\sum_{i=0}^{n-1}{p_ix_i}}$$
+
+$$\sum_{i:\phi(j)} x_i \geq 1,\ j\in [0,m) $$
+
+$$ bin\ x_i,\ i\in [0,n)$$
 
  
 Otro modelo del problema es
@@ -24,4 +29,7 @@ Otro modelo del problema es
 ## Modelo
 
 $$ \min \sum_{i=0}^{n-1} p_i\ x_i $$
-$$\cup_{i=0|x_i=1}^{n-1} f_i \supseteq D$$$$bin\ x_i,\ i\in [0,n-1]$$
+
+$$\cup_{i=0|x_i=1}^{n-1} f_i \supseteq D$$
+
+$$bin\ x_i,\ i\in [0,n-1]$$
