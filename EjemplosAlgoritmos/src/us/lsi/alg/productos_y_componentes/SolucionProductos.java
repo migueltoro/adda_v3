@@ -1,4 +1,4 @@
-	package us.lsi.alg.productoscomp;
+	package us.lsi.alg.productos_y_componentes;
 
 import java.util.List;
 import java.util.Map;
@@ -6,7 +6,7 @@ import java.util.stream.Collectors;
 
 import org.jgrapht.GraphPath;
 
-import us.lsi.alg.productoscomp.DatosProductos.Producto;
+import us.lsi.alg.productos_y_componentes.DatosProductos.Producto;
 import us.lsi.common.Map2;
 
 public class SolucionProductos {

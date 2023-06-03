@@ -1,4 +1,4 @@
-package us.lsi.alg.productoscomp;
+package us.lsi.alg.productos_y_componentes;
 
 import java.io.IOException;
 import java.util.Collections;

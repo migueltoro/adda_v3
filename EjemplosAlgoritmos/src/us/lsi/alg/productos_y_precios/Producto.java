@@ -1,7 +1,6 @@
-package us.lsi.alg.productos;
+package us.lsi.alg.productos_y_precios;
 
 import java.util.Set;
-
 import us.lsi.common.Set2;
 
 
@@ -13,7 +12,7 @@ public record Producto(String nombre,Double precio,Set<String> funciones, Boolea
 		String nombre = tokens[0].trim();
 		Double precio = Double.parseDouble(tokens[1].split(" ")[0].trim());
 		Set<String> funciones = Set2.parseSet(partes[1].trim().split(","),tk->tk.trim());
-		Boolean excluded = Set2.intersection(funciones,DatosProductos.getFunciones()).isEmpty();
+		Boolean excluded = Set2.intersection(funciones,DatosProductos.funcionesDS).isEmpty();
 		return new Producto(nombre,precio,funciones,excluded);				
 	}
 	
@@ -23,7 +22,7 @@ public record Producto(String nombre,Double precio,Set<String> funciones, Boolea
 	}
 	
 	public Double precioPorFuncionalidad() {
-		Integer n = Set2.intersection(this.funciones,DatosProductos.getFunciones()).size();
+		Integer n = Set2.intersection(this.funciones,DatosProductos.funcionesDS).size();
 		return this.precio()/n;
 	}
 

@@ -1,4 +1,4 @@
-package us.lsi.alg.productos;
+package us.lsi.alg.productos_y_precios;
 
 import java.util.List;
 import java.util.Locale;
@@ -17,7 +17,7 @@ public class TestPD {
 
 		for (Integer id_fichero = 1; id_fichero < 4; id_fichero++) {
 
-			DatosProductos.iniDatos("ficheros/productos" + id_fichero + ".txt");
+			DatosProductos.iniDatos("ficheros/productos_y_precios/productos" + id_fichero + ".txt");
 			System.out.println("\n\n>\tResultados para el test " + id_fichero + "\n");
 			
 

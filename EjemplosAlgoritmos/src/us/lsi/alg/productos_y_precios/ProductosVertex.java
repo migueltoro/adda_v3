@@ -1,59 +1,44 @@
-package us.lsi.alg.productos;
-
+package us.lsi.alg.productos_y_precios;
 
 import java.util.Comparator;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 import java.util.function.Predicate;
 
 import org.jgrapht.GraphPath;
 
+import us.lsi.common.IntegerSet;
 import us.lsi.common.List2;
 import us.lsi.common.Preconditions;
-import us.lsi.common.Set2;
 import us.lsi.graphs.virtual.VirtualVertex;
 
-public class ProductosVertex implements VirtualVertex<ProductosVertex, ProductosEdge, Integer> {
-
-	// Variables
-	public Integer indice;
-	public Set<String> funcionalidades_restantes;
-
-	// Factorías vacías
+public record ProductosVertex(Integer indice,IntegerSet funcionalidades_restantes) 
+		implements VirtualVertex<ProductosVertex, ProductosEdge, Integer> {
+	
+	// Factorï¿½as vacï¿½as
 
 	public static ProductosVertex initial() {
-		return ProductosVertex.of(0,Set2.of(DatosProductos.getFunciones()));
+		return ProductosVertex.of(0,DatosProductos.funcionesDeseadas());
 	}
 	
 	public static Predicate<ProductosVertex> goal() {
 		return v->v.indice == DatosProductos.NUM_PRODUCTOS;
 	}
 
-	// Factorías con variables
-
-	public static ProductosVertex of(Integer indice, Set<String> funcionalidades_restantes) {
-		Set<String> funcionalidades_restantesC = new HashSet<>(funcionalidades_restantes);
-		final ProductosVertex a = new ProductosVertex(indice, funcionalidades_restantesC);
-		return a;
+	public static ProductosVertex of(Integer indice, IntegerSet funcionalidades_restantes) {
+		return new ProductosVertex(indice, funcionalidades_restantes);
 	}
 
 	public static ProductosVertex copy(ProductosVertex v_input) {
 		return ProductosVertex.of(v_input.indice, v_input.funcionalidades_restantes);
 	}
 
-	private ProductosVertex(Integer indice, Set<String> funcionalidades_restantes) {
-		this.indice = indice;
-		this.funcionalidades_restantes = funcionalidades_restantes;
-	}
-
-	// Métodos para el grafo
+	// Mï¿½todos para el grafo
 
 	
 
 	@Override
 	public Boolean isValid() {
-		return indice >= 0 && indice <= DatosProductos.getProductos().size();
+		return indice >= 0 && indice <= DatosProductos.productos().size();
 	}
 	
 	public Integer geedyAction() {
@@ -73,7 +58,7 @@ public class ProductosVertex implements VirtualVertex<ProductosVertex, Productos
 			if (this.funcionalidades_restantes.isEmpty())
 				alternativas = List2.of(0);
 			else if (!this.funcionalidades_restantes.isEmpty()
-					&& DatosProductos.getFuncionesProducto(this.indice).containsAll(this.funcionalidades_restantes))
+					&& DatosProductos.funciones(this.indice).containsAll(this.funcionalidades_restantes))
 				alternativas = List2.of(1);
 			else
 				alternativas = List2.of();
@@ -81,8 +66,7 @@ public class ProductosVertex implements VirtualVertex<ProductosVertex, Productos
 		} else if (this.indice < DatosProductos.NUM_PRODUCTOS - 1) {
 			if (this.funcionalidades_restantes.isEmpty())
 				alternativas = List2.of(0);
-			else if (Set2.intersection(this.funcionalidades_restantes, DatosProductos.getFuncionesProducto(this.indice))
-					.isEmpty())
+			else if (this.funcionalidades_restantes.intersection(DatosProductos.funciones(this.indice)).isEmpty())
 				alternativas = List2.of(0);
 			else
 				alternativas = List2.of(1, 0);
@@ -97,7 +81,7 @@ public class ProductosVertex implements VirtualVertex<ProductosVertex, Productos
 		if(a == 0) r = ProductosVertex.of(this.indice+1,this.funcionalidades_restantes);
 		else if (a == 1) 
 			r = ProductosVertex.of(indice + 1,
-		          Set2.difference(this.funcionalidades_restantes,DatosProductos.getFuncionesProducto(this.indice)));
+		          this.funcionalidades_restantes.difference(DatosProductos.funciones(this.indice)));
 		return r;
 	}
 
@@ -106,18 +90,18 @@ public class ProductosVertex implements VirtualVertex<ProductosVertex, Productos
 		return ProductosEdge.of(this, this.neighbor(a), a);
 	}
 
-	// Métodos auxiliares
+	// Mï¿½todos auxiliares
 
 	public String toString() {
 		String nombre = this.indice<DatosProductos.NUM_PRODUCTOS?
-				DatosProductos.getProducto(this.indice).nombre():"_";
-		return String.format("(Indice: %d, %s, Asignación pendiente: %s)", 
+				DatosProductos.producto(this.indice).nombre():"_";
+		return String.format("(Indice: %d, %s, Asignaciï¿½n pendiente: %s)", 
 				this.indice,nombre,funcionalidades_restantes);
 	}
 	
 	public String toGraph() {
 		String nombre = this.indice < DatosProductos.NUM_PRODUCTOS? 
-				DatosProductos.getProducto(this.indice).nombre() : "_";
+				DatosProductos.producto(this.indice).nombre() : "_";
 		return String.format("(%s,%s)",nombre,this.funcionalidades_restantes);
 	}
 
@@ -136,38 +120,7 @@ public class ProductosVertex implements VirtualVertex<ProductosVertex, Productos
 		return SolucionProductos.of(alternativas);
 	}
 
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((funcionalidades_restantes == null) ? 0 : funcionalidades_restantes.hashCode());
-		result = prime * result + ((indice == null) ? 0 : indice.hashCode());
-		return result;
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		ProductosVertex other = (ProductosVertex) obj;
-		if (funcionalidades_restantes == null) {
-			if (other.funcionalidades_restantes != null)
-				return false;
-		} else if (!funcionalidades_restantes.equals(other.funcionalidades_restantes))
-			return false;
-		if (indice == null) {
-			if (other.indice != null)
-				return false;
-		} else if (!indice.equals(other.indice))
-			return false;
-		return true;
-	}
-	
-	
 
 }
+
 

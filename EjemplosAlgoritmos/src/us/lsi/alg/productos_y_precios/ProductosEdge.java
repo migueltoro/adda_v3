@@ -1,4 +1,4 @@
-package us.lsi.alg.productos;
+package us.lsi.alg.productos_y_precios;
 
 
 import us.lsi.graphs.virtual.SimpleEdgeAction;
@@ -7,7 +7,7 @@ public record ProductosEdge(ProductosVertex source, ProductosVertex target, Inte
            implements SimpleEdgeAction<ProductosVertex, Integer> {
 	
 	public static ProductosEdge of(ProductosVertex origen, ProductosVertex destino, Integer action) {
-		Double coste = DatosProductos.getProducto(origen.indice).precio()*action;
+		Double coste = DatosProductos.producto(origen.indice()).precio()*action;
 		return new ProductosEdge(origen, destino, action, coste);
 	}
 

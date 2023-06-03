@@ -1,4 +1,4 @@
-package us.lsi.alg.productos;
+package us.lsi.alg.productos_y_precios;
 
 
 import java.util.List;
@@ -37,11 +37,11 @@ public class ProductosHeuristic {
 	}
 	
 	public static Double heuristic2(ProductosVertex vertice, Integer lastIndex) {		
-		if (vertice.funcionalidades_restantes.isEmpty()) {
+		if (vertice.funcionalidades_restantes().isEmpty()) {
 			return 0.;
 		} else {
-			return IntStream.range(vertice.indice,lastIndex)
-					.mapToDouble(i->DatosProductos.getProducto(i).precio())
+			return IntStream.range(vertice.indice(),lastIndex)
+					.mapToDouble(i->DatosProductos.producto(i).precio())
 					.min()
 					.getAsDouble();
 		}

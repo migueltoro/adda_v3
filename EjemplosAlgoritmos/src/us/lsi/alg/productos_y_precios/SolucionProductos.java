@@ -1,4 +1,4 @@
-package us.lsi.alg.productos;
+package us.lsi.alg.productos_y_precios;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -22,7 +22,7 @@ public record SolucionProductos(Double precioTotal,Set<Producto> productos,Set<S
 		Set<String> funciones = new HashSet<>();
 		for(int i=0; i<lsC.size(); i++) {
 			if(ls.get(i)==1) {
-				Producto p = DatosProductos.getProducto(i);
+				Producto p = DatosProductos.producto(i);
 				productos.add(p);
 				funciones.addAll(p.funciones());
 				precioTotal += p.precio();
@@ -40,7 +40,7 @@ public record SolucionProductos(Double precioTotal,Set<Producto> productos,Set<S
 	public String toString() {
 		return String.format("Funcionalidades a cubrir: %s\nComposicion del lote seleccionado:\n\t%s"
 				+ "\nFuncionalidades del lote seleccionado:\n\t%s\nPrecio total del lote seleccionado: %.2f euros", 			
-				DatosProductos.getFunciones(),
+				DatosProductos.funcionesDS,
 				this.productos().stream().map(e->e.toString()).collect(Collectors.joining("\n\t")),
 		        this.funciones(),
 		        precioTotal);

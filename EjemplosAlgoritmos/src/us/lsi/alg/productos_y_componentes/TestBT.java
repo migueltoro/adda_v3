@@ -1,4 +1,4 @@
-package us.lsi.alg.productoscomp;
+package us.lsi.alg.productos_y_componentes;
 
 import java.util.Locale;
 import java.util.Optional;

@@ -1,9 +1,9 @@
-package us.lsi.alg.productoscomp;
+package us.lsi.alg.productos_y_componentes;
 
 
 import java.util.function.Predicate;
 
-import us.lsi.alg.productoscomp.DatosProductos.Producto;
+import us.lsi.alg.productos_y_componentes.DatosProductos.Producto;
 
 
 public class ProductosHeuristic {
