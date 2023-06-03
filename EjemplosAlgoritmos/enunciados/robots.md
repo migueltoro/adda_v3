@@ -31,6 +31,8 @@ Es un tipo enumerado que toma los valores $Ar = \{-1,0,..n-1\}$.  La acción $a$
 
 $$max \ (x_T).m(3) $$
 
-$$x_0=([1,0,0,0],[0,0,0,0])$$$$OP_{t=0|g}^T x_t$$
+$$x_0=([1,0,0,0],[0,0,0,0])$$
+
+$$OP_{t=0|g}^T x_t$$
 
 $$ Vr \ \ x_t,\ t∈[0,T]$$
