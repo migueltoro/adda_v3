@@ -31,7 +31,7 @@ Invariante
 - $vot(t)$: IntegerSet, valores ocupados en la subtabla $t$
 - $vlc(d)$: _IntegerSet_, valores libres en la casilla $c(d)$. Este valor es el conjunto vacío si a casilla está definida y si no lo está:
 
-$$vlc(d)= [1,n]-(voc(c(d).i)\cup vof(c(d).j) vot(c(d).t)$$
+$$vlc(d)= [1,n]-(voc(c(d).i)\cup vof(c(d).j) \cup vot(c(d).t)$$
 
 ## Modelo Lineal
 
