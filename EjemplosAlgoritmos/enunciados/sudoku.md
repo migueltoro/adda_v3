@@ -54,9 +54,9 @@ Las variables $x_{ij}$ indican el valor de la casilla $ij$.
 
 $$P_{i=0}^{n-1} \ (x_{ij},i+1), \ j\in[0,n-1]$$
 
-$${AD}_{j=0}^{n-1}\ x_{ij},\ i\in[0,n-1]$$
+$$AD_{j=0}^{n-1}\ x_{ij},\ i\in[0,n-1]$$
 
-$${AD}_{(i,j)|φ(t)}^{n-1} x_{ij}, \ t\in[0,n-1]$$
+$$AD_{(i,j)|φ(t)}^{n-1} x_{ij}, \ t\in[0,n-1]$$
 
 $$int \ x_{ij},      i,j\in[0,n-1]$$
 
