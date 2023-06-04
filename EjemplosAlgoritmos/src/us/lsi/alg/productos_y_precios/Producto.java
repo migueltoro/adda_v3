@@ -1,19 +1,17 @@
 package us.lsi.alg.productos_y_precios;
 
-import java.util.Set;
-import us.lsi.common.Set2;
+import us.lsi.common.IntegerSet;
 
 
-public record Producto(String nombre,Double precio,Set<String> funciones, Boolean excluded) implements Comparable<Producto>{
+public record Producto(String nombre,Double precio,IntegerSet funciones) 
+		implements Comparable<Producto>{
 
-	public static Producto parse(String s) {
-		String[] partes = s.split(":");
-		String[] tokens = partes[0].split("[()]");
-		String nombre = tokens[0].trim();
-		Double precio = Double.parseDouble(tokens[1].split(" ")[0].trim());
-		Set<String> funciones = Set2.parseSet(partes[1].trim().split(","),tk->tk.trim());
-		Boolean excluded = Set2.intersection(funciones,DatosProductos.funcionesDS).isEmpty();
-		return new Producto(nombre,precio,funciones,excluded);				
+	public static Producto of(ProductoL p) {	
+		return new Producto(p.nombre(),p.precio(),DatosProductos.indices(p.funciones()));				
+	}
+	
+	public Boolean excluded() {
+		return this.funciones().intersection(DatosProductos.funcionesD).isEmpty();
 	}
 	
 	@Override
@@ -22,7 +20,7 @@ public record Producto(String nombre,Double precio,Set<String> funciones, Boolea
 	}
 	
 	public Double precioPorFuncionalidad() {
-		Integer n = Set2.intersection(this.funciones,DatosProductos.funcionesDS).size();
+		Integer n = this.funciones.intersection(DatosProductos.funcionesD).size();
 		return this.precio()/n;
 	}
 

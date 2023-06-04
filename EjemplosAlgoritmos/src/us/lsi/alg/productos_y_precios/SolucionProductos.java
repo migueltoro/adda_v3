@@ -24,7 +24,7 @@ public record SolucionProductos(Double precioTotal,Set<Producto> productos,Set<S
 			if(ls.get(i)==1) {
 				Producto p = DatosProductos.producto(i);
 				productos.add(p);
-				funciones.addAll(p.funciones());
+				funciones.addAll(DatosProductos.nombres(p.funciones()));
 				precioTotal += p.precio();
 			}			
 		}
