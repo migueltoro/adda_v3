@@ -43,7 +43,7 @@ $$\sum_{j=0}^{n-1} x_{ijv}\ =\  1,\ i\in [0,n-1],\ v\in [1,n]$$
 
 $$\sum_{(i,j):\phi(t)}x_{ijv} \  =\  1,\ t=\in [0,n-1],\ v\in [1,n]$$
 
-$$ \sum_{v=1}^{n}{x_{ijv} \ = \ 1, \ i \in [0,n-1],j\in [0,n-1]$$
+$$ \sum_{v=1}^{n} x_{ijv} \ = \ 1, \ i \in [0,n-1],j\in [0,n-1]$$
 
 $$bin\ x_{ijv},\ \ \ \ \ \ i,j \in [0,n-1],\ v\in [1,n]$$
 
@@ -52,13 +52,13 @@ $$bin\ x_{ijv},\ \ \ \ \ \ i,j \in [0,n-1],\ v\in [1,n]$$
 
 Las variables $x_{ij}$ indican el valor de la casilla $ij$.
 
-$$P_{i=0}^{n-1}(x_{ij},i+1), \ j∈[0,n-1]$$
+$$P_{i=0}^{n-1} \ (x_{ij},i+1), \ j\in[0,n-1]$$
 
-$${AD}_{j=0}^{n-1}\ x_{ij},\ i∈[0,n-1]$$
+$${AD}_{j=0}^{n-1}\ x_{ij},\ i\in[0,n-1]$$
 
-$${AD}_{(i,j)|φ(t)}^{n-1} x_{ij}, \ t∈[0,n-1]$$
+$${AD}_{(i,j)|φ(t)}^{n-1} x_{ij}, \ t\in[0,n-1]$$
 
-$$int \ x_{ij},      i,j∈[0,n-1]$$
+$$int \ x_{ij},      i,j\in[0,n-1]$$
 
 ## Vértice del grafo (Sudoku)
 
