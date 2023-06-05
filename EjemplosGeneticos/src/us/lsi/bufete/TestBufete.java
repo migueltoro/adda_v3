@@ -3,7 +3,6 @@ package us.lsi.bufete;
 import java.util.List;
 import java.util.Locale;
 
-import us.lsi.ag.Chromosome;
 import us.lsi.ag.agchromosomes.AlgoritmoAG;
 import us.lsi.ag.agstopping.StoppingConditionFactory;
 import us.lsi.ag.agstopping.StoppingConditionFactory.StoppingConditionType;
@@ -28,7 +27,7 @@ public class TestBufete {
 		StoppingConditionFactory.SOLUTIONS_NUMBER_MIN = 1;
 		StoppingConditionFactory.FITNESS_MIN = -4;
 		StoppingConditionFactory.stoppingConditionType = StoppingConditionType.GenerationCount;
-		Locale.setDefault(new Locale("en", "US"));
+		Locale.setDefault(Locale.of("en", "US"));
 		TestBufete.test("bufete.txt");
 //		test("PI6Ej2DatosEntrada2");
 //		test("PI6Ej2DatosEntrada3");	

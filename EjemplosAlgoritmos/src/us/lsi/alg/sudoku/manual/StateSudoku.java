@@ -2,8 +2,7 @@ package us.lsi.alg.sudoku.manual;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import us.lsi.alg.sudoku.DatosSudoku.SolucionSudoku;
+import us.lsi.alg.sudoku.SolucionSudoku;
 import us.lsi.alg.sudoku.SudokuVertex;
 
 
@@ -32,7 +31,7 @@ public class StateSudoku {
 	}
 
 	SolucionSudoku solucion() {
-		return new SolucionSudoku(this.vertice().sudoku());
+		return new SolucionSudoku(this.vertice());
 	}
 
 	public SudokuVertex vertice() {

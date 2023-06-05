@@ -8,8 +8,6 @@ import java.util.List;
 import java.util.Set;
 
 import us.lsi.ag.BlocksData;
-import us.lsi.ag.agchromosomes.ChromosomeFactory;
-import us.lsi.ag.agchromosomes.ChromosomeFactory.ChromosomeType;
 import us.lsi.sudoku.datos.Casilla;
 import us.lsi.sudoku.datos.DatosSudoku;
 import us.lsi.sudoku.datos.SolucionSudoku;

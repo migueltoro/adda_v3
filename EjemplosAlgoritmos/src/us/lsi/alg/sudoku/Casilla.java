@@ -7,145 +7,137 @@ import us.lsi.common.Preconditions;
  *
  *<p> La casilla de un Sudoku
  */
-public class Casilla {
+public class Casilla implements Comparable<Casilla> {
 	
 	public static Casilla parse(String s) {
 		String[] sp = s.split(",");
-		Integer x = Integer.parseInt(sp[0].trim());
-		Integer y = Integer.parseInt(sp[1].trim());
+		Integer f = Integer.parseInt(sp[0].trim());
+		Integer c = Integer.parseInt(sp[1].trim());
 		Integer value =	Integer.parseInt(sp[2].trim());
-		return Casilla.of(x,y,value);
+		return Casilla.of(f,c,value,true,true);
 	}
-	public static Casilla of(Integer x, Integer y, Integer value) {
-		Casilla c = new Casilla(x, y, value); 
-		return c;
-	}
-	public static Casilla of(Integer x, Integer y) {
-		return Casilla.of(x,y,null);
-	}
+	
 	public static Casilla of(Integer p) {
-		Preconditions.checkArgument(0<=p && p < DatosSudoku.numeroDeCasillas);	
-		Integer x = p%DatosSudoku.numeroDeFilas;
-		Integer y = p/DatosSudoku.numeroDeFilas;
-		return Casilla.of(x,y,null);
+		return new Casilla(p/DatosSudoku.nf,p%DatosSudoku.nf, null, false,false);
 	}
-	final private Integer x;
-	final private Integer y;
-	final private Integer sc;
-	final private Integer p;
+	
+	public static Casilla of(Integer f, Integer c) {
+		return new Casilla(f, c, null, false,false);
+	}
+	
+	public static Casilla of(Integer f, Integer c, Integer value, Boolean definida, Boolean intialValue) {
+		return new Casilla(f, c, value, definida,intialValue);
+	}
+
+	private Integer c;
+	private Integer f;
 	private Boolean withInitialValue;
+	private Boolean definida;
 	private Integer value;
 	
-	private Casilla(Integer x, Integer y, Integer value) {
+	private Casilla(Integer f, Integer c, Integer value, Boolean definida, Boolean intialValue) {
 		super();
-		Preconditions.checkArgument(0 <= x && x < DatosSudoku.numeroDeFilas);
-		Preconditions.checkArgument(0 <= y && y < DatosSudoku.numeroDeFilas);
-		this.x = x;
-		this.y = y;
-		Integer tm = DatosSudoku.tamSubCuadro;
-		this.sc = x/tm+tm*(y/tm);
-	    this.p = y*DatosSudoku.numeroDeFilas+x;	
+		Preconditions.checkArgument(0 <= f && f < DatosSudoku.nf, String.format("El numero de fila es %d",f));
+		Preconditions.checkArgument(0 <= c && c < DatosSudoku.nf, String.format("El numero de columna es %d",c));
+		this.c = c;
+		this.f = f;
 		this.value = value;	
-		this.withInitialValue = false;
+		this.withInitialValue = intialValue;
+		this.definida = definida;
 	}
 		
-	private Casilla(Integer x, Integer y, Integer value, Boolean initialFree, Integer initialValue) {
-		super();
-		this.x = x;
-		this.y = y;
-		this.value = value;
+	public Integer st() {
 		Integer tm = DatosSudoku.tamSubCuadro;
-		this.sc = x/tm+tm*(y/tm);
-	    this.p = y*DatosSudoku.numeroDeFilas+x;
-	    this.withInitialValue = false;
+		return this.c/tm+tm*(this.f/tm);
 	}
+	
+	public Integer p() {
+		return this.f*DatosSudoku.nf+this.c;	
+	}
+
 	/**
 	 * @return La coordenada x de la casilla en 0..DatosSudoku.numeroDeFilas-1
 	 */
-	public Integer getX() {
-		return x;
+	public Integer c() {
+		return c;
 	}
 	/**
 	 * @return La coordenada y de la casilla en 0..CuadroSudoku.numeroDeFilas-1
 	 */
-	public Integer getY() {
-		return y;
+	public Integer f() {
+		return f;
 	}
-	/**
-	 * @return El subcuadro de la casilla en 0..CuadroSudoku.numeroDeFilas-1
-	 */
-	public Integer getSubCuadro() {
-		return sc;
-	}
-	/**
-	 * @return La posición de la casilla si se las
-	 * numera por filas en 0..CuadroSudoku.numeroDeFilas-1
-	 */
-	public Integer getP() {
-		return p;
-	}
-	/**
-	 * @return Si la casilla está libre
-	 */
-	public boolean isFree() {
-		return value==null?true:false;
+	
+	public boolean definida() {
+		return this.definida;
 	}
 	
 	/**
 	 * @return Si tiene un valor inicial
 	 */
 	public Boolean isWithInitialValue() {
-		return withInitialValue;
+		return this.withInitialValue;
 	}
 	/**
 	 * @return El valor contenido en la casilla
 	 */
-	public Integer getValue() {
-		Preconditions.checkArgument(!this.isFree(),String.format("La casilla %s está libre",this));
+	public Integer value() {
+		Preconditions.checkArgument(this.definida(),String.format("La casilla %s esta libre",this));
 		return value;
 	}
 	
 	public void setValue(Integer value) {
 		this.value = value;
+		this.definida = true;
 	}
 	
-	public void setInitialValue(Boolean withInitialValue) {
-		this.withInitialValue = withInitialValue;
+	public void setInitialValue(Integer value) {
+		this.withInitialValue = true;
+		this.value = value;
+		this.definida = true;
+	}
+	
+	public void setNoDefinida() {
+		this.definida = false;
 	}
 	
 	public Casilla copy() {
-		return new Casilla(x,y,value);
+		return new Casilla(c,f,value,this.definida,this.withInitialValue);
 	}
 	
 	public static String blank = "_";
 	
-	public String getStringValue() {
+	public String stringValue() {
 		String r;
-		if(this.isFree()) {
+		if(!this.definida()) {
 			r = String.format("%2s", blank);
 		} else if(this.withInitialValue){
-			r = String.format("X%1d", this.getValue());
+			r = String.format("X%1d", this.value());
 		} else {
-			r = String.format("%2d", this.getValue());
+			r = String.format("%2d", this.value());
 		}
 		return r;	
 	}
 	
 	public String getString() {
-		return String.format("(%d,%d)",x,y);
+		return String.format("(%d,%d)",c,f);
+	}
+	
+	@Override
+	public int compareTo(Casilla cs) {
+		return this.p().compareTo(cs.p());
 	}
 	
 	@Override
 	public String toString() {
-		return "(" + x + "," + y + "," + sc + "," + p
-				+ "," + isFree() + ")";
+		return String.format("(%d,%d,%d,%d,%s,%s)",f,c,st(),p(),this.definida(),this.withInitialValue);
 	}
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((x == null) ? 0 : x.hashCode());
-		result = prime * result + ((y == null) ? 0 : y.hashCode());
+		result = prime * result + ((c == null) ? 0 : c.hashCode());
+		result = prime * result + ((f == null) ? 0 : f.hashCode());
 		return result;
 	}
 	@Override
@@ -157,15 +149,15 @@ public class Casilla {
 		if (!(obj instanceof Casilla))
 			return false;
 		Casilla other = (Casilla) obj;
-		if (x == null) {
-			if (other.x != null)
+		if (c == null) {
+			if (other.c != null)
 				return false;
-		} else if (!x.equals(other.x))
+		} else if (!c.equals(other.c))
 			return false;
-		if (y == null) {
-			if (other.y != null)
+		if (f == null) {
+			if (other.f != null)
 				return false;
-		} else if (!y.equals(other.y))
+		} else if (!f.equals(other.f))
 			return false;
 		return true;
 	}

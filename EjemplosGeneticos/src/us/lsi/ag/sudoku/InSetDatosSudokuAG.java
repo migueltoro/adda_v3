@@ -6,7 +6,6 @@ import java.util.Map;
 import java.util.stream.IntStream;
 
 import us.lsi.ag.ValuesInSetData;
-import us.lsi.ag.agchromosomes.ChromosomeFactory.ChromosomeType;
 import us.lsi.sudoku.datos.Casilla;
 import us.lsi.sudoku.datos.DatosSudoku;
 import us.lsi.sudoku.datos.SolucionSudoku;

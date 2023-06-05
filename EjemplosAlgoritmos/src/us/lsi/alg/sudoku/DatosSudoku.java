@@ -1,11 +1,12 @@
 package us.lsi.alg.sudoku;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import us.lsi.common.Files2;
-import us.lsi.common.String2;
+import us.lsi.common.IntegerSet;
+import us.lsi.streams.Collectors2;
 
 
 public class DatosSudoku {
@@ -23,50 +24,50 @@ public class DatosSudoku {
 	 */
 	public static Integer numeroDeCasillas = numeroDeFilas*numeroDeFilas;
 	
+	public static Integer n = numeroDeCasillas;
 	
+	public static Integer nf = numeroDeFilas;
+	
+	public static IntegerSet allValues; 
+	
+	public static List<Casilla> casillas;
+	
+	public static List<Integer> indices;
+	
+	public static Casilla casilla(Integer p) {
+		return DatosSudoku.casillas.get(p);
+	}
+	
+	public static Casilla casilla(Integer f, Integer c) {
+		return DatosSudoku.casillas.get(f*DatosSudoku.nf+c);
+	}
+	
+	public static List<Casilla> copyCasillas(List<Casilla> casillas) {
+		return casillas.stream().map(c->c.copy()).collect(Collectors.toList());
+	}
+
 	/**
 	 * @param nf Fichero de datos
 	 * @post Inicializa las variables del tipo
 	 */
-	public static Sudoku leeFichero(String file) {
-		List<Casilla> casillas = new ArrayList<>();
-		IntStream.range(0, DatosSudoku.numeroDeCasillas).forEach(p->casillas.add(Casilla.of(p)));
-		Sudoku sudoku = SudokuI.of(casillas);
+	public static void leeFichero(String file) {
+		DatosSudoku.casillas = IntStream.range(0, DatosSudoku.n).boxed()
+				.map(p->Casilla.of(p))
+				.collect(Collectors.toList());
 		Files2.streamFromFile(file)
 				.map(ln->Casilla.parse(ln))
-				.forEach(c ->{Casilla co = sudoku.casillas().get(c.getP()); 
-							   sudoku.setValueInCasilla(co,c.getValue());
-				 			   co.setInitialValue(true);});
-		sudoku.check();
-		sudoku.completarValores();
-		sudoku.sortIndices(0,DatosSudoku.numeroDeCasillas);	
-		return sudoku;
+				.forEach(c ->casillas.set(c.p(), c));
+		DatosSudoku.allValues = IntStream.range(1, 10).boxed()
+				.collect(Collectors2.toIntegerSet());
+		DatosSudoku.indices = IntStream.range(0, DatosSudoku.n).boxed()
+				.collect(Collectors.toList());
 	}
 	
-	public record SolucionSudoku(Sudoku sudoku) implements Comparable<SolucionSudoku>{		
-		
-		@Override
-		public String toString() {
-			return String.format("Errores = %d\n%s",sudoku.errores(),sudoku);
-		}
-
-		@Override
-		public int compareTo(SolucionSudoku other) {
-			return this.sudoku().errores().compareTo(other.sudoku().errores());
-		}
-		
-	}
 	
 	public static void main(String[] args) {
 		Locale.setDefault(Locale.of("en", "US"));
 		DatosSudoku.tamSubCuadro = 3;
-		Sudoku sd = DatosSudoku.leeFichero("ficheros/sudoku2.txt");
-		System.out.println(sd);
-		System.out.println(sd.indices());
-		IntStream.range(0,DatosSudoku.numeroDeCasillas).boxed()
-			.map(i->sd.casillaIndex(i))
-			.forEach(c->String2.toConsole(String.format("%s, %d",c,sd.numValoresLibresEnCasilla(c))));
-		
-//		System.out.println(SudokuProblem.first(DatosSudoku.sudoku));
+		DatosSudoku.leeFichero("ficheros/sudoku2.txt");
+		System.out.println(SolucionSudoku.of(SudokuVertex.first()));
 	}
 }

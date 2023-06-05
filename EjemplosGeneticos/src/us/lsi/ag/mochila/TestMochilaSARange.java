@@ -17,7 +17,7 @@ public class TestMochilaSARange {
 	
 
 	public static void main(String[] args) {
-		Locale.setDefault(new Locale("en", "US"));
+		Locale.setDefault(Locale.of("en", "US"));
 		
 		AlgoritmoSA.alfa = 0.9999;
 		AlgoritmoSA.numeroDeIteracionesPorIntento = 100000;

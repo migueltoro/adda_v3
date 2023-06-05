@@ -10,7 +10,7 @@ import us.lsi.grafos.datos.Ciudad;
 public class TestCamino {
 	
 	public static void main(String[] args) {
-		Locale.setDefault(new Locale("en", "US"));		
+		Locale.setDefault(Locale.of("en", "US"));		
 		testsFichero(1,"Cadiz", "Granada",c -> c.habitantes() > 100000,w -> w > 100.);
 		testsFichero(2,"Toledo","Guadalajara",c -> c.habitantes() <= 200000,w -> w >= 120.);
 		testsFichero(3,"C01","C25",c -> c.habitantes() > 25000,w -> w < 200.);

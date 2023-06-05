@@ -23,15 +23,6 @@ Invariante
 - $n$: número de casillas
 - $k$: tamaño de la subtabla, $n = k*k$
 - $\phi(t) = \{(i,j)|t=\frac{j}{k}k+i/k\}$: El conjunto de casillas de la subtabla $t$.
-- $lc$: _List\<Casilla\>_, lista de casillas
-- $indices$: _List\<Integer\>_, índices a las casillas, ordenados de menor a mayor según el valor de $|vl(d)|$.
-- $c(d)$: casilla cuyo índice es $d$
-- $voc(i)$: IntegerSet, valores ocupados en la columna $i$
-- $vof(j)$: IntegerSet, valores ocupados en la fila $j$
-- $vot(t)$: IntegerSet, valores ocupados en la subtabla $t$
-- $vlc(d)$: _IntegerSet_, valores libres en la casilla $c(d)$. Este valor es el conjunto vacío si a casilla está definida y si no lo está:
-
-$$vlc(d)= [1,n]-(voc(c(d).i)\cup vof(c(d).j) \cup vot(c(d).t)$$
 
 ## Modelo Lineal
 
@@ -64,9 +55,16 @@ $$int \ x_{ij},      i,j\in[0,n-1]$$
 
 ### Propiedades
 
-- $index$: es una posición en la lista de índice de índices, el primer valor es el de la primera casilla no definida en $indices$.
-- $indices$: _List\<Integer\>_, índices a las casillas, siempre se mantienen ordenados de menor a mayor según el valor de $|vl(d)|$. 
-- $lc$: _List\<Casilla\>_, lista de casillas
+- $index$: derivada, es una posición en la lista de índice de índices, el primer valor es el de la primera casilla no definida en $indices$.
+- $lc$: básica _List\<Casilla\>_, lista de casillas, siempre se mantiene ordenada de menor a mayor según el valor de $|vl(d)|$. Ela rango de casillas en $[0,index)$ ya tienen un valor asignado, están definidas.
+- $c(d)$: casilla cuyo índice es $d$
+- $voc(i)$: IntegerSet, valores ocupados en la columna $i$
+- $vof(j)$: IntegerSet, valores ocupados en la fila $j$
+- $vot(t)$: IntegerSet, valores ocupados en la subtabla $t$
+- $vlc(d)$: _IntegerSet_, valores libres en la casilla $c(d)$. Este valor es el conjunto vacío si la casilla está definida y si no lo está:
+
+	$$vlc(d)= [1,n]-(voc(c(d).i)\cup vof(c(d).j) \cup vot(c(d).t)$$
+	
 - $err$: Número de errores, derivada
 
 $$ err =\sum_{i=0}^{n-1} (n-voc(i)) + \sum_{j=0}^{n-1} (n-vof(j)) +\sum_{t=0}^{n-1} (n-vot(i))$$

@@ -6,7 +6,6 @@ import java.util.function.Predicate;
 
 import org.jgrapht.GraphPath;
 
-import us.lsi.alg.sudoku.DatosSudoku.SolucionSudoku;
 import us.lsi.graphs.alg.BTR;
 import us.lsi.graphs.virtual.SimpleEdgeAction;
 import us.lsi.graphs.virtual.EGraph.Type;
@@ -17,14 +16,14 @@ public class TestSudokuBTRandom {
 
 	public static void main(String[] args) {
 		Locale.setDefault(Locale.of("en", "US"));
-		Sudoku sd = DatosSudoku.leeFichero("ficheros/sudoku2.txt");
-		SudokuVertex e1 = SudokuVertex.first(sd);
+		DatosSudoku.leeFichero("ficheros/sudoku/sudoku2.txt");
+		SudokuVertex e1 = SudokuVertex.first();
 		
 		Predicate<SudokuVertex> goal = SudokuVertex.goal();
 		
 		EGraph<SudokuVertex,SimpleEdgeAction<SudokuVertex,Integer>> graph = 
 				EGraph.virtual(e1,goal,PathType.Last, Type.One)
-				.vertexWeight(v->(double)v.sudoku().errores())
+				.vertexWeight(v->(double)v.errores())
 				.goalHasSolution(SudokuVertex.goalHasSolution())
 				.build();
 		
@@ -32,17 +31,13 @@ public class TestSudokuBTRandom {
 		BTR<SudokuVertex,SimpleEdgeAction<SudokuVertex,Integer>,SolucionSudoku> ms = 
 				BTR.of(
 				graph,
-				SudokuVertex::of,
-				v->DatosSudoku.numeroDeCasillas-v.index(),
+				SolucionSudoku::of,
+				v->DatosSudoku.n-v.index(),
 				15);
 		
-//		BTR.threshold = 15;
-//		BackTrackingRandom.solutionsNumber = 1;
-		
 		Optional<GraphPath<SudokuVertex, SimpleEdgeAction<SudokuVertex, Integer>>> gp = ms.search();
-//		SudokuVertex lv = List2.last(path.getVertexList());
-		System.out.println("Solucion = \n"+SudokuVertex.of(gp.get()));
-		System.out.println("Iteraciones = \n"+ms.iterations);
+		System.out.println("Solucion = "+SolucionSudoku.of(gp.get().getEndVertex()));
+		System.out.println("Iteraciones = "+ms.iterations);
 	}
 
 }

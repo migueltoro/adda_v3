@@ -21,7 +21,6 @@ public class BTR<V,E,S extends Comparable<S>> extends BT<V,E,S> {
 		return new BTR<V, E, S>(graph,solution, size,threshold);
 	}
 	
-	
 
 	BTR(EGraph<V, E> graph, 
 			Function<GraphPath<V, E>, S> solution,

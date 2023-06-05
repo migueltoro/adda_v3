@@ -7,19 +7,23 @@ import java.util.Locale;
 import us.lsi.alg.sudoku.DatosSudoku;
 import us.lsi.alg.sudoku.SolucionSudoku;
 import us.lsi.alg.sudoku.SudokuVertex;
+import us.lsi.common.List2;
 import us.lsi.common.String2;
 
-public class SudokuBT {
+public class SudokuBTR {
 	
-	public static SudokuBT of() {
-		return new SudokuBT();
+	public static SudokuBTR of() {
+		return new SudokuBTR();
 	}
 
 	private StateSudoku estado;
 	private SolucionSudoku solucion;
+	private Integer iteraciones = 0;
+	private Integer threshold;
 	private Long time;
+	
 
-	private SudokuBT() {
+	private SudokuBTR() {
 		super();
 	}
 	
@@ -31,22 +35,31 @@ public class SudokuBT {
 		return solucion;
 	}
 
-	public void bt(SudokuVertex start) {
+	public Integer iteraciones() {
+		return iteraciones;
+	}
+
+	public void bt(SudokuVertex start, Integer threshold) {
+		this.threshold = threshold;
 		this.time = System.nanoTime();
 		this.estado = StateSudoku.of(start);
 		this.solucion = null;
-		bt();
+		do {
+			bt();
+			iteraciones++;
+		} while (this.solucion == null);
 		this.time = System.nanoTime() - this.time;
 	}
 
 	public void bt() {
-
 		if (this.estado.vertice().index() == DatosSudoku.n) {
 			SolucionSudoku s = this.estado.solucion();
-			if (s.errores() == 0)
-				this.solucion = s;
+			if (s.errores() == 0) this.solucion = s;
 		} else {
 			List<Integer> alternativas = this.estado.vertice().actions();
+			if (DatosSudoku.n - this.estado.vertice().index() > this.threshold) {
+				alternativas = List2.randomUnitary(alternativas);
+			}
 			for (Integer a : alternativas) {
 				this.estado.forward(a);
 				this.bt();
@@ -59,11 +72,11 @@ public class SudokuBT {
 		Locale.setDefault(Locale.of("en", "US"));
 		DatosSudoku.tamSubCuadro = 3;
 		DatosSudoku.leeFichero("ficheros/sudoku/sudoku2.txt");
-		SudokuBT a = SudokuBT.of();
-		a.bt(SudokuVertex.first());
+		SudokuBTR a = SudokuBTR.of();		
+		a.bt(SudokuVertex.first(),15);
 		System.out.println("Tiempo = " + a.time());
+		System.out.println("Iteraciones = " + a.iteraciones());
 		String2.toConsole(a.solucion().toString(), "Solucion");
 	}
 
 }
-
