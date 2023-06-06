@@ -8,6 +8,7 @@ import java.util.function.Predicate;
 import java.util.stream.IntStream;
 import us.lsi.common.IntegerSet;
 import us.lsi.common.List2;
+import us.lsi.common.Preconditions;
 import us.lsi.graphs.virtual.SimpleEdgeAction;
 import us.lsi.graphs.virtual.VirtualVertex;
 
@@ -30,6 +31,7 @@ public class SudokuVertex
 		this.index = index;
 		this.casillas = DatosSudoku.copyCasillas(casillas);
 		this.valoresOcupados();
+		this.fillOneValues();
 		this.sortCasillas(this.index);
 		this.index = IntStream.range(index,DatosSudoku.n).boxed()
 				.filter(i->this.valoresLibresEnCasilla(this.casilla(i)).size()>0)
@@ -128,6 +130,21 @@ public class SudokuVertex
 		if(c.definida()) return IntegerSet.empty();
 		IntegerSet r = valoresOcupadosEnCasilla(c);
 		return DatosSudoku.allValues.difference(r);
+	}
+	
+	private Integer element(Casilla c) {
+		IntegerSet s = this.valoresLibresEnCasilla(c);
+		Preconditions.checkArgument(!s.isEmpty(),String.format("El conjunto %s está vacío",s));
+		return s.stream().toList().get(0);
+	}
+	
+	public void fillOneValues() {
+		while (this.numValoresLibresEnCasillas().stream().anyMatch(v->v==1)) {
+			this.casillas().stream()
+				.filter(c -> this.valoresLibresEnCasilla(c).size() == 1)
+				.forEach(c -> c.setValue(element(c)));
+		}
+		
 	}
 	
 	public Casilla casilla() {

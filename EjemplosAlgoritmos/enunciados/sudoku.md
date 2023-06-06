@@ -56,7 +56,7 @@ $$int \ x_{ij},      i,j\in[0,n-1]$$
 ### Propiedades
 
 - $index$: derivada, es una posición en la lista de índice de índices, el primer valor es el de la primera casilla no definida en $indices$.
-- $lc$: básica _List\<Casilla\>_, lista de casillas, siempre se mantiene ordenada de menor a mayor según el valor de $|vl(d)|$. Ela rango de casillas en $[0,index)$ ya tienen un valor asignado, están definidas.
+- $lc$: básica, _List\<Casilla\>_, lista de casillas
 - $c(d)$: casilla cuyo índice es $d$
 - $voc(i)$: IntegerSet, valores ocupados en la columna $i$
 - $vof(j)$: IntegerSet, valores ocupados en la fila $j$
@@ -68,6 +68,10 @@ $$int \ x_{ij},      i,j\in[0,n-1]$$
 - $err$: Número de errores, derivada
 
 $$ err =\sum_{i=0}^{n-1} (n-voc(i)) + \sum_{j=0}^{n-1} (n-vof(j)) +\sum_{t=0}^{n-1} (n-vot(i))$$
+
+Invariante
+
+ - La lista de casillas siempre se mantiene ordenada de menor a mayor según el valor de $|vl(d)|$. El rango de casillas en $[0,index)$ ya están definidas y por lo tanto tienen un valor asignado. Las casillas con un solo valor posible se les da ese valor.
 
 
 

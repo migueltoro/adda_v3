@@ -13,7 +13,7 @@ import java.util.stream.IntStream;
 
 import us.lsi.streams.Stream2;
 
-public class Set2 {
+public class Set2 {	
 	
 	public static <E> Set<E> parse(String s, String sep, Function<String,E> fMap) {
 		return Arrays.stream(s.split("["+sep+"]"))

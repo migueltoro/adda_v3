@@ -72,8 +72,6 @@ public class SudokuBTR {
 		Locale.setDefault(Locale.of("en", "US"));
 		DatosSudoku.tamSubCuadro = 3;
 		DatosSudoku.leeFichero("ficheros/sudoku/sudoku2.txt");
-		
-		
 		SudokuBTR a = SudokuBTR.of();		
 		a.bt(SudokuVertex.first(),15);
 		System.out.println("Tiempo = " + a.time());

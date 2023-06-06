@@ -1,4 +1,5 @@
 package us.lsi.ag.sudoku;
+
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -11,21 +12,21 @@ import us.lsi.alg.sudoku.DatosSudoku;
 import us.lsi.alg.sudoku.SolucionSudoku;
 import us.lsi.alg.sudoku.SudokuVertex;
 
-public class BlocksDatosSudokuFilasAG implements BlocksData<SolucionSudoku>{
+public class BlocksDatosSudokuSubTablaAG implements BlocksData<SolucionSudoku> {
 	
 	SudokuVertex sv;
 	Integer n; 
 	public List<Integer> blocksLimits;
 	public List<Integer> initialValues;
 	
-	public BlocksDatosSudokuFilasAG(SudokuVertex sv){
+	public BlocksDatosSudokuSubTablaAG(SudokuVertex sv){
 		super();
 		this.sv = sv;
 		this.n = DatosSudoku.n-sv.index();
-		Comparator<Casilla> cmp = Comparator.comparing(c->c.f());
+		Comparator<Casilla> cmp = Comparator.comparing(c->c.st());
 		Collections.sort(sv.casillas().subList(sv.index(),DatosSudoku.n),cmp);
 		this.blocksLimits = IntStream.range(sv.index(),DatosSudoku.n).boxed()
-			.filter(i->i==sv.index() || sv.casilla(i).f() != sv.casilla(i-1).f())
+			.filter(i->i==sv.index() || sv.casilla(i).st() != sv.casilla(i-1).st())
 			.map(i->i-sv.index())
 			.collect(Collectors.toList());
 		this.blocksLimits.set(0, 0);
@@ -44,7 +45,7 @@ public class BlocksDatosSudokuFilasAG implements BlocksData<SolucionSudoku>{
 		SolucionSudoku s = solucion(cr);
 		return -(double)s.errores();
 	}
-	
+
 	@Override
 	public SolucionSudoku solucion(List<Integer> dc) {
 		IntStream.range(0,n).forEach(i->sv.casilla(this.sv.index()+i).setValue(dc.get(i)));	
@@ -61,5 +62,6 @@ public class BlocksDatosSudokuFilasAG implements BlocksData<SolucionSudoku>{
 	public List<Integer> initialValues() {
 		return initialValues;
 	}
+
 
 }

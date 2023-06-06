@@ -6,7 +6,6 @@ module datos_compartidos {
 	exports us.lsi.afinidad.datos;
 	exports us.lsi.anuncios.datos;
 	exports us.lsi.grafos.datos;
-	exports us.lsi.sudoku.datos;
 	exports us.lsi.bufete.datos;
 
 	requires transitive partecomun;

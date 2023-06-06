@@ -11,16 +11,16 @@ import us.lsi.alg.sudoku.DatosSudoku;
 import us.lsi.alg.sudoku.SolucionSudoku;
 import us.lsi.alg.sudoku.SudokuVertex;
 
-public class TestInsetSudokuAG {
-	
+
+public class TestFilasBlocksSudokuAG {
 	
 	public static void main(String[] args) {
 		AlgoritmoAG.ELITISM_RATE  = 0.1;
 		AlgoritmoAG.CROSSOVER_RATE = 0.6;
 		AlgoritmoAG.MUTATION_RATE = 0.6;
-		AlgoritmoAG.POPULATION_SIZE = 50;
+		AlgoritmoAG.POPULATION_SIZE = 30;
 		
-		StoppingConditionFactory.NUM_GENERATIONS = 100000000;
+		StoppingConditionFactory.NUM_GENERATIONS = 100;
 		StoppingConditionFactory.SOLUTIONS_NUMBER_MIN = 1;
 		StoppingConditionFactory.FITNESS_MIN = 0.;
 		StoppingConditionFactory.stoppingConditionType = StoppingConditionType.SolutionsNumber;
@@ -28,12 +28,11 @@ public class TestInsetSudokuAG {
 		ChromosomeFactory.crossoverType = CrossoverType.OnePoint;
 		ChromosomeFactory.TOURNAMENT_ARITY = 2;
 		
-		DatosSudoku.tamSubCuadro = 3;
 		DatosSudoku.leeFichero("ficheros/sudoku.txt");
 
 		SudokuVertex sv = SudokuVertex.first();
 		
-		InSetDatosSudokuAG p = new InSetDatosSudokuAG(sv);
+		BlocksDatosSudokuFilasAG p = new BlocksDatosSudokuFilasAG(sv);
 		
 		System.out.println(sv);
 		System.out.println(p.size());
@@ -47,4 +46,3 @@ public class TestInsetSudokuAG {
 		}
 	}	
 }
-
