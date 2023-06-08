@@ -41,10 +41,11 @@ public class InSetDatosSudokuAG implements ValuesInSetData<SolucionSudoku> {
 		return  values.get(index);
 	}
 	
+	
 	public Map<Integer, List<Integer>> values() {
 		return  values;
 	}
-
+	
 	@Override
 	public Double fitnessFunction(List<Integer> dc) {
 		this.decode = dc;

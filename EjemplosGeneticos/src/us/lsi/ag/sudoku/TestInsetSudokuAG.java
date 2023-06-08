@@ -45,9 +45,6 @@ public class TestInsetSudokuAG {
 			a.ejecuta();
 			System.out.println(SolucionSudoku.of(sv));
 		}
-		p.sv.valoresOcupados();
-		System.out.println(p.check());
-		System.out.println(p.sv.valoresOcupadosEnSubtablas());
 	}	
 }
 
