@@ -21,6 +21,7 @@ public class SudokuBTR {
 	private Integer iteraciones = 0;
 	private Integer threshold;
 	private Long time;
+	private Integer iteracionesMax;
 	
 
 	private SudokuBTR() {
@@ -39,15 +40,16 @@ public class SudokuBTR {
 		return iteraciones;
 	}
 
-	public void bt(SudokuVertex start, Integer threshold) {
+	public void bt(SudokuVertex start, Integer iteracionesMax, Integer threshold) {
 		this.threshold = threshold;
+		this.iteracionesMax = iteracionesMax;
 		this.time = System.nanoTime();
 		this.estado = StateSudoku.of(start);
 		this.solucion = null;
 		do {
 			bt();
 			iteraciones++;
-		} while (this.solucion == null);
+		} while (this.solucion == null && iteraciones < this.iteracionesMax);
 		this.time = System.nanoTime() - this.time;
 	}
 
@@ -71,9 +73,9 @@ public class SudokuBTR {
 	public static void main(String[] args) {
 		Locale.setDefault(Locale.of("en", "US"));
 		DatosSudoku.tamSubCuadro = 3;
-		DatosSudoku.leeFichero("ficheros/sudoku/sudoku2.txt");
+		DatosSudoku.leeFichero("ficheros/sudoku/sudoku1.txt");	
 		SudokuBTR a = SudokuBTR.of();		
-		a.bt(SudokuVertex.first(),15);
+		a.bt(SudokuVertex.first(),15000,10);
 		System.out.println("Tiempo = " + a.time());
 		System.out.println("Iteraciones = " + a.iteraciones());
 		String2.toConsole(a.solucion().toString(), "Solucion");

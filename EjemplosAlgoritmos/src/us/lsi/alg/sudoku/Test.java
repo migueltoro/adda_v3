@@ -6,7 +6,7 @@ public class Test {
 
 	public static void main(String[] args) {
 		Locale.setDefault(Locale.of("en", "US"));
-		DatosSudoku.leeFichero("ficheros/sudoku/sudoku2.txt");
+		DatosSudoku.leeFichero("ficheros/sudoku/sudoku3.txt");
 		
 		SudokuVertex e1 = SudokuVertex.first();
 		System.out.println(e1);

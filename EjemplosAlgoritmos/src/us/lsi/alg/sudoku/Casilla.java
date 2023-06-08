@@ -29,21 +29,21 @@ public class Casilla implements Comparable<Casilla> {
 		return new Casilla(f, c, value, definida,intialValue);
 	}
 
-	private Integer c;
 	private Integer f;
-	private Boolean withInitialValue;
-	private Boolean definida;
+	private Integer c;
 	private Integer value;
+	private Boolean definida;
+	private Boolean withInitialValue;
 	
 	private Casilla(Integer f, Integer c, Integer value, Boolean definida, Boolean intialValue) {
 		super();
 		Preconditions.checkArgument(0 <= f && f < DatosSudoku.nf, String.format("El numero de fila es %d",f));
 		Preconditions.checkArgument(0 <= c && c < DatosSudoku.nf, String.format("El numero de columna es %d",c));
-		this.c = c;
 		this.f = f;
+		this.c = c;
 		this.value = value;	
-		this.withInitialValue = intialValue;
 		this.definida = definida;
+		this.withInitialValue = intialValue;
 	}
 		
 	public Integer st() {
@@ -102,7 +102,7 @@ public class Casilla implements Comparable<Casilla> {
 	}
 	
 	public Casilla copy() {
-		return new Casilla(c,f,value,this.definida,this.withInitialValue);
+		return new Casilla(f,c,value,this.definida,this.withInitialValue);
 	}
 	
 	public static String blank = "_";
@@ -120,7 +120,7 @@ public class Casilla implements Comparable<Casilla> {
 	}
 	
 	public String getString() {
-		return String.format("(%d,%d)",c,f);
+		return String.format("(%d,%d)",f,c);
 	}
 	
 	@Override

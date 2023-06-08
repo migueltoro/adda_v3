@@ -13,7 +13,7 @@ public class AntLr {
 	
 
 	public static void main(String[] args) throws IOException {
-			test("reinas_1");
+			test("prueba_0");
 	}
 
 }

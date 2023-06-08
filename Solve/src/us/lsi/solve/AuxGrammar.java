@@ -352,7 +352,15 @@ public class AuxGrammar {
 	
 	public static Map<String,Type> resultType = new HashMap<>();
 	
-	public static String constraintName[] = {"a","b","c","d","e","f","g","h","p","q","r"};
+	private static String constraintName[] = {"a","b","c","d","e","f","g","h","p","q"};
+	
+	public static String constraintName(Integer index) {
+		String s = index.toString();
+		return IntStream.range(0,s.length()).boxed()
+				.map(i->constraintName[Integer.parseInt(""+s.charAt(i))])
+				.collect(Collectors.joining(""));			
+	}
+	
 	public static Integer cn = 0;
 	public static Integer constraintNumber = 0;	
 	

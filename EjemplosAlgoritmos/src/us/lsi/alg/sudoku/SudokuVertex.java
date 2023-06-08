@@ -143,19 +143,16 @@ public class SudokuVertex
 			this.casillas().stream()
 				.filter(c -> this.valoresLibresEnCasilla(c).size() == 1)
 				.forEach(c -> c.setValue(element(c)));
-		}
-		
+		}	
 	}
 	
 	public Casilla casilla() {
+		Preconditions.checkArgument(this.index() < DatosSudoku.n);
 		return this.casilla(this.index);
 	}
 	
-	public Casilla casilla(Integer f, Integer c) {
-		return this.casillas.get(f*DatosSudoku.nf+c);
-	}
-	
 	public Casilla casilla(Integer i) {
+		
 		return this.casillas.get(i);
 	}
 	
@@ -218,6 +215,7 @@ public class SudokuVertex
 				+ "\nvaloresOcupadosEnColumnas=" + this.valoresOcupadosEnColumnas
 				+ "\nvaloresOcupadosEnSubtablas=" + this.valoresOcupadosEnSubtablas
 				+ "\nnumeroDeValoresLibres="+this.numValoresLibresEnCasillas()
-				+ "\nvaloresLibresEnCasilla="+this.valoresLibresEnCasilla(this.casilla());
+				+ "\nvaloresLibresEnCasilla="+
+					(this.index<DatosSudoku.n?this.valoresLibresEnCasilla(this.casilla()):"___");
 	}
 }

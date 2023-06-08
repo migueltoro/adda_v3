@@ -11,16 +11,15 @@ import us.lsi.alg.sudoku.DatosSudoku;
 import us.lsi.alg.sudoku.SolucionSudoku;
 import us.lsi.alg.sudoku.SudokuVertex;
 
+public class TestSubTablasSudokuAG {
 
-public class TestFilasBlocksSudokuAG {
-	
 	public static void main(String[] args) {
 		AlgoritmoAG.ELITISM_RATE  = 0.1;
 		AlgoritmoAG.CROSSOVER_RATE = 0.6;
 		AlgoritmoAG.MUTATION_RATE = 0.6;
 		AlgoritmoAG.POPULATION_SIZE = 30;
 		
-		StoppingConditionFactory.NUM_GENERATIONS = 1;
+		StoppingConditionFactory.NUM_GENERATIONS = 1000;
 		StoppingConditionFactory.SOLUTIONS_NUMBER_MIN = 1;
 		StoppingConditionFactory.FITNESS_MIN = 0.;
 		StoppingConditionFactory.stoppingConditionType = StoppingConditionType.SolutionsNumber;
@@ -32,14 +31,14 @@ public class TestFilasBlocksSudokuAG {
 
 		SudokuVertex sv = SudokuVertex.first();
 		
-		BlocksDatosSudokuFilasAG p = new BlocksDatosSudokuFilasAG(sv);
+		BlocksDatosSudokuSubTablaAG p = new BlocksDatosSudokuSubTablaAG(sv);
 		
 		System.out.println(sv);
 		System.out.println(p.size());
 		
 		AlgoritmoAG<List<Integer>,SolucionSudoku> a;
 		
-		for (int i = 0; i < 1; i++) {
+		for (int i = 0; i < 10; i++) {
 			a = AlgoritmoAG.of(p);	
 			a.ejecuta();
 			System.out.println(SolucionSudoku.of(sv));
@@ -47,6 +46,6 @@ public class TestFilasBlocksSudokuAG {
 		
 		p.sv.valoresOcupados();
 		System.out.println(p.check());
-		System.out.println(p.sv.valoresOcupadosEnFilas());
-	}	
+		System.out.println(p.sv.valoresOcupadosEnSubtablas());
+	}
 }

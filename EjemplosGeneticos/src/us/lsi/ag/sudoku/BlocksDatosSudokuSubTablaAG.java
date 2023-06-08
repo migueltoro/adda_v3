@@ -18,6 +18,7 @@ public class BlocksDatosSudokuSubTablaAG implements BlocksData<SolucionSudoku> {
 	Integer n; 
 	public List<Integer> blocksLimits;
 	public List<Integer> initialValues;
+	public List<Integer> decode;
 	
 	public BlocksDatosSudokuSubTablaAG(SudokuVertex sv){
 		super();
@@ -30,14 +31,21 @@ public class BlocksDatosSudokuSubTablaAG implements BlocksData<SolucionSudoku> {
 			.map(i->i-sv.index())
 			.collect(Collectors.toList());
 		this.blocksLimits.set(0, 0);
+		this.blocksLimits.add(DatosSudoku.n-sv.index());
 		this.initialValues = IntStream.range(0,DatosSudoku.nf).boxed()
-			.flatMap(f->DatosSudoku.allValues.difference(sv.valoresOcupadosEnFilas().get(f)).stream())
+			.flatMap(t->DatosSudoku.allValues.difference(sv.valoresOcupadosEnSubtablas().get(t)).stream())
 			.toList();
+		
+	}
+	
+	public Boolean check() {
+		return IntStream.range(0, DatosSudoku.nf).boxed()
+				.allMatch(st->DatosSudoku.allValues.difference(sv.valoresOcupadosEnSubtablas().get(st)).isEmpty());
 	}
 
 	@Override
 	public Integer size() {
-		return this.initialValues.size();
+		return DatosSudoku.n-sv.index();
 	}
 
 	@Override
@@ -48,7 +56,8 @@ public class BlocksDatosSudokuSubTablaAG implements BlocksData<SolucionSudoku> {
 
 	@Override
 	public SolucionSudoku solucion(List<Integer> dc) {
-		IntStream.range(0,n).forEach(i->sv.casilla(this.sv.index()+i).setValue(dc.get(i)));	
+		this.decode = dc;
+		IntStream.range(0,this.size()).forEach(i->sv.casilla(this.sv.index()+i).setValue(dc.get(i)));	
 		SolucionSudoku s = SolucionSudoku.of(sv);
 		return s;
 	}

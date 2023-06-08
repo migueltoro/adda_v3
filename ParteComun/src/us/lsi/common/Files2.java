@@ -5,9 +5,22 @@ import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.List;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class Files2 {
+	
+	public static String text(String file){
+		List<String> lineas = null;
+		try {
+			BufferedReader bufferedReader = new BufferedReader(new FileReader(file));
+			lineas = bufferedReader.lines().collect(Collectors.toList());
+			bufferedReader.close();
+		} catch (IOException e) {
+			System.out.println(e.toString());
+		}
+		return lineas.stream().collect(Collectors.joining("\n"));
+	}
 	
 	public static void toFile(String s, String file) {
 		try {

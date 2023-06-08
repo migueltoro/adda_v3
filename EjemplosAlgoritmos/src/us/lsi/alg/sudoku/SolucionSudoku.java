@@ -5,7 +5,6 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 import org.jgrapht.GraphPath;
-
 import us.lsi.graphs.virtual.SimpleEdgeAction;
 
 public class SolucionSudoku implements Comparable<SolucionSudoku>{	
@@ -18,27 +17,36 @@ public class SolucionSudoku implements Comparable<SolucionSudoku>{
 		return new SolucionSudoku(vertex);
 	}
 	
-	static record CasFC(Integer f, Integer c) {
-		public static CasFC of(Integer f, Integer c) {
-			return new CasFC(f, c);
-		}
-	}
-	
 	public SolucionSudoku(SudokuVertex vertex) {
 		super();
 		this.vertex = vertex;
-		this.map = vertex.casillas().stream()
+		this.map = this.vertex.casillas().stream()
 				.collect(Collectors.toMap(cs->CasFC.of(cs.f(),cs.c()),cs->cs));
 	}
 
 	private SudokuVertex vertex;
 	private Map<CasFC,Casilla> map;
 	
+	public static record CasFC(Integer f, Integer c) {
+		public static CasFC of(Integer f, Integer c) {
+			return new CasFC(f, c);
+		}
+	}
+	
+	public Casilla casilla(Integer p) {
+		return this.vertex.casillas().get(p);
+	}
+	
+	public Casilla casilla(Integer f, Integer c) {
+		CasFC cs = CasFC.of(f, c);
+		return map.get(cs);
+	}
+	
+	
 	private String fila(Integer f) {
-		return IntStream.range(0,DatosSudoku.nf)
-					.boxed()
-					.map(c->map.get(CasFC.of(f, c)).stringValue())
-					.collect(Collectors.joining(" "));
+		return IntStream.range(0, DatosSudoku.nf).boxed()
+				.map(c -> this.casilla(f, c).stringValue())
+				.collect(Collectors.joining(" "));
 	}
 	
 	@Override

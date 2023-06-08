@@ -165,11 +165,11 @@ public class PLIModelVisitorC extends PLIModelBaseVisitor<Object>{
 		Object val =  this.visit(ctx.exp());		
 		switch(type) {
 		case "Integer":
-			Preconditions.checkArgument(AuxGrammar.isInteger(val),"El resultado de la expresión debe ser entero");
+			Preconditions.checkArgument(AuxGrammar.isInteger(val),"El resultado de la expresiï¿½n debe ser entero");
 			AuxGrammar.types.put(name,Type.INT); 
 			break;
 		case "Double": 
-			Preconditions.checkArgument(AuxGrammar.isDouble(val),"El resultado de la expresión debe ser double");
+			Preconditions.checkArgument(AuxGrammar.isDouble(val),"El resultado de la expresiï¿½n debe ser double");
 			AuxGrammar.types.put(name,Type.DOUBLE); 
 			break;
 		}
@@ -226,10 +226,11 @@ public class PLIModelVisitorC extends PLIModelBaseVisitor<Object>{
 	
 	@Override
 	public Object visitConstraints(PLIModelParser.ConstraintsContext ctx) {
-		Function<Integer,String> cn = i->AuxGrammar.constraintName[i];
+		Function<Integer,String> cn = i->AuxGrammar.constraintName(i);
 		Integer n = ctx.list().size();
 		Function<Integer,List<String>> cs = i->AuxGrammar.asListString(visit(ctx.list(i))); 
-		Function<Integer,Stream<String>> sc = i ->Stream2.enumerate(cs.apply(i).stream().filter(ls->!ls.isEmpty()))
+		Function<Integer,Stream<String>> sc = 
+					i ->Stream2.enumerate(cs.apply(i).stream().filter(ls->!ls.isEmpty()))
 				      .map(p->String.format("%s%d: %s",cn.apply(i),p.counter(),p.value()));
 		String lt1 = IntStream.range(0,n).boxed()
 				.flatMap(i ->sc.apply(i))
@@ -521,7 +522,7 @@ public class PLIModelVisitorC extends PLIModelBaseVisitor<Object>{
 		Preconditions.checkArgument(
 				(AuxGrammar.isInteger(left) || AuxGrammar.isDouble(left) ||  AuxGrammar.isBoolean(left))
 						&& (AuxGrammar.isInteger(right) || AuxGrammar.isDouble(right) || AuxGrammar.isBoolean(right)),
-				String.format("Los operandos deben ser numéricos"));
+				String.format("Los operandos deben ser numï¿½ricos"));
 		Object r = null;
 		switch (op) {
 		case "%": r = AuxGrammar.rest(left,right); break;
@@ -753,7 +754,7 @@ public class PLIModelVisitorC extends PLIModelBaseVisitor<Object>{
 		Integer n = left.size();
 		Integer m = right.size();
 		Preconditions.checkArgument(n == m, 
-				String.format("La parte derecha e izquierda deben ser del mismo tamaño y sus tamaño es left =%d, right=%d", n,m));
+				String.format("La parte derecha e izquierda deben ser del mismo tamaï¿½o y sus tamaï¿½o es left =%d, right=%d", n,m));
 		for (int i = 0; i < n; i++) {
 			Pair<String, Integer> pLeft = reorderGenExp(left.get(i));
 			Pair<String, Integer> pRight = reorderGenExp(right.get(i));

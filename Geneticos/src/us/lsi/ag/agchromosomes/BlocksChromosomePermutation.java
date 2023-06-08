@@ -73,7 +73,7 @@ public class BlocksChromosomePermutation extends RandomKey<Integer>
 					.collect(Collectors.toList());
 			Collections.sort(dts,Comparator.comparing(d->d.first));	
 			List<Integer> sortValues = dts.stream().map(d->d.second()).collect(Collectors.toList());
-			s.addAll(sortValues);
+			s.addAll(sortValues);			
 		}
 		return s;
 	}	

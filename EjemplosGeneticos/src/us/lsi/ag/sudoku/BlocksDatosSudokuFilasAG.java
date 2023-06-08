@@ -14,14 +14,13 @@ import us.lsi.alg.sudoku.SudokuVertex;
 public class BlocksDatosSudokuFilasAG implements BlocksData<SolucionSudoku>{
 	
 	SudokuVertex sv;
-	Integer n; 
 	public List<Integer> blocksLimits;
 	public List<Integer> initialValues;
+	public List<Integer> decode;
 	
 	public BlocksDatosSudokuFilasAG(SudokuVertex sv){
 		super();
 		this.sv = sv;
-		this.n = DatosSudoku.n-sv.index();
 		Comparator<Casilla> cmp = Comparator.comparing(c->c.f());
 		Collections.sort(sv.casillas().subList(sv.index(),DatosSudoku.n),cmp);
 		this.blocksLimits = IntStream.range(sv.index(),DatosSudoku.n).boxed()
@@ -29,14 +28,20 @@ public class BlocksDatosSudokuFilasAG implements BlocksData<SolucionSudoku>{
 			.map(i->i-sv.index())
 			.collect(Collectors.toList());
 		this.blocksLimits.set(0, 0);
+		this.blocksLimits.add(DatosSudoku.n-sv.index());
 		this.initialValues = IntStream.range(0,DatosSudoku.nf).boxed()
 			.flatMap(f->DatosSudoku.allValues.difference(sv.valoresOcupadosEnFilas().get(f)).stream())
 			.toList();
 	}
+	
+	public Boolean check() {
+		return IntStream.range(0, DatosSudoku.nf).boxed()
+				.allMatch(f->DatosSudoku.allValues.difference(sv.valoresOcupadosEnFilas().get(f)).isEmpty());
+	}
 
 	@Override
 	public Integer size() {
-		return this.initialValues.size();
+		return DatosSudoku.n-sv.index();
 	}
 
 	@Override
@@ -47,8 +52,10 @@ public class BlocksDatosSudokuFilasAG implements BlocksData<SolucionSudoku>{
 	
 	@Override
 	public SolucionSudoku solucion(List<Integer> dc) {
-		IntStream.range(0,n).forEach(i->sv.casilla(this.sv.index()+i).setValue(dc.get(i)));	
+		this.decode = dc;
+		IntStream.range(0,this.size()).forEach(i->sv.casilla(this.sv.index()+i).setValue(dc.get(i)));	
 		SolucionSudoku s = SolucionSudoku.of(sv);
+		System.out.println(this.sv.valoresOcupadosEnFilas());
 		return s;
 	}
 

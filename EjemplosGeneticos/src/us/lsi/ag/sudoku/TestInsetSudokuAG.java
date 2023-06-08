@@ -20,7 +20,7 @@ public class TestInsetSudokuAG {
 		AlgoritmoAG.MUTATION_RATE = 0.6;
 		AlgoritmoAG.POPULATION_SIZE = 50;
 		
-		StoppingConditionFactory.NUM_GENERATIONS = 100000000;
+		StoppingConditionFactory.NUM_GENERATIONS = 1000;
 		StoppingConditionFactory.SOLUTIONS_NUMBER_MIN = 1;
 		StoppingConditionFactory.FITNESS_MIN = 0.;
 		StoppingConditionFactory.stoppingConditionType = StoppingConditionType.SolutionsNumber;
@@ -29,7 +29,7 @@ public class TestInsetSudokuAG {
 		ChromosomeFactory.TOURNAMENT_ARITY = 2;
 		
 		DatosSudoku.tamSubCuadro = 3;
-		DatosSudoku.leeFichero("ficheros/sudoku.txt");
+		DatosSudoku.leeFichero("ficheros/sudoku2.txt");
 
 		SudokuVertex sv = SudokuVertex.first();
 		
@@ -38,13 +38,16 @@ public class TestInsetSudokuAG {
 		System.out.println(sv);
 		System.out.println(p.size());
 		
-		AlgoritmoAG<List<Integer>,SolucionSudoku> a;
+		AlgoritmoAG<List<Integer>,SolucionSudoku> a = null;
 		
 		for (int i = 0; i < 10; i++) {
 			a = AlgoritmoAG.of(p);	
 			a.ejecuta();
 			System.out.println(SolucionSudoku.of(sv));
 		}
+		p.sv.valoresOcupados();
+		System.out.println(p.check());
+		System.out.println(p.sv.valoresOcupadosEnSubtablas());
 	}	
 }
 

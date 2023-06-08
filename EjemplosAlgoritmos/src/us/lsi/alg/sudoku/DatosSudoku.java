@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
+
 import us.lsi.common.Files2;
 import us.lsi.common.IntegerSet;
 import us.lsi.streams.Collectors2;
@@ -32,20 +33,10 @@ public class DatosSudoku {
 	
 	public static List<Casilla> casillas;
 	
-	public static List<Integer> indices;
-	
-	public static Casilla casilla(Integer p) {
-		return DatosSudoku.casillas.get(p);
-	}
-	
-	public static Casilla casilla(Integer f, Integer c) {
-		return DatosSudoku.casillas.get(f*DatosSudoku.nf+c);
-	}
-	
 	public static List<Casilla> copyCasillas(List<Casilla> casillas) {
 		return casillas.stream().map(c->c.copy()).collect(Collectors.toList());
 	}
-
+	
 	/**
 	 * @param nf Fichero de datos
 	 * @post Inicializa las variables del tipo
@@ -59,15 +50,22 @@ public class DatosSudoku {
 				.forEach(c ->casillas.set(c.p(), c));
 		DatosSudoku.allValues = IntStream.range(1, 10).boxed()
 				.collect(Collectors2.toIntegerSet());
-		DatosSudoku.indices = IntStream.range(0, DatosSudoku.n).boxed()
-				.collect(Collectors.toList());
 	}
 	
 	
 	public static void main(String[] args) {
 		Locale.setDefault(Locale.of("en", "US"));
 		DatosSudoku.tamSubCuadro = 3;
-		DatosSudoku.leeFichero("ficheros/sudoku2.txt");
-		System.out.println(SolucionSudoku.of(SudokuVertex.first()));
+		DatosSudoku.leeFichero("ficheros/sudoku/sudoku3.txt");
+		System.out.println(SudokuVertex.first());
+		SolucionSudoku s = SolucionSudoku.of(SudokuVertex.first());
+		System.out.println(s);
+		System.out.println(s.casilla(8,8));
+		System.out.println("_____________");
+		for(int f = 0; f < DatosSudoku.nf;f++) {
+			for(int c = 0; c < DatosSudoku.nf;c++) {
+				System.out.println(s.casilla(f,c));
+			}
+		}
 	}
 }
