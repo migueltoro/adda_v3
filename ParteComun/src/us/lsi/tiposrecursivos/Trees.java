@@ -250,7 +250,7 @@ public class Trees {
 		}
 	}
 	
-	
+
 	public static void test3() {
 		Tree<String> t1 = Tree.parse("39(2.,27(_,2,3,4),9(8.,_))");
 		Tree<Double> t2 = t1.map(s->Double.parseDouble(s));
