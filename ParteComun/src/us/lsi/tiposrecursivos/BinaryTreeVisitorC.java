@@ -24,16 +24,13 @@ public class BinaryTreeVisitorC extends BinaryTreeBaseVisitor<Object> {
 		return tree;
 	}
 		
-	@Override public Object visitIntLabel(BinaryTreeParser.IntLabelContext ctx) { 
-		return ctx.getText(); 
-	}
-		
-	@Override public Object visitDoubleLabel(BinaryTreeParser.DoubleLabelContext ctx) { 
-		return ctx.getText(); 
-	}
-		
 	@Override public Object visitIdLabel(BinaryTreeParser.IdLabelContext ctx) { 
-		return ctx.getText();
+		String s = ctx.getText();
+		s = s.replace("/(","(");
+		s = s.replace("/)",")");
+		s = s.replace("/,",",");
+		s = s.replace("/,_",",_"); 
+		return s;
 	}
 
 }

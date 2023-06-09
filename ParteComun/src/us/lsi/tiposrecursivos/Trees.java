@@ -275,9 +275,16 @@ public class Trees {
 		System.out.println(t7);
 		t7.toDot("ficheros/tree.gv");
 	}
+	
+	public static void test6() {
+		String ex = "Pepa/(Vera/,Antonio/)(2(1(0,_),3),7(5(_,6),10(9(8,_),11(_,12))))";
+		Tree<String> t7 = Tree.parse(ex);		
+		System.out.println(t7);
+		t7.toDot("ficheros/tree.gv");
+	}
 
 	public static void main(String[] args) {
-		test5();
+		test6();
 	}
 
 }

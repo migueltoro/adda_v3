@@ -555,9 +555,15 @@ public class BinaryTrees {
 		System.out.println(BinaryTrees.containsLabel(t0,"3"));
 	}
 	
+	public static void test8() {
+		String ex = "/(4/,7/)(/(4_/,7/),/(4/,7_/))";
+		BinaryTree<String> t0 = BinaryTree.parse(ex);
+		System.out.println(t0);
+	}
+	
 	
 	public static void main(String[] args) {
-		test7();
+		test8();
 	}
 	
 	

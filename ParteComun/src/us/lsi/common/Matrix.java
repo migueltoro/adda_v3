@@ -2,6 +2,7 @@ package us.lsi.common;
 
 import java.lang.reflect.Array;
 import java.util.List;
+import java.util.ArrayList;
 import java.util.Random;
 import java.util.function.Function;
 import java.util.function.Predicate;
@@ -24,6 +25,14 @@ import us.lsi.streams.Stream2;
  */
 public class Matrix<E> {
 	
+	public static Matrix<String> of(String file, String delim) {
+		List<String> lineas = Files2.linesFromFile(file);
+		Integer nf = lineas.size();
+		Integer nc = lineas.get(0).split(delim).length;
+		String[][] r = new String[nf][nc];
+		IntStream.range(0, nf).forEach(f->r[f] = lineas.get(f).split(delim));
+		return Matrix.of(r);
+	}
 	
 	public static <E> Matrix<E> of(Integer nf, Integer nc,E[] datos) {
 		Preconditions.checkArgument(nf>=0 && nc >=0,

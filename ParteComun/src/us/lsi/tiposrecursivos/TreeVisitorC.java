@@ -30,16 +30,13 @@ public class TreeVisitorC extends TreeBaseVisitor<Object> {
 		return tree;
 	}
 	
-	@Override public Object visitIntLabel(TreeParser.IntLabelContext ctx) { 
-		return ctx.getText(); 
-	}
-	
-	@Override public Object visitDoubleLabel(TreeParser.DoubleLabelContext ctx) { 
-		return ctx.getText();
-	}
-	
 	@Override public Object visitIdLabel(TreeParser.IdLabelContext ctx) { 
-		return ctx.getText();
+		String s = ctx.getText();
+		s = s.replace("/(","(");
+		s = s.replace("/)",")");
+		s = s.replace("/,",",");
+		s = s.replace("/,_",",_"); 
+		return s;
 	}
 
 }
