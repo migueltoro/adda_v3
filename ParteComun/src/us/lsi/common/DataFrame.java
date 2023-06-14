@@ -6,12 +6,7 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 public class DataFrame extends DataText {
-	
-	
-	public static DataFrame of(String file){
-		Matrix<String> m = Matrix.of(file, ";");
-		return new DataFrame(m);
-	}
+
 	
 	public static DataFrame of(DataText d){
 		return new DataFrame(d.matrix);
@@ -121,9 +116,9 @@ public class DataFrame extends DataText {
 				.map(r->this.rowValue(r,t))
 				.toList();
 	}
-
-	public static void main(String[] args) {
-		DataText m = DataText.of("ficheros/prueba.csv");    
+	
+	public static void tes1() {
+		DataText m = DataText.of("ficheros/prueba.csv",18,10);    
 		System.out.println(m);
 		System.out.println(m.get(1, 3));
 		System.out.println(m.subDataText(1,1,5,2));
@@ -139,5 +134,45 @@ public class DataFrame extends DataText {
 		System.out.println(m2.columnNames());
 		System.out.println(m2.rowNames());
 		System.out.println(m2.columnValues("p2",e->e.equals("T")?true:false));
+	}
+	
+	public static void test2() {
+		DataText m = DataText.of("ficheros/inv2.csv",18,10);  
+		System.out.println(m.rn());
+		System.out.println(m.cn());
+		System.out.println(m);
+		System.out.println(m.get(1, 3));
+		System.out.println("________________");
+		DataFrame d1 = DataFrame.of(m.subDataText(0,0,6,3));
+		System.out.println(d1);
+		System.out.println("Columna0 = "+d1.columnValues("Capacidad",e->Integer.parseInt(e)));
+		
+		System.out.println("________________");
+		DataFrame d2 = DataFrame.of(m.subDataText(7,0,4,2));
+		System.out.println(d2);
+		System.out.println("________________");
+		DataFrame d3 = DataFrame.of(m.subDataText(13,0,5,1));
+		System.out.println(d3);
+		System.out.println("Columna1 = "+d1.columnValues(1,e->d3.rowId(e)));
+		System.out.println("________________");
+		DataRel d4 = DataRel.of(m.subDataText(3,7,12,3),d2.rowNames(),d3.rowNames());
+		System.out.println(d4);
+		System.out.println("________________");
+		System.out.println(d4.pairs());
+		System.out.println("________________");
+		System.out.println(d4.map);
+		System.out.println("________________");
+		System.out.println(d4.contains("T01","E1"));
+		System.out.println("________________");
+		System.out.println(d4.values("T01","E1"));
+		System.out.println("________________");	
+		System.out.println(d4.value("T01","E1",e->Integer.parseInt(e)));
+		System.out.println("________________");	
+		System.out.println(d4.value(0,1,e->Integer.parseInt(e)));
+		
+	}
+
+	public static void main(String[] args) {
+		test2();
     }    
 }

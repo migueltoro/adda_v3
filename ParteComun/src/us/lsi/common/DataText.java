@@ -5,8 +5,8 @@ import java.util.function.Function;
 
 public class DataText {
 	
-	public static DataText of(String file){
-		Matrix<String> m = Matrix.of(file, ";");
+	public static DataText of(String file, Integer nf, Integer nc){
+		Matrix<String> m = Matrix.of(file, ",", nf, nc);
 		return new DataText(m);
 	}
 	
@@ -21,8 +21,8 @@ public class DataText {
 		return DataFrame.of(this);
 	}
 	
-	public DataRel asDataRel(List<String> rowNames) {
-		return DataRel.of(this,rowNames);
+	public DataRel asDataRel(List<String> rowNames1, List<String> rowNames2) {
+		return DataRel.of(this,rowNames1, rowNames2);
 	}
 
 	public int hashCode() {
