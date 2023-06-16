@@ -81,7 +81,7 @@ Este tipo ofrece algunos métodos adicionales a Set de uso frecuente:
 
 - Es un caso particular de _DataText_. 
 - Tiene un identificador para cada fila y columna que puede servir como índice para acceder a las filas y la columnas.
-- Un ejemplo es ![[dataframe.jpg]]
+- Un ejemplo es ![DatFrame](./dataframe.jpg)
 - Tiene métodos para obtener el identificador de una fila y de una columna o un índice asociado a cada fila y columna.
 - Tiene métodos para obtener todos los datos de una columna después de transformarlos mediante una función List<E> columnValues(String columnName, Function<String,E> t) o List<E> columnValues(Integer c, Function<String,E> t)
 - Tiene métodos para obtener los datos de una fila agregados en un valor del tipo E después de transformarlos mediante una función E rowValue(String rowName, Function<List<String>,E> t) o E rowValue(String rowName, Function<List<String>,E> t)
