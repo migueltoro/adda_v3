@@ -22,7 +22,7 @@ public class Set2 {
 		.collect(Collectors.toSet());
 	}
 	
-	public static <E> Set<E> parseSet(String[] tokens, Function<String,E> fMap) {
+	public static <E> Set<E> parse(String[] tokens, Function<String,E> fMap) {
 		return Arrays.stream(tokens)
 		.filter(e->e!=null && e.length()>0)
 		.map(e->fMap.apply(e.trim())).collect(Collectors.toSet());
@@ -55,6 +55,18 @@ public class Set2 {
 	@SafeVarargs
 	public static <E> Set<E> of(E... e){
 		return Arrays.stream(e).collect(Collectors.toSet());
+	}
+	
+	public static <E> Set<E> add(Set<E> s, E e) {
+		Set<E> s1 = new HashSet<>(s);
+		s1.add(e);
+		return s1;
+	}
+	
+	public static <E> Set<E> remove(Set<E> s, E e) {
+		Set<E> s1 = new HashSet<>(s);
+		s1.remove(e);
+		return s1;
 	}
 
 	public static <E,U extends Collection<E>> Set<E> of(U elements){

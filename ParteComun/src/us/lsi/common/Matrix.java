@@ -194,6 +194,10 @@ public class Matrix<E> {
 		return view(origin.first(),origin.second(),tam.first(),tam.second());
 	}
 	
+	public Matrix<E> subMatrix(Integer fMin, Integer cMin, Integer nf, Integer nc){
+		return this.view(fMin, cMin, nf, nc).copy();
+	}
+	
 	public Matrix<E> view(Integer fMin, Integer cMin, Integer nf, Integer nc){
 		Preconditions.checkArgument(nf>=0 && nc >=0,
 				String.format("Numero de filas menor que cero nf = %d, nc = %d",nf,nc));

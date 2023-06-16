@@ -50,14 +50,12 @@ public class Map2 {
 	/**
 	 * @param <K> tipo de las claves
 	 * @param <V> tipo de los valores
-	 * @param <U> tipo de la colecci�n
 	 * @param m Un Map
 	 * @return Un map inverso asumiendo que los elementos en todos los conjuntos imagen son distintos
 	 */
-	public static <K,V,U extends Collection<V>> Map<V,K> reverseHashMap(Map<K,U> m){
+	public static <K,V> Map<V,K> reverseHashMap(Map<K,V> m){
 		return m.keySet().stream()
-				.<Entry<K,V>>flatMap(x->m.get(x).stream().map(y->Map2.entry(x,y)))
-				.collect(Collectors.toMap(z->z.getValue(), z->z.getKey()));
+				.collect(Collectors.toMap(k->m.get(k),k->k));
 	}
 	
 	/**

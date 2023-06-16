@@ -8,6 +8,9 @@ import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
+import us.lsi.streams.Collectors2;
+import us.lsi.streams.Stream2;
+
 /**
  * @author migueltoro
  *
@@ -42,12 +45,17 @@ public class IntegerSet implements Set<Integer> {
 		return r;
 	}
 	
-	public static IntegerSet ofRange(Integer from, Integer to) {
+	public static IntegerSet range(Integer a, Integer b) {
 		IntegerSet r = IntegerSet.empty();
-		IntStream.range(from,to).boxed().toList();
-		r.addAll(IntStream.range(from,to).boxed().toList());
+		IntStream.range(a,b).boxed().toList();
+		r.addAll(IntStream.range(a,b).boxed().toList());
 		return r;
 	}
+	
+	public static IntegerSet range(Integer a, Integer b, Integer c){		
+		return Stream2.range(a, b, c).boxed()
+			 .collect(Collectors2.toIntegerSet());
+	}	
 	
 	public static IntegerSet parse(String s, String sep) {
 		IntegerSet r = IntegerSet.empty();
@@ -58,7 +66,7 @@ public class IntegerSet implements Set<Integer> {
 		return r;
 	}
 	
-	public static IntegerSet parseSet(String[] tokens) {
+	public static IntegerSet parse(String[] tokens) {
 		IntegerSet r = IntegerSet.empty();
 		Arrays.stream(tokens).filter(e -> e != null && e.length() > 0)
 				.map(e -> Integer.parseInt(e.trim()))

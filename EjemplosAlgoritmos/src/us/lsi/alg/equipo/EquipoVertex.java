@@ -20,7 +20,7 @@ public record EquipoVertex(Integer index,IntegerSet players) implements VirtualV
 
 
 	public static EquipoVertex first() {
-		return of(0, IntegerSet.ofRange(0,DatosEquipo.N));
+		return of(0, IntegerSet.range(0,DatosEquipo.N));
 	}
 
 	public static EquipoVertex of(Integer index, IntegerSet players) {
