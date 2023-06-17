@@ -40,7 +40,7 @@ public class Data<V,E> {
 				Comparator.naturalOrder() : Comparator.reverseOrder();
 		this.cmp = cmp;
 		this.memory = new HashMap<>();
-		this.memoryAll = SetMultimap.create();
+		this.memoryAll = SetMultimap.empty();
 	}
 	
 	public Comparator<Sp<E>> order(){

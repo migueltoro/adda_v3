@@ -3,7 +3,9 @@ package us.lsi.common;
 
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Comparator;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -14,7 +16,7 @@ public class Multiset<E>  {
 
 	/**
 	 * @param <E> Tipo de los elementos del Multiset
-	 * @return Un Multiset vacío
+	 * @return Un Multiset vacï¿½o
 	 */
 	public static <E> Multiset<E> empty() {
 		return new Multiset<E>();
@@ -122,7 +124,7 @@ public class Multiset<E>  {
 
 
 	public Integer add(E e, Integer n) {
-		Preconditions.checkArgument(n>=0,"No se pueden añadir cantidades negativas");
+		Preconditions.checkArgument(n>=0,"No se pueden aï¿½adir cantidades negativas");
 		Integer r = n;
 		if(r>0) elements.put(e,elements.getOrDefault(e,0) + n);
 		return r;
@@ -150,6 +152,14 @@ public class Multiset<E>  {
 		return elements.remove(e);
 	}
 
+	public List<Pair<E,Integer>> maxValues(Integer n) {
+		List<Pair<E,Integer>> r = this.elements.keySet().stream()			
+				.sorted(Comparator.comparing(k->this.elements.get(k)).reversed())
+				.limit(n)
+				.map(k->Pair.of(k,this.elements.get(k)))
+				.toList();
+		return r;
+	}
 	
 	public int size() {
 		return elements.size();

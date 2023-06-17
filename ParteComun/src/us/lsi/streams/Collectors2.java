@@ -2,8 +2,10 @@ package us.lsi.streams;
 
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.function.BiFunction;
 import java.util.function.BinaryOperator;
@@ -14,9 +16,12 @@ import java.util.stream.Collector;
 
 import us.lsi.common.IntegerSet;
 import us.lsi.common.List2;
+import us.lsi.common.ListMultimap;
+import us.lsi.common.Map2;
 import us.lsi.common.Multiset;
 import us.lsi.common.MutableType;
 import us.lsi.common.Set2;
+import us.lsi.common.SetMultimap;
 
 public class Collectors2 {
 	
@@ -76,6 +81,52 @@ public class Collectors2 {
 				s->s.size());
 	}
 	
+	public static <E,K,R> Collector<E,ListMultimap<K,R>,Map<K,List<R>>> groupingList(
+			Function<E,K> key,
+			Function<E,R> value) {
+		return Collector.of(
+				()->ListMultimap.<K,R>empty(), 
+				(x,e)->x.put(key.apply(e),value.apply(e)), 
+				(s1,s2)->ListMultimap.add(s1,s2), 
+				s->s.asMap());
+	}
+	
+	public static <E,K,R> Collector<E,SetMultimap<K,R>,Map<K,Set<R>>> groupingSet(
+			Function<E,K> key,
+			Function<E,R> value) {
+		return Collector.of(
+				()->SetMultimap.<K,R>empty(), 
+				(x,e)->x.put(key.apply(e),value.apply(e)), 
+				(s1,s2)->SetMultimap.add(s1,s2), 
+				s->s.asMap());
+	}
+	
+	public static <E,K,R> Collector<E,Map<K,R>,Map<K,R>> groupingReduce(
+			Function<E,K> key,
+			Function<E,R> value,
+			BinaryOperator<R> op) {
+		return Collector.of(
+				()->new HashMap<>(), 
+				(x,e)->{
+					K k = key.apply(e);
+					R v = value.apply(e);
+					if(x.containsKey(k)) x.put(k,op.apply(x.get(k),v));
+					else x.put(k,v);							
+				},
+				(s1,s2)->Map2.merge(s1,s2,op), 
+				s->s);
+	}
+	
+	public static <E,K,R> Collector<E,SetMultimap<K,R>,Map<K,R>> groupingReduceDistinct(
+			Function<E,K> key,
+			Function<E,R> value,
+			BinaryOperator<R> op) {
+		return Collector.of(
+				()->SetMultimap.<K,R>empty(), 
+				(x,e)->x.put(key.apply(e),value.apply(e)), 
+				(s1,s2)->SetMultimap.add(s1,s2), 
+				s->s.asMap(op));
+	}
 	
 
 }

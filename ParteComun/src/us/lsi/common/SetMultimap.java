@@ -5,16 +5,17 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
+import java.util.function.BinaryOperator;
 import java.util.stream.Collectors;
 
 public class SetMultimap<K, V>  {
 
 		
-	public static <K, V> SetMultimap<K, V> create() {
+	public static <K, V> SetMultimap<K, V> empty() {
 		return new SetMultimap<K, V>();
 	}
-
-	public static <K, V> SetMultimap<K, V> create(SetMultimap<K, V> m) {
+	
+	public static <K, V> SetMultimap<K, V> of(Map<K, Set<V>> m) {
 		return new SetMultimap<K, V>(m);
 	}
 
@@ -24,12 +25,18 @@ public class SetMultimap<K, V>  {
 		this.map = new HashMap<>();
 	}
 		
-	private SetMultimap(SetMultimap<K,V> m){
-		this.map = new HashMap<>(m.map);;
+	private SetMultimap(Map<K,Set<V>> m){
+		this.map = m;;
 	}
 
 	public Map<K, Set<V>> asMap() {
 		return map;
+	}
+	
+	public Map<K, V> asMap(BinaryOperator<V> op) {
+		Map<K, V> r = new HashMap<>();
+		this.keySet().stream().forEach(k->r.put(k,this.get(k).stream().reduce(op).orElse(null)));
+		return r;
 	}
 
 	public void clear() {
@@ -89,6 +96,23 @@ public class SetMultimap<K, V>  {
 				.stream()
 				.flatMap(x->map.get(x).stream())
 				.collect(Collectors.toSet());
+	}
+	
+	public SetMultimap<K,V> copy() {
+		Map<K,Set<V>> r = new HashMap<>();
+		this.keySet().forEach(k->r.put(k,Set2.copy(this.get(k))));
+		return SetMultimap.of(r);
+	}
+	
+	public static <K,V> SetMultimap<K,V> add(SetMultimap<K,V> m1, SetMultimap<K,V> m2) {
+		Map<K,Set<V>> r = m1.copy().asMap();
+		Map<K,Set<V>> r2 = m1.asMap();
+		r.keySet().forEach(k->r.put(k,Set2.union(r.get(k),r2.get(k))));	
+		return SetMultimap.of(r);
+	}
+	
+	public SetMultimap<K,V> add(SetMultimap<K,V> m2) {
+		return SetMultimap.add(this, m2);
 	}
 	
 }

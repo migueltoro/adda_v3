@@ -3,6 +3,7 @@ package us.lsi.common;
 import java.util.*;
 import java.util.Map.Entry;
 import java.util.AbstractMap.SimpleEntry;
+import java.util.function.BinaryOperator;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
@@ -92,6 +93,14 @@ public class Map2 {
 	public static <K, V> Map<K, V> merge(Map<K,V> m1, Map<K,V> m2) {
 		Map<K, V> r = new HashMap<>(m1);
 		r.putAll(m2);
+		return r;
+	}
+	
+	public static <K, V> Map<K, V> merge(Map<K,V> m1, Map<K,V> m2, BinaryOperator<V> op) {
+		BinaryOperator<V> nop = BinaryOperator2.of(op);
+		Map<K, V> r = new HashMap<>(m1);
+		Set<K> keys = Set2.union(m1.keySet(),m2.keySet());
+		keys.stream().forEach(k->r.put(k,nop.apply(m1.getOrDefault(k, null), m2.getOrDefault(k, null))));
 		return r;
 	}
     

@@ -2,9 +2,12 @@ package us.lsi.ejemplos_stream;
 
 
 import java.util.List;
+import java.util.Random;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
+import us.lsi.streams.Collectors2;
 import us.lsi.streams.Stream2;
 import us.lsi.common.Pair;
 import us.lsi.math.Math2;
@@ -15,6 +18,7 @@ public class EjemplosDeStreams2 {
 	
 	@SuppressWarnings("unused")
 	public static void main(String[] args) {
+		Random r = new Random(System.nanoTime());
 		var s1 = List.of(1,2,3,4,5,6,7);
 		var s2 = List.of(11,12,13,14,15,16);
 		var r2 = List.of(11,12,13,14,15,16,34,57);
@@ -63,6 +67,10 @@ public class EjemplosDeStreams2 {
 		var s13 = Stream2.consecutivePairs(s12).collect(Collectors.toList());
 		System.out.println(s13);
 		System.out.println("11: ______");
+		var s14 = IntStream.range(0, 1000).boxed().collect(Collectors2.toMultiset());
+		System.out.println(s14);
+		var s15 = IntStream.range(0, 1000).boxed().collect(Collectors2.groupingReduceDistinct(e->e%10,e->1,(x,y)->x+y));
+		System.out.println(s15);
 	}
 
 }
