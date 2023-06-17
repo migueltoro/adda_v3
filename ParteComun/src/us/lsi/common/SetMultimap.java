@@ -107,7 +107,7 @@ public class SetMultimap<K, V>  {
 	public static <K,V> SetMultimap<K,V> add(SetMultimap<K,V> m1, SetMultimap<K,V> m2) {
 		Map<K,Set<V>> r = m1.copy().asMap();
 		Map<K,Set<V>> r2 = m1.asMap();
-		r.keySet().forEach(k->r.put(k,Set2.union(r.get(k),r2.get(k))));	
+		r.keySet().forEach(k->r.put(k,Set2.union(r.getOrDefault(k,Set2.empty()),r2.getOrDefault(k,Set2.empty()))));	
 		return SetMultimap.of(r);
 	}
 	

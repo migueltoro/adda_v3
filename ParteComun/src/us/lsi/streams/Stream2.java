@@ -11,6 +11,7 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 import java.util.Spliterator;
@@ -217,6 +218,26 @@ public class Stream2 {
 	public static <T> Stream<T> concat(Stream<T>... s1) {
 		return Arrays.stream(s1).flatMap(x->x);
 	}
+	
+	/**
+	 * @param s1 Un stream
+	 * @param s2 Un segundo stream
+	 * @param k1 Una funci�n que calcula una clave para los elementos de stream1
+	 * @param k2 Una funci�n que calcula una clave para los elementos de stream2
+	 * @param <T> El tipo de los elementos de la primera secuencia
+	 * @param <U> El tipo de los elementos de la segunda secuencia
+	 * @param <K> El tipo de los elementos de la clave
+	 * @return Un stream resultado del joint de stream1 y stream2
+	 */
+	
+	
+	public static <T, U, K> Stream<Pair<T,U>> join(
+			Supplier<Stream<T>> s1,
+			Supplier<Stream<U>> s2,
+			Function<T,K> k1,
+			Function<U,K> k2){
+		return join(s1,s2,k1,k2,(x1,x2)->Pair.of(x1, x2));
+	}
 
 	/**
 	 * @param s1 Un stream
@@ -230,14 +251,37 @@ public class Stream2 {
 	 * @param <R> El tipo de los elementos de la secuencia resultante
 	 * @return Un stream resultado del joint de stream1 y stream2
 	 */
-	public static <T, U, K, R> Stream<R> join(
-			Supplier<Stream<T>> s1,
-			Supplier<Stream<U>> s2,
-			Function<? super T, ? extends K> k1,
-			Function<? super U, ? extends K> k2, 
-			BiFunction<T, U, R> fr) {
-		return s1.get().flatMap(e1->s2.get().filter(e2->k1.apply(e1).equals(k2.apply(e2)))
-					   .map(e2->fr.apply(e1, e2)));
+	
+	public static <T, U, K, R> Stream<R> join(Supplier<Stream<T>> s1, Supplier<Stream<U>> s2, Function<T, K> k1,
+			Function<U, K> k2, BiFunction<T, U, R> fr) {
+		Map<K, List<T>> m1 = s1.get().collect(Collectors2.groupingList(k1, x -> x));
+		return s2.get().flatMap(e2 -> {
+			K k2v = k2.apply(e2);
+			if (m1.containsKey(k2v))
+				return m1.get(k2v).stream().map(e1 -> fr.apply(e1, e2));
+			else
+				return Stream.empty();
+		});
+	}
+	
+	/**
+	 * @param s1 Una collection
+	 * @param s2 Un segundo collection
+	 * @param k1 Una funci�n que calcula una clave para los elementos de stream1
+	 * @param k2 Una funci�n que calcula una clave para los elementos de stream2
+	 * @param <T> El tipo de los elementos de la primera secuencia
+	 * @param <U> El tipo de los elementos de la segunda secuencia
+	 * @param <K> El tipo de los elementos de la clave
+	 * @return Un stream resultado del joint de stream1 y stream2
+	 */
+	
+	
+	public static <T, U, K> Stream<Pair<T,U>> join(
+			Collection<T> s1,
+			Collection<U> s2,
+			Function<T,K> k1,
+			Function<U,K> k2) {
+		return join(s1,s2,k1,k2,(x1,x2)->Pair.of(x1, x2));
 	}
 	
 	/**
@@ -252,14 +296,17 @@ public class Stream2 {
 	 * @param <R> El tipo de los elementos de la secuencia resultante
 	 * @return Un stream resultado del joint de stream1 y stream2
 	 */
-	public static <T, U, K, R> Stream<R> join(
-			Collection<T> s1,
-			Collection<U> s2,
-			Function<? super T, ? extends K> k1,
-			Function<? super U, ? extends K> k2, 
-			BiFunction<T, U, R> fr) {
-		return s1.stream().flatMap(e1->s2.stream().filter(e2->k1.apply(e1).equals(k2.apply(e2)))
-								.map(e2->fr.apply(e1, e2)));
+	
+	public static <T, U, K, R> Stream<R> join(Collection<T> s1, Collection<U> s2, Function<T, K> k1,
+			Function<U, K> k2, BiFunction<T, U, R> fr) {
+		Map<K, List<T>> m1 = s1.stream().collect(Collectors2.groupingList(k1, x -> x));
+		return s2.stream().flatMap(e2 -> {
+			K k2v = k2.apply(e2);
+			if (m1.containsKey(k2v))
+				return m1.get(k2v).stream().map(e1 -> fr.apply(e1, e2));
+			else
+				return Stream.empty();
+		});
 	}
 	
 	/**

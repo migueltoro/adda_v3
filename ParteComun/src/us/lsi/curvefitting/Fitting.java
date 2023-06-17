@@ -13,7 +13,8 @@ public class Fitting {
 
 	// Este método devuelve un par: función para obtener puntos de la curva de
 	// ajuste, y String para mostrar coeficientes del ajuste
-	public static Pair<Function<Double, Double>, String> fitCurve(List<WeightedObservedPoint> points,FittingType tipoAjuste) {
+	public static Pair<Function<Double, Double>, String> fitCurve(
+			List<WeightedObservedPoint> points,FittingType tipoAjuste) {
 
 		// Curva de ajuste
 		final double[] coeff;

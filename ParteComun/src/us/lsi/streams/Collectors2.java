@@ -3,14 +3,12 @@ package us.lsi.streams;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.function.BiFunction;
 import java.util.function.BinaryOperator;
 import java.util.function.Function;
-import java.util.function.Predicate;
 import java.util.function.Supplier;
 import java.util.stream.Collector;
 
@@ -65,40 +63,38 @@ public class Collectors2 {
 		return mergeSort(Comparator.naturalOrder());
 	}
 	
-	public static <E> Collector<E,MutableType<Boolean>,Boolean> all(Predicate<E> p){
-		return of(
-				()->true, 
-				(b,e)->p.test(e), 
-				(b1,b2)->b1&&b2, 
-				b->b);
-	}
-	
-	public static <E> Collector<E,Set<E>,Integer> countDistinct() {
-		return Collector.of(
-				()->new HashSet<E>(), 
-				(x,e)->x.add(e), 
-				(s1,s2)->{Set<E> c = new HashSet<>(s1); c.addAll(s2); return c;}, 
-				s->s.size());
-	}
-	
 	public static <E,K,R> Collector<E,ListMultimap<K,R>,Map<K,List<R>>> groupingList(
 			Function<E,K> key,
-			Function<E,R> value) {
+			Function<E,R> value){
+		return groupingList(key,value,rs->rs);
+	}
+	
+	public static <E,K,R,S> Collector<E,ListMultimap<K,R>,Map<K,S>> groupingList(
+			Function<E,K> key,
+			Function<E,R> value,
+			Function<List<R>,S> rs) {
 		return Collector.of(
 				()->ListMultimap.<K,R>empty(), 
 				(x,e)->x.put(key.apply(e),value.apply(e)), 
 				(s1,s2)->ListMultimap.add(s1,s2), 
-				s->s.asMap());
+				s->Map2.of(s.asMap(),rs));
 	}
 	
 	public static <E,K,R> Collector<E,SetMultimap<K,R>,Map<K,Set<R>>> groupingSet(
 			Function<E,K> key,
 			Function<E,R> value) {
+		return groupingSet(key,value,rs->rs);
+	}
+	
+	public static <E,K,R,S> Collector<E,SetMultimap<K,R>,Map<K,S>> groupingSet(
+			Function<E,K> key,
+			Function<E,R> value,
+			Function<Set<R>,S> rs) {
 		return Collector.of(
 				()->SetMultimap.<K,R>empty(), 
 				(x,e)->x.put(key.apply(e),value.apply(e)), 
 				(s1,s2)->SetMultimap.add(s1,s2), 
-				s->s.asMap());
+				s->Map2.of(s.asMap(),rs));
 	}
 	
 	public static <E,K,R> Collector<E,Map<K,R>,Map<K,R>> groupingReduce(
@@ -115,17 +111,6 @@ public class Collectors2 {
 				},
 				(s1,s2)->Map2.merge(s1,s2,op), 
 				s->s);
-	}
-	
-	public static <E,K,R> Collector<E,SetMultimap<K,R>,Map<K,R>> groupingReduceDistinct(
-			Function<E,K> key,
-			Function<E,R> value,
-			BinaryOperator<R> op) {
-		return Collector.of(
-				()->SetMultimap.<K,R>empty(), 
-				(x,e)->x.put(key.apply(e),value.apply(e)), 
-				(s1,s2)->SetMultimap.add(s1,s2), 
-				s->s.asMap(op));
 	}
 	
 

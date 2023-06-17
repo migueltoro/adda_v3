@@ -101,7 +101,7 @@ public class ListMultimap<K, V>  {
 	public static <K,R> ListMultimap<K,R> add(ListMultimap<K,R> m1, ListMultimap<K,R> m2) {
 		Map<K,List<R>> r = m1.copy().asMap();
 		Map<K,List<R>> r2 = m1.asMap();
-		r.keySet().forEach(k->r.put(k,List2.union(r.get(k),r2.get(k))));	
+		r.keySet().forEach(k->r.put(k,List2.union(r.getOrDefault(k,List2.empty()),r2.getOrDefault(k,List2.empty()))));	
 		return ListMultimap.of(r);
 	}
 

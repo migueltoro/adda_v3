@@ -6,8 +6,10 @@ import java.util.Arrays;
 
 import us.lsi.common.Preconditions;
 
+
+
 /**
- * Una implementación de un array de tamaño variable
+ * Una implementaciï¿½n de un array de tamaï¿½o variable
  * 
  * @author Miguel Toro
  *

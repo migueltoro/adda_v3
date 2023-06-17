@@ -13,7 +13,7 @@ module partecomun {
 	exports us.lsi.streams;
 	exports us.lsi.filetools;
 	exports us.lsi.graphics;
-	
+
 	requires transitive commons.math3;
 	requires transitive juniversalchardet;
 	requires transitive matplotlib4j;

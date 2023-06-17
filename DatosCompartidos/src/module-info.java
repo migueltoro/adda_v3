@@ -1,4 +1,5 @@
 module datos_compartidos {
+	
 	exports us.lsi.tareasyprocesadores.datos;
 	exports us.lsi.reinas.datos;
 	exports us.lsi.jarras.datos;

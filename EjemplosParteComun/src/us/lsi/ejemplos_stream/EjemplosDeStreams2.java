@@ -67,9 +67,10 @@ public class EjemplosDeStreams2 {
 		var s13 = Stream2.consecutivePairs(s12).collect(Collectors.toList());
 		System.out.println(s13);
 		System.out.println("11: ______");
-		var s14 = IntStream.range(0, 1000).boxed().collect(Collectors2.toMultiset());
+		var s14 = IntStream.range(0, 1000).boxed().map(e->r.nextInt(20)).collect(Collectors2.toMultiset());
 		System.out.println(s14);
-		var s15 = IntStream.range(0, 1000).boxed().collect(Collectors2.groupingReduceDistinct(e->e%10,e->1,(x,y)->x+y));
+		var s15 = IntStream.range(0, 1000).boxed().map(e->r.nextInt(20))
+				.collect(Collectors2.groupingList(e->e%10,x->x,x->x.size()/1.));
 		System.out.println(s15);
 	}
 
