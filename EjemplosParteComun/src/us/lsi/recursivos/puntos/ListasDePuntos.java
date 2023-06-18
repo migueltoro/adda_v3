@@ -127,7 +127,7 @@ public class ListasDePuntos {
 			r = Comparator2.min(s1, s2,ordNatural);
 			List<Punto2D> yCentral = List2.empty();
 			for(Punto2D p: puntosY){
-				if(Math.abs(p.x()- xk) < r.getDistancia()){
+				if(Math.abs(p.x()- xk) < r.distancia()){
 						yCentral.add(p);
 				}
 			}
@@ -142,7 +142,7 @@ public class ListasDePuntos {
 	
 	private static ParDePuntos masCercanoCentral(ParDePuntos s, List<Punto2D> yCentral, Comparator<ParDePuntos> ordNatural) {	
 		ParDePuntos r = null;
-		double d = s.getDistancia();
+		double d = s.distancia();
 		Punto2D pIzq = null;
 		Punto2D pDer = null;
 		for(int i=0; i < yCentral.size(); i++){
@@ -150,20 +150,20 @@ public class ListasDePuntos {
 			for(int j=i+1;j<yCentral.size();j++){
 				pDer = yCentral.get(j);
 				r = ParDePuntos.create(pIzq, pDer);
-				if(r.getDistancia()>d){
+				if(r.distancia()>d){
 					break;
 				}
 				s = Comparator2.min(s, r,ordNatural) ;
-				d = s.getDistancia();
+				d = s.distancia();
 			}
 			for(int j=i-1;j>=0;j--){
 				pDer = yCentral.get(j);
 				r = ParDePuntos.create(pIzq, pDer);
-				if(r.getDistancia()>d){
+				if(r.distancia()>d){
 					break;
 				}
 				s = Comparator2.min(s, r,ordNatural) ;
-				d = s.getDistancia();
+				d = s.distancia();
 			}
 		}
 		return s;
@@ -179,7 +179,7 @@ public class ListasDePuntos {
 			for(int j = i+1; j < b; j++){
 				p1 = lista.get(i);
 				p2 = lista.get(j);
-				d = p1.getDistanciaA(p2);
+				d = p1.distanciaA(p2);
 				if(d < r ){
 					r = d;
 					p = ParDePuntos.create(p1, p2);

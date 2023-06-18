@@ -16,8 +16,8 @@ import us.lsi.common.List2;
 import us.lsi.common.Multiset;
 import us.lsi.common.Preconditions;
 import us.lsi.common.String2;
+import us.lsi.geometria.Cuadrante;
 import us.lsi.geometria.Punto2D;
-import us.lsi.geometria.Punto2D.Cuadrante;
 import us.lsi.math.Math2;
 import us.lsi.streams.Stream2;
 
@@ -81,7 +81,7 @@ public class EjemplosDeStreams {
 	/**
 	 * @param ls Una lista
 	 * @param umbral Un elemento de referencia
-	 * @return El primer real que encuentre que sea mayor que un umbral dado como parámetro
+	 * @return El primer real que encuentre que sea mayor que un umbral dado como parï¿½metro
 	 */
 	public static Double ejemploG(List<Double> ls, Double umbral){
 		return ls.stream()
@@ -92,7 +92,7 @@ public class EjemplosDeStreams {
 	
 	/**
 	 * @param ls Una lista
-	 * @return Una lista de Punto con los puntos simétricos sobre el eje Y
+	 * @return Una lista de Punto con los puntos simï¿½tricos sobre el eje Y
 	 */
 	public static List<Punto2D> ejemploH(List<Punto2D> ls){
 		return ls.stream()
@@ -111,7 +111,7 @@ public class EjemplosDeStreams {
 	
 	/**
 	 * @param ls Una lista
-	 * @return Número de puntos de la lista en el primer cuadrante
+	 * @return Nï¿½mero de puntos de la lista en el primer cuadrante
 	 */
 	public static Long ejemploJ(List<Punto2D> ls){
 		return ls.stream()
@@ -128,9 +128,9 @@ public class EjemplosDeStreams {
 	}
 	
 	/**
-	 * @post Guarda en un fichero de texto los números primos hasta un número n dado.
+	 * @post Guarda en un fichero de texto los nï¿½meros primos hasta un nï¿½mero n dado.
 	 * @param fileOut  Un fichero 
-	 * @param limit Un número de referencia
+	 * @param limit Un nï¿½mero de referencia
 	 */
 	public static void ejemploL(String fileOut, Integer limit){
 		String r = Stream.iterate(1, x->x<=limit, x->Math2.siguientePrimo(x))
@@ -148,8 +148,8 @@ public class EjemplosDeStreams {
 	}
 	
 	/**
-	 * @return Texto con el cuadrado de los números primos hasta un número n dado.
-	 * @param limit Un número de referencia
+	 * @return Texto con el cuadrado de los nï¿½meros primos hasta un nï¿½mero n dado.
+	 * @param limit Un nï¿½mero de referencia
 	 */
 	public String ejemploN(Integer limit){
 		return Stream.iterate(1, x-> x<=limit, x->Math2.siguientePrimo(x))
@@ -159,7 +159,7 @@ public class EjemplosDeStreams {
 	}
 	
 	/**
-	 * @param fileIn Un fichero de texto que contiene en cada línea un número entero
+	 * @param fileIn Un fichero de texto que contiene en cada lï¿½nea un nï¿½mero entero
 	 * @return Un IntStream
 	 */
 	public static IntStream ejemploO(String fileIn){
@@ -170,7 +170,7 @@ public class EjemplosDeStreams {
 	/**
 	 * @param limit Una referencia
 	 * @return Un Stream de Punto con los puntos del plano cuya coordenada sea (X,X), 
-	 * siendo X un número primo menor que un número dado
+	 * siendo X un nï¿½mero primo menor que un nï¿½mero dado
 	 */
 	public static Stream<Punto2D> ejemploP(Integer limit){
 		return Stream.iterate(1L, x-> x<=limit, x->Math2.siguientePrimo(x))
@@ -179,10 +179,10 @@ public class EjemplosDeStreams {
 	
 	/**
 	 * @post Genera fileOut a partir de fileIn
-	 * @param fileIn Un fichero de texto con una fecha escrita en cada línea
-	 * @param fileOut Un fichero con las fechas ordenadas y que estén entre dos fechas dadas
-	 * @param c1 Límite inferior de las fechas
-	 * @param c2 Límite superior de las fecha
+	 * @param fileIn Un fichero de texto con una fecha escrita en cada lï¿½nea
+	 * @param fileOut Un fichero con las fechas ordenadas y que estï¿½n entre dos fechas dadas
+	 * @param c1 Lï¿½mite inferior de las fechas
+	 * @param c2 Lï¿½mite superior de las fecha
 	 */
 	public static void ejemploQ(String fileIn, String fileOut, LocalDate c1, LocalDate c2){
 		Preconditions.checkArgument(c2.compareTo(c1) > 0);
@@ -195,7 +195,7 @@ public class EjemplosDeStreams {
 	}
 	
 	/**
-	 * @param fileIn Un fichero de texto que contiene en cada línea una lista de números enteros separados por comas
+	 * @param fileIn Un fichero de texto que contiene en cada lï¿½nea una lista de nï¿½meros enteros separados por comas
 	 * @return Un IntStream
 	 */
 	public static IntStream ejemploR(String fileIn){
@@ -208,19 +208,19 @@ public class EjemplosDeStreams {
 	/**
 	 * @post Agrupa los puntos por cuadrantes
 	 * @param st Un Stream
-	 * @return Multimap&lt;Cuadrante,Punto&gt; en el que se asocia a cada cuadrante, los puntos del Stream que están en ese cuadrante
+	 * @return Multimap&lt;Cuadrante,Punto&gt; en el que se asocia a cada cuadrante, los puntos del Stream que estï¿½n en ese cuadrante
 	 */
 	public static Map<Cuadrante,List<Punto2D>> ejemploS1(Stream<Punto2D> st){
-		return st.collect(Collectors.groupingBy(Punto2D::getCuadrante));
+		return st.collect(Collectors.groupingBy(Punto2D::cuadrante));
 	}
 	
 	/**
 	 * @post Agrupa los puntos por cuadrantes
 	 * @param st Un Stream
-	 * @return Map&lt;Cuadrante,List&lt;Punto&gt;&gt; en el que se asocia a cada cuadrante, los puntos del Stream que están en ese cuadrante
+	 * @return Map&lt;Cuadrante,List&lt;Punto&gt;&gt; en el que se asocia a cada cuadrante, los puntos del Stream que estï¿½n en ese cuadrante
 	 */
 	public static Map<Cuadrante,List<Punto2D>> ejemploT1(Stream<Punto2D> st){
-		return st.collect(Collectors.groupingBy(Punto2D::getCuadrante));
+		return st.collect(Collectors.groupingBy(Punto2D::cuadrante));
 	}
 	
 	/**
@@ -229,38 +229,38 @@ public class EjemplosDeStreams {
 	 * @return Map@lt;Cuadrante,Double&gt; en el que se asocia a cada cuadrante, la suma de las coordenadas X de los puntos de ese cuadrante
 	 */
 	public static Map<Cuadrante,Double> ejemploU(Stream<Punto2D> st){
-		return st.collect(Collectors.groupingBy(Punto2D::getCuadrante, 
+		return st.collect(Collectors.groupingBy(Punto2D::cuadrante, 
 							Collectors.reducing(0.,x->x.x(),(x,y)->x+y)));
 	}
 		
 	/**
-	 * @post Cuenta cuántos puntos hay de cada cuadrante en el Stream
+	 * @post Cuenta cuï¿½ntos puntos hay de cada cuadrante en el Stream
 	 * @param st Un Stream
 	 * @return  Un Multiset&lt;Cuadrante&gt;
 	 */
 	public static Map<Cuadrante, Long> ejemploV(Stream<Punto2D> st){
 		return st.collect(
-				Collectors.groupingBy(Punto2D::getCuadrante, 
+				Collectors.groupingBy(Punto2D::cuadrante, 
 			    Collectors.counting()));	
 	}
 	
 	public static Multiset<Cuadrante> ejemploV2(Stream<Punto2D> st){
-		return Stream2.toMultiSet(st.map(Punto2D::getCuadrante));	
+		return Stream2.toMultiSet(st.map(Punto2D::cuadrante));	
 	}
 	
 	/**
-	 * @post Cuenta cuántos puntos hay de cada cuadrante en el Stream
+	 * @post Cuenta cuï¿½ntos puntos hay de cada cuadrante en el Stream
 	 * @param st Un Stream 
 	 * @return Un Map&lt;Cuadrante,Long&gt;
 	 */
 	public static Map<Cuadrante,Long> ejemploW(Stream<Punto2D> st){
-		return st.collect(Collectors.groupingBy(Punto2D::getCuadrante, Collectors.counting()));
+		return st.collect(Collectors.groupingBy(Punto2D::cuadrante, Collectors.counting()));
 	}
 
 	
 	/**
 	 * @param s Un String
-	 * @return Número de caracteres en minúscula que tiene la cadena
+	 * @return Nï¿½mero de caracteres en minï¿½scula que tiene la cadena
 	 */
 	public static Long ejemploX(String s){
 		return s.chars()
@@ -270,7 +270,7 @@ public class EjemplosDeStreams {
 	
 	/**
 	 * @param ls Una lista
-	 * @return La cadena que tiene un mayor número de caracteres en minúscula
+	 * @return La cadena que tiene un mayor nï¿½mero de caracteres en minï¿½scula
 	 */
 	public static String ejemploY(List<String> ls){
 		return ls.stream()
@@ -280,7 +280,7 @@ public class EjemplosDeStreams {
 	
 	/**
 	 * @param ls Una lista
-	 * @return El máximo, el mínimo, la media y la suma.
+	 * @return El mï¿½ximo, el mï¿½nimo, la media y la suma.
 	 */
 	public static IntSummaryStatistics ejemploZ(List<Integer> ls){
 		return ls.stream()

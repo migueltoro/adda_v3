@@ -17,10 +17,10 @@ public class ListasDePuntosTest {
 		List<Punto2D> lista = ListasDePuntos.getListaPuntosAleatoria(10000);
 		ParDePuntos p1 = ListasDePuntos.parMasCercano(lista);
 		ParDePuntos p2 = ListasDePuntos.parMasCercanoBase(0, lista.size(), lista);
-		if(!p1.getDistancia().equals(p2.getDistancia())){
+		if(!p1.distancia().equals(p2.distancia())){
 			System.out.println(p1+","+p2);
 		}
-		assertTrue(p1.getDistancia().equals(p2.getDistancia()));
+		assertTrue(p1.distancia().equals(p2.distancia()));
 	}
 	
 	

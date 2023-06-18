@@ -19,8 +19,8 @@ import us.lsi.common.Multiset;
 import us.lsi.common.Preconditions;
 import us.lsi.common.SetMultimap;
 import us.lsi.common.String2;
+import us.lsi.geometria.Cuadrante;
 import us.lsi.geometria.Punto2D;
-import us.lsi.geometria.Punto2D.Cuadrante;
 import us.lsi.math.Math2;
 
 /**
@@ -215,7 +215,7 @@ public class Ejemplos {
 	 */
 	public static SetMultimap<Cuadrante,Punto2D> ejemploS1(Stream<Punto2D> st){
 		SetMultimap<Cuadrante,Punto2D> m = SetMultimap.empty();
-		st.forEach(x->m.put(x.getCuadrante(),x));
+		st.forEach(x->m.put(x.cuadrante(),x));
 		return m;
 	}
 	
@@ -225,7 +225,7 @@ public class Ejemplos {
 	 * @return Map&lt;Cuadrante,List&lt;Punto&gt;&gt; en el que se asocia a cada cuadrante, los puntos del Stream que est�n en ese cuadrante
 	 */
 	public static Map<Cuadrante,List<Punto2D>> ejemploT1(Stream<Punto2D> st){
-		return st.collect(Collectors.groupingBy(Punto2D::getCuadrante));
+		return st.collect(Collectors.groupingBy(Punto2D::cuadrante));
 	}
 	
 	/**
@@ -234,7 +234,7 @@ public class Ejemplos {
 	 * @return Map@lt;Cuadrante,Double&gt; en el que se asocia a cada cuadrante, la suma de las coordenadas X de los puntos de ese cuadrante
 	 */
 	public static Map<Cuadrante,Double> ejemploU(Stream<Punto2D> st){
-		return st.collect(Collectors.groupingBy(Punto2D::getCuadrante, 
+		return st.collect(Collectors.groupingBy(Punto2D::cuadrante, 
 							Collectors.reducing(0.,x->x.x(),(x,y)->x+y)));
 	}
 		
@@ -245,7 +245,7 @@ public class Ejemplos {
 	 */
 	public static Multiset<Cuadrante> ejemploV(Stream<Punto2D> st){
 		Multiset<Cuadrante> m = Multiset.empty();
-		st.forEach(x->m.add(x.getCuadrante()));	
+		st.forEach(x->m.add(x.cuadrante()));	
 		return m;
 	}
 	
@@ -255,7 +255,7 @@ public class Ejemplos {
 	 * @return Un Map&lt;Cuadrante,Long&gt;
 	 */
 	public static Map<Cuadrante,Long> ejemploW(Stream<Punto2D> st){
-		return st.collect(Collectors.groupingBy(Punto2D::getCuadrante, Collectors.counting()));
+		return st.collect(Collectors.groupingBy(Punto2D::cuadrante, Collectors.counting()));
 	}
 
 	

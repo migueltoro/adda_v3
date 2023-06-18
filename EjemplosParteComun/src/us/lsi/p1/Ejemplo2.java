@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import us.lsi.geometria.Cuadrante;
 import us.lsi.geometria.Punto2D;
 
 public class Ejemplo2 {
@@ -18,18 +19,18 @@ public class Ejemplo2 {
 		return res;
 	}
 
-	public static Map<Punto2D.Cuadrante, Double> ejemplo2_funcional(List<Punto2D> ls) {
+	public static Map<Cuadrante, Double> ejemplo2_funcional(List<Punto2D> ls) {
 		return ls.stream()
-				.collect(Collectors.groupingBy(Punto2D::getCuadrante,
+				.collect(Collectors.groupingBy(Punto2D::cuadrante,
 						Collectors.reducing(0., x -> x.x(), (x, y) -> x + y)));
 	}
 
-	public static Map<Punto2D.Cuadrante, Double> ejemplo2_iterativo(List<Punto2D> ls) {
+	public static Map<Cuadrante, Double> ejemplo2_iterativo(List<Punto2D> ls) {
 		Integer e = 0;
-		Map<Punto2D.Cuadrante, Double> b = new HashMap<Punto2D.Cuadrante, Double>();
+		Map<Cuadrante, Double> b = new HashMap<Cuadrante, Double>();
 		while (e < ls.size()) {
 			Punto2D p = ls.get(e);
-			Punto2D.Cuadrante key = p.getCuadrante();
+			Cuadrante key = p.cuadrante();
 			if(b.containsKey(key)) b.put(key, b.get(key)+p.x());
 			else b.put(key,p.x());
 			e++;
@@ -38,17 +39,17 @@ public class Ejemplo2 {
 
 	}
 
-	public static Map<Punto2D.Cuadrante, Double> ejemplo2_recursivo(List<Punto2D> ls) {
-		Map<Punto2D.Cuadrante, Double> res = new HashMap<Punto2D.Cuadrante, Double>();
+	public static Map<Cuadrante, Double> ejemplo2_recursivo(List<Punto2D> ls) {
+		Map<Cuadrante, Double> res = new HashMap<Cuadrante, Double>();
 		return ejemplo2_recursivo(ls, res, 0);
 
 	}
 
-	public static Map<Punto2D.Cuadrante, Double> ejemplo2_recursivo(List<Punto2D> ls, Map<Punto2D.Cuadrante, Double> b,
+	public static Map<Cuadrante, Double> ejemplo2_recursivo(List<Punto2D> ls, Map<Cuadrante, Double> b,
 			Integer e) {
 		if (e < ls.size()) {
 			Punto2D p = ls.get(e);
-			Punto2D.Cuadrante key = p.getCuadrante();
+			Cuadrante key = p.cuadrante();
 			if(b.containsKey(key)) b.put(key, b.get(key)+p.x());
 			else b.put(key,p.x());
 			b = ejemplo2_recursivo(ls, b, e + 1);

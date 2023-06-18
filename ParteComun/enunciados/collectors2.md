@@ -1,6 +1,7 @@
 # Collectors2
 
-Es una factoría de Collectors adicional a la ya existente en Java. Se usa en la forma: stream.collect(Collector2.metodo()).
+Es una factoría de Collectors adicional a la ya existente en Java. Se usa en la forma: 
+	stream.collect(Collector2.metodo()).
 
 - toMultiset(): El resultado es un Multiset
 - toIntegerSet(): El resultado es un IntegerSet
@@ -33,3 +34,6 @@ Es una factoría de Collectors adicional a la ya existente en Java. Se usa en la
 - groupingSizeDistinct(Function\<E,K\> key, Function\<E,R\> value): 
 	El resultado es de tipo Map\<K,Integer\>.
 	Cuenta los elementos distintos en cada grupo
+- frequencies():
+	El resultado es de tipo Multiset.
+	Cuenta la frecuencia cada elemento
