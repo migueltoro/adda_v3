@@ -18,7 +18,6 @@ import java.util.Spliterator;
 import java.util.Spliterators;
 import java.util.function.BiFunction;
 import java.util.function.Function;
-import java.util.function.Supplier;
 import java.util.stream.Collector;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -34,6 +33,7 @@ import us.lsi.common.Multiset;
 import us.lsi.common.MutableType;
 import us.lsi.common.Pair;
 import us.lsi.common.Preconditions;
+import us.lsi.common.Set2;
 import us.lsi.math.Math2;
 
 public class Stream2 {
@@ -130,16 +130,13 @@ public class Stream2 {
 	/**
 	 * @param <T> Tipo de los elementos del primer stream
 	 * @param <U> Tipo de los elementos del segundo stream
-	 * @param <R> Tipo de los elementos del stream resultado
 	 * @param s1 Un Stream
 	 * @param s2 Un Segundo Stream
-	 * @param f Una Bifunction que opera un elemento del primer stream con un del segundo para 
-	 * dar un resultado
 	 * @return El resultado de operar los pares posibles de s1 y s2 con la bifunci�n f
 	 */
-	public static <T, U, R> Stream<R> cartesianProduct(Stream<T> s1, Stream<U> s2, BiFunction<T, U, R> f) {
+	public static <T, U> Stream<Pair<T,U>> cartesianProduct(Stream<T> s1, Stream<U> s2) {
 		List<U> ls = s2.collect(Collectors.toList());
-		return s1.flatMap(x->ls.stream().map(y->f.apply(x,y)));
+		return s1.flatMap(x->ls.stream().map(y->Pair.of(x,y)));
 	}
 	
 	public static <E> Stream<Pair<E,E>> cartesianProduct(Stream<E> s1) {
@@ -157,12 +154,12 @@ public class Stream2 {
 	 * dar un resultado
 	 * @return El resultado de operar los pares posibles de s1 y s2 con la bifunci�n f
 	 */
-	public static <T, U, R> Stream<R> cartesianProduct(Collection<T> s1, Collection<U> s2, BiFunction<T, U, R> f) {
-		return s1.stream().flatMap(x->s2.stream().map(y->f.apply(x,y)));
+	public static <T, U> Stream<Pair<T,U>> cartesianProduct(Collection<T> s1, Collection<U> s2) {
+		return s1.stream().flatMap(x->s2.stream().map(y->Pair.of(x,y)));
 	}
 
 	public static <T> Stream<Pair<T,T>> cartesianProduct(Collection<T> s1) {
-		return cartesianProduct(s1,s1,(x,y)->Pair.of(x, y));
+		return cartesianProduct(s1,s1);
 	}
 	
 	/**
@@ -219,70 +216,31 @@ public class Stream2 {
 		return Arrays.stream(s1).flatMap(x->x);
 	}
 	
-	/**
-	 * @param s1 Un stream
-	 * @param s2 Un segundo stream
-	 * @param k1 Una funci�n que calcula una clave para los elementos de stream1
-	 * @param k2 Una funci�n que calcula una clave para los elementos de stream2
-	 * @param <T> El tipo de los elementos de la primera secuencia
-	 * @param <U> El tipo de los elementos de la segunda secuencia
-	 * @param <K> El tipo de los elementos de la clave
-	 * @return Un stream resultado del joint de stream1 y stream2
-	 */
 	
-	
-	public static <T, U, K> Stream<Pair<T,U>> join(
-			Supplier<Stream<T>> s1,
-			Supplier<Stream<U>> s2,
-			Function<T,K> k1,
-			Function<U,K> k2){
-		return join(s1,s2,k1,k2,(x1,x2)->Pair.of(x1, x2));
-	}
 
 	/**
 	 * @param s1 Un stream
 	 * @param s2 Un segundo stream
 	 * @param k1 Una funci�n que calcula una clave para los elementos de stream1
 	 * @param k2 Una funci�n que calcula una clave para los elementos de stream2
-	 * @param fr Una funci�n que calcula un nuevo valor a partir  de uno procedente de stream1 y otro del stream2
-	 * @param <T> El tipo de los elementos de la primera secuencia
-	 * @param <U> El tipo de los elementos de la segunda secuencia
-	 * @param <K> El tipo de los elementos de la clave
-	 * @param <R> El tipo de los elementos de la secuencia resultante
-	 * @return Un stream resultado del joint de stream1 y stream2
-	 */
-	
-	public static <T, U, K, R> Stream<R> join(Supplier<Stream<T>> s1, Supplier<Stream<U>> s2, Function<T, K> k1,
-			Function<U, K> k2, BiFunction<T, U, R> fr) {
-		Map<K, List<T>> m1 = s1.get().collect(Collectors2.groupingList(k1, x -> x));
-		return s2.get().flatMap(e2 -> {
-			K k2v = k2.apply(e2);
-			if (m1.containsKey(k2v))
-				return m1.get(k2v).stream().map(e1 -> fr.apply(e1, e2));
-			else
-				return Stream.empty();
-		});
-	}
-	
-	/**
-	 * @param s1 Una collection
-	 * @param s2 Un segundo collection
-	 * @param k1 Una funci�n que calcula una clave para los elementos de stream1
-	 * @param k2 Una funci�n que calcula una clave para los elementos de stream2
 	 * @param <T> El tipo de los elementos de la primera secuencia
 	 * @param <U> El tipo de los elementos de la segunda secuencia
 	 * @param <K> El tipo de los elementos de la clave
 	 * @return Un stream resultado del joint de stream1 y stream2
 	 */
-	
 	
 	public static <T, U, K> Stream<Pair<T,U>> join(
-			Collection<T> s1,
-			Collection<U> s2,
-			Function<T,K> k1,
-			Function<U,K> k2) {
-		return join(s1,s2,k1,k2,(x1,x2)->Pair.of(x1, x2));
+			Stream<T> s1, 
+			Stream<U> s2, 
+			Function<T, K> k1,
+			Function<U, K> k2) {
+		Map<K, List<T>> m1 = s1.collect(Collectors2.groupingList(k1, x -> x));
+		Map<K, List<U>> m2 = s2.collect(Collectors2.groupingList(k2, x -> x));
+		Set<K> sk = Set2.intersection(m1.keySet(),m2.keySet());
+		return sk.stream().flatMap(k->Stream2.cartesianProduct(m1.get(k),m2.get(k)));
 	}
+	
+	
 	
 	/**
 	 * @param s1 Una collection
@@ -297,16 +255,15 @@ public class Stream2 {
 	 * @return Un stream resultado del joint de stream1 y stream2
 	 */
 	
-	public static <T, U, K, R> Stream<R> join(Collection<T> s1, Collection<U> s2, Function<T, K> k1,
-			Function<U, K> k2, BiFunction<T, U, R> fr) {
+	public static <T, U, K> Stream<Pair<T,U>> join(
+			Collection<T> s1, 
+			Collection<U> s2, 
+			Function<T, K> k1,
+			Function<U, K> k2) {
 		Map<K, List<T>> m1 = s1.stream().collect(Collectors2.groupingList(k1, x -> x));
-		return s2.stream().flatMap(e2 -> {
-			K k2v = k2.apply(e2);
-			if (m1.containsKey(k2v))
-				return m1.get(k2v).stream().map(e1 -> fr.apply(e1, e2));
-			else
-				return Stream.empty();
-		});
+		Map<K, List<U>> m2 = s2.stream().collect(Collectors2.groupingList(k2, x -> x));
+		Set<K> sk = Set2.intersection(m1.keySet(),m2.keySet());
+		return sk.stream().flatMap(k->Stream2.cartesianProduct(m1.get(k),m2.get(k)));
 	}
 	
 	/**

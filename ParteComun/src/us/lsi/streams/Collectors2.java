@@ -113,5 +113,20 @@ public class Collectors2 {
 				s->s);
 	}
 	
-
+	
+	public static <E,K> Collector<E,Map<K,Integer>,Map<K,Integer>> groupingSize(
+			Function<E,K> key) {
+		return Collector.of(
+				()->new HashMap<>(), 
+				(m,e)->m.put(key.apply(e),m.getOrDefault(e,0)+1), 
+				(m1,m2)->Map2.merge(m1,m2,(x,y)->x+y), 
+				s->s);
+	}
+	
+	public static <E,K,R> Collector<E,SetMultimap<K,R>,Map<K,Integer>> groupingSizeDistinct(
+			Function<E,K> key,
+			Function<E,R> value) {
+		return Collectors2.<E,K,R,Integer>groupingSet(key,value,s -> s.size());
+	}
+	
 }
