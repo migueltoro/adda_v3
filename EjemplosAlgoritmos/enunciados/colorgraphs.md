@@ -37,11 +37,11 @@ $$ int  \ x_i,   i \in [0,n-1] $$
 
 ### Propiedades del vértice
  
-•	$index$: Integer, básica
-•	$cav$: Map\<Integer,Integer\>, colores asignados a cada vértice en $[0,index-1]$, básica
-•	$ca$: IntegerSet, colores ya asignados, derivada, $ca=cav.values()$.
-•	$nc$: Integer, número de colores ya asignados, derivada, $nc = ca.size()$.
-•	$cv$: IntegerSet, colores asignados a los vecinos de $i$ que ya tienen color, derivada. 
+- $index$: Integer, básica
+- $cav$: Map\<Integer,Integer\>, colores asignados a cada vértice en $[0,index-1]$, básica
+- $ca$: IntegerSet, colores ya asignados, derivada, $ca=cav.values()$.
+- $nc$: Integer, número de colores ya asignados, derivada, $nc = ca.size()$.
+- $cv$: IntegerSet, colores asignados a los vecinos de $i$ que ya tienen color, derivada. 
 	$$cv =  S_{k : N(i) \cap cav.keys()} \ cav.get(k) $$
 
 

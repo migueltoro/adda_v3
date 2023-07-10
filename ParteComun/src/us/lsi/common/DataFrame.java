@@ -71,8 +71,8 @@ public class DataFrame extends DataText {
 		return this.columnIds.getOrDefault(name,-1);
 	}
 	
-	public String get(String row, String columna) {
-		return this.get(this.rowId(row)+1,this.columnId(columna)+1);
+	public String get(String row, String column) {
+		return this.get(this.rowId(row)+1,this.columnId(column)+1);
 	}
 	
 	public String rowName(Integer f) {

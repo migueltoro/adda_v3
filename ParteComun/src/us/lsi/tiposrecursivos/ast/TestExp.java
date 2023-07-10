@@ -35,6 +35,7 @@ public class TestExp {
 		String2.toConsole("5 %s",be2.value());
 		String2.toConsole("6 %s",ue1.value());
 		String2.toConsole("7 %s",ue2.value());
+		Exp.toDot("ficheros/exp.gv",ue2);
 	}
 	
 	public static void test2() {

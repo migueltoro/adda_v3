@@ -34,9 +34,9 @@ $$int\ x_i,\ i\in [0,n-1] $$
 
 ### Propiedades del vértice del grafo
 
-•	$index$: _Integer_, básica
-•	$cargas$: List\<Double\> de tamaño $m$, cargas de los procesadores, básica
-•	$cm = \max\limits_{j:[0,m-1]} cargas[j]$ : _Double_, derivada, carga del procesador más cargado
-•	$nMin = \underset{j:[0,m-1]}{argmin} \ cargas[j]$: _Integer_, derivada, procesador menos cargado
+- $index$: _Integer_, básica
+- $cargas$: List\<Double\> de tamaño $m$, cargas de los procesadores, básica
+- $cm = \max\limits_{j:[0,m-1]} cargas[j]$ : _Double_, derivada, carga del procesador más cargado
+- $nMin = \underset{j:[0,m-1]}{argmin} \ cargas[j]$: _Integer_, derivada, procesador menos cargado
 
 

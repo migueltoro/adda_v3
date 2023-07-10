@@ -60,13 +60,9 @@ public class DataText {
 	public Integer cn() {
 		return matrix.nc();
 	}
-	
-	public <R> Matrix<R> map(Function<String, R> ft) {
-		return matrix.map(ft);
-	}
 
-	public Matrix<String> copy() {
-		return matrix.copy();
+	public DataText copy() {
+		return new DataText(matrix.copy());
 	}
 	
 	public  DataText subDataText(Integer f0, Integer c0, Integer nf, Integer nc) {

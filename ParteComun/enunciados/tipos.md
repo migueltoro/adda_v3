@@ -72,26 +72,6 @@ Este tipo ofrece algunos métodos adicionales a Set de uso frecuente:
 	- \<E extends FieldElement\<E\>\> Matrix\<E\> multiply(Matrix\<E\> in1, Matrix\<E\> in2)
 	- \<E extends FieldElement\<E\>\> Matrix\<E\> pow(Matrix\<E\> m, Integer n)
 
-## DataText
-
-- Es un agregado de datos tabular que se compone filas y columnas _similar_ a una tabla en un archivo de Excel. Es equivalente a Matrix\<String\>
-- Se leen de un fichero csv con datos separados por comas.
-
-## DataFrame
-
-- Es un caso particular de _DataText_. 
-- Tiene un identificador para cada fila y columna que puede servir como índice para acceder a las filas y la columnas.
-- Un ejemplo es ![DatFrame](./dataframe.jpg)
-- Tiene métodos para obtener el identificador de una fila y de una columna o un índice asociado a cada fila y columna.
-- Tiene métodos para obtener todos los datos de una columna después de transformarlos mediante una función List\<E\> columnValues(String columnName, Function\<String,E\> t) o List\<E\> columnValues(Integer c, Function\<String,E\> t)
-- Tiene métodos para obtener los datos de una fila agregados en un valor del tipo E después de transformarlos mediante una función E rowValue(String rowName, Function\<List\<String\>,E\> t) o E rowValue(String rowName, Function\<List\<String\>,E\> t)
-
-## DataRel
-
-- Es un caso particular de _DataText_.  Sus dos primeras columnas contienen índices a valores de dos tipos previamente definidos en un DataFrame.
-- Dispone de métodos para obtener todos los pares de índices o peguntar si un par de índices está contenido en del DataRel
-- Disponen de métodos para consultar los valores asociados a un par de índices si existen
-
 ## PairsSet\<A, B\>
 
 - Es un conjunto de pares de enteros con métodos adicionales

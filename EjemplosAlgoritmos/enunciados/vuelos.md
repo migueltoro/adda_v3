@@ -14,7 +14,9 @@ Tenemos un conjunto de vuelos, cada vuelo tiene un origen, un destino y un tiemp
 Para modelar el problema tenemos un multigrafo $g$ cuyos vértices son los aeropuertos, de tipo _String_, y cuyas aristas son los vuelos.
 
 Si $g_e$ es el conjunto de las aristas del grafo y $C_P$ el conjunto de tripletas $ijk$ dónde $i$ es un vértice del camino,  $j$ una arista el camino que llega al vértice $i$, y $k$ una arista el camino que sale del vértice $i$ el peso de un camino  $C$ es:
+
 $$ |C|=\sum_{j\in g_e} w_j+\sum_{ijk\in C_P} u_{ijk}$$
+
 ## Modelo
 
 El problema podemos modelarlo como uno de camino mínimo desde el vértice $v_0$ hasta el $v_1$. La variable $x_i$ indica el vértice en la posición $i$.

@@ -9,7 +9,9 @@ El objetivo es saber cual es la cantidad máxima de material de tipo $D$, $j=3$ 
 
 - $n$: número de robots
 -  Sea $mt(i,j), \ i,j \in[0,n)$ la cantidad de material $j$ necesaria para construir un robots de tipo $i$. Usaremos la notación $mt(i)$ para indicar el material necesario para construir el robots $i$. Ej: 
+
 $$ mt = [[4,0,0,0],[2,0,0,0],[3,14,0,0],[3,0,7,0]] $$
+
 ## Modelo
 
 
