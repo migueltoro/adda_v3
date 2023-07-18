@@ -69,13 +69,13 @@ public interface EGraph<V, E> extends Graph<V, E> {
 	
 	Integer solutionNumber();
 		
-	public default Double add(E nextEdge, V vertexActual, Double acumulateValue, E lastEdge) {
-		return this.initialPath().add(nextEdge, vertexActual, acumulateValue, lastEdge);
+	public default Double add(V vertexActual, Double acumulateValue, E edgeOut, E edgeIn) {
+		return this.initialPath().add(vertexActual, acumulateValue, edgeOut, edgeIn);
 	}
 
-	public default Double boundedValue(V vertexActual, Double acumulateValue, E edge,
+	public default Double boundedValue(V vertexActual, Double acumulateValue, E edgeOut,
 			TriFunction<V, Predicate<V>, V, Double> heuristic) {
-		return this.initialPath().boundedValue(vertexActual, acumulateValue, edge, this.goal(), this.endVertex(),
+		return this.initialPath().boundedValue(vertexActual, acumulateValue, edgeOut, this.goal(), this.endVertex(),
 				heuristic);
 	}
 
@@ -88,7 +88,8 @@ public interface EGraph<V, E> extends Graph<V, E> {
 		return pathType().equals(PathType.Sum) ? 0. : getVertexWeight(vertexActual);
 	}
 
-	public default Double fromNeighbordSolutionValue(V vertexActual, Double weight, E edge, E lastEdge) {
-		 return pathType().equals(PathType.Sum) ? initialPath().add(edge, vertexActual, weight, lastEdge) : weight;
+	public default Double fromNeighbordSolutionValue(V vertexActual, Double weight, E edgeOut, E edgeIn) {
+		 Double r = pathType().equals(PathType.Sum) ? initialPath().add(vertexActual, weight, edgeOut, edgeIn) : weight;
+		 return r;
 	}
 }

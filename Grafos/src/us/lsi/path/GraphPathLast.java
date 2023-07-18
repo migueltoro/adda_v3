@@ -83,9 +83,9 @@ public class GraphPathLast<V, E> extends GraphPath2<V,E> implements EGraphPath<V
 	}
 	
 	@Override
-	public Double add(E edge, V vertexActual, Double acumulateValue, E lastEdge) {
-		Preconditions.checkNotNull(edge, "La arista no puede ser null");
-		V target = Graphs.getOppositeVertex(graph, edge, vertexActual);
+	public Double add(V vertexActual, Double acumulateValue, E edgeOut, E edgeIn) {
+		Preconditions.checkNotNull(edgeOut, "La arista no puede ser null");
+		V target = Graphs.getOppositeVertex(graph, edgeOut, vertexActual);
 		return graph.getVertexWeight(target);
 	}
 	

@@ -211,7 +211,7 @@ public class BT<V,E,S> {
 		@Override
 		public void forward(E edge) {
 			E lastEdge = edges.isEmpty()?null:List2.last(edges);
-			this.accumulateValue = this.graph.add(edge,this.actualVertex,this.accumulateValue,lastEdge);
+			this.accumulateValue = this.graph.add(this.actualVertex,this.accumulateValue,edge,lastEdge);
 			this.actualVertex = Graphs.getOppositeVertex(graph,edge,this.actualVertex);
 			this.edges.add(edge);
 			this.weights.add(this.accumulateValue);

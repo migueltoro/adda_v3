@@ -17,7 +17,6 @@ import org.jgrapht.GraphPath;
 import org.jgrapht.Graphs;
 import org.jgrapht.graph.GraphWalk;
 import org.jgrapht.graph.SimpleDirectedGraph;
-// import org.jheaps.AddressableHeap;
 import org.jheaps.AddressableHeap.Handle;
 import org.jheaps.tree.FibonacciHeap;
 
@@ -131,7 +130,7 @@ public class AStar<V,E,S> implements Iterator<V>, Iterable<V> {
 		if(forget(actualDistance,  vertexActual)) return null;
 		for (E backEdge : graph.edgesListOf(vertexActual)) {
 			V v = Graphs.getOppositeVertex(graph,backEdge,vertexActual);
-			Double newDistanceToOrigin = graph.add(backEdge,v,actualDistance,edgeToOrigen);
+			Double newDistanceToOrigin = graph.add(v,actualDistance,backEdge,edgeToOrigen);
 			Double newDistanceToEnd =  graph.estimatedWeightToEnd(v,newDistanceToOrigin);
 			if (!tree.containsKey(v)) {
 				Data<V, E> dv = Data.of(v, backEdge, newDistanceToOrigin);

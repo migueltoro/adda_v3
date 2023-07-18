@@ -166,7 +166,7 @@ public class PDR<V, E, S> {
 			if (graph.goalHasSolution().test(actual)) {
 				r = Sp.of(graph.goalSolutionValue(actual), null);
 				this.solutionsTree.put(actual, r);
-				update(actual,accumulateValue);
+				update(actual,accumulateValue);			
 			} else {
 				r = null;
 				this.solutionsTree.put(actual, r);
@@ -176,11 +176,10 @@ public class PDR<V, E, S> {
 			for (E edge : graph.edgesListOf(actual)) {					
 				if (this.forget(edge,actual,accumulateValue,graph.goal(),graph.endVertex()) || this.stop) continue;
 				V v = Graphs.getOppositeVertex(graph,edge,actual);
-				Double ac = this.graph.add(edge,actual,accumulateValue,edgeToOrigin); 
+				Double ac = this.graph.add(actual,accumulateValue,edge,edgeToOrigin); 
 				Sp<E> s = search(v,ac,edge);
 				if (s!=null) {
-					E lastEdge = this.solutionsTree.get(v).edge;
-					Double spv = this.graph.fromNeighbordSolutionValue(v,s.weight,edge,lastEdge);	
+					Double spv = this.graph.fromNeighbordSolutionValue(actual,s.weight,edge,edgeToOrigin);	
 					Sp<E> sp = Sp.of(spv,edge);
 					rs.add(sp);
 				}

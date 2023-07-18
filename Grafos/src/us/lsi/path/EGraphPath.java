@@ -14,7 +14,7 @@ public interface EGraphPath<V, E> extends GraphPath<V, E> {
 	E lastEdge();
 	EGraphPath<V, E> add(E edge);
 	EGraphPath<V, E> remove();
-	Double add(E edge, V vertexActual, Double acumulateValue, E lastEdge);
+	Double add(V vertexActual, Double acumulateValue, E edgeOut, E edgeIn);
 	EGraphPath<V, E> copy();
 	Double boundedValue(V vertexActual,Double acumulateValue,E edge,Predicate<V> goal,V end,
 			TriFunction<V,Predicate<V>,V,Double> heuristic);

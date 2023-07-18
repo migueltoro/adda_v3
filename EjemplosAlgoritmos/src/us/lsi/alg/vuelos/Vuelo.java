@@ -1,50 +1,72 @@
 package us.lsi.alg.vuelos;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
+
+import us.lsi.common.LocalDateTime2;
+
 public class Vuelo {
+	
+	public static LocalDate fecha;
+	public static DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm");
 	
 	private Integer id;
 	private String from;
 	private String to;
-	private double horaDeSalida;
-	private double duracion;
+	private LocalDateTime horaDeSalida;
+	private Integer duracion;
 	public static Integer n = 0;
 	
 	public static  Vuelo ofFormat(String[] s) {
-		return new Vuelo(s[0],s[1], Double.parseDouble(s[2]),Double.parseDouble(s[3]));
+		LocalTime hs = LocalTime.parse(s[2],DateTimeFormatter.ofPattern("HH:mm"));
+		LocalDateTime dhs = LocalDateTime.of(Vuelo.fecha, hs);
+		return Vuelo.of(s[0],s[1],dhs,Integer.parseInt(s[3]));
 	}
 	
-	public static Vuelo of(String from, String to, double timeSalida,double duracion) {
-		return new Vuelo(from, to, timeSalida, duracion);
+	public static Vuelo of(Integer id, String from, String to, LocalDateTime timeSalida, Integer duracion) {
+		Vuelo v = new Vuelo(id,from, to, timeSalida, duracion);
+		return v;
 	}
 	
-	public static Double getVertexPassWeight(String vertex, Vuelo edgeIn, Vuelo edgeOut) {
+	public static Vuelo of(String from, String to, LocalDateTime timeSalida, Integer duracion) {
+		Vuelo v = new Vuelo(n,from, to, timeSalida, duracion);
+		n++;
+		return v;
+	}
+	
+	public static Double getVertexPassWeight(String vertex, Vuelo edgeIn, Vuelo edgeOut) {		
 		double r=0.;
-		double horaDeLlegada;
-		double horaDeSalida;
 		if (edgeIn != null && edgeOut !=null) {
-			horaDeLlegada = edgeIn.getHoraDeLlegada();
-			horaDeSalida = edgeOut.getHoraDeSalida();
-			r = horaDeSalida - horaDeLlegada;
-			if (r < 0) {
-				r += 24.;
-			} 
+			LocalDateTime horaDeLlegada = edgeIn.getHoraDeLlegada();
+			LocalDateTime horaDeSalida = LocalDateTime2.next(horaDeLlegada,edgeOut.getHoraDeSalida());
+			r = horaDeLlegada.until(horaDeSalida,ChronoUnit.MINUTES);
 		}
 		return r;
 	}
 	
 	
-	Vuelo(String from, String to, double horaDeSalida, double duracion) {
+	Vuelo(Integer n, String from, String to, LocalDateTime horaDeSalida, Integer duracion) {
 		super();
 		this.from = from;
 		this.to = to;
 		this.horaDeSalida = horaDeSalida;
 		this.duracion = duracion;
 		this.id = n;
-		n++;
+	}
+	
+	public Vuelo copy() {
+		return Vuelo.of(from, to, this.horaDeSalida, duracion);
 	}
 
 	public Vuelo() {
 		super();
+	}
+
+	public Integer getId() {
+		return id;
 	}
 
 	public String getFrom() {
@@ -55,21 +77,23 @@ public class Vuelo {
 		return to;
 	}
 
-	public double getHoraDeSalida() {
+	public LocalDateTime getHoraDeSalida() {
 		return horaDeSalida;
 	}
 
-	public double getDuracion() {
+	public Integer getDuracion() {
 		return duracion;
 	}
 
-	public double getHoraDeLlegada() {
-		return horaDeSalida+duracion;
+	public LocalDateTime getHoraDeLlegada() {
+		return horaDeSalida.plusMinutes(duracion);
 	}	
 
 	@Override
 	public String toString() {
-		return String.format("(%s,%s,%.2f,%.2f,%.2f)",from,to,horaDeSalida,duracion,getHoraDeLlegada());
+		String hl = horaDeSalida.format(Vuelo.dateFormat);
+		String hs = getHoraDeLlegada().format(Vuelo.dateFormat);
+		return String.format("(%d,%s,%s,%s,%s,%d)",id,from,to,hl,hs,duracion);
 	}
 
 	@Override

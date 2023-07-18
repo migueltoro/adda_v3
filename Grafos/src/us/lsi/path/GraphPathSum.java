@@ -98,13 +98,13 @@ public class GraphPathSum<V, E> extends GraphPath2<V,E> implements EGraphPath<V,
 	}
 	
 	@Override
-	public Double add(E edge, V vertexActual, Double acumulateValue, E lastEdge) {
-		Preconditions.checkNotNull(edge, "La arista no puede ser null");
+	public Double add(V vertexActual, Double acumulateValue, E edgeOut, E edgeIn) {
+		Preconditions.checkNotNull(edgeOut, "La arista no puede ser null");
 		Double weight = acumulateValue;
-		V target = Graphs.getOppositeVertex(graph, edge, vertexActual);
-		weight += graph.getEdgeWeight(edge);
+		V target = Graphs.getOppositeVertex(graph, edgeOut, vertexActual);
+		weight += graph.getEdgeWeight(edgeOut);
 		weight += graph.getVertexWeight(target);
-		if (lastEdge != null) weight += graph.getVertexPassWeight(vertexActual, lastEdge, edge);
+		if (edgeIn != null) weight += graph.getVertexPassWeight(vertexActual, edgeIn, edgeOut);
 		return weight;
 	}
 	
