@@ -15,6 +15,8 @@ import us.lsi.graphs.Graphs2;
 import us.lsi.graphs.GraphsReader;
 import us.lsi.graphs.alg.AStar;
 import us.lsi.graphs.virtual.EGraph;
+import us.lsi.graphs.virtual.EGraph.Type;
+import us.lsi.path.EGraphPath.PathType;
 
 
 public class AStarTest {
@@ -39,7 +41,8 @@ public class AStarTest {
 		Ciudad end = ciudad(graph,"Almeria");
 		
 		EGraph<Ciudad,Carretera> g = 
-				EGraph.ofGraph(graph,start,v->v.equals(end)).edgeWeight(e->e.km()).build();
+				EGraph.ofGraph(graph,start,v->v.equals(end),PathType.Sum,Type.Min)
+				.edgeWeight(e->e.km()).build();
 		
 				
 		AStar<Ciudad, Carretera,?> ra = AStar.ofGreedy(g);

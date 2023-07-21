@@ -17,7 +17,7 @@ import us.lsi.path.EGraphPath;
 import us.lsi.path.EGraphPath.PathType;
 
 
-public class EGraphI<V,E,G extends Graph<V,E>> implements EGraph<V,E> {
+public class EGraphOfGraph<V,E,G extends Graph<V,E>> implements EGraph<V,E> {
 	
 	private G graph;
 	private Function<E,Double> edgeWeight = null;
@@ -35,7 +35,7 @@ public class EGraphI<V,E,G extends Graph<V,E>> implements EGraph<V,E> {
 	private Integer solutionNumber;
 
 	
-	EGraphI(EGraphBuilderReal<G,V,E> builder){
+	EGraphOfGraph(EGraphBuilderGraph<G,V,E> builder){
 		this.graph = builder.graph;
 		this.edgeWeight = builder.edgeWeight;
 		this.vertexWeight = builder.vertexWeight;

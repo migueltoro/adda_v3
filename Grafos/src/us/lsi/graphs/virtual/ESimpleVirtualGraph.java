@@ -33,7 +33,8 @@ import us.lsi.path.EGraphPath.PathType;
  * @param <E> El tipo de las aristas
  * 
  */
-public class SimpleVirtualGraph<V extends VirtualVertex<V,E,?>, E extends SimpleEdgeAction<V,?>> implements EGraph<V,E> {
+public class ESimpleVirtualGraph<V extends VirtualVertex<V,E,?>, E extends SimpleEdgeAction<V,?>> 
+		implements EGraph<V,E> {
 	
 
 	private Set<V> vertexSet;
@@ -52,7 +53,7 @@ public class SimpleVirtualGraph<V extends VirtualVertex<V,E,?>, E extends Simple
 	private Integer solutionNumber;
 	
 	
-	SimpleVirtualGraph(EGraphBuilderVirtual<V,E> builder) {
+	ESimpleVirtualGraph(EGraphBuilderVirtual<V,E> builder) {
 		this.edgeWeight =  builder.edgeWeight;
 		this.vertexWeight = builder.vertexWeight;
 		this.vertexPassWeight = builder.vertexPassWeight;

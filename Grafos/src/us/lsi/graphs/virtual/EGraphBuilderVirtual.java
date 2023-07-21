@@ -93,8 +93,7 @@ public class EGraphBuilderVirtual<V extends VirtualVertex<V,E,?>, E extends Simp
 		return this;
 	}
 	public EGraph<V,E> build() {
-		return new SimpleVirtualGraph<V,E>(this);		
+		return new ESimpleVirtualGraph<V,E>(this);		
 	}
-
 
 }

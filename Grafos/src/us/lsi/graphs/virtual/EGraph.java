@@ -5,6 +5,8 @@ import java.util.function.Function;
 import java.util.function.Predicate;
 
 import org.jgrapht.Graph;
+import org.jgrapht.graph.DirectedMultigraph;
+import org.jgrapht.graph.Multigraph;
 
 import us.lsi.common.TriFunction;
 import us.lsi.path.EGraphPath;
@@ -13,16 +15,16 @@ import us.lsi.path.EGraphPath.PathType;
 public interface EGraph<V, E> extends Graph<V, E> {
 	
 	public static <G extends Graph<V,E>, V,E> EGraphBuilder<V, E> ofGraph(G graph){
-		return new EGraphBuilderReal<G,V,E>(graph);
+		return new EGraphBuilderGraph<G,V,E>(graph);
 	}
 	
 	public static <G extends Graph<V, E>, V, E> EGraphBuilder<V, E> ofGraph(G graph, V startVertex, Predicate<V> goal) {
-		return new EGraphBuilderReal<G, V, E>(graph, startVertex, goal);
+		return new EGraphBuilderGraph<G, V, E>(graph, startVertex, goal);
 	}
 	
 	public static <G extends Graph<V,E>, V,E> 
 		EGraphBuilder<V, E> ofGraph(G graph,V startVertex,Predicate<V> goal,PathType pathType,Type type){
-		return new EGraphBuilderReal<G,V,E>(graph,startVertex,goal,pathType,type);
+		return new EGraphBuilderGraph<G,V,E>(graph,startVertex,goal,pathType,type);
 	}
 	
 	public static <V extends VirtualVertex<V,E,?>, E extends SimpleEdgeAction<V,?>> EGraphBuilder<V, E> virtual(){
@@ -37,6 +39,16 @@ public interface EGraph<V, E> extends Graph<V, E> {
 	public static <V extends VirtualVertex<V,E,?>, E extends SimpleEdgeAction<V,?>> 
 		EGraphBuilder<V, E> virtual(V startVertex,Predicate<V> goal,PathType pathType,Type type){
 		return new EGraphBuilderVirtual<V,E>(startVertex,goal,pathType,type);
+	}
+	
+	public static <V, E> EGraphBuilderVirtualG<V, E> virtualG(Graph<V, E> graph, V startVertex, Predicate<V> goal,
+			PathType pathType, Type type) {
+		return new EGraphBuilderVirtualG<V, E>(graph, startVertex, goal, pathType, type);
+	}
+	
+	public static <V, E> EGraphBuilderVirtualMG<V, E> virtualMG(DirectedMultigraph<V, E> graph, V startVertex, Predicate<V> goal,
+			PathType pathType, Type type) {
+		return new EGraphBuilderVirtualMG<V, E>(graph, startVertex, goal, pathType, type);
 	}
 
 	double getVertexPassWeight(V vertex, E edgeIn, E edgeOut);

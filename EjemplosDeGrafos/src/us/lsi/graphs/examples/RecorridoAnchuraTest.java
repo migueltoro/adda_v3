@@ -12,7 +12,6 @@ import us.lsi.graphs.Graphs2;
 import us.lsi.graphs.GraphsReader;
 import us.lsi.graphs.alg.BreadthSearch;
 import us.lsi.graphs.virtual.EGraph;
-import us.lsi.graphs.virtual.EGraphI;
 import us.lsi.streams.Stream2;
 
 public class RecorridoAnchuraTest {
@@ -22,7 +21,7 @@ public class RecorridoAnchuraTest {
 	}
 	
 	public static void main(String[] args) {
-		Locale.setDefault(new Locale("en", "US"));
+		Locale.setDefault(Locale.of("en", "US"));
 		Graph<Ciudad,Carretera> graph =  
 				GraphsReader.newGraph("data/andalucia.txt",
 						Ciudad::ofFormat, 

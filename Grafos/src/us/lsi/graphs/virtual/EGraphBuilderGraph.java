@@ -10,7 +10,7 @@ import us.lsi.common.TriFunction;
 import us.lsi.graphs.virtual.EGraph.Type;
 import us.lsi.path.EGraphPath.PathType;
 
-public class EGraphBuilderReal<G extends Graph<V,E>, V, E> implements EGraphBuilder<V, E> {
+public class EGraphBuilderGraph<G extends Graph<V,E>, V, E> implements EGraphBuilder<V, E> {
 
 	G graph;
 	V startVertex = null;
@@ -27,19 +27,19 @@ public class EGraphBuilderReal<G extends Graph<V,E>, V, E> implements EGraphBuil
 	Type type = Type.Min;
 	Integer solutionNumber = 1;
 	
-	public EGraphBuilderReal(G graph) {
+	public EGraphBuilderGraph(G graph) {
 		super();
 		this.graph = graph;
 	}
 	
-	public EGraphBuilderReal(G graph,V startVertex,Predicate<V> goal) {
+	public EGraphBuilderGraph(G graph,V startVertex,Predicate<V> goal) {
 		super();
 		this.graph = graph;
 		this.startVertex = startVertex;
 		this.goal = goal;
 	}
 	
-	public EGraphBuilderReal(G graph,V startVertex,Predicate<V> goal,PathType pathType,Type type) {
+	public EGraphBuilderGraph(G graph,V startVertex,Predicate<V> goal,PathType pathType,Type type) {
 		super();
 		this.graph = graph;
 		this.startVertex = startVertex;
@@ -114,9 +114,7 @@ public class EGraphBuilderReal<G extends Graph<V,E>, V, E> implements EGraphBuil
 	
 	@Override
 	public EGraph<V,E> build() {
-		return new EGraphI<>(this);
+		return new EGraphOfGraph<>(this);
 	}
-
-	
 
 }

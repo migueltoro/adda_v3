@@ -5,7 +5,6 @@ import static us.lsi.colors.GraphColors.colorIf;
 import static us.lsi.colors.GraphColors.styleIf;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
@@ -14,11 +13,11 @@ import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 import org.jgrapht.GraphPath;
+import org.jgrapht.graph.DirectedMultigraph;
 import org.jgrapht.graph.DirectedWeightedMultigraph;
-import org.jgrapht.graph.SimpleDirectedWeightedGraph;
+import org.jgrapht.graph.SimpleDirectedGraph;
 
-import us.lsi.alg.mochila.MochilaEdge;
-import us.lsi.alg.mochila.MochilaVertex;
+
 import us.lsi.colors.GraphColors;
 import us.lsi.colors.GraphColors.Color;
 import us.lsi.colors.GraphColors.Style;
@@ -44,11 +43,11 @@ public class TestVuelos {
 		return graph;
 	}
 	
-	public static SimpleDirectedWeightedGraph<Pair<String, Integer>, Vuelo> toGraph(
-			DirectedWeightedMultigraph<String, Vuelo> graphIn, String startVertex) {
+	public static SimpleDirectedGraph<Pair<String, Integer>, Vuelo> toGraph(
+			DirectedMultigraph<String, Vuelo> graphIn, String startVertex) {
 
-		SimpleDirectedWeightedGraph<Pair<String, Integer>, Vuelo> graphOut = 
-				new SimpleDirectedWeightedGraph<Pair<String, Integer>, Vuelo>(null, null);
+		SimpleDirectedGraph<Pair<String, Integer>, Vuelo> graphOut = 
+				new SimpleDirectedGraph<Pair<String, Integer>, Vuelo>(null, null, false);
 
 		graphOut.addVertex(Pair.of(startVertex, -1));
 
@@ -89,7 +88,7 @@ public class TestVuelos {
 		DirectedWeightedMultigraph<String,Vuelo> graph = leeGrafo("ficheros/vuelos2.txt");
 		System.out.println(graph);
 		System.out.println("__________________");
-		SimpleDirectedWeightedGraph<Pair<String,Integer>,Vuelo> gs = toGraph(graph,"Sevilla");
+		SimpleDirectedGraph<Pair<String,Integer>,Vuelo> gs = toGraph(graph,"Sevilla");
 		System.out.println(gs);
 		String end = "Malaga";
 		
