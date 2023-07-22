@@ -21,7 +21,7 @@ public class AnchuraTest {
 	public static void main(String[] args) {
 		
 		SimpleWeightedGraph<Ciudad,Carretera> graph =  
-				GraphsReader.newGraph("ficheros/andalucia.txt",
+				GraphsReader.newGraph("ficheros/andalucia/andalucia.txt",
 						Ciudad::ofFormat, 
 						Carretera::ofFormat,
 						Graphs2::simpleWeightedGraph,

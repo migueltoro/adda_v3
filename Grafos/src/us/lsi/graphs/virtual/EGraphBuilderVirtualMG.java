@@ -4,6 +4,7 @@ import java.util.function.Predicate;
 
 import org.jgrapht.graph.DirectedMultigraph;
 
+import us.lsi.common.Preconditions;
 import us.lsi.graphs.virtual.EGraph.Type;
 import us.lsi.path.EGraphPath.PathType;
 
@@ -14,6 +15,7 @@ public class EGraphBuilderVirtualMG<V, E> extends EGraphBuilderVirtual<VirtualVe
 	public EGraphBuilderVirtualMG(DirectedMultigraph<V,E> graph, V startVertex, Predicate<V> goal, PathType pathType, Type type) {	
 		super(VirtualVertexMG.of(startVertex, null, graph),v->goal.test(v.vertex()), pathType, type);
 		this.graph = graph;
+		Preconditions.checkArgument(graph.getType().isMultigraph(),"El grafo debe ser Multigraph");
 	}
 	
 	public DirectedMultigraph<V, E> graph() {

@@ -6,6 +6,7 @@ import java.util.function.Predicate;
 import org.jgrapht.Graph;
 
 import us.lsi.common.List2;
+import us.lsi.common.Preconditions;
 import us.lsi.common.TriFunction;
 import us.lsi.graphs.virtual.EGraph.Type;
 import us.lsi.path.EGraphPath.PathType;
@@ -29,6 +30,7 @@ public class EGraphBuilderGraph<G extends Graph<V,E>, V, E> implements EGraphBui
 	
 	public EGraphBuilderGraph(G graph) {
 		super();
+		Preconditions.checkArgument(graph.getType().isSimple(),"El grafo debe ser simple");
 		this.graph = graph;
 	}
 	

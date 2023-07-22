@@ -5,6 +5,8 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
+import java.util.ArrayList;
+import java.util.List;
 
 import us.lsi.common.LocalDateTime2;
 
@@ -43,6 +45,17 @@ public class Vuelo {
 			LocalDateTime horaDeLlegada = edgeIn.getHoraDeLlegada();
 			LocalDateTime horaDeSalida = LocalDateTime2.next(horaDeLlegada,edgeOut.getHoraDeSalida());
 			r = horaDeLlegada.until(horaDeSalida,ChronoUnit.MINUTES);
+		}
+		return r;
+	}
+	
+	public static List<Vuelo> vuelos(List<Vuelo> vuelos) {
+		List<Vuelo> r = new ArrayList<>();
+		r.add(vuelos.get(0));
+		for (int i=1;i<vuelos.size();i++) {
+			Vuelo v=vuelos.get(i);
+			Vuelo va=vuelos.get(i-1);
+			r.add(Vuelo.of(v.getId(),v.getFrom(),v.getTo(),LocalDateTime2.next(va.getHoraDeLlegada(),v.getHoraDeSalida()),v.getDuracion()));
 		}
 		return r;
 	}
