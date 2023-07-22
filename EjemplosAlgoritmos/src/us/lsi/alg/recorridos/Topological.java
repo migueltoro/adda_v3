@@ -8,6 +8,7 @@ import us.lsi.graphs.virtual.EGraph;
 
 public class Topological {
 
+
 	public static void main(String[] args) {
 		FlowGraph graph = FlowGraph.newGraph("ficheros/flow2.txt");
 		
