@@ -219,7 +219,7 @@ public class ESimpleVirtualGraph<V extends VirtualVertex<V,E,?>, E extends Simpl
 	 */
 	@Override
 	public GraphType getType() {
-		return new DefaultGraphType.Builder().build().asDirected();
+		return new DefaultGraphType.Builder().directed().allowMultipleEdges(false).build();
 	}	
 	
 	/**
@@ -351,4 +351,5 @@ public class ESimpleVirtualGraph<V extends VirtualVertex<V,E,?>, E extends Simpl
 	public Integer solutionNumber() {
 		return this.solutionNumber;
 	}
+
 }

@@ -5,8 +5,9 @@ import java.util.function.Function;
 import java.util.function.Predicate;
 
 import org.jgrapht.Graph;
+import org.jgrapht.GraphPath;
 import org.jgrapht.graph.DirectedMultigraph;
-import org.jgrapht.graph.Multigraph;
+import org.jgrapht.graph.GraphWalk;
 
 import us.lsi.common.TriFunction;
 import us.lsi.path.EGraphPath;
@@ -104,4 +105,23 @@ public interface EGraph<V, E> extends Graph<V, E> {
 		 Double r = pathType().equals(PathType.Sum) ? initialPath().add(vertexActual, weight, edgeOut, edgeIn) : weight;
 		 return r;
 	}
+	
+	public static <V,E> GraphPath<V,E> pathG(GraphPath<VirtualVertexG<V,E>,VirtualEdgeG<V,E>> p, Graph<V,E> graph) {
+		return new GraphWalk<V, E>(graph, 
+				p.getStartVertex().vertex(), 
+				p.getEndVertex().vertex(), 
+				p.getVertexList().stream().map(v->v.vertex()).toList(), 
+				p.getEdgeList().stream().map(e->e.action()).toList(),
+				p.getWeight());
+	}
+	
+	public static <V,E> GraphPath<V,E> pathMG(GraphPath<VirtualVertexMG<V,E>,VirtualEdgeMG<V,E>> p, Graph<V,E> graph) {
+		return new GraphWalk<V, E>(graph, 
+				p.getStartVertex().vertex(), 
+				p.getEndVertex().vertex(), 
+				p.getVertexList().stream().map(v->v.vertex()).toList(), 
+				p.getEdgeList().stream().map(e->e.action()).toList(),
+				p.getWeight());
+	}
+
 }

@@ -72,25 +72,28 @@ public class TestVuelos2 {
 		AStar<VirtualVertexMG<String, Vuelo>, VirtualEdgeMG<String, Vuelo>, Object> ms = 
 				AStar.of(gv,p->p,null,null);
 		
-		GraphPath<VirtualVertexMG<String, Vuelo>, VirtualEdgeMG<String, Vuelo>> path = ms.search().orElse(null);
-		System.out.printf("Aeropuertos = %s\n",path.getVertexList().stream().map(e->e.vertex()).toList());
-		System.out.printf("Recorrido = %s\n",vuelos(path.getEdgeList().stream().map(e->e.action()).toList()));
+		GraphPath<String, Vuelo> path = 
+				EGraph.pathMG(ms.search().orElse(null),graph);
+		System.out.printf("Aeropuertos = %s\n",path.getVertexList());
+		System.out.printf("Recorrido = %s\n",vuelos(path.getEdgeList()));
 		System.out.printf("Tiempo de Recorrido = %.2f\n",path.getWeight());
 		System.out.println("__________________");
 		System.out.println("Backtracking");
 		BT<VirtualVertexMG<String, Vuelo>, VirtualEdgeMG<String, Vuelo>, Object> bt = BT.of(gv);
 		
-		GraphPath<VirtualVertexMG<String, Vuelo>, VirtualEdgeMG<String, Vuelo>> btp = bt.search().orElse(null);
-		System.out.printf("Aeropuertos = %s\n",btp.getVertexList().stream().map(e->e.vertex()).toList());
-		System.out.printf("Recorrido = %s\n",vuelos(btp.getEdgeList().stream().map(e->e.action()).toList()));
+		GraphPath<String,Vuelo> btp = 
+				EGraph.pathMG(bt.search().orElse(null),graph);
+		System.out.printf("Aeropuertos = %s\n",btp.getVertexList());
+		System.out.printf("Recorrido = %s\n",vuelos(btp.getEdgeList()));
 		System.out.printf("Tiempo de Recorrido = %.2f\n",btp.getWeight());
 		System.out.println("__________________");
 		System.out.println("PDR");
 		PDR<VirtualVertexMG<String, Vuelo>, VirtualEdgeMG<String, Vuelo>, Object> pd = PDR.of(gv,null,null,null,true);
 		
-		GraphPath<VirtualVertexMG<String, Vuelo>, VirtualEdgeMG<String, Vuelo>> pdp = pd.search().orElse(null);
-		System.out.printf("Aeropuertos = %s\n",pdp.getVertexList().stream().map(e->e.vertex()).toList());
-		System.out.printf("Recorrido = %s\n",vuelos(pdp.getEdgeList().stream().map(e->e.action()).toList()));
+		GraphPath<String, Vuelo> pdp = 
+				EGraph.pathMG(pd.search().orElse(null),graph);
+		System.out.printf("Aeropuertos = %s\n",pdp.getVertexList());
+		System.out.printf("Recorrido = %s\n",vuelos(pdp.getEdgeList()));
 		System.out.printf("Tiempo de Recorrido = %.2f\n",pdp.getWeight());
 		
 //		Predicate<Pair<String,Integer>> pv = v->pd.optimalPath().get().getVertexList().contains(v);

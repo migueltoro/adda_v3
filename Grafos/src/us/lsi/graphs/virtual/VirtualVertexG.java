@@ -27,5 +27,7 @@ public record VirtualVertexG<V,E>(V vertex, Graph<V,E> graph) implements Virtual
 		return VirtualEdgeG.of(this,neighbor(edge),edge,graph.getEdgeWeight(edge));
 	}
 	
+	
+	
 }
 
