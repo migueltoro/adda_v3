@@ -17,6 +17,7 @@ module partecomun {
 	requires transitive commons.math3;
 	requires transitive juniversalchardet;
 	requires transitive matplotlib4j;
+	requires transitive log4j;
 	requires transitive org.jgrapht.core;
 	requires transitive org.jgrapht.io;
 	requires transitive java.desktop;

@@ -6,7 +6,6 @@
  *
  */
 
-
 module solve {
 	exports us.lsi.solve;
 	exports us.lsi.gurobi;
