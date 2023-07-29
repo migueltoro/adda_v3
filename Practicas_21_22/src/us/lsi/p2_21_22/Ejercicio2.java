@@ -52,11 +52,7 @@ public class Ejercicio2 {
 	}
 
 	// ==================================== TESTS ====================================
-	public static void main(String[] args) {
-		Files2.streamFromFile("ficheros/Ejercicio2DatosEntrada.txt")
-		.map(s->Pair.of(creaLista(s.split("#")[0]), creaRango(s.split("#")[1])))
-		.forEach(p->System.out.println(bbRango(p.first(), p.second())));
-	}
+	
 
 	private static List<Integer> creaLista(String s) {
 		return Arrays.stream(s.split(","))
@@ -67,6 +63,12 @@ public class Ejercicio2 {
 	private static IntRange creaRango(String s) {
 		String[] tk = s.split(",");
 		return IntRange.of(Integer.parseInt(tk[0].trim()), Integer.parseInt(tk[1].trim()));
+	}
+	
+	public static void main(String[] args) {
+		Files2.streamFromFile("ficheros/p2/Ejercicio2DatosEntrada.txt")
+		.map(s->Pair.of(creaLista(s.split("#")[0]), creaRango(s.split("#")[1])))
+		.forEach(p->System.out.println(bbRango(p.first(), p.second())));
 	}
 	
 }

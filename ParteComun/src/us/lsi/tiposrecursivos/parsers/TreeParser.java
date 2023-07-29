@@ -31,7 +31,7 @@ public class TreeParser extends Parser {
 
 	private static String[] makeLiteralNames() {
 		return new String[] {
-			null, "'('", "','", "')'", "'/('", "'/)'", "'/,'", "'/_,'"
+			null, "'('", "','", "')'", "'/('", "'/)'", "'/,'", "'/_'"
 		};
 	}
 	private static final String[] _LITERAL_NAMES = makeLiteralNames();

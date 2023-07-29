@@ -1,4 +1,4 @@
-package us.lsi.trees_21_22;
+package us.lsi.p3_21_22;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,7 +14,7 @@ import us.lsi.tiposrecursivos.Tree.TEmpty;
 import us.lsi.tiposrecursivos.Tree.TLeaf;
 import us.lsi.tiposrecursivos.Tree.TNary;
 
-public class Ejercicio3 {
+public class Ejercicio6 {
 	/*
 	PI3 - Ejercicio 3
 	
@@ -77,4 +77,5 @@ public class Ejercicio3 {
 		}
 		};									
 	}
+	
 }

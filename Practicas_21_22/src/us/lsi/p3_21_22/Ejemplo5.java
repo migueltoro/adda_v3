@@ -1,9 +1,11 @@
-package us.lsi.trees_21_22;
+package us.lsi.p3_21_22;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Predicate;
 
+import us.lsi.common.Files2;
+import us.lsi.math.Math2;
 import us.lsi.tiposrecursivos.Tree;
 import us.lsi.tiposrecursivos.Tree.TEmpty;
 import us.lsi.tiposrecursivos.Tree.TLeaf;
@@ -44,5 +46,36 @@ public class Ejemplo5 {
 		};
 	}
 	
+	private static final Predicate<Integer> PAR = x-> x%2==0;
+	private static final Predicate<Integer> PRIMO = x-> Math2.esPrimo(x);
+	
+	// Ejemplo5
+		public static void testsEjemplo5() {
+			
+			String file = "ficheros/trees/Ejemplo5DatosEntrada.txt";
+			
+			List<Tree<Integer>> inputs = Files2
+					.streamFromFile(file)
+					.map(linea -> Tree.parse(linea,s->Integer.parseInt(s)))
+					.toList();
+			
+			System.out.println("\n.....................................................................................................");
+			System.out.println("EJEMPLO 5");
+			System.out.println(".....................................................................................................\n");
+			
+			System.out.println("\nSOLUCION RECURSIVA-PAR:\n");	
+			inputs.stream()
+			.forEach(x->System.out.println(x+": "+Ejemplo5.solucion_recursiva(x, PAR)));
+
+			System.out.println("\nSOLUCION RECURSIVA-PRIMOS:\n");	
+			inputs.stream()
+				.forEach(x->System.out.println(x+": "+Ejemplo5.solucion_recursiva(x, PRIMO)));
+
+
+		}
+
+	public static void main(String[] args) {
+		testsEjemplo5();
+	}
 	
 }

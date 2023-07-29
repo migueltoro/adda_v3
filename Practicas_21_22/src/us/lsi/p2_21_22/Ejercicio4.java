@@ -64,7 +64,7 @@ public class Ejercicio4 {
 
 	// ==================================== TESTS ====================================
 	public static void main(String[] args) {
-		Files2.streamFromFile("ficheros/Ejercicio4DatosEntrada.txt")
+		Files2.streamFromFile("ficheros/p2/Ejercicio4DatosEntrada.txt")
 		.map(s -> Trio.of(Integer.valueOf(s.split(",")[0]), 
 		Integer.valueOf(s.split(",")[1]), Integer.valueOf(s.split(",")[2])))
 		.forEach(p -> {

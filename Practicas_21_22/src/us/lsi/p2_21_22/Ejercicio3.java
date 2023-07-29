@@ -63,11 +63,7 @@ public class Ejercicio3 {
 	}
 	
 	// ==================================== TESTS ====================================
-	public static void main(String[] args) {
-		Files2.streamFromFile("ficheros/Ejercicio3DatosEntrada.txt")
-		.map(s -> Integer.parseInt(s.split("=")[1].trim()))
-		.forEach(n -> test(n));
-	}
+	
 
 	private static void test(Integer n) {
 		System.out.println("Entero de entrada: " + n);
@@ -75,5 +71,11 @@ public class Ejercicio3 {
 		System.out.println("Recursiva con memoria: "+f_recursivo_conMemoria(n));
 		System.out.println("Iterativa:\t\t  "+f_iterativo(n));
 		System.out.println("===============================================================");
+	}
+	
+	public static void main(String[] args) {
+		Files2.streamFromFile("ficheros/p2/Ejercicio3DatosEntrada.txt")
+		.map(s -> Integer.parseInt(s.split("=")[1].trim()))
+		.forEach(n -> test(n));
 	}
 }

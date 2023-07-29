@@ -34,10 +34,7 @@ public class Ejemplo1 {
 	}
 
 	// ==================================== TESTS ====================================
-	public static void main(String[] args) {
-		test("ficheros/Ejemplo1DatosEntrada1.txt");
-		test("ficheros/Ejemplo1DatosEntrada2.txt");
-	}
+	
 	
 	private static void test(String fichero) {
 		Matrix<Integer> matriz = Matrix.of(creaArray(fichero));
@@ -57,6 +54,11 @@ public class Ejemplo1 {
 			fila.toArray(res[i]);
 		}
 		return res;
+	}
+	
+	public static void main(String[] args) {
+		test("ficheros/p2/Ejemplo1DatosEntrada1.txt");
+		test("ficheros/p2/Ejemplo1DatosEntrada2.txt");
 	}
 	
 }

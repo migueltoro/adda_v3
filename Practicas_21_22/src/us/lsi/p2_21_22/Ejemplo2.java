@@ -59,18 +59,7 @@ public class Ejemplo2 {
 	}
 
 	// ==================================== TESTS ====================================
-	public static void main(String[] args) {
-		Files2.streamFromFile("ficheros/Ejemplo2DatosEntrada.txt")
-		.map(s -> Pair.of(Integer.valueOf(s.split(",")[0]), Integer.valueOf(s.split(",")[1])))
-		.forEach(p -> {
-			System.out.println("(a, b) = (" + p.first() + ", " + p.second() + ")");
-			System.out.println("F. Recursiva sin memoria: " + g_recursivo_sinMemoria(p.first(), p.second()));
-			System.out.println("F. Recursiva con memoria: " + g_recursivo_conMemoria(p.first(), p.second()));
-			System.out.println("F. Iterativa con Map:\t  " + g_iterativo_con_Map(p.first(), p.second()));
-			System.out.println("F. Iterativa con array:\t  " + g_iterativo_con_array(p.first(), p.second()));
-			System.out.println("===============================================================");
-		});
-	}
+	
 	
 	
 	
@@ -90,5 +79,19 @@ public class Ejemplo2 {
 		}
 		return res[a][b];
 	}	
+	
+	
+	public static void main(String[] args) {
+		Files2.streamFromFile("ficheros/p2/Ejemplo2DatosEntrada.txt")
+		.map(s -> Pair.of(Integer.valueOf(s.split(",")[0]), Integer.valueOf(s.split(",")[1])))
+		.forEach(p -> {
+			System.out.println("(a, b) = (" + p.first() + ", " + p.second() + ")");
+			System.out.println("F. Recursiva sin memoria: " + g_recursivo_sinMemoria(p.first(), p.second()));
+			System.out.println("F. Recursiva con memoria: " + g_recursivo_conMemoria(p.first(), p.second()));
+			System.out.println("F. Iterativa con Map:\t  " + g_iterativo_con_Map(p.first(), p.second()));
+			System.out.println("F. Iterativa con array:\t  " + g_iterativo_con_array(p.first(), p.second()));
+			System.out.println("===============================================================");
+		});
+	}
 	
 }

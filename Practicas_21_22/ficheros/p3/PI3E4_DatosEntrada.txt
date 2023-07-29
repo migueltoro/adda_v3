@@ -1,0 +1,8 @@
+a(b,c)
+a(n(a,/_),e,i,o,u)
+o(s(a,e,i,o,u),p(i,e),r(o,t,s))
+a(n(a,/_),y(b,e(/_,r)),m(e,a,t))
+r(a(p(a(r)),d(a(/_,r),i(o,/_)),t),t,u(t(a)))
+a(o,e(u,i(o(u,a),e(i,o))))
+a(o(u,i),e(u(e,a),i(o,u)))
+a(e(i,a),i(o(u,i),a))

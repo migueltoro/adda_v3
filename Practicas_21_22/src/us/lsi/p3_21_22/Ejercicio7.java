@@ -1,4 +1,4 @@
-package us.lsi.trees_21_22;
+package us.lsi.p3_21_22;
 
 import us.lsi.tiposrecursivos.BinaryTree;
 import us.lsi.tiposrecursivos.BinaryTree.BEmpty;
@@ -9,7 +9,7 @@ import us.lsi.tiposrecursivos.Tree.TEmpty;
 import us.lsi.tiposrecursivos.Tree.TLeaf;
 import us.lsi.tiposrecursivos.Tree.TNary;
 
-public class Ejercicio4 {
+public class Ejercicio7 {
 	/*
 	PI3 - Ejercicio 4
 

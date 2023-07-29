@@ -58,9 +58,13 @@ public class Files2 {
 	 */
 	
 	public static Stream<String> streamFromFile(String file) {
+		return streamFromFile(file, Charset.defaultCharset());
+	}
+	
+	public static Stream<String> streamFromFile(String file, Charset charset) {
 		Stream<String> r = null;
 		try {
-			r = Files.lines(Paths.get(file), Charset.defaultCharset());
+			r = Files.lines(Paths.get(file), charset);
 		} catch (IOException e) {
 			throw new IllegalArgumentException("No se ha encontrado el fichero " + file);
 		}

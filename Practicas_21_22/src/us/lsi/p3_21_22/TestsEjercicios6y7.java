@@ -1,4 +1,4 @@
-package us.lsi.trees_21_22;
+package us.lsi.p3_21_22;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -9,7 +9,7 @@ import us.lsi.common.Preconditions;
 import us.lsi.tiposrecursivos.BinaryTree;
 import us.lsi.tiposrecursivos.Tree;
 
-public class TestsEjercicios {
+public class TestsEjercicios6y7 {
 
 	public static void main(String[] args) {
 		testsEjercicio3Binario();
@@ -40,7 +40,7 @@ public class TestsEjercicios {
 			
 			System.out.println("Arbol: "+tree+
 					"\tCaracter: "+ch+"\t["+
-					Ejercicio3.solucion_recursiva(tree,ch)+"]");
+					Ejercicio6.solucion_recursiva(tree,ch)+"]");
 		});			
 		
 
@@ -68,7 +68,7 @@ public class TestsEjercicios {
 				
 				System.out.println("Arbol: "+tree+
 						"\tCaracter: "+ch+"\t["+
-						Ejercicio3.solucion_recursiva(tree,ch)+"]");
+						Ejercicio6.solucion_recursiva(tree,ch)+"]");
 			});	
 		
 	}
@@ -86,7 +86,7 @@ public class TestsEjercicios {
 		System.out.println("EJERCICIO 4 - arboles n-arios");
 		System.out.println(".....................................................................................................\n");
 		inputsBinary.stream()
-			.forEach(x->System.out.println(x+": "+Ejercicio4.solucion_recursiva(x)));			
+			.forEach(x->System.out.println(x+": "+Ejercicio7.solucion_recursiva(x)));			
 
 	}
 	
@@ -104,7 +104,7 @@ public class TestsEjercicios {
 		
 		
 		inputsNary.stream()
-		.forEach(x->System.out.println(x+": "+Ejercicio4.solucion_recursiva(x)));	
+		.forEach(x->System.out.println(x+": "+Ejercicio7.solucion_recursiva(x)));	
 
 	}
 }

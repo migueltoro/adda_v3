@@ -33,10 +33,7 @@ public class Ejercicio1 {
 	}
 	
 	// ==================================== TESTS ====================================	
-	public static void main(String[] args) {
-		test("ficheros/Ejercicio1DatosEntrada1.txt", true);
-		test("ficheros/Ejercicio1DatosEntrada2.txt", true);
-	}
+	
 	
 	private static void test(String fichero, boolean mostrar) {
 		Matrix<Character> matriz = Matrix.of(creaArray(fichero));
@@ -58,6 +55,11 @@ public class Ejercicio1 {
 			fila.toArray(res[i]);
 		}
 		return res;
+	}
+	
+	public static void main(String[] args) {
+		test("ficheros/p2/Ejercicio1DatosEntrada1.txt", true);
+//		test("ficheros/p2/Ejercicio1DatosEntrada2.txt", true);
 	}
 	
 }
