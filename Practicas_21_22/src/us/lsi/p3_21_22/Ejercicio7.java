@@ -62,8 +62,8 @@ public class Ejercicio7 {
 			case TEmpty<String> t ->  Tupla.of(true, 0); 
 			case TLeaf<String> t ->  Tupla.of(true, numVocales(t.label())); 				
 			case TNary<String> t -> {
-				Integer nv = numVocales(t.label())+t.elements().stream().mapToInt(x->recursivo(x).n).sum();
-				Boolean all = t.elements().stream().allMatch(x->recursivo(x).b);
+				Integer nv = numVocales(t.label())+t.children().stream().mapToInt(x->recursivo(x).n).sum();
+				Boolean all = t.children().stream().allMatch(x->recursivo(x).b);
 				yield Tupla.of(all,nv);
 			}
 		};

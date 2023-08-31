@@ -5,8 +5,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.apache.commons.math3.analysis.ParametricUnivariateFunction;
-import org.apache.commons.math3.fitting.SimpleCurveFitter;
 import org.apache.commons.math3.fitting.WeightedObservedPoint;
+import org.apache.commons.math3.fitting.leastsquares.LeastSquaresProblem.Evaluation;
 
 /**
  * @author migueltoro
@@ -16,10 +16,18 @@ import org.apache.commons.math3.fitting.WeightedObservedPoint;
 public class Exponential implements ParametricUnivariateFunction {
 	
 	private static Exponential pl = null;
+	private SimpleCurveFitter2 fitter = null;		
+	private Evaluation evaluation;
 	
 	public static Exponential of() {
 		if(pl == null) pl = new Exponential();
 		return pl;
+	}
+	
+	public Exponential() {
+		super();
+		this.evaluation = null;
+		this.fitter = SimpleCurveFitter2.create(this,new double[] { 1., 1., 1., 1. });
 	}
 
 	@Override
@@ -45,8 +53,13 @@ public class Exponential implements ParametricUnivariateFunction {
 	}
 	
 	public double[] fit(List<WeightedObservedPoint> points, double[] start) {
-		final SimpleCurveFitter fitter = SimpleCurveFitter.create(Exponential.of(),start);
-		return fitter.fit(points);
+		double[] r = this.fitter.fit(points);
+		this.evaluation = this.fitter.getProblem(points).evaluate(RealVectors.toRealVector(r));
+		return r;
+	}
+	
+	public Evaluation getEvaluation() {
+		return evaluation;
 	}
 	
 	public void print(double n, double... p) {

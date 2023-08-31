@@ -10,8 +10,9 @@ import java.util.function.Function;
 import java.util.stream.IntStream;
 
 import org.apache.commons.math3.fitting.WeightedObservedPoint;
+import org.apache.commons.math3.fitting.leastsquares.LeastSquaresProblem.Evaluation;
 
-import us.lsi.common.Pair;
+import us.lsi.common.Trio;
 import us.lsi.curvefitting.DataFile;
 import us.lsi.curvefitting.Fitting;
 import us.lsi.curvefitting.FittingType;
@@ -161,7 +162,7 @@ public class Busquedas {
 	public static void test2() {
 		String file = "ficheros/busquedaLineal.txt";
 		List<WeightedObservedPoint> data = DataFile.points(file);
-		Pair<Function<Double, Double>, String> f = Fitting.fitCurve(data, FittingType.LINEAL);
+		Trio<Function<Double, Double>,String,Evaluation> f = Fitting.fitCurve(data, FittingType.LINEAL);
 		System.out.println(f);
 		MatPlotLib.show(file, f.first(), f.second());
 	}

@@ -4,7 +4,8 @@ import java.util.List;
 
 import org.apache.commons.math3.analysis.ParametricUnivariateFunction;
 import org.apache.commons.math3.fitting.WeightedObservedPoint;
-import org.apache.commons.math3.fitting.SimpleCurveFitter;
+import org.apache.commons.math3.fitting.leastsquares.LeastSquaresProblem.Evaluation;
+
 
 /**
  * @author migueltoro
@@ -15,6 +16,8 @@ import org.apache.commons.math3.fitting.SimpleCurveFitter;
 public class NLogN2 implements ParametricUnivariateFunction {
 	
 	private static NLogN2 pl = null;
+	private SimpleCurveFitter2 fitter = null;		
+	private Evaluation evaluation;
 	
 	public static NLogN2 of() {
 		if(pl == null) pl = new NLogN2();
@@ -23,6 +26,8 @@ public class NLogN2 implements ParametricUnivariateFunction {
 	
 	public NLogN2() {
 		super();
+		this.evaluation = null;
+		this.fitter = SimpleCurveFitter2.create(this,new double[] { 1.});
 	}
 
 	@Override
@@ -39,8 +44,13 @@ public class NLogN2 implements ParametricUnivariateFunction {
 	}
 	
 	public double[] fit(List<WeightedObservedPoint> points, double[] start) {
-		final SimpleCurveFitter fitter = SimpleCurveFitter.create(NLogN2.of(),start);
-		return fitter.fit(points);
+		double[] r = this.fitter.fit(points);
+		this.evaluation = this.fitter.getProblem(points).evaluate(RealVectors.toRealVector(r));
+		return r;
+	}
+	
+	public Evaluation getEvaluation() {
+		return evaluation;
 	}
 	
 	public void print(double n, double... p) {

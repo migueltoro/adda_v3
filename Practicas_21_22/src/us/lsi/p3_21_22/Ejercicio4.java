@@ -58,7 +58,7 @@ public class Ejercicio4 {
 		}
 		case TNary<Character> t -> {
 			List<Character> lc2 = List2.addLast(lc, t.label());
-			yield t.elements().stream()
+			yield t.children().stream()
 				.map(e -> recursivo(e, lc2))
 				.flatMap(x -> x.stream())
 				.collect(Collectors.toSet());

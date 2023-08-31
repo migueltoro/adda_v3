@@ -7,9 +7,10 @@ import java.util.function.Function;
 import org.apache.commons.math3.Field;
 import org.apache.commons.math3.FieldElement;
 import org.apache.commons.math3.fitting.WeightedObservedPoint;
+import org.apache.commons.math3.fitting.leastsquares.LeastSquaresProblem.Evaluation;
 import org.apache.commons.math3.fraction.BigFractionField;
 
-import us.lsi.common.Pair;
+import us.lsi.common.Trio;
 import us.lsi.curvefitting.DataFile;
 import us.lsi.curvefitting.Fitting;
 import us.lsi.curvefitting.FittingType;
@@ -59,7 +60,7 @@ public class Factorial {
 	public static void test3() {
 		String file = "ficheros/factorialI.txt";
 		List<WeightedObservedPoint> data = DataFile.points(file);
-		Pair<Function<Double, Double>, String> f = Fitting.fitCurve(data, FittingType.POWERLOG3);
+		Trio<Function<Double, Double>,String,Evaluation> f = Fitting.fitCurve(data, FittingType.POWERLOG3);
 		System.out.println(f);
 		MatPlotLib.show(file, f.first(), f.second());
 	}
@@ -67,7 +68,7 @@ public class Factorial {
 	public static void test4() {
 		String file = "ficheros/factorialR.txt";
 		List<WeightedObservedPoint> data = DataFile.points(file);
-		Pair<Function<Double, Double>, String> f = Fitting.fitCurve(data, FittingType.POWERLOG3);
+		Trio<Function<Double, Double>,String,Evaluation> f = Fitting.fitCurve(data, FittingType.POWERLOG3);
 		System.out.println(f);
 		MatPlotLib.show(file, f.first(), f.second());
 	}
@@ -81,7 +82,7 @@ public class Factorial {
 	public static void test6() {
 		String file = "ficheros/factorialR.txt";
 		List<WeightedObservedPoint> data = DataFile.points(file);
-		Pair<Function<Double, Double>, String> f = Fitting.fitCurve(data, FittingType.POWERLOG3);
+		Trio<Function<Double, Double>,String,Evaluation> f = Fitting.fitCurve(data, FittingType.POWERLOG3);
 		System.out.println(f);
 		CanvasPlot.show(file, f.first(), f.second());
 	}
@@ -93,7 +94,7 @@ public class Factorial {
 	}
 
 	public static void main(String[] args) {
-		test6();
+		test4();
 	}
 
 }

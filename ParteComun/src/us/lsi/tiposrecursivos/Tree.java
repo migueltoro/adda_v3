@@ -58,20 +58,23 @@ public sealed interface Tree<E> permits TEmpty<E>, TLeaf<E>, TNary<E>{
 		Tree<String> tree = Tree.parse(s);
 		return tree.map(f);
 	}
-	
-	
+		
 	TreeType type();
 	boolean isEmpty();
 	int size();
+	default int sizeDifferent() {
+		return (int) this.byDepth().distinct().count();
+	}
 	int height();
 	Tree<E> copy();
 	Tree<E> reverse();
 	<R> Tree<R> map(Function<E, R> f);
 	String toString();
-	List<Tree<E>> elements();
-	int numElements();
-	boolean equals(Object obj);
+	List<Tree<E>> children();
+	int childrenNumber();
 	Optional<E> optionalLabel();
+	boolean equals(Object obj);
+	int hashCode();
 	
 	public default Stream<Tree<E>> byDepth(){
 		return Trees.byDeph(this);
@@ -93,51 +96,51 @@ public sealed interface Tree<E> permits TEmpty<E>, TLeaf<E>, TNary<E>{
 		public TreeType type() { return TreeType.Empty;}
 		public boolean isEmpty() {return true;};
 		public Optional<E> optionalLabel() { return Optional.empty(); }
-		public List<Tree<E>> elements() {return new ArrayList<>();}
+		public List<Tree<E>> children() {return new ArrayList<>();}
 		public int size() { return 0; }
 		public int height() { return 0; }
 		public Tree<E> copy() { return Tree.empty(); }
 		public Tree<E> reverse() { return Tree.empty(); }
 		public <R> Tree<R> map(Function<E, R> f) { return Tree.empty();}
 		public String toString() { return "_"; }
-		public int numElements() { return 0;}
+		public int childrenNumber() { return 0;}
 	}
 	
 	public static record TLeaf<E>(E label) implements Tree<E> {
 		public TreeType type() { return TreeType.Leaf;}
 		public boolean isEmpty() {return false;};
 		public Optional<E> optionalLabel() { return Optional.of(this.label()); }
-		public List<Tree<E>> elements() {return new ArrayList<>();}
+		public List<Tree<E>> children() {return new ArrayList<>();}
 		public int size() { return 1; }
 		public int height() { return 0; }
 		public Tree<E> copy() { return Tree.leaf(this.label()); }
 		public Tree<E> reverse() { return Tree.leaf(this.label()); }
 		public <R> Tree<R> map(Function<E, R> f) { return Tree.leaf(f.apply(this.label()));}
 		public String toString() { return this.label().toString(); }
-		public int numElements() { return 0;}
+		public int childrenNumber() { return 0;}
 	}
 	
-	public static record TNary<E>(E label, List<Tree<E>> elements) implements Tree<E> {
+	public static record TNary<E>(E label, List<Tree<E>> children) implements Tree<E> {
 		public TreeType type() { return TreeType.Nary;}
 		public boolean isEmpty() {return false;};
 		public Optional<E> optionalLabel() { return Optional.of(this.label()); }
-		public int size() { return  1+(int)elements().stream().mapToInt(x->x.size()).sum();}
-		public int height() { return 1+ this.elements().stream().mapToInt(x->x.height()).max().getAsInt();}
-		public Tree<E> copy() { return Tree.nary(label(),elements().stream().map(x->x.copy()).toList()); }
+		public int size() { return  1+(int)children().stream().mapToInt(x->x.size()).sum();}
+		public int height() { return 1+ this.children().stream().mapToInt(x->x.height()).max().getAsInt();}
+		public Tree<E> copy() { return Tree.nary(label(),children().stream().map(x->x.copy()).toList()); }
 		public Tree<E> reverse() { 
-			List<Tree<E>> nElements = List2.reverse(this.elements()).stream().map(x -> x.reverse()).toList();
+			List<Tree<E>> nElements = List2.reverse(this.children()).stream().map(x -> x.reverse()).toList();
 			return Tree.nary(this.label(), nElements);
 		}
 		public <R> Tree<R> map(Function<E, R> f) { 
-			List<Tree<R>> nElements = this.elements().stream().map(x->x.map(f)).collect(Collectors.toList());	
+			List<Tree<R>> nElements = this.children().stream().map(x->x.map(f)).collect(Collectors.toList());	
 			return Tree.nary(f.apply(label), nElements);
 		}
 		public String toString() {
 			return label().toString()
-					+ elements().stream().map(x -> x.toString()).collect(Collectors.joining(",", "(", ")"));
+					+ children().stream().map(x -> x.toString()).collect(Collectors.joining(",", "(", ")"));
 		}
-		public Tree<E> element(int index) {return this.elements().get(index); }
-		public int numElements() { return this.elements().size();}
+		public Tree<E> element(int index) {return this.children().get(index); }
+		public int childrenNumber() { return this.children().size();}
 	}
 	
 }

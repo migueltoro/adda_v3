@@ -5,8 +5,9 @@ import java.util.List;
 import java.util.function.Function;
 
 import org.apache.commons.math3.fitting.WeightedObservedPoint;
+import org.apache.commons.math3.fitting.leastsquares.LeastSquaresProblem.Evaluation;
 
-import us.lsi.common.Pair;
+import us.lsi.common.Trio;
 import us.lsi.curvefitting.DataFile;
 import us.lsi.curvefitting.Fitting;
 import us.lsi.curvefitting.FittingType;
@@ -40,7 +41,7 @@ public class TestEjemplo1 {
 	public static void showPr() {
 		String file = "ficheros_generados/pr.txt";
 		List<WeightedObservedPoint> data = DataFile.points(file);
-		Pair<Function<Double, Double>, String> f = Fitting.fitCurve(data, FittingType.POWER2);
+		Trio<Function<Double, Double>, String,Evaluation> f = Fitting.fitCurve(data, FittingType.POWER2);
 		System.out.println(f);
 		MatPlotLib.show(file, f.first(), f.second());
 	}
@@ -48,7 +49,7 @@ public class TestEjemplo1 {
 	public static void showLin() {
 		String file = "ficheros_generados/lin.txt";
 		List<WeightedObservedPoint> data = DataFile.points(file);
-		Pair<Function<Double, Double>, String> f = Fitting.fitCurve(data, FittingType.POWER2);
+		Trio<Function<Double, Double>, String,Evaluation> f = Fitting.fitCurve(data, FittingType.POWER2);
 		System.out.println(f);
 		MatPlotLib.show(file, f.first(), f.second());
 	}

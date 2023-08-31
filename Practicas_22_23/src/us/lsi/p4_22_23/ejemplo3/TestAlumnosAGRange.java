@@ -19,7 +19,7 @@ public class TestAlumnosAGRange {
 		StoppingConditionFactory.NUM_GENERATIONS = 5000;
 		StoppingConditionFactory.stoppingConditionType = StoppingConditionFactory.StoppingConditionType.GenerationCount;
 		
-		InRangeAlumnosAG p = new InRangeAlumnosAG("ficheros/Ejemplo3DatosEntrada3.txt");
+		InRangeAlumnosAG p = new InRangeAlumnosAG("ficheros/p4/ejemplo3_3.txt");
 		
 		AlgoritmoAG<List<Integer>,SolucionAlumnos> ap = AlgoritmoAG.of(p);
 		ap.ejecuta();

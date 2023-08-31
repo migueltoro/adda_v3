@@ -56,13 +56,13 @@ public class Ejemplo1 {
 	}
 
 	private static Boolean iterativo_funcional(BinaryTree<Integer> tree) {
-		return tree.byDeph().allMatch(t -> pv(t));
+		return tree.byDepth().allMatch(t -> pv(t));
 
 	}
 
 	private static Boolean iterativo_imperativo(BinaryTree<Integer> tree) {
 		Boolean res = true;
-		Iterator<BinaryTree<Integer>> it = tree.byDeph().iterator();
+		Iterator<BinaryTree<Integer>> it = tree.byDepth().iterator();
 		while (res && it.hasNext()) {
 			BinaryTree<Integer> nxt = it.next();
 			res = pv(nxt);

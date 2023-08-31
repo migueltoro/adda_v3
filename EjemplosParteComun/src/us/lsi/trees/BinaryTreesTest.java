@@ -12,27 +12,16 @@ import us.lsi.tiposrecursivos.BinaryTree;
 import us.lsi.tiposrecursivos.BinaryTree.BEmpty;
 import us.lsi.tiposrecursivos.BinaryTree.BLeaf;
 import us.lsi.tiposrecursivos.BinaryTree.BTree;
-import us.lsi.tiposrecursivos.BinaryTrees;
+import us.lsi.tiposrecursivos.BinaryTrees; 
 
 
 public class BinaryTreesTest {
-	
 	
 	public static <E> Integer size(BinaryTree<E> tree) {
 		return switch (tree) {
 		case BEmpty<E>  t-> 0;
 		case BLeaf<E>  t -> 1;
 		case BTree<E>  t -> 1 + size(t.left()) + size(t.right());
-		};
-	}
-	
-	public static <E> Boolean equals(BinaryTree<E> t1, BinaryTree<E> t2) {
-		return switch (t1) {
-		case BEmpty<E>  r1 when t2 instanceof BEmpty<E> r2 -> true;
-		case BLeaf<E>  r1 when t2 instanceof BLeaf<E> r2 &&  r1.label().equals(r2.label()) -> true;
-		case BTree<E>  r1 when t2 instanceof BTree<E> r2 && r1.label().equals(r2.label()) ->
-				equals(r1.left(), r2.left()) || equals(r1.right(), r2.right());
-		default -> false;
 		};
 	}
 		
@@ -79,14 +68,14 @@ public class BinaryTreesTest {
 	}
 	
 	public static Integer sumIfPredicate2(BinaryTree<Integer> tree, Predicate<Integer> predicate) {
-		return tree.byDeph()
+		return tree.byDepth()
 		.map(t -> t.optionalLabel().orElse(0))
 		.filter(predicate)
 		.mapToInt(lb -> lb).sum();
 	}
 
 	public static Boolean sumaEtiquetas(BinaryTree<Integer> tree) {
-		return tree.byDeph()
+		return tree.byDepth()
 				.filter(e->e instanceof BTree<Integer> t && !t.left().isEmpty() && !t.right().isEmpty())
 				.allMatch(e->e instanceof BTree<Integer> t && 
 						t.label().equals(t.left().optionalLabel().get()+t.right().optionalLabel().get()));
@@ -142,20 +131,18 @@ public class BinaryTreesTest {
 		System.out.println(tree3.isOrdered(Comparator.naturalOrder()));
 		System.out.println(sumIfPredicate(tree3,x->x%2==0));
 		BinaryTree<Integer> tree4 = copy(tree);
-		System.out.println(equals(tree,tree4));
+		System.out.println(tree.equals(tree4));
 	}
 	
 	public static void test2() {
-		BinaryTree<Integer> tree =  BinaryTree.parse("1(2(-1,-4(3,_)),10(-5(7(_,-2),4),-6))")
+		BinaryTree<Integer> tree =  BinaryTree.parse("1(2(-1,-4(3,/_)),10(-5(7(/_,-2),4),-6))")
 				.map(label->Integer.parseInt(label));
 		tree.toDot("ficheros/tree.gv");
 		String2.toConsole("%s",maxCamino(tree));	
 	}
 
 	public static void main(String[] args) {
-		test2();
-	}
-	
-	
+		test1();
+	}	
 	
 }

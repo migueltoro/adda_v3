@@ -69,14 +69,14 @@ public class Ejercicio5 {
 	
 	
 	private static Map<ParE, List<Integer>> iterativo_funcional(BinaryTree<Integer> tree) {
-		return tree.byDeph().filter(t -> check(t))
+		return tree.byDepth().filter(t -> check(t))
 				.collect(Collectors.groupingBy(t -> paridad(t.optionalLabel().get()),
 						Collectors.mapping(t -> t.optionalLabel().get(), Collectors.toList())));
 	}
 	
 	private static Map<ParE,List<Integer>> iterativo_imperativo (BinaryTree<Integer> tree){
 		Map<ParE,List<Integer>> res = new HashMap<ParE,List<Integer>>();
-		Iterator<BinaryTree<Integer>> it = tree.byDeph().iterator();		
+		Iterator<BinaryTree<Integer>> it = tree.byDepth().iterator();		
 		while (it.hasNext()) {
 			BinaryTree<Integer> nxt = it.next();
 			if(check(nxt)) updateMap(res,nxt.optionalLabel().get());

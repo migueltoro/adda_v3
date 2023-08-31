@@ -22,14 +22,19 @@ public sealed interface BinaryTree<E> permits BEmpty<E>,BLeaf<E>,BTree<E> {
 	
 	BinaryType type();
 	int size();
+	default int sizeDifferent() {
+		return (int) this.byDepth().distinct().count();
+	}
 	int height();
 	BinaryTree<E> copy();
 	BinaryTree<E> reverse();
 	<R> BinaryTree<R> map(Function<E, R> f);
 	boolean isEmpty();
 	Optional<E> optionalLabel();
+	boolean equals(Object t);
+	int hashCode();
 	
-	public default Stream<BinaryTree<E>> byDeph() {
+	public default Stream<BinaryTree<E>> byDepth() {
 		return BinaryTrees.byDeph(this);
 	}
 	

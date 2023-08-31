@@ -51,7 +51,7 @@ public class Ejercicio1 {
 		case TEmpty<E> t -> {;}
 		case TLeaf<E> t when predicate.test(t.label())-> res.add(t.label());
 		case TLeaf<E> t -> {;}
-		case TNary<E> t ->	t.elements().forEach(tc->recursivo(tc, predicate, res));
+		case TNary<E> t ->	t.children().forEach(tc->recursivo(tc, predicate, res));
 		}
 	}	
 	

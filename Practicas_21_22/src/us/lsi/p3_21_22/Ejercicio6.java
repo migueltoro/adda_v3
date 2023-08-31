@@ -70,7 +70,7 @@ public class Ejercicio6 {
 		case TNary<Character> t when t.label().equals(ch) ->  List2.of();	
 		case TNary<Character> t when !t.label().equals(ch) -> {
 			ac.add(t.label());
-			yield t.elements().stream()
+			yield t.children().stream()
 				.flatMap(x->recursivo(x,ch,ac).stream())
 				.filter(s->s.length()>0)
 				.collect(Collectors.toList());

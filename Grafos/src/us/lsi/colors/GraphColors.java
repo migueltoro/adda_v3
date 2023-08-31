@@ -9,12 +9,16 @@ import java.util.function.Function;
 import java.util.stream.IntStream;
 
 import org.jgrapht.Graph;
+import org.jgrapht.graph.DefaultEdge;
+import org.jgrapht.graph.SimpleDirectedGraph;
 import org.jgrapht.nio.Attribute;
 import org.jgrapht.nio.DefaultAttribute;
 import org.jgrapht.nio.dot.DOTExporter;
 
 import us.lsi.common.Files2;
 import us.lsi.common.Map2;
+import us.lsi.graphs.views.TreeToGraph;
+import us.lsi.tiposrecursivos.BinaryTree;
 
 
 public class GraphColors {
@@ -115,12 +119,22 @@ public class GraphColors {
 			r.putAll(f);
 		return r;
 	}
+	
+	public static <E> void toDot(BinaryTree<E> tree, String file) {	
+		SimpleDirectedGraph<BinaryTree<E>, DefaultEdge> graph = TreeToGraph.toGraph(tree);
+		GraphColors.toDot(graph, file);
+	}
 
 	public static <V,E> void toDot(Graph<V,E> graph, String file) {		
 		DOTExporter<V,E> de = new DOTExporter<V,E>();
 		de.setVertexAttributeProvider(v->GraphColors.label(v.toString()));
 		Writer f1 = Files2.getWriter(file);
 		de.exportGraph(graph, f1);
+	}
+	
+	public static <E> void toDot(BinaryTree<E> tree, String file, Function<BinaryTree<E>,String> vertexLabel) {	
+		SimpleDirectedGraph<BinaryTree<E>, DefaultEdge> graph = TreeToGraph.toGraph(tree);
+		GraphColors.toDot(graph,file,vertexLabel);
 	}
 	
 	public static <V,E> void toDot(Graph<V,E> graph, String file, Function<V,String> vertexLabel) {	

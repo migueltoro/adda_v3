@@ -40,7 +40,7 @@ public class Trees {
 		return switch (tree) {
 		case TEmpty<E>  t -> Tree.empty();
 		case TLeaf<E>  t -> Tree.leaf(t.label());
-		case TNary<E>  t -> Tree.nary(t.label(),t.elements().stream().map(x->Trees.copy(x)).toList());
+		case TNary<E>  t -> Tree.nary(t.label(),t.children().stream().map(x->Trees.copy(x)).toList());
 		};
 	}
 	
@@ -71,7 +71,7 @@ public class Trees {
 		case TEmpty<E> t -> Tree.leaf(Nv.of(Trees.nextInteger(),null));
 		case TLeaf<E> t -> Tree.leaf(Nv.of(Trees.nextInteger(),t.label()));
 		case TNary<E> t -> Tree.nary(Nv.of(Trees.nextInteger(),t.label()),
-				t.elements().stream().map(e->Trees.map(e)).toList());
+				t.children().stream().map(e->Trees.map(e)).toList());
 		};
 	}
 	
@@ -81,7 +81,7 @@ public class Trees {
 		case TLeaf<Nv<E>> t : graph.addVertex(t.label()); break;
 		case TNary<Nv<E>> t : 
 			graph.addVertex(t.label()); 
-			t.elements().stream().forEach(e->toDot1(e,graph));
+			t.children().stream().forEach(e->toDot1(e,graph));
 			break;
 		}
 	}
@@ -91,12 +91,12 @@ public class Trees {
 		case TEmpty<Nv<E>> t: break;
 		case TLeaf<Nv<E>> t : break;
 		case TNary<Nv<E>> t : 
-			t.elements().stream().forEach(e -> 
+			t.children().stream().forEach(e -> 
 				{if(e instanceof TLeaf<Nv<E>> tl) graph.addEdge(t.label(),tl.label());
 				if(e instanceof TNary<Nv<E>> tn) graph.addEdge(t.label(),tn.label());
 				}
 			);
-			t.elements().stream().forEach(e->toDot2(e,graph));
+			t.children().stream().forEach(e->toDot2(e,graph));
 			break;
 		}
 	}
@@ -155,7 +155,7 @@ public class Trees {
 			Tree<E> actual = stack.pop();
 			switch(actual) {
 			case TNary<E> t: 
-				for(Tree<E> v:List2.reverse(t.elements())) {
+				for(Tree<E> v:List2.reverse(t.children())) {
 					stack.add(v);
 				}
 				break;
@@ -192,7 +192,7 @@ public class Trees {
 		}
 
 		private static <E> List<TreeLevel<E>> children(TreeLevel<E> actual){
-			return actual.tree().elements().stream().map(t->TreeLevel.of(actual.level()+1,t)).toList();
+			return actual.tree().children().stream().map(t->TreeLevel.of(actual.level()+1,t)).toList();
 		}
 		
 		@Override

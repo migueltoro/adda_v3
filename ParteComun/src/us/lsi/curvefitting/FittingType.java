@@ -10,6 +10,7 @@ public enum FittingType {
 	POWER2, // a*n^b
 	LOG, // a*(ln n) + b
 	LOG2, // a*(ln n)
+	LOG3, // a*(ln n)^b
 	NLOGN, // a*n*(ln n) + b
 	NLOGN2, // a*n*(ln n)
 	EXP, // a*b^(c*n) + d

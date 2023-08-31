@@ -53,7 +53,7 @@ public class Ejemplo3 {
 		case TLeaf<E> t -> actualizaLista(p.test(t.label()), nivel, res);
 		case TNary<E> t -> {
 			actualizaLista(p.test(t.label()), nivel, res);
-			t.elements().forEach(x->recursivo(x, p, nivel+1, res));
+			t.children().forEach(x->recursivo(x, p, nivel+1, res));
 		}
 		}
 	}

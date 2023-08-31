@@ -48,12 +48,12 @@ public class Ejemplo4 {
 		switch (tree) {
 		case TEmpty<E> t -> {;}
 		case TLeaf<E> t -> {;}
-		case TNary<E> t when t.elements().size() % 2 == 0 -> {
+		case TNary<E> t when t.children().size() % 2 == 0 -> {
 			actualizaMap(t.label(), nivel, res);
-			t.elements().forEach(tc -> recursivo(tc, nivel + 1, res));
+			t.children().forEach(tc -> recursivo(tc, nivel + 1, res));
 		}
 		case TNary<E> t -> {
-			t.elements().forEach(tc -> recursivo(tc, nivel + 1, res));
+			t.children().forEach(tc -> recursivo(tc, nivel + 1, res));
 		}
 		}
 	}
@@ -74,7 +74,7 @@ public class Ejemplo4 {
 			switch (nxt.tree()) {
 			case TEmpty<E> t -> {;}
 			case TLeaf<E> t -> {;}
-			case TNary<E> t when t.elements().size() % 2 == 0 -> actualizaMap(t.label(), nxt.level(), res);
+			case TNary<E> t when t.children().size() % 2 == 0 -> actualizaMap(t.label(), nxt.level(), res);
 			case TNary<E> t -> {;}
 			}
 		}

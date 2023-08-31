@@ -8,9 +8,10 @@ import java.util.function.Consumer;
 import java.util.function.Function;
 
 import org.apache.commons.math3.fitting.WeightedObservedPoint;
+import org.apache.commons.math3.fitting.leastsquares.LeastSquaresProblem.Evaluation;
 
 import us.lsi.recursivos.problemasdelistas.ProblemasDeListas;
-import us.lsi.common.Pair;
+import us.lsi.common.Trio;
 import us.lsi.curvefitting.DataFile;
 import us.lsi.curvefitting.Fitting;
 import us.lsi.curvefitting.FittingType;
@@ -37,16 +38,24 @@ public class QuickSort {
 		ProblemasDeListas.quickSort(list,Comparator.naturalOrder());
 	};
 	
-	public static void test1() {
-		String file = "ficheros/quickSort50.txt";
+	/**
+	 * GenData Param
+	 * @param algorithm Una función que calcula el timepo de ejecución de un algoritmo de tamaño t
+	 * @param ficheroTiempos El fichero de salida
+	 * @param tMin Mínimo valor del tamaño
+	 * @param tMax Máximo valor del tamaño
+	 * @param tInc Incremento del tamaño
+	 * @param numIter Número de iteraciones para cada tamaño
+	 * @param numIterWarmup Número de iteraciones de warmup
+	 */
+	public static void test1(String file) {		
 		Function<Integer,Long> f1 = GenData.time(pre,time);
 		GenData.tiemposEjecucion(f1,file,50,50000,500,30,5);
 	}
 	
-	public static void test2() {
-		String file = "ficheros/quickSort20.txt";
+	public static void test2(String file) {		
 		List<WeightedObservedPoint> data = DataFile.points(file);
-		Pair<Function<Double, Double>, String> f = Fitting.fitCurve(data, FittingType.NLOGN2);
+		Trio<Function<Double, Double>,String,Evaluation> f = Fitting.fitCurve(data, FittingType.POWERLOG);
 		System.out.println(f);
 		MatPlotLib.show(file, f.first(), f.second());
 	}
@@ -57,10 +66,9 @@ public class QuickSort {
 				List.of("Umbral 5","Umbral 20","Umbral 50"));
 	}
 	
-	public static void test4() {
-		String file = "ficheros/quickSort20.txt";
+	public static void test4(String file) {
 		List<WeightedObservedPoint> data = DataFile.points(file);
-		Pair<Function<Double, Double>, String> f = Fitting.fitCurve(data, FittingType.NLOGN2);
+		Trio<Function<Double, Double>,String,Evaluation> f = Fitting.fitCurve(data, FittingType.POWERLOG2);
 		System.out.println(f);
 		CanvasPlot.show(file, f.first(), f.second());
 	}
@@ -72,7 +80,9 @@ public class QuickSort {
 	}
 
 	public static void main(String[] args) {
-		test5();
+		String file = "ficheros/quickSort50.txt";
+//		test1();
+		test2(file);
 	}
 
 }

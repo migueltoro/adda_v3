@@ -29,7 +29,7 @@ public class Ejercicio2_21_22 {
 		case TNary<String> t -> {
 			String r = null;
 			if(!p.test(t.label()))
-				r = t.elements().stream()
+				r = t.children().stream()
 						.map(x->caminoStringMinimo1(x,p,ct+t.label()))
 						.filter(x->x!=null)
 						.min(Comparator.comparing(x->x.length()))
@@ -58,7 +58,7 @@ public class Ejercicio2_21_22 {
 		switch(tree) {
 		case TLeaf<String> t when !p.test(t.label()) -> {actualizaLista(a,ct+t.label());}	
 		case TNary<String> t when !p.test(t.label()) -> 
-			{t.elements().stream().forEach(x->caminoStringMinimo2(x,p,a,ct+t.label()));}
+			{t.children().stream().forEach(x->caminoStringMinimo2(x,p,a,ct+t.label()));}
 		default -> {;}
 		}
 	}

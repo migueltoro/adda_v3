@@ -41,7 +41,7 @@ public class Ejemplo5 {
 		case TNary<E> t -> {
 			Boolean r = pred.test(t.label()) && res.get(nivel);
 			res.set(nivel, r);
-			t.elements().forEach(tc -> recursivo(tc, pred, nivel + 1, res));
+			t.children().forEach(tc -> recursivo(tc, pred, nivel + 1, res));
 		}
 		};
 	}

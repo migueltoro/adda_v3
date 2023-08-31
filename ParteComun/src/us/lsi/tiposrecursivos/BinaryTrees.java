@@ -29,7 +29,6 @@ import us.lsi.tiposrecursivos.BinaryTree.BLeaf;
 import us.lsi.tiposrecursivos.BinaryTree.BTree;
 
 
-
 public class BinaryTrees {
 
 
@@ -146,7 +145,7 @@ public class BinaryTrees {
 	}
 	
 	public static <E> Boolean containsLabel(BinaryTree<E> tree, E label) {
-		return tree.byDeph()
+		return tree.byDepth()
 			.map(t -> t.optionalLabel())
 			.filter(e -> e.isPresent())
 			.map(e->e.get())
