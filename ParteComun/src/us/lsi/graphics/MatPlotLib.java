@@ -9,11 +9,13 @@ import org.apache.commons.math3.fitting.WeightedObservedPoint;
 import com.github.sh0nk.matplotlib4j.Plot;
 import com.github.sh0nk.matplotlib4j.PythonExecutionException;
 
+import us.lsi.common.Preconditions;
 import us.lsi.curvefitting.DataFile;
 
 public class MatPlotLib {
 	
 	public static void show(String dataFile, Function<Double, Double> f, String title) {
+		Preconditions.checkNotNull(f);
 		List<WeightedObservedPoint> points = DataFile.points(dataFile);
 		List<Double> lx = points.stream().map(p -> p.getX()).toList();
 		List<Double> ajuste = points.stream().map(p -> f.apply(p.getX())).toList();

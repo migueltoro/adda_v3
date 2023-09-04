@@ -11,7 +11,6 @@ import java.util.function.Function;
 
 import org.apache.commons.math3.FieldElement;
 import org.apache.commons.math3.fitting.WeightedObservedPoint;
-import org.apache.commons.math3.fitting.leastsquares.LeastSquaresProblem.Evaluation;
 import org.apache.commons.math3.Field;
 import org.apache.commons.math3.fraction.BigFraction;
 import org.apache.commons.math3.fraction.BigFractionField;
@@ -22,11 +21,10 @@ import org.apache.commons.math3.util.Decimal64Field;
 import us.lsi.common.Arrays2;
 import us.lsi.common.Matrix;
 import us.lsi.common.String2;
-import us.lsi.common.Trio;
 import us.lsi.curvefitting.DataFile;
-import us.lsi.curvefitting.Fitting;
-import us.lsi.curvefitting.FittingType;
+import us.lsi.curvefitting.Exponential;
 import us.lsi.curvefitting.GenData;
+import us.lsi.curvefitting.PowerLog;
 import us.lsi.graphics.CanvasPlot;
 import us.lsi.graphics.MatPlotLib;
 
@@ -186,12 +184,10 @@ public class Fibonacci {
 	public static void test5() {
 		String file = "ficheros/fibonacci.txt";
 		List<WeightedObservedPoint> data = DataFile.smoothPoints(file,1.);
-		Trio<Function<Double, Double>,String,Evaluation> f = Fitting.fitCurve(data, FittingType.POWER);
-		System.out.println(f);
-		MatPlotLib.show(file, f.first(), f.second());
-		f = Fitting.fitCurve(data, FittingType.POWER2);
-		System.out.println(f);
-		MatPlotLib.show(file, f.first(), f.second());
+		Exponential pl = Exponential.of();
+		pl.fit(data);
+		System.out.println(pl.getEvaluation().getRMS());
+		MatPlotLib.show(file, pl.getFunction(), pl.getExpression());
 	}
 	
 	public static void test6() {
@@ -219,14 +215,18 @@ public class Fibonacci {
 	public static void test8() {
 		String file = "ficheros/fibonacciLin.txt";
 		List<WeightedObservedPoint> data = DataFile.smoothPoints(file,1.);
-		Trio<Function<Double, Double>,String,Evaluation> f = Fitting.fitCurve(data, FittingType.POWER2);
-		System.out.println(f);
-		MatPlotLib.show(file, f.first(), f.second());
+		PowerLog pl = PowerLog.of(List.of());
+		pl.fit(data);
+		System.out.println(pl.getExpression());
+		System.out.println(pl.getEvaluation().getRMS());
+//		MatPlotLib.show(file, pl.getFunction(), pl.getExpression());
 		file = "ficheros/fibonacciMatrix.txt";
 		data = DataFile.smoothPoints(file,1.);
-		f = Fitting.fitCurve(data, FittingType.POWER2);
-		System.out.println(f);
-		MatPlotLib.show(file, f.first(), f.second());
+		pl = PowerLog.of(List.of());
+		pl.fit(data);
+		System.out.println(pl.getExpression());
+		System.out.println(pl.getEvaluation().getRMS());
+//		MatPlotLib.show(file, pl.getFunction(), pl.getExpression());
 	}
 	
 	public static void test9() {
@@ -243,10 +243,11 @@ public class Fibonacci {
 	
 
 	public static void main(String[] args) {
+//		test5();
 //		test6();
-//		test8();
+		test8();
 //		test7();
-		test9();
+//		test9();
 	}
 	
 

@@ -1,10 +1,13 @@
 package us.lsi.curvefitting;
 
 import java.util.List;
+import java.util.function.Function;
 
 import org.apache.commons.math3.analysis.ParametricUnivariateFunction;
 import org.apache.commons.math3.fitting.WeightedObservedPoint;
 import org.apache.commons.math3.fitting.leastsquares.LeastSquaresProblem.Evaluation;
+
+import us.lsi.common.Pair;
 
 
 /**
@@ -15,13 +18,17 @@ import org.apache.commons.math3.fitting.leastsquares.LeastSquaresProblem.Evaluat
  */
 public class PowerLog implements ParametricUnivariateFunction {
 	
-	private static PowerLog pl = null;
-	private SimpleCurveFitter2 fitter = null;		
-	private Evaluation evaluation;
+	public static PowerLog of(List<Pair<Integer,Double>> fixedParams) {
+		return PowerLogFixingValues.of(fixedParams);
+	}
+	
+	protected SimpleCurveFitter2 fitter = null;		
+	protected Evaluation evaluation = null;;
+	protected String expression = null;
+	protected Function<Double, Double> function = null;
 	
 	public static PowerLog of() {
-		if(pl == null) pl = new PowerLog();
-		return pl;
+		return new PowerLog();
 	}
 	public PowerLog() {
 		super();
@@ -51,9 +58,11 @@ public class PowerLog implements ParametricUnivariateFunction {
 		return a*Math.pow(n,b)*Math.pow(Math.log(n),c) + d;
 	}
 	
-	public double[] fit(List<WeightedObservedPoint> points, double[] start) {
+	public double[] fit(List<WeightedObservedPoint> points) {
 		double[] r = this.fitter.fit(points);
 		this.evaluation = this.fitter.getProblem(points).evaluate(RealVectors.toRealVector(r));
+		this.expression = String.format("%.2f * n^%.2f * (ln n)^%.2f + %.2f", r[0], r[1], r[2], r[3]);
+		this.function = x -> this.value(x, r);
 		return r;
 	}
 	
@@ -61,6 +70,13 @@ public class PowerLog implements ParametricUnivariateFunction {
 		return evaluation;
 	}
 	
+	public String getExpression() {
+		return expression;
+	}
+	
+	public Function<Double, Double> getFunction() {
+		return function;
+	}
 	public void print(double n, double... p) {
 		String r = String.format("Values: n = %.2f,a = %.2f,b = %.2f,c = %.2f,d = %.2f",n, p[0],p[1],p[2],p[3]);
 		System.out.println(r);
@@ -68,5 +84,7 @@ public class PowerLog implements ParametricUnivariateFunction {
 		double[] g = this.gradient(n, p);
 		System.out.println("Gradiente = "+String.format("%.2f,%.2f,%.2f,%.2f",g[0],g[1],g[2],g[3]));
 	}
+	
+	
 
 }

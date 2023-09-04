@@ -16,8 +16,7 @@ import org.apache.commons.math3.random.RandomDataGenerator;
 import us.lsi.common.Files2;
 import us.lsi.common.Trio;
 import us.lsi.curvefitting.DataFile;
-import us.lsi.curvefitting.Fitting;
-import us.lsi.curvefitting.FittingType;
+import us.lsi.curvefitting.PowerLog;
 import us.lsi.graphics.MatPlotLib;
 
 public class QuickSortRecurrence {
@@ -62,11 +61,12 @@ public class QuickSortRecurrence {
 	}
 	
 	
-	public static void test2(String file, FittingType type) {
+	public static void test2(String file) {
 		List<WeightedObservedPoint> data = DataFile.points(file);
-		Trio<Function<Double, Double>,String,Evaluation> f = Fitting.fitCurve(data, type);
-		System.out.println(f.second());
-		System.out.println(f.third().getRMS());
+		PowerLog pl = PowerLog.of(List.of());
+		pl.fit(data);
+		System.out.println(pl.getEvaluation().getRMS());
+		System.out.println(pl.getExpression());
 	}
 	
 	public static void test3(String file, Trio<Function<Double, Double>, String,Evaluation> f) {
@@ -76,8 +76,8 @@ public class QuickSortRecurrence {
 	public static void main(String[] args) {
 		Locale.setDefault(Locale.of("en", "us"));
 		String file = "ficheros/quickSortR.txt";
-//		test1(100000000000L,file,e->e.getKey()>10000);
-		test2(file,FittingType.POWERLOG3);
+//		test1(100000000000L,file,e->e.getKey()>0);
+		test2(file);
 	}
 
 

@@ -7,13 +7,11 @@ import java.util.function.Consumer;
 import java.util.function.Function;
 
 import org.apache.commons.math3.fitting.WeightedObservedPoint;
-import org.apache.commons.math3.fitting.leastsquares.LeastSquaresProblem.Evaluation;
 
-import us.lsi.common.Trio;
+import us.lsi.common.Pair;
 import us.lsi.curvefitting.DataFile;
-import us.lsi.curvefitting.Fitting;
-import us.lsi.curvefitting.FittingType;
 import us.lsi.curvefitting.GenData;
+import us.lsi.curvefitting.PowerLog;
 import us.lsi.graphics.MatPlotLib;
 
 public class TestEjemplo3 {
@@ -159,14 +157,18 @@ public class TestEjemplo3 {
 	public static void show() {
 		String file = "ficheros_generados/busquedaBinaria.txt";
 		List<WeightedObservedPoint> data = DataFile.points(file);
-		Trio<Function<Double, Double>, String,Evaluation> f = Fitting.fitCurve(data, FittingType.LINEAL);
-		System.out.println(f);
-		MatPlotLib.show(file, f.first(), f.second());
+		PowerLog pl = PowerLog.of(List.of(Pair.of(2, 1.),Pair.of(3, 0.)));
+		pl.fit(data);
+		System.out.println(pl.getExpression());
+		System.out.println(pl.getEvaluation().getRMS());
+		MatPlotLib.show(file, pl.getFunction(), pl.getExpression());
 		file = "ficheros_generados/busquedaLineal.txt";
 		data = DataFile.points(file);
-		f = Fitting.fitCurve(data, FittingType.LOG2);
-		System.out.println(f);
-		MatPlotLib.show(file, f.first(), f.second());
+		pl = PowerLog.of(List.of(Pair.of(2, 1.),Pair.of(3, 0.)));
+		pl.fit(data);
+		System.out.println(pl.getExpression());
+		System.out.println(pl.getEvaluation().getRMS());
+		MatPlotLib.show(file, pl.getFunction(), pl.getExpression());
 	}
 	
 	public static void combined() {

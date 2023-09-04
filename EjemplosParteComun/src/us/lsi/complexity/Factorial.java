@@ -7,14 +7,12 @@ import java.util.function.Function;
 import org.apache.commons.math3.Field;
 import org.apache.commons.math3.FieldElement;
 import org.apache.commons.math3.fitting.WeightedObservedPoint;
-import org.apache.commons.math3.fitting.leastsquares.LeastSquaresProblem.Evaluation;
 import org.apache.commons.math3.fraction.BigFractionField;
 
-import us.lsi.common.Trio;
+import us.lsi.common.Pair;
 import us.lsi.curvefitting.DataFile;
-import us.lsi.curvefitting.Fitting;
-import us.lsi.curvefitting.FittingType;
 import us.lsi.curvefitting.GenData;
+import us.lsi.curvefitting.PowerLog;
 import us.lsi.graphics.CanvasPlot;
 import us.lsi.graphics.MatPlotLib;
 
@@ -60,17 +58,21 @@ public class Factorial {
 	public static void test3() {
 		String file = "ficheros/factorialI.txt";
 		List<WeightedObservedPoint> data = DataFile.points(file);
-		Trio<Function<Double, Double>,String,Evaluation> f = Fitting.fitCurve(data, FittingType.POWERLOG3);
-		System.out.println(f);
-		MatPlotLib.show(file, f.first(), f.second());
+		PowerLog pl = PowerLog.of(List.of(Pair.of(2, 1.),Pair.of(3, 0.)));
+		pl.fit(data);
+		System.out.println(pl.getExpression());
+		System.out.println(pl.getEvaluation().getRMS());
+		MatPlotLib.show(file, pl.getFunction(), pl.getExpression());
 	}
 	
 	public static void test4() {
 		String file = "ficheros/factorialR.txt";
 		List<WeightedObservedPoint> data = DataFile.points(file);
-		Trio<Function<Double, Double>,String,Evaluation> f = Fitting.fitCurve(data, FittingType.POWERLOG3);
-		System.out.println(f);
-		MatPlotLib.show(file, f.first(), f.second());
+		PowerLog pl = PowerLog.of(List.of(Pair.of(2, 1.),Pair.of(3, 0.)));
+		pl.fit(data);
+		System.out.println(pl.getExpression());
+		System.out.println(pl.getEvaluation().getRMS());
+		MatPlotLib.show(file, pl.getFunction(), pl.getExpression());
 	}
 	
 	public static void test5() {
@@ -82,9 +84,11 @@ public class Factorial {
 	public static void test6() {
 		String file = "ficheros/factorialR.txt";
 		List<WeightedObservedPoint> data = DataFile.points(file);
-		Trio<Function<Double, Double>,String,Evaluation> f = Fitting.fitCurve(data, FittingType.POWERLOG3);
-		System.out.println(f);
-		CanvasPlot.show(file, f.first(), f.second());
+		PowerLog pl = PowerLog.of(List.of());
+		pl.fit(data);
+		System.out.println(pl.getExpression());
+		System.out.println(pl.getEvaluation().getRMS());
+		CanvasPlot.show(file, pl.getFunction(), pl.getExpression());
 	}
 	
 	public static void test7() {

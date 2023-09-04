@@ -3,20 +3,18 @@ package us.lsi.complexity;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
-import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.stream.Stream;
 
 import org.apache.commons.math3.fitting.WeightedObservedPoint;
-import org.apache.commons.math3.fitting.leastsquares.LeastSquaresProblem.Evaluation;
 
 import us.lsi.colors.GraphColors;
 import us.lsi.common.Files2;
-import us.lsi.common.Trio;
+import us.lsi.common.Pair;
 import us.lsi.curvefitting.DataFile;
-import us.lsi.curvefitting.Fitting;
-import us.lsi.curvefitting.FittingType;
+import us.lsi.curvefitting.PowerLog;
 import us.lsi.graphics.MatPlotLib;
 import us.lsi.tiposrecursivos.BinaryTree;
 
@@ -60,15 +58,19 @@ public class BinaryTreeSize {
 
 	public static void test2(String file) {
 		List<WeightedObservedPoint> data = DataFile.points(file);
-		Trio<Function<Double, Double>,String,Evaluation> f = Fitting.fitCurve(data, FittingType.LOG3);
-		MatPlotLib.show(file, f.first(), f.second());
+		PowerLog pl = PowerLog.of(List.of(Pair.of(1, 0.)));
+		pl.fit(data);
+		System.out.println(pl.getExpression());
+		System.out.println(pl.getEvaluation().getRMS());
+		MatPlotLib.show(file, pl.getFunction(), pl.getExpression());
 	}
 	
 	public static void main(String[] args) {
-		String file = "ficheros/tree1.gv";
+		Locale.setDefault(Locale.of("en", "us"));
+		String file = "ficheros/tree1.txt";
 //		test0(1000L,file);
-		test1(10000L,file,e->e.getKey()>1000);
-//		test2(file);
+//		test1(1000000000L,file,e->e.getKey()>10);
+		test2(file);
 	}
 
 }

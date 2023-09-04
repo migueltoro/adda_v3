@@ -8,14 +8,12 @@ import java.util.function.Consumer;
 import java.util.function.Function;
 
 import org.apache.commons.math3.fitting.WeightedObservedPoint;
-import org.apache.commons.math3.fitting.leastsquares.LeastSquaresProblem.Evaluation;
 
 import us.lsi.recursivos.problemasdelistas.ProblemasDeListas;
-import us.lsi.common.Trio;
+import us.lsi.common.Pair;
 import us.lsi.curvefitting.DataFile;
-import us.lsi.curvefitting.Fitting;
-import us.lsi.curvefitting.FittingType;
 import us.lsi.curvefitting.GenData;
+import us.lsi.curvefitting.PowerLog;
 import us.lsi.graphics.CanvasPlot;
 import us.lsi.graphics.MatPlotLib;
 
@@ -55,22 +53,16 @@ public class QuickSort {
 	
 	public static void test2(String file) {		
 		List<WeightedObservedPoint> data = DataFile.points(file);
-		Trio<Function<Double, Double>,String,Evaluation> f = Fitting.fitCurve(data, FittingType.POWERLOG);
-		System.out.println(f);
-		MatPlotLib.show(file, f.first(), f.second());
+		PowerLog pl = PowerLog.of(List.of(Pair.of(1,1.),Pair.of(3,0.)));
+		pl.fit(data);
+		System.out.println(pl.getEvaluation().getRMS());
+		MatPlotLib.show(file, pl.getFunction(), pl.getExpression());
 	}
 	
 	public static void test3() {
 		MatPlotLib.showCombined("Tiempos",
 				List.of("ficheros/quickSort5.txt","ficheros/quickSort20.txt", "ficheros/quickSort50.txt"), 
 				List.of("Umbral 5","Umbral 20","Umbral 50"));
-	}
-	
-	public static void test4(String file) {
-		List<WeightedObservedPoint> data = DataFile.points(file);
-		Trio<Function<Double, Double>,String,Evaluation> f = Fitting.fitCurve(data, FittingType.POWERLOG2);
-		System.out.println(f);
-		CanvasPlot.show(file, f.first(), f.second());
 	}
 	
 	public static void test5() {
@@ -80,7 +72,7 @@ public class QuickSort {
 	}
 
 	public static void main(String[] args) {
-		String file = "ficheros/quickSort50.txt";
+		String file = "ficheros/quickSort5.txt";
 //		test1();
 		test2(file);
 	}

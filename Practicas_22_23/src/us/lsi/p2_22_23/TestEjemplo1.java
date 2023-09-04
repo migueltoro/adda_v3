@@ -5,13 +5,11 @@ import java.util.List;
 import java.util.function.Function;
 
 import org.apache.commons.math3.fitting.WeightedObservedPoint;
-import org.apache.commons.math3.fitting.leastsquares.LeastSquaresProblem.Evaluation;
 
-import us.lsi.common.Trio;
+import us.lsi.common.Pair;
 import us.lsi.curvefitting.DataFile;
-import us.lsi.curvefitting.Fitting;
-import us.lsi.curvefitting.FittingType;
 import us.lsi.curvefitting.GenData;
+import us.lsi.curvefitting.PowerLog;
 import us.lsi.graphics.MatPlotLib;
 
 public class TestEjemplo1 {
@@ -26,14 +24,14 @@ public class TestEjemplo1 {
 	
 	public static void genDataPr() {
 		String file = "ficheros_generados/pr.txt";
-		Function<Integer,Long> f1 = GenData.time(t -> Ejemplo1.potenciaIter(a,t));
+		Function<Integer,Long> f1 = GenData.time(t -> Ejemplo1.potenciaR(a,t));
 //		Integer tMin,Integer tMax,Integer tInc,Integer numIter,Integer numIterWarmup
 		GenData.tiemposEjecucion(f1,file,nMin,nMax,nIncr,nIter,nIterWarmup);
 	}
 	
 	public static void genDataLin() {
 		String file = "ficheros_generados/lin.txt";
-		Function<Integer,Long> f1 = GenData.time(t -> Ejemplo1.potenciaR(a,t));
+		Function<Integer,Long> f1 = GenData.time(t -> Ejemplo1.potenciaIter(a,t));
 //		Integer tMin,Integer tMax,Integer tInc,Integer numIter,Integer numIterWarmup
 		GenData.tiemposEjecucion(f1,file,nMin,nMax,nIncr,nIter,nIterWarmup);
 	}
@@ -41,17 +39,21 @@ public class TestEjemplo1 {
 	public static void showPr() {
 		String file = "ficheros_generados/pr.txt";
 		List<WeightedObservedPoint> data = DataFile.points(file);
-		Trio<Function<Double, Double>, String,Evaluation> f = Fitting.fitCurve(data, FittingType.POWER2);
-		System.out.println(f);
-		MatPlotLib.show(file, f.first(), f.second());
+		PowerLog pl = PowerLog.of(List.of(Pair.of(2, 0.),Pair.of(3, 0.)));
+		pl.fit(data);
+		System.out.println(pl.getExpression());
+		System.out.println(pl.getEvaluation().getRMS());
+		MatPlotLib.show(file, pl.getFunction(), pl.getExpression());
 	}
 	
 	public static void showLin() {
 		String file = "ficheros_generados/lin.txt";
 		List<WeightedObservedPoint> data = DataFile.points(file);
-		Trio<Function<Double, Double>, String,Evaluation> f = Fitting.fitCurve(data, FittingType.POWER2);
-		System.out.println(f);
-		MatPlotLib.show(file, f.first(), f.second());
+		PowerLog pl = PowerLog.of(List.of(Pair.of(2, 0.),Pair.of(3, 0.)));
+		pl.fit(data);
+		System.out.println(pl.getExpression());
+		System.out.println(pl.getEvaluation().getRMS());
+		MatPlotLib.show(file, pl.getFunction(), pl.getExpression());
 	}
 	
 	public static void showCombined() {
@@ -62,11 +64,11 @@ public class TestEjemplo1 {
 	
 
 	public static void main(String[] args) {
-		genDataPr();
+//		genDataPr();
 		genDataLin();
-		showPr();
+//		showPr();
 		showLin();
-		showCombined();
+//		showCombined();
 	}
 
 

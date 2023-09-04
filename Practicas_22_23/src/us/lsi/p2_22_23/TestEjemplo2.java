@@ -4,13 +4,11 @@ import java.util.List;
 import java.util.function.Function;
 
 import org.apache.commons.math3.fitting.WeightedObservedPoint;
-import org.apache.commons.math3.fitting.leastsquares.LeastSquaresProblem.Evaluation;
 
-import us.lsi.common.Trio;
+import us.lsi.common.Pair;
 import us.lsi.curvefitting.DataFile;
-import us.lsi.curvefitting.Fitting;
-import us.lsi.curvefitting.FittingType;
 import us.lsi.curvefitting.GenData;
+import us.lsi.curvefitting.PowerLog;
 import us.lsi.graphics.MatPlotLib;
 
 public class TestEjemplo2 {
@@ -46,17 +44,21 @@ public class TestEjemplo2 {
 	public static void showPotMat() {
 		String file = "ficheros_generados/fib_pm.txt";
 		List<WeightedObservedPoint> data = DataFile.points(file);
-		Trio<Function<Double, Double>, String,Evaluation> f = Fitting.fitCurve(data, FittingType.POWER2);
-		System.out.println(f);
-		MatPlotLib.show(file, f.first(), f.second());
+		PowerLog pl = PowerLog.of(List.of(Pair.of(2, 1.),Pair.of(3, 0.)));
+		pl.fit(data);
+		System.out.println(pl.getExpression());
+		System.out.println(pl.getEvaluation().getRMS());
+		MatPlotLib.show(file, pl.getFunction(), pl.getExpression());
 	}
 	
 	public static void showIter() {
 		String file = "ficheros_generados/fib_iter.txt";
 		List<WeightedObservedPoint> data = DataFile.points(file);
-		Trio<Function<Double, Double>, String,Evaluation> f = Fitting.fitCurve(data, FittingType.POWER2);
-		System.out.println(f);
-		MatPlotLib.show(file, f.first(), f.second());
+		PowerLog pl = PowerLog.of(List.of(Pair.of(2, 1.),Pair.of(3, 0.)));
+		pl.fit(data);
+		System.out.println(pl.getExpression());
+		System.out.println(pl.getEvaluation().getRMS());
+		MatPlotLib.show(file, pl.getFunction(), pl.getExpression());
 	}
 	
 	public static void showCombined() {
