@@ -1,6 +1,7 @@
 package us.lsi.complexity;
 
 import java.util.List;
+import java.util.Locale;
 import java.util.function.Consumer;
 import java.util.function.Function;
 
@@ -52,7 +53,7 @@ public class Factorial {
 		String file = "ficheros/factorialR.txt";
 		Consumer<Integer> c1 = t->Factorial.factorialR(t,BigFractionField.getInstance());
 		Function<Integer,Long> f1 = GenData.time(c1);
-		GenData.tiemposEjecucion(f1,file,500,10000,500,1,1);
+		GenData.tiemposEjecucion(f1,file,100,10500,500,1,1);
 	}
 	
 	public static void test3() {
@@ -68,7 +69,7 @@ public class Factorial {
 	public static void test4() {
 		String file = "ficheros/factorialR.txt";
 		List<WeightedObservedPoint> data = DataFile.points(file);
-		PowerLog pl = PowerLog.of(List.of(Pair.of(2, 1.),Pair.of(3, 0.)));
+		PowerLog pl = PowerLog.of(List.of(Pair.of(2, 1.)),2,0.,9.5,10000000.);
 		pl.fit(data);
 		System.out.println(pl.getExpression());
 		System.out.println(pl.getEvaluation().getRMS());
@@ -98,6 +99,8 @@ public class Factorial {
 	}
 
 	public static void main(String[] args) {
+		Locale.setDefault(Locale.of("en", "us"));
+//		test2();
 		test4();
 	}
 

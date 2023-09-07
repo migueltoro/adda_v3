@@ -32,7 +32,7 @@ public class Polynomial {
 		this.evaluation = this.fitter.getProblem(points).evaluate(RealVectors.toRealVector(r));
 		this.expression = IntStream.range(0, this.grado+1).boxed()
 				.map(i->String.format(i>0?"%.2f * x^%d":"%.2f",r[i],i))
-						.collect(Collectors.joining("+"));
+				.collect(Collectors.joining("+"));
 		this.function = x -> this.value(x, r);
 		return r;
 	}

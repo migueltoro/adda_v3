@@ -20,15 +20,15 @@ class PowerLogFixingValues  extends PowerLog {
 		return new PowerLogFixingValues(fixedParams);
 	}
 	
-	private List<Pair<Integer,Double>> fixedParamsValues = null;
-	public IntegerSet fixedParams = null;
-	public IntegerSet freeParams = null;
-	private Integer numFreeParameters;
-	public double[] parameters = null;
-	public double[] initialParameters = null;
-	public Function<Double, Double> function = null;
+	protected List<Pair<Integer,Double>> fixedParamsValues = null;
+	protected IntegerSet fixedParams = null;
+	protected IntegerSet freeParams = null;
+	protected Integer numFreeParameters;
+	protected double[] parameters = null;
+	protected double[] initialParameters = null;
+	protected Function<Double, Double> function = null;
 
-	public PowerLogFixingValues(List<Pair<Integer,Double>> fixedParamsvalues) {
+	protected PowerLogFixingValues(List<Pair<Integer,Double>> fixedParamsvalues) {
 		super();
 		this.fixedParamsValues = fixedParamsvalues;
 		this.fixedParams = fixedParamsvalues.stream().map(p->p.first()).collect(Collectors2.toIntegerSet());

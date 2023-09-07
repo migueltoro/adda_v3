@@ -18,8 +18,13 @@ import us.lsi.common.Pair;
  */
 public class PowerLog implements ParametricUnivariateFunction {
 	
-	public static PowerLog of(List<Pair<Integer,Double>> fixedParams) {
+	public static PowerLog of(List<Pair<Integer, Double>> fixedParams) {
 		return PowerLogFixingValues.of(fixedParams);
+	}
+
+	public static PowerLog of(List<Pair<Integer, Double>> fixedParamsvalues, Integer cp, Double minPv, Double maxPv,
+			Double k) {
+		return PowerLogFixingConsValues.of(fixedParamsvalues, cp, minPv, maxPv, k);
 	}
 	
 	protected SimpleCurveFitter2 fitter = null;		
