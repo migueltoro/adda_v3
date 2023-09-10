@@ -25,6 +25,33 @@ Se ofrecen tres familias de curvas para ajustar a ellas un nube de puntos leído
 	
 - La clase PowerLog ajusta $a*n^b*(ln n)^c + d$ a una nube de puntos. Esta clase tiene métodos de factoría que permiten especficar valorés concretos para alguno d elos parámetros o indicar el rango de valores permitido para otros.
 
+Cada una de las clases anteriores implementa si son necesaios los métodos del interface:
+
+```java
+public interface Fit {
+	double[] gradient(double n, double... p);
+	double value(double n, double... p);
+	double[] fit(List<WeightedObservedPoint> points);
+	Evaluation getEvaluation();
+	String getExpression();
+	Function<Double, Double> getFunction();
+	void print(double n, double... p);
+}
+```
+
+El tipo Evaluation de Apache contiene los métodos:
+
+```java
+public interface Evaluation {
+	RealMatrix getCovariances(double threshold);
+	RealVector getSigma(double covarianceSingularityThreshold);
+	double getRMS();
+	RealMatrix getJacobian();
+	double getCost();
+	RealVector getResiduals();
+	RealVector getPoint();
+}
+```
 
 ## Representación gráfica
 

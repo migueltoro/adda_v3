@@ -14,7 +14,7 @@ import org.apache.commons.math3.fitting.leastsquares.LeastSquaresProblem.Evaluat
  *
  * Función de la forma a*b^n
  */
-public class Exponential implements ParametricUnivariateFunction {
+public class Exponential implements ParametricUnivariateFunction, Fit {
 	
 	private SimpleCurveFitter2 fitter = null;		
 	private Evaluation evaluation;

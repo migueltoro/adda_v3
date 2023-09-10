@@ -1,7 +1,7 @@
 package us.lsi.curvefitting;
 
 /*
- *  Clase adpatada de org.apache.commons.math3.fitting.PolynomialCurveFitter;
+ *  Clase adaptada de org.apache.commons.math3.fitting.PolynomialCurveFitter;
  *  
 002 * Licensed to the Apache Software Foundation (ASF) under one or more
 003 * contributor license agreements.  See the NOTICE file distributed with

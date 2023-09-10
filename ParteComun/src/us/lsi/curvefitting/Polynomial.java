@@ -9,7 +9,7 @@ import org.apache.commons.math3.analysis.polynomials.PolynomialFunction;
 import org.apache.commons.math3.fitting.WeightedObservedPoint;
 import org.apache.commons.math3.fitting.leastsquares.LeastSquaresProblem.Evaluation;
 
-public class Polynomial {
+public class Polynomial implements Fit{
 	
 	public static Polynomial of(Integer grado) {
 		return new Polynomial(grado);
@@ -55,6 +55,16 @@ public class Polynomial {
 
 	public double value(double n, double... p) {
 		return new PolynomialFunction(p).value(n);
+	}
+
+	@Override
+	public double[] gradient(double n, double... p) {
+		return null;
+	}
+
+	@Override
+	public void print(double n, double... p) {
+		
 	}
 	
 }

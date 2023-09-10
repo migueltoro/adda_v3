@@ -8,6 +8,7 @@ import org.apache.commons.math3.fitting.WeightedObservedPoint;
 
 import us.lsi.common.Pair;
 import us.lsi.curvefitting.DataFile;
+import us.lsi.curvefitting.Fit;
 import us.lsi.curvefitting.GenData;
 import us.lsi.curvefitting.PowerLog;
 import us.lsi.graphics.MatPlotLib;
@@ -39,7 +40,7 @@ public class TestEjemplo1 {
 	public static void showPr() {
 		String file = "ficheros_generados/pr.txt";
 		List<WeightedObservedPoint> data = DataFile.points(file);
-		PowerLog pl = PowerLog.of(List.of(Pair.of(2, 0.),Pair.of(3, 0.)));
+		Fit pl = PowerLog.of(List.of(Pair.of(2, 0.),Pair.of(3, 0.)));
 		pl.fit(data);
 		System.out.println(pl.getExpression());
 		System.out.println(pl.getEvaluation().getRMS());
@@ -49,7 +50,7 @@ public class TestEjemplo1 {
 	public static void showLin() {
 		String file = "ficheros_generados/lin.txt";
 		List<WeightedObservedPoint> data = DataFile.points(file);
-		PowerLog pl = PowerLog.of(List.of(Pair.of(2, 0.),Pair.of(3, 0.)));
+		Fit pl = PowerLog.of(List.of(Pair.of(2, 0.),Pair.of(3, 0.)));
 		pl.fit(data);
 		System.out.println(pl.getExpression());
 		System.out.println(pl.getEvaluation().getRMS());

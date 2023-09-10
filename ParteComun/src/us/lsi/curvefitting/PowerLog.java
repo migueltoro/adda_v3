@@ -16,13 +16,13 @@ import us.lsi.common.Pair;
  * Una curva de la forma a*n^b*(ln n)^c + d
  *
  */
-public class PowerLog implements ParametricUnivariateFunction {
+public class PowerLog implements ParametricUnivariateFunction, Fit {
 	
-	public static PowerLog of(List<Pair<Integer, Double>> fixedParams) {
+	public static Fit of(List<Pair<Integer, Double>> fixedParams) {
 		return PowerLogFixingValues.of(fixedParams);
 	}
 
-	public static PowerLog of(List<Pair<Integer, Double>> fixedParamsvalues, Integer cp, Double minPv, Double maxPv,
+	public static Fit of(List<Pair<Integer, Double>> fixedParamsvalues, Integer cp, Double minPv, Double maxPv,
 			Double k) {
 		return PowerLogFixingConsValues.of(fixedParamsvalues, cp, minPv, maxPv, k);
 	}
@@ -63,6 +63,7 @@ public class PowerLog implements ParametricUnivariateFunction {
 		return a*Math.pow(n,b)*Math.pow(Math.log(n),c) + d;
 	}
 	
+	@Override
 	public double[] fit(List<WeightedObservedPoint> points) {
 		double[] r = this.fitter.fit(points);
 		this.evaluation = this.fitter.getProblem(points).evaluate(RealVectors.toRealVector(r));
@@ -71,17 +72,21 @@ public class PowerLog implements ParametricUnivariateFunction {
 		return r;
 	}
 	
+	@Override
 	public Evaluation getEvaluation() {
 		return evaluation;
 	}
 	
+	@Override
 	public String getExpression() {
 		return expression;
 	}
 	
+	@Override
 	public Function<Double, Double> getFunction() {
 		return function;
 	}
+	@Override
 	public void print(double n, double... p) {
 		String r = String.format("Values: n = %.2f,a = %.2f,b = %.2f,c = %.2f,d = %.2f",n, p[0],p[1],p[2],p[3]);
 		System.out.println(r);

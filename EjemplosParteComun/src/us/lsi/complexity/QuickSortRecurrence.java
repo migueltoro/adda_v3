@@ -16,6 +16,7 @@ import org.apache.commons.math3.random.RandomDataGenerator;
 import us.lsi.common.Files2;
 import us.lsi.common.Trio;
 import us.lsi.curvefitting.DataFile;
+import us.lsi.curvefitting.Fit;
 import us.lsi.curvefitting.PowerLog;
 import us.lsi.graphics.MatPlotLib;
 
@@ -63,7 +64,7 @@ public class QuickSortRecurrence {
 	
 	public static void test2(String file) {
 		List<WeightedObservedPoint> data = DataFile.points(file);
-		PowerLog pl = PowerLog.of(List.of());
+		Fit pl = PowerLog.of(List.of());
 		pl.fit(data);
 		System.out.println(pl.getEvaluation().getRMS());
 		System.out.println(pl.getExpression());

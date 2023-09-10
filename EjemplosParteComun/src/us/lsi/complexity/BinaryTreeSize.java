@@ -14,6 +14,7 @@ import us.lsi.colors.GraphColors;
 import us.lsi.common.Files2;
 import us.lsi.common.Pair;
 import us.lsi.curvefitting.DataFile;
+import us.lsi.curvefitting.Fit;
 import us.lsi.curvefitting.PowerLog;
 import us.lsi.graphics.MatPlotLib;
 import us.lsi.tiposrecursivos.BinaryTree;
@@ -58,7 +59,7 @@ public class BinaryTreeSize {
 
 	public static void test2(String file) {
 		List<WeightedObservedPoint> data = DataFile.points(file);
-		PowerLog pl = PowerLog.of(List.of(Pair.of(1, 0.)));
+		Fit pl = PowerLog.of(List.of(Pair.of(1, 0.)));
 		pl.fit(data);
 		System.out.println(pl.getExpression());
 		System.out.println(pl.getEvaluation().getRMS());

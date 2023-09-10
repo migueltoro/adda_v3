@@ -12,6 +12,7 @@ import org.apache.commons.math3.fraction.BigFractionField;
 
 import us.lsi.common.Pair;
 import us.lsi.curvefitting.DataFile;
+import us.lsi.curvefitting.Fit;
 import us.lsi.curvefitting.GenData;
 import us.lsi.curvefitting.PowerLog;
 import us.lsi.graphics.CanvasPlot;
@@ -59,7 +60,7 @@ public class Factorial {
 	public static void test3() {
 		String file = "ficheros/factorialI.txt";
 		List<WeightedObservedPoint> data = DataFile.points(file);
-		PowerLog pl = PowerLog.of(List.of(Pair.of(2, 1.),Pair.of(3, 0.)));
+		Fit pl = PowerLog.of(List.of(Pair.of(2, 1.),Pair.of(3, 0.)));
 		pl.fit(data);
 		System.out.println(pl.getExpression());
 		System.out.println(pl.getEvaluation().getRMS());
@@ -69,7 +70,7 @@ public class Factorial {
 	public static void test4() {
 		String file = "ficheros/factorialR.txt";
 		List<WeightedObservedPoint> data = DataFile.points(file);
-		PowerLog pl = PowerLog.of(List.of(Pair.of(2, 1.)),2,0.,9.5,10000000.);
+		Fit pl = PowerLog.of(List.of(Pair.of(2, 1.)),2,0.,9.5,10000000.);
 		pl.fit(data);
 		System.out.println(pl.getExpression());
 		System.out.println(pl.getEvaluation().getRMS());
@@ -85,7 +86,7 @@ public class Factorial {
 	public static void test6() {
 		String file = "ficheros/factorialR.txt";
 		List<WeightedObservedPoint> data = DataFile.points(file);
-		PowerLog pl = PowerLog.of(List.of());
+		Fit pl = PowerLog.of(List.of());
 		pl.fit(data);
 		System.out.println(pl.getExpression());
 		System.out.println(pl.getEvaluation().getRMS());
