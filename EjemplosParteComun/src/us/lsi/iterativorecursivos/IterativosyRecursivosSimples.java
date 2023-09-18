@@ -24,6 +24,7 @@ import us.lsi.common.Enumerate;
 import us.lsi.common.IntPair;
 import us.lsi.common.List2;
 import us.lsi.common.LongPair;
+import us.lsi.common.Pair;
 import us.lsi.common.Preconditions;
 import us.lsi.common.Printers;
 import us.lsi.common.String2;
@@ -702,23 +703,22 @@ public class IterativosyRecursivosSimples {
 	}
 	
 	
-	public static List<LongPair> primosPar(Long m, Long n, Integer k) {
+	public static List<Pair<Long,Long>> primosPar(Long m, Long n, Integer k) {
 		Stream<Long> r = Stream.iterate(Math2.siguientePrimo(m - 1), x -> x < n, x -> Math2.siguientePrimo(x));
-		List<LongPair> r2 = 
+		List<Pair<Long,Long>> r2 = 
 				Stream2.consecutivePairs(r)
-				.map(p->LongPair.of(p))
 				.filter(t -> t.second() - t.first() == k)
 				.toList();
 		return r2;
 	}
 
 
-	public static List<LongPair> primosPar2(Long m, Long n, Integer k) {
-		List<LongPair> r = new ArrayList<>();
+	public static List<Pair<Long,Long>> primosPar2(Long m, Long n, Integer k) {
+		List<Pair<Long,Long>> r = new ArrayList<>();
 		Long e1 = null;
 		Long e2 = Math2.siguientePrimo(m - 1);		
 		while(e2<n) {
-			LongPair p = LongPair.of(e1, e2);
+			Pair<Long,Long> p = Pair.of(e1, e2);
 			e1 = e2;
 			e2 = Math2.siguientePrimo(e2);
 			if(p.first() != null && p.second() - p.first() == k) {
