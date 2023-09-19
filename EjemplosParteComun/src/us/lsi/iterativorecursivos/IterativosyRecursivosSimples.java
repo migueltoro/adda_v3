@@ -211,10 +211,8 @@ public class IterativosyRecursivosSimples {
 		Integer n = ls.size();
 		Integer b = -1;
 		while(i < n && b == -1){
-		   E e = ls.get(i);
-		   Integer r = i;
+		   if(elem.equals(ls.get(i))) b = i;
 		   i = i+1;
-		   if(e.equals(elem)) b = r;
 		}
 		return b;
 	}
@@ -303,7 +301,7 @@ public class IterativosyRecursivosSimples {
 		while(itt.hasNext() && b == -1){
 		   T a = itt.next();
 		   if(a.equals(e)) b = i;
-		   i = i +1;
+		   i = i + 1;
 		}
 		return b;
 	}
@@ -371,7 +369,7 @@ public class IterativosyRecursivosSimples {
 	
 	public static boolean esPalindromo2(String p) {
 		int i = 0;
-		int j= p.length();
+		int j = p.length();
 		Boolean b = true;
 		while(j - i > 1 && b) {	
 			i = i + 1;
