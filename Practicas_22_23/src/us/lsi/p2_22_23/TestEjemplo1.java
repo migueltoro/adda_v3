@@ -13,7 +13,6 @@ import us.lsi.curvefitting.GenData;
 import us.lsi.curvefitting.PowerLog;
 import us.lsi.graphics.MatPlotLib;
 
-
 import us.lsi.iterativorecursivos.IterativosyRecursivosSimples;
 
 public class TestEjemplo1 {
