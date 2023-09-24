@@ -1,5 +1,4 @@
-package us.lsi.p4_22_23.ejemplo2;
-
+package us.lsi.p3_22_23.ejemplo_3;
 
 import java.util.List;
 import java.util.Locale;
@@ -7,8 +6,7 @@ import java.util.Locale;
 import us.lsi.ag.agchromosomes.AlgoritmoAG;
 import us.lsi.ag.agstopping.StoppingConditionFactory;
 
-
-public class TestSubconjuntosAGBinary {
+public class TestAlumnosAGRange {
 
 	public static void main(String[] args) {
 		Locale.setDefault(Locale.of("en", "US"));
@@ -21,9 +19,9 @@ public class TestSubconjuntosAGBinary {
 		StoppingConditionFactory.NUM_GENERATIONS = 5000;
 		StoppingConditionFactory.stoppingConditionType = StoppingConditionFactory.StoppingConditionType.GenerationCount;
 		
-		BinSubconjuntoAG p = new BinSubconjuntoAG("ficheros/Ejemplo2DatosEntrada1.txt");
+		InRangeAlumnosAG p = new InRangeAlumnosAG("ficheros/p4/ejemplo3_3.txt");
 		
-		AlgoritmoAG<List<Integer>,SolucionSubconjunto> ap = AlgoritmoAG.of(p);
+		AlgoritmoAG<List<Integer>,SolucionAlumnos> ap = AlgoritmoAG.of(p);
 		ap.ejecuta();
 		
 		System.out.println("================================");

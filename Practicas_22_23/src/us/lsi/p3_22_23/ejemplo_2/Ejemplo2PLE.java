@@ -1,4 +1,4 @@
-package us.lsi.p4_22_23.ejemplo2;
+package us.lsi.p3_22_23.ejemplo_2;
 
 
 import java.io.IOException;
@@ -7,7 +7,7 @@ import java.util.Locale;
 
 import us.lsi.gurobi.GurobiLp;
 import us.lsi.gurobi.GurobiSolution;
-import us.lsi.p4_22_23.ejemplo2.DatosSubconjunto.Subconjunto;
+import us.lsi.p3_22_23.ejemplo_2.DatosSubconjunto.Subconjunto;
 import us.lsi.solve.AuxGrammar;
 
 public class Ejemplo2PLE {
@@ -29,13 +29,13 @@ public class Ejemplo2PLE {
 	}
 	
 	public static void ejemplo2_model() throws IOException {
-		DatosSubconjunto.iniDatos("ficheros/Ejemplo2DatosEntrada2.txt");
+		DatosSubconjunto.iniDatos("ficheros/p4/ejemplo2_1.txt");
 		
 		subconjuntos = DatosSubconjunto.getSubconjuntos();
 		universo = DatosSubconjunto.getUniverso();
 		
-		AuxGrammar.generate(Ejemplo2PLE.class,"lsi_models/Ejemplo2.lsi","gurobi_models/Ejemplo2-2.lp");
-		GurobiSolution solution = GurobiLp.gurobi("gurobi_models/Ejemplo2-2.lp");
+		AuxGrammar.generate(Ejemplo2PLE.class,"modelos/ejemplo2.lsi","gurobi_models/ejemplo2-2.lp");
+		GurobiSolution solution = GurobiLp.gurobi("gurobi_models/ejemplo2-2.lp");
 		Locale.setDefault(Locale.of("en", "US"));
 		System.out.println(solution.toString((s,d)->d>0.));
 	}

@@ -9,8 +9,11 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.io.File;
 
 import org.mozilla.universalchardet.UniversalDetector;
+
+import us.lsi.common.Preconditions;
 
 public class FileTools {
 	
@@ -73,6 +76,39 @@ public class FileTools {
 			System.out.println(e.toString());
 		}
 		return lineas.stream().collect(Collectors.joining("\n"));
+	}
+	
+	public static String projectRoot() {
+		return System.getProperty("user.dir");
+	}
+	
+	public static String absolutePath(String file) {
+		String absolute = null;
+		try {
+            File f = new File(file);
+            absolute = f.getAbsolutePath();
+        }
+        catch (Exception e) {
+            Preconditions.checkArgument(false, absolute);
+        }
+		return absolute;
+	}
+	
+	public static Boolean existFile(String file) {
+		Boolean r = true;
+		try {
+            new File(file);
+        }
+        catch (Exception e) {
+            r= false;
+        }
+		return r;
+	}
+	
+	public static void main(String[] args) {
+		System.out.println(existFile("ficheros/acciones.txt"));
+		System.out.println(absolutePath("ficheros/acciones.txt"));
+		System.out.println(projectRoot());
 	}
 
 }

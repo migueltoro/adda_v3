@@ -20,7 +20,7 @@ public class TestEjemplo2 {
 	public static void testsEjemplo2(String file, String origen, String destino) {
 		
 		SimpleWeightedGraph<Ciudad,Carretera> g =  
-				GraphsReader.newGraph("ficheros/" + file + ".txt",
+				GraphsReader.newGraph("ficheros/p3/" + file + ".txt",
 						Ciudad::ofFormat, 
 						Carretera::ofFormat,
 						Graphs2::simpleWeightedGraph,
@@ -30,16 +30,10 @@ public class TestEjemplo2 {
 
 		
 		System.out.println("Apartado A):");
-		Ejemplo2.apartadoA(g, file);
+		Ejemplo2.apartadoA(g, file, origen, destino);
 		
 		System.out.println("Apartado B):");
-		Ejemplo2.apartadoB(g, file, origen, destino);
-		
-		System.out.println("Apartado C):");
-		Ejemplo2.apartadoC(g, file);
-		
-		System.out.println("Apartado D):");
-		Ejemplo2.apartadoD(g, file);
+		Ejemplo2.apartadoB(g, file);
 		
 	}
 

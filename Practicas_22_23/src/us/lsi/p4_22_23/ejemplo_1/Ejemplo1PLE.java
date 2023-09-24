@@ -1,4 +1,4 @@
-package us.lsi.p4_22_23.ejemplo1;
+package us.lsi.p4_22_23.ejemplo_1;
 
 import java.io.IOException;
 import java.util.List;
@@ -30,13 +30,15 @@ public class Ejemplo1PLE {
 	}
 	
 	public static void ejemplo1_model() throws IOException {
-		DatosMulticonjunto.iniDatos("ficheros/Ejemplo1DatosEntrada2.txt");
+		DatosMulticonjunto.iniDatos("ficheros/p4/ejemplo1_1.txt");
+//		DatosMulticonjunto.iniDatos("ficheros/Ejemplo1DatosEntrada2.txt");
 
 		suma = DatosMulticonjunto.getSuma();
 		elementos = DatosMulticonjunto.getListaNumeros();
 		
 		//si cambia el fichero de datos de entrada, cambiar tambien el nº del .lp para no sobreescribirlo
-		AuxGrammar.generate(Ejemplo1PLE.class,"lsi_models/Ejemplo1.lsi","gurobi_models/Ejemplo1-2.lp");
+//		AuxGrammar.generate(Ejemplo1PLE.class,"lsi_models/Ejemplo1.lsi","gurobi_models/Ejemplo1-2.lp");
+		AuxGrammar.generate(Ejemplo1PLE.class,"modelos/ejemplo1.lsi","gurobi_models/Ejemplo1-2.lp");
 		GurobiSolution solution = GurobiLp.gurobi("gurobi_models/Ejemplo1-2.lp");
 		Locale.setDefault(Locale.of("en", "US"));
 		System.out.println(solution.toString((s,d)->d>0.));

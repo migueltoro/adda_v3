@@ -71,7 +71,54 @@ public class Ejemplo3 {
 		return r;
 	}
 
+	public static <E extends Comparable<? super E>> Integer busquedaLinealOrdI2(List<E> ls, E elem) {
+		return busquedaLinealOrdI2(ls, elem, Comparator.naturalOrder());
+	}
 	
+	public static <E> Integer busquedaLinealOrdI2(List<E> ls, E elem, Comparator<E> cmp) {
+		Integer r = -1;
+		Integer i = 0;
+		Boolean fin = false;
+		Iterator<E> iterator = ls.iterator();
+		while (iterator.hasNext() && !fin) {
+			E e = iterator.next();
+	      	if (cmp.compare(elem, e) <= 0) {
+	      		if (cmp.compare(elem, e) == 0)
+	      			r = i;
+	      		else
+	      			r = -1;
+	      		fin = true;
+	      	}
+	   		else i++;
+		}
+		return r;
+	}
+
+	public static <E extends Comparable<? super E>> Integer busquedaLinealOrdI3(List<E> ls, E elem) {
+		return busquedaLinealOrdI2(ls, elem, Comparator.naturalOrder());
+	}
+	
+	public static <E> Integer busquedaLinealOrdI3(List<E> ls, E elem, Comparator<E> cmp) {
+		Integer r = -1;
+		Integer i = 0;
+		Boolean fin = false;
+		Iterator<E> iterator = ls.iterator();
+		while (iterator.hasNext() && !fin) {
+			E e = iterator.next();
+			if (cmp.compare(elem, e) > 0) 
+				i++;
+			else {
+				if (cmp.compare(elem, e) == 0)
+					r = i;
+				else
+					r = -1;
+	      		fin = true;
+	      	}
+		}
+		return r;
+	}
+
+		
 	
 	public static <E extends Comparable<? super E>> Integer busquedaLinealOrdR(List<E> ls, E elem) {
 		return busquedaLinealOrdR(ls, elem, Comparator.naturalOrder());

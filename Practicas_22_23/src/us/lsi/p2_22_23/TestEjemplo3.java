@@ -1,6 +1,7 @@
 package us.lsi.p2_22_23;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Random;
 import java.util.function.Consumer;
@@ -24,158 +25,94 @@ public class TestEjemplo3 {
 	usando en los casos que correspondan listas ordenadas o desordenadas.
 	*/
 
-//	public static <E> Integer busquedaLineal(List<E> ls, E elem) {
-//		Integer i = 0;
-//		Boolean b = false;
-//		while (i < ls.size() && !b) {
-//			if (ls.get(i).equals(elem)) {
-//				b = true;
-//			} else {
-//				i++;
-//			}
-//		}
-//		return b?i:-1;
-//	}
-//	
-//	public static <E> Integer busquedaLinealR(List<E> ls, E elem) {
-//		return busquedaLinealR(0,ls,elem);
-//	}
-//	
-//	private static <E> Integer busquedaLinealR(Integer i, List<E> ls, E elem) {
-//	 	Integer b = -1;
-//	 	Integer n = ls.size();
-//		if(n-i> 0){
-//			if (ls.get(i).equals(elem)) b = i;
-//	    		else b = busquedaLinealR(i+1,ls,elem);
-//		}
-//		return b;
-//	}
-//
-//	public static <E> Integer busquedaLinealFun(List<E> ls, E elem) {
-//		return IntStream.range(0, ls.size())
-//				.map(i-> elem.equals(ls.get(i))?i:-1)
-//				.filter(i-> i>-1)
-//				.findFirst().orElse(-1);
-//	}
-//	
-//	public static <E> Integer busquedaLinealOrdI(List<E> ls, E elem, Comparator<E> c) {
-//		Integer r = -1;
-//		Integer i = 0;
-//		Boolean fin = false;
-//		Iterator<E> iterator = ls.iterator();
-//		while (iterator.hasNext() && !fin) {
-//			E e = iterator.next();
-//	      	if (c.compare(elem, e) == 0) {
-//	      		r = i;
-//	      		fin = true;
-//	      	} else if(c.compare(elem, e) < 0) {
-//	      		r = -1;
-//	      		fin = true;
-//	      	}
-//	   		else i++;
-//		}
-//		return r;
-//	}
-//
-//	
-//	public static <E> Integer busquedaLinealOrdR(List<E> ls, E elem, Comparator<E> comparator) {
-//		return busquedaLinealOrdR(0,ls.iterator(),elem,comparator);
-//	}
-//	
-//	private static <E> Integer busquedaLinealOrdR(Integer i, Iterator<E> iterator, E elem, Comparator<? super E> c) {
-//		Integer r = -1;
-//		if(iterator.hasNext()){
-//			E e = iterator.next();
-//	      	if (c.compare(elem, e) == 0) r = i;
-//			else if(c.compare(elem, e) < 0) r = -1;
-//	   		else r = busquedaLinealOrdR(i+1,iterator,elem,c);
-//		}
-//		return r;
-//	}
-//	
-//	public static <E> Integer busquedaBinaria(List<E> ls, E elem, Comparator<E> comparator) {
-//		Integer i = 0;
-//		Integer j = ls.size();
-//		Integer k = (i+j)/2;
-//		Integer r = -1;
-//		while (j-i> 0 && r==-1) {
-//			if (comparator.compare(elem, ls.get(k)) == 0) r = k;
-//			else if (comparator.compare(elem, ls.get(k)) < 0) {
-//				j = k;
-//				k = (i+j)/2;
-//			} else {
-//				i = k+1;
-//				k = (i+j)/2;
-//			}
-//		}
-//		return r;
-//	}
-//	
-//	public static <E> Integer busquedaBinariaR(List<E> ls, E elem, Comparator<E> c) {
-//		Integer n = ls.size();
-//		return busquedaBinariaR(0,n,ls,elem, c);
-//	}
-//	
-//	private static <E> Integer busquedaBinariaR(Integer i, Integer j, List<E> ls, E elem, Comparator<E> c) {
-//	 	Integer r = -1;
-//		if(j-i> 0){
-//			Integer k = (j+i)/2;
-//			if (c.compare(elem, ls.get(k)) == 0) r = k;
-//			else if (c.compare(elem, ls.get(k)) < 0) 
-//				r = busquedaBinariaR(i,k,ls,elem,c);
-//			else r = busquedaBinariaR(k+1,j,ls,elem,c); 
-//		}
-//		return r;
-//	}
 	
 	private static Random rr = new Random(System.nanoTime());
-	private static List<Integer> list;
+	private static List<Integer> list = List.of();
+	private static List<String> ficheros = new ArrayList<String>();
+	private static List<Fit> curvas = new ArrayList<Fit>();
 	
-	public static void generaListaEnteros(Integer t) {
+//	private static void preparaDatos() {
+//		list = null;
+//	}
+
+	public static void generaListaEnteros(Integer t, Boolean ord) {
 		List <Integer> ls = new ArrayList<Integer>();
 		for (int i=0;i<t;i++) {
-			ls.add(rr.nextInt(1000000));
+			ls.add(rr.nextInt(t*1000));
 		}
+		if (ord)
+			ls.sort(Comparator.naturalOrder());
 		list = ls;
 	}
 	
 	private static Integer e;
-	private static Consumer<Integer> pre = t -> {
-		e = rr.nextInt(1000000);
-		generaListaEnteros(t);
-	};
 	
+	private static Consumer<Integer> pre_noord = t -> {
+		e = rr.nextInt(t*1000);
+		if (t != list.size())
+			generaListaEnteros(t,false);
+	};
+
+	private static Consumer<Integer> pre_ord = t -> {
+		e = rr.nextInt(t*1000);
+		if (t != list.size())
+			generaListaEnteros(t,true);
+	};
+
+
 	
 	public static void genDatos() {
 		String file = "ficheros_generados/busquedaBinaria.txt";
-		Function<Integer,Long> f1 = GenData.time(pre,t ->Ejemplo3.busquedaBinaria(list,e));
-		GenData.tiemposEjecucion(f1,file,50,100000,500,30,5);
-		file = "ficheros_generados/busquedaLineal.txt";
-		f1 = GenData.time(pre,t ->Ejemplo3.busquedaLineal(list,e));
-		GenData.tiemposEjecucion(f1,file,50,100000,500,30,5);
+		ficheros.add(file);
+		Function<Integer,Long> f1 = GenData.time(pre_ord,t ->Ejemplo3.busquedaBinaria(list,e));
+		GenData.tiemposEjecucion(f1,file,50,100000,500,30,t->t<100?1000000:10000);
+		file = "ficheros_generados/busquedaLineal_noord.txt";
+		ficheros.add(file);
+		f1 = GenData.time(pre_noord,t ->Ejemplo3.busquedaLineal(list,e));
+		GenData.tiemposEjecucion(f1,file,50,100000,500,100,t->(int)(1000-0.005*t));
+		file = "ficheros_generados/busquedaLineal_ord.txt";
+		ficheros.add(file);
+		f1 = GenData.time(pre_ord,t ->Ejemplo3.busquedaLinealOrdI(list,e));
+		GenData.tiemposEjecucion(f1,file,50,100000,500,100,t->(int)(1000-0.005*t));
+//		file = "ficheros_generados/busquedaLineal_noord.txt";
+//		ficheros.add(file);
+//		f1 = GenData.time(pre_noord,t ->Ejemplo3.busquedaLineal(list,e));
+//		GenData.tiemposEjecucion(f1,file,50,100000,500,900,t->(int)(10000-0.05*t));
+//		file = "ficheros_generados/busquedaLineal_ord.txt";
+//		ficheros.add(file);
+//		f1 = GenData.time(pre_ord,t ->Ejemplo3.busquedaLinealOrdI(list,e));
+//		GenData.tiemposEjecucion(f1,file,50,100000,500,900,t->(int)(10000-0.05*t));
+	}
+
+	
+	public static Fit show(String file, String busqueda, List<Pair<Integer,Double>> lp) {
+		List<WeightedObservedPoint> data = DataFile.points(file);
+		Fit pl = PowerLog.of(lp);
+		pl.fit(data);
+		System.out.println(pl.getExpression());
+		System.out.println(pl.getEvaluation().getRMS());
+		MatPlotLib.show(file, pl.getFunction(), busqueda+ " = " + pl.getExpression());
+		return pl;
 	}
 	
 	public static void show() {
-		String file = "ficheros_generados/busquedaBinaria.txt";
-		List<WeightedObservedPoint> data = DataFile.points(file);
-		Fit pl = PowerLog.of(List.of(Pair.of(2, 1.),Pair.of(3, 0.)));
-		pl.fit(data);
-		System.out.println(pl.getExpression());
-		System.out.println(pl.getEvaluation().getRMS());
-		MatPlotLib.show(file, pl.getFunction(), pl.getExpression());
-		file = "ficheros_generados/busquedaLineal.txt";
-		data = DataFile.points(file);
-		pl = PowerLog.of(List.of(Pair.of(2, 1.),Pair.of(3, 0.)));
-		pl.fit(data);
-		System.out.println(pl.getExpression());
-		System.out.println(pl.getEvaluation().getRMS());
-		MatPlotLib.show(file, pl.getFunction(), pl.getExpression());
+		curvas.add(show(ficheros.get(0),"bin",List.of(Pair.of(2, 1.),Pair.of(3, 0.))));
+		curvas.add(show(ficheros.get(1),"lin no ord",List.of(Pair.of(1, 1.),Pair.of(2, 0.),Pair.of(3, 0.))));
+		curvas.add(show(ficheros.get(2),"lin ord",List.of(Pair.of(1, 1.),Pair.of(2, 0.),Pair.of(3, 0.))));
 	}
+	
+	public static void combined(List<Fit> pls) {
+		MatPlotLib.showCombined("Tiempos",
+				ficheros,				
+				pls.stream().map(pl->pl.getFunction()).toList(),
+				List.of("Binaria","Lineal_noord","Lineal_ord"));
+	}
+
 	
 	public static void combined() {
 		MatPlotLib.showCombined("Tiempos",
-				List.of("ficheros/busquedaLineal.txt","ficheros/busquedaBinaria.txt"), 
-				List.of("Lineal","Binaria"));
+				ficheros, 
+				List.of("Binaria","Lineal_noord","Lineal_ord"));
 	}
 	
 
@@ -183,6 +120,7 @@ public class TestEjemplo3 {
 		genDatos();
 		show();
 		combined();
+		combined(curvas);
 	}
 
 }

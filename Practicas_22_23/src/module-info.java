@@ -10,4 +10,6 @@ module practicas_22_23 {
 	requires transitive grafos;
 	requires transitive solve;
 	requires transitive geneticos;
+	requires ejemplos_parte_comun;
+	requires ejemplos_algoritmos;
 }

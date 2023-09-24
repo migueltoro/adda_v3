@@ -1,4 +1,4 @@
-package us.lsi.p4_22_23.ejemplo3;
+package us.lsi.p3_22_23.ejemplo_3;
 
 import java.util.List;
 import java.util.stream.Collectors;

@@ -64,4 +64,29 @@ public class MatPlotLib {
 		}
 	}
 
+	public static void showCombined(String header, List<String> files, List<Function<Double, Double>> functions, List<String> labels) {
+
+		Plot plt = Plot.create();
+		plt.title(header);
+		for (int i = 0; i < files.size(); i++) {
+			String label = labels.get(i);
+			String file = files.get(i);
+			Function<Double,Double> f = functions.get(i);
+			List<WeightedObservedPoint> points = DataFile.points(file);
+			List<Double> lx = points.stream().map(p -> p.getX()).toList();
+			List<Double> ajuste = points.stream().map(p -> f.apply(p.getX())).toList();
+			plt.plot().add(lx, ajuste).label(label).linestyle("-");
+		}
+
+		plt.legend();
+		plt.xlabel("tamano");
+		plt.ylabel("tiempo");
+		try {
+			plt.show();
+		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (PythonExecutionException e) {
+			e.printStackTrace();
+		}
+	}
 }

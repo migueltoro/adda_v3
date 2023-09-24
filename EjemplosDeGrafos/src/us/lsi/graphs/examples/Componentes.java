@@ -21,7 +21,7 @@ public class Componentes {
 	
 	
 	public static void main(String[] args) {
-		Locale.setDefault(new Locale("en", "US"));
+		Locale.setDefault(Locale.of("en", "US"));
 
 		Graph<Ciudad,Carretera> graph =  
 				GraphsReader.newGraph("ficheros/andalucia.txt",

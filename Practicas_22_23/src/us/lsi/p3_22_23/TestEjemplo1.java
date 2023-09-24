@@ -22,7 +22,7 @@ public class TestEjemplo1 {
 	
 	public static void testsEjemplo1(String file) {
 		Graph<Ciudad, Carretera> g = GraphsReader
-					.newGraph("ficheros/" + file + ".txt", //fichero de datos
+					.newGraph("ficheros/p3/" + file + ".txt", //fichero de datos
 							Ciudad::ofFormat, //factoria para construir los vertices
 							Carretera::ofFormat, //factoria para crear las aristas
 							Graphs2::simpleGraph); //creador del grafo

@@ -16,7 +16,7 @@ public class TestEjemplo4 {
 	
 	public static void testEjemplo4(String file) {
 		
-		Graph<String, Pasillo> grafo = GraphsReader.newGraph("ficheros/" + file + ".txt",
+		Graph<String, Pasillo> grafo = GraphsReader.newGraph("ficheros/p3/" + file + ".txt",
 			v -> v[0], Pasillo::ofFormat, Graphs2::simpleWeightedGraph, Pasillo::mts);
 		
 		System.out.println("\nArchivo " + file + ".txt \n" + "Datos de entrada: " + grafo);

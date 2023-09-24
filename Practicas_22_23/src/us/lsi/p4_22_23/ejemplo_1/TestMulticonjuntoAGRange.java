@@ -1,4 +1,4 @@
-package us.lsi.p4_22_23.ejemplo1;
+package us.lsi.p4_22_23.ejemplo_1;
 
 import java.util.List;
 import java.util.Locale;

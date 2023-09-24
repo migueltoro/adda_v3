@@ -1,10 +1,10 @@
-package us.lsi.p4_22_23.ejemplo2;
+package us.lsi.p3_22_23.ejemplo_2;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
 import us.lsi.common.List2;
-import us.lsi.p4_22_23.ejemplo2.DatosSubconjunto.Subconjunto;
+import us.lsi.p3_22_23.ejemplo_2.DatosSubconjunto.Subconjunto;
 
 public class SolucionSubconjunto {
 	

@@ -19,7 +19,7 @@ public class TestEjemplo3 {
 		Graph<String, DefaultEdge> g = 
 			Graphs2.simpleGraph(String::new, DefaultEdge::new, false);
 			
-			Files2.streamFromFile("ficheros/"+file+".txt").forEach(linea -> {
+			Files2.streamFromFile("ficheros/p3/"+file+".txt").forEach(linea -> {
 				String[] v = linea.split(",");
 				g.addVertex(v[0]);
 				g.addVertex(v[1]);
