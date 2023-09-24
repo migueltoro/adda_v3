@@ -65,15 +65,15 @@ public class TestEjemplo3 {
 		String file = "ficheros_generados/busquedaBinaria.txt";
 		ficheros.add(file);
 		Function<Integer,Long> f1 = GenData.time(pre_ord,t ->Ejemplo3.busquedaBinaria(list,e));
-		GenData.tiemposEjecucion(f1,file,50,100000,500,30,t->t<100?1000000:10000);
+		GenData.tiemposEjecucionAritmetica(f1,file,50,100000,500,30,t->t<100?1000000:10000);
 		file = "ficheros_generados/busquedaLineal_noord.txt";
 		ficheros.add(file);
 		f1 = GenData.time(pre_noord,t ->Ejemplo3.busquedaLineal(list,e));
-		GenData.tiemposEjecucion(f1,file,50,100000,500,100,t->(int)(1000-0.005*t));
+		GenData.tiemposEjecucionAritmetica(f1,file,50,100000,500,100,t->(int)(1000-0.005*t));
 		file = "ficheros_generados/busquedaLineal_ord.txt";
 		ficheros.add(file);
 		f1 = GenData.time(pre_ord,t ->Ejemplo3.busquedaLinealOrdI(list,e));
-		GenData.tiemposEjecucion(f1,file,50,100000,500,100,t->(int)(1000-0.005*t));
+		GenData.tiemposEjecucionAritmetica(f1,file,50,100000,500,100,t->(int)(1000-0.005*t));
 //		file = "ficheros_generados/busquedaLineal_noord.txt";
 //		ficheros.add(file);
 //		f1 = GenData.time(pre_noord,t ->Ejemplo3.busquedaLineal(list,e));

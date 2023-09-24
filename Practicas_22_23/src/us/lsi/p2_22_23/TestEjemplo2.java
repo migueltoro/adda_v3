@@ -18,12 +18,12 @@ public class TestEjemplo2 {
 
 	public static void genData(Consumer<Integer> algorithm,String file,Integer tMin,Integer tMax,Integer tInc,Integer numIter,Integer numIterWarmup) {
 		Function<Integer,Long> f1 = GenData.time(algorithm);
-		GenData.tiemposEjecucion(f1,file,tMin,tMax,tInc,numIter,numIterWarmup);
+		GenData.tiemposEjecucionAritmetica(f1,file,tMin,tMax,tInc,numIter,numIterWarmup);
 	}
 	
 	public static void genDataGeom(Consumer<Integer> algorithm,String file,Integer tMin,Integer tMax,Integer tInc,Integer numIter,Integer numIterWarmup) {
 		Function<Integer,Long> f1 = GenData.time(algorithm);
-		GenData.tiemposEjecucionGeom(f1,file,tMin,tMax,tInc,numIter,numIterWarmup);
+		GenData.tiemposEjecucionGeometrica(f1,file,tMin,tMax,tInc,numIter,numIterWarmup);
 	}
 	
 	public static void showPowerLog_Fixed(String file,String label,List<Pair<Integer, Double>> fixedParams) {
@@ -61,7 +61,7 @@ public class TestEjemplo2 {
 		Function<Integer,Long> f1 = GenData.time(t -> Ejemplo2.fibR(t));
 //		Integer tMin,Integer tMax,Integer tInc,Integer numIter,Integer numIterWarmup
 //		GenData.tiemposEjecucion(f1,file,500,100300,500,10,10);
-		GenData.tiemposEjecucion(f1,file,5,35,3,10,10);
+		GenData.tiemposEjecucionAritmetica(f1,file,5,35,3,10,10);
 	}
 	
 	public static void genDataRM() {
@@ -69,21 +69,21 @@ public class TestEjemplo2 {
 		Function<Integer,Long> f1 = GenData.time(t -> Ejemplo2.fibRM(t));
 //		Integer tMin,Integer tMax,Integer tInc,Integer numIter,Integer numIterWarmup
 //		GenData.tiemposEjecucion(f1,file,500,100300,500,10,10);
-		GenData.tiemposEjecucion(f1,file,500,50300,500,10,10);
+		GenData.tiemposEjecucionAritmetica(f1,file,500,50300,500,10,10);
 	}
 	
 	public static void genDataIter() {
 		String file = "ficheros_generados/fib_iter.txt";
 		Function<Integer,Long> f1 = GenData.time(t -> Ejemplo2.fibIter(t));
 //		Integer tMin,Integer tMax,Integer tInc,Integer numIter,Integer numIterWarmup
-		GenData.tiemposEjecucion(f1,file,500,100300,500,10,10);
+		GenData.tiemposEjecucionAritmetica(f1,file,500,100300,500,10,10);
 	}
 	
 	public static void genDataPotM() {
 		String file = "ficheros_generados/fib_pm.txt";
 		Function<Integer,Long> f1 = GenData.time(t -> Ejemplo2.fibonacciPotMat(t));
 //		Integer tMin,Integer tMax,Integer tInc,Integer numIter,Integer numIterWarmup
-		GenData.tiemposEjecucion(f1,file,500,100300,500,10,10);
+		GenData.tiemposEjecucionAritmetica(f1,file,500,100300,500,10,10);
 	}
 	
 	public static void showPotMat() {

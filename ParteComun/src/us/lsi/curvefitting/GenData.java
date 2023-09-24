@@ -53,7 +53,7 @@ public class GenData {
 	 * @param numIter Número de iteraciones para cada tamaño
 	 * @param numIterWarmup Número de iteraciones de warmup
 	 */
-	public static void tiemposEjecucion(Function<Integer,Long> algorithm,String ficheroTiempos,
+	public static void tiemposEjecucionAritmetica(Function<Integer,Long> algorithm,String ficheroTiempos,
 			Integer tMin,Integer tMax,Integer tInc,Integer numIter,Function<Integer,Integer> numIterWarmup) {
 		GenData.tiemposEjecucion(algorithm, ficheroTiempos, tMin, tMax, t -> t + tInc, numIter, numIterWarmup);
 	}
@@ -67,7 +67,7 @@ public class GenData {
 	 * @param numIter Número de iteraciones para cada tamaño
 	 * @param numIterWarmup Número de iteraciones de warmup
 	 */
-	public static void tiemposEjecucionGeom(Function<Integer,Long> algorithm,String ficheroTiempos,
+	public static void tiemposEjecucionGeometrica(Function<Integer,Long> algorithm,String ficheroTiempos,
 			Integer tMin,Integer tMax,Integer tInc,Integer numIter,Integer numIterWarmup) {
 		GenData.tiemposEjecucion(algorithm, ficheroTiempos, tMin, tMax, t -> t * tInc, numIter, t->numIterWarmup);
 	}
@@ -81,7 +81,7 @@ public class GenData {
 	 * @param numIter Número de iteraciones para cada tamaño
 	 * @param numIterWarmup Número de iteraciones de warmup
 	 */
-	public static void tiemposEjecucionGeom(Function<Integer, Long> algorithm, String ficheroTiempos, Integer tMin,
+	public static void tiemposEjecucionGeometrica(Function<Integer, Long> algorithm, String ficheroTiempos, Integer tMin,
 			Integer tMax, Integer tInc, Integer numIter, Function<Integer, Integer> numIterWarmup) {
 		GenData.tiemposEjecucion(algorithm, ficheroTiempos, tMin, tMax, t -> t * tInc, numIter, numIterWarmup);
 	}

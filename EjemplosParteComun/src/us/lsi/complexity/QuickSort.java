@@ -49,7 +49,7 @@ public class QuickSort {
 	 */
 	public static void test1(String file) {		
 		Function<Integer,Long> f1 = GenData.time(pre,time);
-		GenData.tiemposEjecucion(f1,file,50,50000,500,30,5);
+		GenData.tiemposEjecucionAritmetica(f1,file,50,50000,500,30,5);
 	}
 	
 	public static void test2(String file) {		

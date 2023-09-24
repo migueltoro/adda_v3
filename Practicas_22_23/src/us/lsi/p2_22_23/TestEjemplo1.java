@@ -32,14 +32,14 @@ public class TestEjemplo1 {
 		String file = "ficheros_generados/pr.txt";
 		Function<Integer,Long> f1 = GenData.time(t -> Ejemplo1.potenciaR(a,t));
 //		Integer tMin,Integer tMax,Integer tInc,Integer numIter,Integer numIterWarmup
-		GenData.tiemposEjecucion(f1,file,nMin,nMax,nIncr,nIter,nIterWarmup);
+		GenData.tiemposEjecucionAritmetica(f1,file,nMin,nMax,nIncr,nIter,nIterWarmup);
 	}
 	
 	public static void genDataLin() {
 		String file = "ficheros_generados/lin.txt";
 		Function<Integer,Long> f1 = GenData.time(t -> Ejemplo1.potenciaIter(a,t));
 //		Integer tMin,Integer tMax,Integer tInc,Integer numIter,Integer numIterWarmup
-		GenData.tiemposEjecucion(f1,file,nMin,nMax,nIncr,nIter,nIterWarmup);
+		GenData.tiemposEjecucionAritmetica(f1,file,nMin,nMax,nIncr,nIter,nIterWarmup);
 	}
 	
 	
@@ -48,7 +48,7 @@ public class TestEjemplo1 {
 		String file = "ficheros_generados/log.txt";
 		Function<Integer,Long> f1 = GenData.time(t -> IterativosyRecursivosSimples.pot(a.longValue(),t));
 //		Integer tMin,Integer tMax,Integer tInc,Integer numIter,Integer numIterWarmup
-		GenData.tiemposEjecucion(f1,file,nMin,nMax,nIncr,nIter,nIterWarmup);
+		GenData.tiemposEjecucionAritmetica(f1,file,nMin,nMax,nIncr,nIter,nIterWarmup);
 	}
 	
 	

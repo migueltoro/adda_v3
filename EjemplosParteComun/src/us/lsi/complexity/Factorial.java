@@ -47,14 +47,14 @@ public class Factorial {
 		String file = "ficheros/factorialI.txt";
 		Consumer<Integer> c1 = t->Factorial.factorialI(t,BigFractionField.getInstance());
 		Function<Integer,Long> f1 = GenData.time(c1);
-		GenData.tiemposEjecucion(f1,file,500,50000,500,1,1);
+		GenData.tiemposEjecucionAritmetica(f1,file,500,50000,500,1,1);
 	}
 	
 	public static void test2() {
 		String file = "ficheros/factorialR.txt";
 		Consumer<Integer> c1 = t->Factorial.factorialR(t,BigFractionField.getInstance());
 		Function<Integer,Long> f1 = GenData.time(c1);
-		GenData.tiemposEjecucion(f1,file,100,10500,500,1,1);
+		GenData.tiemposEjecucionAritmetica(f1,file,100,10500,500,1,1);
 	}
 	
 	public static void test3() {

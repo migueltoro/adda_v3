@@ -195,10 +195,10 @@ public class Fibonacci {
 		String file = "ficheros/fibonacciLin.txt";
 		Consumer<Integer> c1 = t->Fibonacci.fibLin(t,BigFractionField.getInstance());
 		Function<Integer,Long> f1 = GenData.time(c1);
-		GenData.tiemposEjecucion(f1,file,500,100300,500,10,10);
+		GenData.tiemposEjecucionAritmetica(f1,file,500,100300,500,10,10);
 		file = "ficheros/fibonacciMatrix.txt";
 		c1 = t->Fibonacci.fibMatrix(t,BigFractionField.getInstance());
-		GenData.tiemposEjecucion(f1,file,500,100300,500,10,10);
+		GenData.tiemposEjecucionAritmetica(f1,file,500,100300,500,10,10);
 	}
 	
 	public static void test7() {

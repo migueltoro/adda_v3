@@ -153,7 +153,7 @@ public class Busquedas {
 	public static void test1() {
 		String file = "ficheros/busquedaBinaria.txt";
 		Function<Integer,Long> f1 = GenData.time(pre,time);
-		GenData.tiemposEjecucion(f1,file,50,100000,500,30,5);
+		GenData.tiemposEjecucionAritmetica(f1,file,50,100000,500,30,5);
 	}
 	
 	public static void test2() {
