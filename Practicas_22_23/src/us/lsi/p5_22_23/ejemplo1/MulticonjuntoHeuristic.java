@@ -1,4 +1,4 @@
-package us.lsi.p5_22_23;
+package us.lsi.p5_22_23.ejemplo1;
 
 import java.util.function.Predicate;
 

@@ -43,7 +43,7 @@ public class DatosMulticonjunto {
 	
 	// Test de la lectura del fichero
 	public static void main(String[] args) {
-		iniDatos("ficheros/Ejemplo1DatosEntrada.txt");
+		iniDatos("ficheros/p4/ejemplo1_1.txt");
 	}	
 }
 

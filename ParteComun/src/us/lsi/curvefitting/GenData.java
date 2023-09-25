@@ -38,7 +38,7 @@ public class GenData {
 	 * @param numIter Número de iteraciones para cada tamaño
 	 * @param numIterWarmup Número de iteraciones de warmup
 	 */
-	public static void tiemposEjecucion(Function<Integer,Long> algorithm,String ficheroTiempos,
+	public static void tiemposEjecucionAritmetica(Function<Integer,Long> algorithm,String ficheroTiempos,
 			Integer tMin,Integer tMax,Integer tInc,Integer numIter,Integer numIterWarmup) {
 		GenData.tiemposEjecucion(algorithm, ficheroTiempos, tMin, tMax, t -> t + tInc, numIter, t->numIterWarmup);
 	}

@@ -20,7 +20,7 @@ public class TestMulticonjuntoAGRange {
 		StoppingConditionFactory.NUM_GENERATIONS = 1000;
 		StoppingConditionFactory.stoppingConditionType = StoppingConditionFactory.StoppingConditionType.GenerationCount;
 		
-		InRangeMulticonjuntoAG p = new InRangeMulticonjuntoAG("ficheros/Ejemplo1DatosEntrada1.txt");
+		InRangeMulticonjuntoAG p = new InRangeMulticonjuntoAG("ficheros/p4/ejemplo1_1.txt");
 		
 		
 		AlgoritmoAG<List<Integer>,SolucionMulticonjunto> ap = AlgoritmoAG.of(p);
