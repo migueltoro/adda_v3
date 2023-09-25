@@ -24,7 +24,6 @@ public class TestAStar {
 		DatosSubconjuntos.iniDatos("ficheros/p5/subconjuntos1" + id_fichero + ".txt");
 		System.out.println("\n\n>\tResultados para el test " + id_fichero + "\n");
 //		DatosSubconjuntos.toConsole();
-		
 
 		// V�rtices clave
 
