@@ -55,6 +55,8 @@ public record SubconjuntosProblem(Integer indice, Set<Integer> elementosCubierto
 		return r;
 	}
 	
+
+	
 	public SubconjuntosProblem neighbor(Integer a) {
 		if(a==0) return SubconjuntosProblem.of(this.cubreUniverso()?DatosSubconjuntos.NUM_SC:this.indice()+1,
 				this.elementosCubiertos());
