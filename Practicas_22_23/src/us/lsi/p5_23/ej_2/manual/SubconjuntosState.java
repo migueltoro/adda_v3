@@ -64,6 +64,7 @@ public class SubconjuntosState {
 	public boolean esTerminal() {
 		return actual.index() == DatosSubconjuntos.NUM_SC;
 	}
+	
 
 	public SolucionSubconjuntos getSolucion() {
 		return SolucionSubconjuntos.of(acciones);
