@@ -181,23 +181,34 @@ public class ProblemasDeListas {
 		      }
 		}
 	}
-
+	
 	public static <E extends Comparable<? super E>> void mergeSort(List<E> lista){
-		Comparator<? super E> ord = Comparator.naturalOrder();
-		List<E> ls = List2.ofCollection(lista);
-		mgSort(lista,0,lista.size(),ord,ls);	
+		mergeSort(lista,1);	
 	}
 	
 	public static <E> void mergeSort(List<E> lista, Comparator<? super E> ord){
+		mergeSort(lista,ord,1);	
+	}
+
+	public static <E extends Comparable<? super E>> void mergeSort(List<E> lista, Integer umbral){
+		Comparator<? super E> ord = Comparator.naturalOrder();
 		List<E> ls = List2.ofCollection(lista);
-		mgSort(lista,0,lista.size(),ord,ls);	
+		mgSort(lista,0,lista.size(),ord,ls,umbral);	
 	}
 	
-	private static <E> void mgSort(List<E> lista, int i, int j, Comparator<? super E> ord, List<E> ls){
-		if(j-i > 1){
+	public static <E> void mergeSort(List<E> lista, Comparator<? super E> ord, Integer umbral){
+		List<E> ls = List2.ofCollection(lista);
+		mgSort(lista,0,lista.size(),ord,ls,umbral);	
+	}
+	
+	private static <E> void mgSort(List<E> lista, int i, int j, Comparator<? super E> ord, List<E> ls, Integer umbral){
+		if(j-i <= umbral){
+			ordenaBase(lista, i, j, ord);
+		}
+		else {
 			int k = (j+i)/2;
-			mgSort(lista,i,k,ord,ls);
-			mgSort(lista,k,j,ord,ls);
+			mgSort(lista,i,k,ord,ls,umbral);
+			mgSort(lista,k,j,ord,ls,umbral);
 			mezcla(lista,i,k,lista,k,j,ls,i,j,ord);
 			copia(lista,i,j,ls);
 		}
