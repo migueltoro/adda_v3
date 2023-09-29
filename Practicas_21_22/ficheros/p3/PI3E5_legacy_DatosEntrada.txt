@@ -1,5 +1,0 @@
-n0d005_p100d0(p0d0001_p40d0(n1d2_p2d0,p1d025_n3d0),_)
-n15d0_n2d0(n20d0_p3d0(n30d0_n2d0,p15d0_p20d0),p0d0_p2d0(n0d5_n1d2,p1d025_p3d0(_,p3d0_p2d0,p2d0_p2d0)))
-p20d0_n1d0(p17d0_p3d0(p15d0_p200d0,p19d0_n2d0),p35d5_p30d0(p25d0_n10d2,p40d0_p30d0))
-p0d8_n12d1(p0d7_p10d0(p0d75_p2d0,p1d5_n2d0),p0d81_p14d08 (p0d75_n1d2,p1d0_p3d0),_)
-p1d0_n1d1(p2d0_n2d0(p3d0_p2d0(_,_,p4d0_p1d0),p4d0_p8d0(p1d0_p1d0,p10d0_p30d0)),p10d0_p12d0(p11d0_p9d0,p15d0_p20d0),n0d5_p10d0(n1d0_n1d0,p3d0_n1d0))

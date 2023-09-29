@@ -184,7 +184,7 @@ public class AVLTreeI<E> implements AVLTree<E>  {
 	}
 	
 	public static void test3() {
-		String s = "4(2(1(0,_),3),7(5(_,6),10(9(8,_),11(_,12))))";
+		String s = "4(2(1(0,/_),3),7(5(/_,6),10(9(8,/_),11(/_,12))))";
 		BinaryTree<Integer> t = BinaryTree.parse(s, e->Integer.parseInt(e));
 		System.out.println(t);
 		AVLTree<Integer> tree = AVLTreeI.of(t,Comparator.naturalOrder());

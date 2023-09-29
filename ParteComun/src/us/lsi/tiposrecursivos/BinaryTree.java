@@ -9,6 +9,7 @@ import org.antlr.v4.runtime.CharStreams;
 import org.antlr.v4.runtime.CommonTokenStream;
 import org.antlr.v4.runtime.tree.ParseTree;
 
+import us.lsi.common.Preconditions;
 import us.lsi.tiposrecursivos.BinaryTree.BEmpty;
 import us.lsi.tiposrecursivos.BinaryTree.BLeaf;
 import us.lsi.tiposrecursivos.BinaryTree.BTree;
@@ -51,10 +52,14 @@ public sealed interface BinaryTree<E> permits BEmpty<E>,BLeaf<E>,BTree<E> {
 	}
 	
 	public static <E> BinaryTree<E> leaf(E label) {
+		Preconditions.checkNotNull(label,"La etiqueta no puede ser null");
 		return new BLeaf<E>(label);
 	}
 	
 	public static <E> BinaryTree<E> binary(E label, BinaryTree<E> left, BinaryTree<E> right) {
+		Preconditions.checkNotNull(label,"La etiqueta no puede ser null");
+		Preconditions.checkNotNull(left,"El árbol izquierdo no puede ser null");
+		Preconditions.checkNotNull(right,"El árbol derecho no puede ser null");
 		if(left.isEmpty() && right.isEmpty()) return new BLeaf<E>(label);
 		return new BTree<E>(label,left,right);
 	}
@@ -99,7 +104,7 @@ public sealed interface BinaryTree<E> permits BEmpty<E>,BLeaf<E>,BTree<E> {
 		public boolean isEmpty() {return true;}
 		public Optional<E> optionalLabel() { return Optional.empty(); }
 		public int size() { return 0; }
-		public int height() { return 0; }
+		public int height() { return -1; }
 		public BinaryTree<E> copy() { return BinaryTree.empty(); }
 		public BinaryTree<E> reverse() { return BinaryTree.empty(); }
 		public <R> BinaryTree<R> map(Function<E, R> f) { return BinaryTree.empty();}
