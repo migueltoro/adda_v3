@@ -583,26 +583,27 @@ public class IterativosyRecursivosSimples {
 		return r;
 	}
 
-	public static List<Integer> digitos(Integer n, Integer a){
+	public static List<Integer> digitos(Integer n, Integer b){
 		List<Integer> r;
-		if(n>0) {
-			r = digitos(n/a,a);
-			Integer d = n%a;
+		if(n>b) {
+			r = digitos(n/b,b);
+			Integer d = n%b;
 		    r.add(d);
 		} else {
 			r = new ArrayList<>();
-		}
+			r.add(n);		}
 		return r;	
 	}
 	
-	public static List<Integer> digitosI(Integer n, Integer a){
-		List<Integer> b = new ArrayList<>(); 
-		while(n>0) {
-			Integer d = n%a;
-		    b.add(0,d);
-			n = n/a;
-		}  
-		return b;	
+	public static List<Integer> digitosI(Integer n, Integer b){
+		List<Integer> r = new ArrayList<>(); 
+		while(n>b) {
+			Integer d = n%b;
+		    r.add(0,d);
+			n = n/b;
+		}
+		r.add(0,n);
+		return r;	
 	}
 
 	public static Integer numeroDeCeros(Integer n, Integer a){
@@ -1034,11 +1035,15 @@ public class IterativosyRecursivosSimples {
 		r = mayor_f(ls);
 		System.out.println(r);
 	}
+	
+	public static void test19() {
+		
+	}
 
 
 	public static void main(String[] args) throws IOException {
 //		String2.toConsole("%s,%s",primos(100L),primos2(100L));
-		test18();
+		test1();
 	}
 
 }
