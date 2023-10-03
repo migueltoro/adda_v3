@@ -2,9 +2,6 @@ package us.lsi.p5.ej_1;
 
 import java.util.function.Predicate;
 
-import us.lsi.alg.multiconjuntos.DatosMulticonjunto;
-import us.lsi.alg.multiconjuntos.MulticonjuntoVertex;
-
 
 public class MulticonjuntoHeuristic {
 

@@ -7,10 +7,6 @@ import java.util.stream.Collectors;
 
 import org.jgrapht.GraphPath;
 
-import us.lsi.alg.multiconjuntos.DatosMulticonjunto;
-import us.lsi.alg.multiconjuntos.MulticonjuntoEdge;
-import us.lsi.alg.multiconjuntos.MulticonjuntoVertex;
-import us.lsi.alg.multiconjuntos.SolucionMulticonjunto;
 import us.lsi.graphs.alg.AStar;
 import us.lsi.graphs.virtual.EGraph;
 import us.lsi.graphs.virtual.EGraph.Type;

@@ -6,10 +6,6 @@ import java.util.function.Predicate;
 
 import org.jgrapht.GraphPath;
 
-import us.lsi.alg.multiconjuntos.DatosMulticonjunto;
-import us.lsi.alg.multiconjuntos.MulticonjuntoEdge;
-import us.lsi.alg.multiconjuntos.MulticonjuntoVertex;
-import us.lsi.alg.multiconjuntos.SolucionMulticonjunto;
 import us.lsi.graphs.alg.BT;
 import us.lsi.graphs.alg.GreedyOnGraph;
 import us.lsi.graphs.virtual.EGraph;
