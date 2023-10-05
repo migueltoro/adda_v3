@@ -3,8 +3,6 @@ package us.lsi.p5.ej_2;
 import java.util.List;
 import java.util.Locale;
 import java.util.stream.Collectors;
-
-import us.lsi.alg.subconjuntos.DatosSubconjuntos;
 import us.lsi.graphs.alg.AStar;
 import us.lsi.graphs.virtual.EGraph;
 

@@ -1,7 +1,6 @@
 package us.lsi.p5.ej_2.manual;
 
-
-import us.lsi.alg.subconjuntos.DatosSubconjuntos;
+import us.lsi.p5.ej_2.DatosSubconjuntos;
 
 public class TestBTManual {
 

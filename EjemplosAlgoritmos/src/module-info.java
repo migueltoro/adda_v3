@@ -21,7 +21,6 @@ module ejemplos_algoritmos {
 	exports us.lsi.alg.recorridos;
 	exports us.lsi.alg.sudoku;
 	exports us.lsi.alg.multiconjuntos;
-	exports us.lsi.alg.subconjuntos;
 
 	requires transitive datos_compartidos;
 	requires transitive grafos;

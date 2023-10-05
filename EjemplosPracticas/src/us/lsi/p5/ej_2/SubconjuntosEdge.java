@@ -1,6 +1,5 @@
 package us.lsi.p5.ej_2;
 
-import us.lsi.alg.subconjuntos.DatosSubconjuntos;
 import us.lsi.graphs.virtual.SimpleEdgeAction;
 
 public record SubconjuntosEdge(SubconjuntosVertex source, SubconjuntosVertex target, Integer action, Double weight) 

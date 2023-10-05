@@ -5,8 +5,8 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.IntStream;
 
-import us.lsi.alg.subconjuntos.DatosSubconjuntos;
 import us.lsi.common.Set2;
+import us.lsi.p5.ej_2.DatosSubconjuntos;
 
 public record SubconjuntosProblem(Integer index, Set<Integer> remaining) {
 	

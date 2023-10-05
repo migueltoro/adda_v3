@@ -2,8 +2,8 @@ package us.lsi.p5.ej_2.manual;
 
 import java.util.List;
 
-import us.lsi.alg.subconjuntos.DatosSubconjuntos;
 import us.lsi.common.List2;
+import us.lsi.p5.ej_2.DatosSubconjuntos;
 import us.lsi.p5.ej_2.SolucionSubconjuntos;
 
 public class SubconjuntosState {

@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.Set;
 import java.util.function.Predicate;
 
-import us.lsi.alg.subconjuntos.DatosSubconjuntos;
 import us.lsi.common.IntegerSet;
 import us.lsi.common.Set2;
 import us.lsi.graphs.virtual.VirtualVertex;

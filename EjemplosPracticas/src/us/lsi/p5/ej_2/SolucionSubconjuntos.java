@@ -6,8 +6,6 @@ import java.util.Set;
 
 import org.jgrapht.GraphPath;
 
-import us.lsi.alg.subconjuntos.DatosSubconjuntos;
-
 public record SolucionSubconjuntos(Double peso, Set<String> conjuntos, Boolean cubre) 
            implements Comparable<SolucionSubconjuntos>{
 	

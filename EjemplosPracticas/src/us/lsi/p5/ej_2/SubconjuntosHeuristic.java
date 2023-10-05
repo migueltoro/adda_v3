@@ -4,8 +4,6 @@ package us.lsi.p5.ej_2;
 import java.util.function.Predicate;
 import java.util.stream.IntStream;
 
-import us.lsi.alg.subconjuntos.DatosSubconjuntos;
-
 public class SubconjuntosHeuristic {
 
 	public static Double heuristic(SubconjuntosVertex v1, Predicate<SubconjuntosVertex> goal, SubconjuntosVertex v2) {

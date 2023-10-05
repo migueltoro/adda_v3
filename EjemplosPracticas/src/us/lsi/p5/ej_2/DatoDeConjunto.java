@@ -1,4 +1,4 @@
-package us.lsi.alg.subconjuntos;
+package us.lsi.p5.ej_2;
 
 
 import java.util.Set;
