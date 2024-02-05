@@ -8,7 +8,7 @@ public class Test2 {
 	public static void main(String[] args) {
 		Locale.setDefault(Locale.of("en", "US"));
 		
-		DatosEquipo.iniDatos("ficheros/DatosEquipo3.txt");
+		DatosEquipo.iniDatos("ficheros/equipo/DatosEquipo3.txt");
 		
 		EquipoVertex v = EquipoVertex.first();
 		

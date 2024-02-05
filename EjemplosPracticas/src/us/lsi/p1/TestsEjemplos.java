@@ -9,9 +9,9 @@ import us.lsi.streams.Stream2;
 
 public class TestsEjemplos {
 	public static void main(String[] args) {
-		testsEjemplo1();
+//		testsEjemplo1();
 		testsEjemplo2();
-		testsEjemplo3();
+//		testsEjemplo3();
 	}
 
 	public static void testsEjemplo1() {

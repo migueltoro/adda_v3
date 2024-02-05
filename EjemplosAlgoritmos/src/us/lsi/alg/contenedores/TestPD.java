@@ -22,7 +22,7 @@ public class TestPD {
 
 		for (Integer id_fichero = 1; id_fichero < 2; id_fichero++) {
 
-			DatosContenedores.iniDatos("ficheros/contenedores"+ id_fichero +".txt");
+			DatosContenedores.iniDatos("ficheros/contenedores/contenedores"+ id_fichero +".txt");
 			System.out.println("\n\n>\tResultados para el test " + id_fichero + "\n");
 //			DatosSubconjuntos.toConsole();
 			// V�rtices clave

@@ -77,7 +77,7 @@ public class TareasPLI {
 				.map(e -> String.format("%d == %s", e.counter(), e.value()))
 				.collect(Collectors.joining("\n"));
 		Tarea.n = Tarea.tareas.size();
-		AuxGrammar.generate(TareasPLI.class,"models/tareas.lsi","ficheros/tareas.lp");
+		AuxGrammar.generate(TareasPLI.class,"modelos/tareas.lsi","ficheros/tareas.lp");
 		Locale.setDefault(new Locale("en", "US"));
 		GurobiSolution solution = GurobiLp.gurobi("ficheros/tareas.lp");
 		System.out.println(solution.toString((s, d) -> d > 0.));

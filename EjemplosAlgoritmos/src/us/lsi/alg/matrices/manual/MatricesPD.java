@@ -93,7 +93,7 @@ public class MatricesPD {
 	public static void main(String[] args) {
 		Locale.setDefault(Locale.of("en", "US"));
 		
-		DatosMatrices.leeFichero("./ficheros/matrices.txt",Data.DpType.Min);
+		DatosMatrices.leeFichero("ficheros/matrices/matrices.txt",Data.DpType.Min);
 		
 		MatrixVertex start = MatrixVertex.of(0,DatosMatrices.n);
 		

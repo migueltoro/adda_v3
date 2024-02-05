@@ -17,9 +17,9 @@ public class Tests {
 	public static void main(String[] args) {
 		Locale.setDefault(Locale.of("en", "US"));
 		
-		tests("ficheros/DatosEquipo1.txt");
-		tests("ficheros/DatosEquipo2.txt");
-		tests("ficheros/DatosEquipo3.txt");
+		tests("ficheros/equipo/DatosEquipo1.txt");
+		tests("ficheros/equipo/DatosEquipo2.txt");
+		tests("ficheros/equipo/DatosEquipo3.txt");
 	}
 
 	private static void tests(String fichero) {

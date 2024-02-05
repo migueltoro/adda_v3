@@ -113,7 +113,7 @@ public class MochilaAStar {
 
 	public static void main(String[] args) {
 		Locale.setDefault(Locale.of("en", "US"));
-		DatosMochila.iniDatos("ficheros/objetosMochila.txt");
+		DatosMochila.iniDatos("ficheros/mochila/objetosMochila.txt");
 		DatosMochila.capacidadInicial = 78;
 		MochilaVertex v1 = MochilaVertex.of(0, DatosMochila.capacidadInicial);
 		SolucionMochila sv = Heuristica.solucionVoraz(v1);

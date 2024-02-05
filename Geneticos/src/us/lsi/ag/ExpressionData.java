@@ -1,13 +1,15 @@
 package us.lsi.ag;
 
+
 import java.util.List;
 
-import us.lsi.ag.agchromosomes.ChromosomeFactory.ChromosomeType;
+import us.lsi.ag.agchromosomes.ARandomKey;
+import us.lsi.ag.agchromosomes.AuxExpression;
 import us.lsi.tiposrecursivos.ast.Exp;
 import us.lsi.tiposrecursivos.ast.Operator;
 import us.lsi.tiposrecursivos.ast.Type;
 
-public interface ExpressionData extends ChromosomeData<Exp,Exp>{
+public interface ExpressionData extends ChromosomeDoubleData<Exp,Exp>{
 	
 	/**
 	 * @return La longitud de la cabeza de un gen
@@ -15,12 +17,12 @@ public interface ExpressionData extends ChromosomeData<Exp,Exp>{
 	Integer headLength();
 	
 	/**
-	 * @return Número de Genes
+	 * @return Nï¿½mero de Genes
 	 */
 	Integer numGenes();
 	
 	/**
-	 * @return Número de variables
+	 * @return Nï¿½mero de variables
 	 */
 	Integer numVariables();
 	
@@ -30,7 +32,7 @@ public interface ExpressionData extends ChromosomeData<Exp,Exp>{
 	Integer numConstants();
 	
 	/**
-	 * @return El rango máximo del valor de cada constante. Cada constante tendrá un valor en el rango 0..getMaxValueConstant()-1
+	 * @return El rango mï¿½ximo del valor de cada constante. Cada constante tendrï¿½ un valor en el rango 0..getMaxValueConstant()-1
 	 */
 	Integer maxValueConstant();
 	
@@ -65,7 +67,14 @@ public interface ExpressionData extends ChromosomeData<Exp,Exp>{
 		return numItemsPorGen()*numGenes() + numConstants();
 	}
 	
-	default ChromosomeType type() {
-		return ChromosomeType.Expression;
+	@Override
+	default Exp decode(List<Double> ls) {
+		return AuxExpression.decode(ls);
+	}
+	
+	@Override
+	default void iniValues(ChromosomeData<Exp,Exp> data) {
+		ARandomKey.iniValues(data);
+		AuxExpression.iniValues(data);
 	}
 }

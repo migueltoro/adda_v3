@@ -4,12 +4,11 @@ package us.lsi.ag.anuncios;
 import java.util.List;
 
 import us.lsi.ag.AuxiliaryAg;
-import us.lsi.ag.SeqNormalData;
-import us.lsi.ag.agchromosomes.ChromosomeFactory.ChromosomeType;
+import us.lsi.ag.PermutationData;
 import us.lsi.anuncios.datos.Anuncio;
 import us.lsi.anuncios.datos.DatosAnuncios;
 
-public class DatosAnunciosAG extends DatosAnuncios implements SeqNormalData<SolucionAnuncios> {
+public class DatosAnunciosAG extends DatosAnuncios implements PermutationData<SolucionAnuncios> {
 
 	public DatosAnunciosAG(String file) {
 		super();
@@ -39,11 +38,6 @@ public class DatosAnunciosAG extends DatosAnuncios implements SeqNormalData<Solu
 	@Override
 	public Integer itemsNumber() {
 		return DatosAnuncios.todosLosAnunciosDisponibles.size();
-	}
-
-	@Override
-	public ChromosomeType type() {
-		return ChromosomeType.Permutation;
 	}
 	
 }

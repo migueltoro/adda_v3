@@ -46,7 +46,7 @@ public class VertexEdgeCoverPLI {
 	public static void vertex_cover_model() throws IOException {
 		VertexEdgeCoverPLI.leeDatos("data/andalucia.txt");
 		System.out.println(GraphData.graph);
-		AuxGrammar.generate(GraphData.class,"models/vertex_cover.lsi","ficheros/vertex_cover.lp");
+		AuxGrammar.generate(GraphData.class,"modelos/vertex_cover.lsi","ficheros/vertex_cover.lp");
 		GurobiSolution solution = GurobiLp.gurobi("ficheros/vertex_cover.lp");
 		System.out.println(solution.toString((s,d)->d>0.));
 		Set<Ciudad> ciudades = solution.values.keySet().stream()
@@ -72,7 +72,7 @@ public class VertexEdgeCoverPLI {
 	public static void edge_cover_model() throws IOException {
 		VertexEdgeCoverPLI.leeDatos("data/andalucia.txt");
 		System.out.println(GraphData.graph);
-		AuxGrammar.generate(GraphData.class,"models/edge_cover.lsi","ficheros/edge_cover.lp");
+		AuxGrammar.generate(GraphData.class,"modelos/edge_cover.lsi","ficheros/edge_cover.lp");
 		GurobiSolution solution = GurobiLp.gurobi("ficheros/edge_cover.lp");
 		System.out.println(solution.toString((s,d)->d>0.));
 		Set<Carretera> carreteras = solution.values.keySet().stream()

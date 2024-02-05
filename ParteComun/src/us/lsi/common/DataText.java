@@ -1,7 +1,6 @@
 package us.lsi.common;
 
 import java.util.List;
-import java.util.function.Function;
 
 public class DataText {
 	

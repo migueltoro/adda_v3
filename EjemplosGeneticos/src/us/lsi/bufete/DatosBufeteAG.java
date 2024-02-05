@@ -5,13 +5,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import us.lsi.ag.ValuesInRangeData;
-import us.lsi.ag.agchromosomes.ChromosomeFactory.ChromosomeType;
+import us.lsi.ag.RangeIntegerData;
 import us.lsi.bufete.datos.Abogado;
 import us.lsi.bufete.datos.DatosBufete;
 import us.lsi.bufete.datos.SolucionBufete;
 
-public class DatosBufeteAG implements ValuesInRangeData<Integer, SolucionBufete> {
+public class DatosBufeteAG implements RangeIntegerData<SolucionBufete> {
 
 	public static DatosBufeteAG create(String fichero) {
 		return new DatosBufeteAG(fichero);
@@ -21,11 +20,6 @@ public class DatosBufeteAG implements ValuesInRangeData<Integer, SolucionBufete>
 		DatosBufete.iniDatos(fichero);
 		DatosBufete.toConsole();
 	}	
-
-	@Override
-	public ChromosomeType type() {
-		return ChromosomeType.Range;
-	}
 
 	@Override
 	public Integer size() {

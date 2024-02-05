@@ -6,8 +6,10 @@ import java.util.List;
 import java.util.function.Predicate;
 import java.util.stream.Stream;
 
+import us.lsi.colors.GraphColors;
 import us.lsi.common.List2;
 import us.lsi.common.String2;
+import us.lsi.tiposrecursivos.AVLTree;
 import us.lsi.tiposrecursivos.BinaryTree;
 import us.lsi.tiposrecursivos.BinaryTree.BEmpty;
 import us.lsi.tiposrecursivos.BinaryTree.BLeaf;
@@ -137,12 +139,92 @@ public class BinaryTreesTest {
 	public static void test2() {
 		BinaryTree<Integer> tree =  BinaryTree.parse("1(2(-1,-4(3,/_)),10(-5(7(/_,-2),4),-6))")
 				.map(label->Integer.parseInt(label));
-		tree.toDot("ficheros/tree.gv");
+		GraphColors.toDot(tree,"ficheros/tree.gv");
 		String2.toConsole("%s",maxCamino(tree));	
+	}
+	
+	public static void test4() {
+		String ex = "-43.7(2.1,56.7(-27.3(_,2),78.2(3,4)))";
+		String ex2 = "-43.7(2.1,5(_,8.(3.,5.)))";
+		BinaryTree<String> t7 = BinaryTree.parse(ex);	
+		BinaryTree<String> t8 = BinaryTree.parse(ex2);	
+		System.out.println(t7);
+		System.out.println(t8);
+		System.out.println(BinaryTrees.equilibrateType(t7));
+		System.out.println(BinaryTrees.equilibrateType(t8));
+		GraphColors.toDot(t7,"ficheros/binary_tree.gv");
+		BinaryTree<String> t9 = t7.equilibrate();
+		BinaryTree<String> t10 = t8.equilibrate();
+		GraphColors.toDot(t9,"ficheros/binary_tree_equilibrate.gv");
+		System.out.println(t9);
+		System.out.println(t10);
+		BinaryTree<Double> t11 =  t7.map(e->Double.parseDouble(e));
+		System.out.println(t11);
+	}
+	
+	public static void test5() {
+		String ex = "4(2(1(0,_),3),7(5(_,6),10(9(8,_),11(_,12))))";
+		BinaryTree<Integer> t0 = BinaryTree.parse(ex, e->Integer.parseInt(e));
+		System.out.println(BinaryTrees.equilibrateType(t0));
+		System.out.println(BinaryTrees.isOrdered(t0,Comparator.naturalOrder()));
+		BinaryTree<Integer> t1 = BinaryTrees.addOrdered(t0,13,Comparator.naturalOrder());
+		System.out.println("t1 = "+t1);
+		System.out.println(BinaryTrees.equilibrateType(t1));
+		System.out.println(BinaryTrees.isOrdered(t1,Comparator.naturalOrder()));
+		GraphColors.toDot(t1,"ficheros/t1.gv");
+		BinaryTree<Integer> t2 = switch(t1) {
+		case BEmpty<Integer> t -> t;
+		case BLeaf<Integer> t  -> t;
+		case BTree<Integer> t -> BinaryTree.binary(t.label(),t.left(),t.right().equilibrate());
+		};
+		System.out.println("t2 = "+t2);
+		System.out.println(BinaryTrees.equilibrateType(t2));
+		System.out.println(BinaryTrees.isOrdered(t2,Comparator.naturalOrder()));
+		GraphColors.toDot(t2,"ficheros/t2.gv");
+		String t4 = "10(_,11(_,12(_,13)))";
+		BinaryTree<Integer> t42 = BinaryTree.parse(t4, e->Integer.parseInt(e));
+		BinaryTree<Integer> t43 = t42.equilibrate();
+		System.out.println("t43 = "+t43);
+		GraphColors.toDot(t43,"ficheros/t43.gv");
+	}
+	
+	public static void test6() {
+		BinaryTree<Integer> tree = BinaryTree.empty();
+		for (int i = 0; i < 50 ; i++) {
+			tree = BinaryTrees.addOrdered(tree, i, Comparator.naturalOrder());
+//			System.out.println(tree.tree().height()+" == "+tree.tree());
+		}	
+		tree = BinaryTrees.equilibrate(tree);
+		GraphColors.toDot(tree,"ficheros/avl_tree.gv");
+	}
+	
+	public static void testAVLTree1() {
+		AVLTree<Integer> tree = AVLTree.of();
+		for (int i = 0; i < 500 ; i++) {
+			tree.add(i);
+		}	
+		for (int i = 0; i < 50 ; i++) {
+			tree.remove(i);
+		}
+		for (int i = 600; i > 450 ; i--) {
+			tree.remove(i);
+		}	
+		String2.toConsole(String.format("%d,%d,%d", tree.firstLabel().get(),tree.lastLabel().get(),tree.height()));
+		String2.toConsole(String.format("%s",tree.toString()));
+		GraphColors.toDot(tree.tree(),"ficheros/avl_tree.gv");
+	}
+	
+	public static void testAVLTree2() {
+		AVLTree<Integer> tree = AVLTree.of();
+		for (int i = 0; i < 50 ; i++) {
+			tree.add(i);
+		}
+		tree.remove(30);
+		GraphColors.toDot(tree.tree(),"ficheros/avl_tree.gv");
 	}
 
 	public static void main(String[] args) {
-		test1();
+		test2();
 	}	
 	
 }

@@ -26,12 +26,12 @@ public class Ejemplo3PLE {
 	}
 	
 	public static void ejemplo3_model() throws IOException {
-		DatosAlumnos.iniDatos("ficheros/Ejemplo3DatosEntrada3.txt");
+		DatosAlumnos.iniDatos("ficheros/p4/ejemplo3_3.txt");
 		
 		alumnos = DatosAlumnos.getAlumnos();
 		
-		AuxGrammar.generate(Ejemplo3PLE.class,"lsi_models/Ejemplo3.lsi","gurobi_models/Ejemplo3-3.lp");
-		GurobiSolution solution = GurobiLp.gurobi("gurobi_models/Ejemplo3-3.lp");
+		AuxGrammar.generate(Ejemplo3PLE.class,"modelos/ejemplo3.lsi","gurobi_models/ejemplo3.lp");
+		GurobiSolution solution = GurobiLp.gurobi("gurobi_models/ejemplo3.lp");
 		Locale.setDefault(Locale.of("en", "US"));
 		System.out.println(solution.toString((s,d)->d>0.));
 	}

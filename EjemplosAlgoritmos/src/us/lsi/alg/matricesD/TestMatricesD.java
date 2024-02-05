@@ -16,7 +16,7 @@ public class TestMatricesD {
 
 		public static void main(String[] args) {
 			Locale.setDefault(Locale.of("en", "US"));
-			DatosMatrices.leeFichero("./ficheros/matrices.txt",Data.DpType.Min);
+			DatosMatrices.leeFichero("ficheros/matrices/matrices.txt",Data.DpType.Min);
 			Data.type = Data.DpType.Min;
 			MatrixVertexD p = MatrixVertexD.initial();
 			String s = p.solution();

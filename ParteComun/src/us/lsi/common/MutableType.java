@@ -5,7 +5,7 @@ package us.lsi.common;
  *
  * @param <T> Un tipo inmutable
  * 
- * Un versión mutable del tipo inmutable
+ * Un versiï¿½n mutable del tipo inmutable
  */
 public class MutableType<T> {
 
@@ -13,9 +13,9 @@ public class MutableType<T> {
 		return new MutableType<T>(e);
 	}
 	
-	private T value;
+	protected T value;
 	
-	private MutableType(T e) {
+	protected MutableType(T e) {
 		super();
 		this.value = e;
 	}
@@ -59,5 +59,26 @@ public class MutableType<T> {
 		return true;
 	}
 	
+	public static class MutableInteger extends MutableType<Integer> {
+
+		private MutableInteger(Integer e) {
+			super(e);
+		}
+		
+		public static MutableInteger of(Integer e) {
+			return new MutableInteger(e);
+		}
+		
+		public static MutableInteger of() {
+			return new MutableInteger(0);
+		}
+		
+		public Integer valueInc() {
+			Integer oldValue = super.value;
+			super.value++;	
+			return oldValue;
+		}
+		
+	}
 	
 }

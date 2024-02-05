@@ -62,8 +62,8 @@ public class SudokuPLI {
 		String txt = "ficheros/sudoku/sudoku1.txt";
 		DatosSudoku.leeFichero(txt);
 		System.out.println(SolucionSudoku.of(SudokuVertex.first()));
-		include(txt,"models/sudoku_p.lsi","models/sudoku.lsi");
-		AuxGrammar.generate(SudokuPLI.class, "models/sudoku.lsi", "ficheros/sudoku.lp");
+		include(txt,"modelos/sudoku_p.lsi","modelos/sudoku.lsi");
+		AuxGrammar.generate(SudokuPLI.class, "modelos/sudoku.lsi", "ficheros/sudoku.lp");
 		GurobiSolution st = GurobiLp.gurobi("ficheros/sudoku.lp");
 		Locale.setDefault(Locale.of("en", "US"));
 		List<Casilla> lc = solucion(st);

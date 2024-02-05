@@ -26,7 +26,7 @@ public class TestTspAG {
 		ap.ejecuta();
 		
 		System.out.println("================================");
-		List<Integer> dc = ap.getBestChromosome().decode();
+		List<Integer> dc = p.decode(ap.getBestChromosome());
 		System.out.println(dc);
 		System.out.println(ap.getBestChromosome().fitness());
 		System.out.println(ap.bestSolution());

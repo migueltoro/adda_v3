@@ -3,8 +3,6 @@ package us.lsi.ag.sudoku;
 import java.util.List;
 
 import us.lsi.ag.agchromosomes.AlgoritmoAG;
-import us.lsi.ag.agchromosomes.ChromosomeFactory;
-import us.lsi.ag.agchromosomes.ChromosomeFactory.CrossoverType;
 import us.lsi.ag.agstopping.StoppingConditionFactory;
 import us.lsi.ag.agstopping.StoppingConditionFactory.StoppingConditionType;
 import us.lsi.alg.sudoku.DatosSudoku;
@@ -25,8 +23,6 @@ public class TestInsetSudokuAG {
 		StoppingConditionFactory.FITNESS_MIN = 0.;
 		StoppingConditionFactory.stoppingConditionType = StoppingConditionType.SolutionsNumber;
 		
-		ChromosomeFactory.crossoverType = CrossoverType.OnePoint;
-		ChromosomeFactory.TOURNAMENT_ARITY = 2;
 		
 		DatosSudoku.tamSubCuadro = 3;
 		DatosSudoku.leeFichero("ficheros/sudoku2.txt");

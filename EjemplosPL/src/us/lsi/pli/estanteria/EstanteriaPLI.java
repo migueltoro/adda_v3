@@ -106,8 +106,8 @@ public class EstanteriaPLI {
 		System.out.println(Estante.anchura);
 		System.out.println(Libro.libros.size());
 		System.out.println(Estante.estantes.size());
-		AuxGrammar.generate(EstanteriaPLI.class,"models/estanteria.lsi","ficheros/estanteria.lp");
-		Locale.setDefault(new Locale("en", "US"));
+		AuxGrammar.generate(EstanteriaPLI.class,"modelos/estanteria.lsi","ficheros/estanteria.lp");
+		Locale.setDefault(Locale.of("en", "US"));
 		GurobiSolution solution = GurobiLp.gurobi("ficheros/estanteria.lp");
 		System.out.println(solution.toString((s,d)->d>0.));
 	}

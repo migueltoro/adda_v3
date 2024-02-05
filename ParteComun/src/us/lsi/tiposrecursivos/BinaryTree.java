@@ -17,7 +17,7 @@ import us.lsi.tiposrecursivos.BinaryTrees.BinaryTreeLevel;
 import us.lsi.tiposrecursivos.parsers.BinaryTreeLexer;
 import us.lsi.tiposrecursivos.parsers.BinaryTreeParser;
 
-public sealed interface BinaryTree<E> permits BEmpty<E>,BLeaf<E>,BTree<E> {
+public sealed interface BinaryTree<E> permits BEmpty,BLeaf,BTree {
 	
 	public enum BinaryType{Empty,Leaf,Binary}
 	
@@ -41,10 +41,6 @@ public sealed interface BinaryTree<E> permits BEmpty<E>,BLeaf<E>,BTree<E> {
 	
 	public default Stream<BinaryTreeLevel<E>> byLevel() {
 		return BinaryTrees.byLevel(this);
-	}
-	
-	public default void toDot(String file) {
-		BinaryTrees.toDot(this,file);
 	}
 	
 	public static <E> BinaryTree<E> empty() {

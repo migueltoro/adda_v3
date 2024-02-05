@@ -5,7 +5,7 @@ package us.lsi.ag.anuncios;
 import java.util.List;
 import java.util.Locale;
 
-import us.lsi.ag.SeqNormalData;
+import us.lsi.ag.PermutationData;
 import us.lsi.ag.agchromosomes.AlgoritmoAG;
 import us.lsi.ag.agstopping.StoppingConditionFactory;
 import us.lsi.ag.agstopping.StoppingConditionFactory.StoppingConditionType;
@@ -27,11 +27,11 @@ public class TestAnunciosAG {
 		
 		DatosAnuncios.tiempoTotal = 30;
 		System.out.println("ficheros/anuncios.txt");
-		SeqNormalData<SolucionAnuncios> p = new DatosAnunciosAG("ficheros/anuncios.txt");		
+		PermutationData<SolucionAnuncios> p = new DatosAnunciosAG("ficheros/anuncios.txt");		
 		AlgoritmoAG<List<Integer>,SolucionAnuncios> ap = AlgoritmoAG.of(p);
 		ap.ejecuta();
 		
-		Locale.setDefault(new Locale("en", "US"));
+		Locale.setDefault(Locale.of("en", "US"));
 		System.out.println("================================");
 		System.out.println(ap.bestSolution());
 		System.out.println("================================");		

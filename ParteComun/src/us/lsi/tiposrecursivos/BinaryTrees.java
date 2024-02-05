@@ -1,25 +1,16 @@
 package us.lsi.tiposrecursivos;
 
-import java.io.Writer;
+
 import java.util.Comparator;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 import java.util.Queue;
 import java.util.Stack;
-import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import org.jgrapht.Graph;
-import org.jgrapht.graph.DefaultEdge;
-import org.jgrapht.graph.SimpleDirectedGraph;
-import org.jgrapht.nio.Attribute;
-import org.jgrapht.nio.DefaultAttribute;
-import org.jgrapht.nio.dot.DOTExporter;
 import us.lsi.common.Files2;
 import us.lsi.common.List2;
 import us.lsi.common.MutableType;
@@ -40,77 +31,6 @@ public class BinaryTrees {
 		return Stream2.ofIterator(BreadthPathBinaryTree.of(tree));
 	}
 	
-	public static <E> void toDot(BinaryTree<E> tree, String file) {
-		Graph<Nv<E>,DefaultEdge> graph = 
-				new SimpleDirectedGraph<Nv<E>,DefaultEdge>(null,()->new DefaultEdge(),true);
-		BinaryTree<Nv<E>> tt = BinaryTrees.map(tree);
-		toDot1(tt,graph);
-		toDot2(tt,graph);
-		toDot3(graph,file,v->v.v()!=null?v.v().toString().toString():"_",e->"");
-	}
-	
-	private static Integer nv = 0;
-	public static Integer nextInteger() {
-		Integer n = nv;
-		nv++;
-		return n;
-	}
-	
-	public static record Nv<E>(Integer n, E v) {
-		public static <E> Nv<E> of(Integer n, E v) {return new Nv<E>(n,v);}
-		public String toString() {return String.format("(%d,%s)",this.n(),this.v());}
-	}
-	
-	public static <E> BinaryTree<Nv<E>> map(BinaryTree<E> tree) {
-		return switch(tree) {
-		case BEmpty<E> t -> BinaryTree.leaf(Nv.of(BinaryTrees.nextInteger(),null));
-		case BLeaf<E> t -> BinaryTree.leaf(Nv.of(BinaryTrees.nextInteger(),t.label()));
-		case BTree<E> t -> BinaryTree.binary(Nv.of(BinaryTrees.nextInteger(),t.label()),
-				BinaryTrees.map(t.left()),BinaryTrees.map(t.right()));
-		};
-	}
-	
-	private static <E> void toDot1(BinaryTree<Nv<E>> tt, Graph<Nv<E>,DefaultEdge> graph) {
-		switch(tt) {
-		case BEmpty<Nv<E>> t: break;
-		case BLeaf<Nv<E>> t : graph.addVertex(t.label()); break;
-		case BTree<Nv<E>> t : 
-			graph.addVertex(t.label()); 
-			toDot1(t.left(), graph);
-			toDot1(t.right(), graph);
-			break;
-		}
-	}
-	
-	private static <E> void toDot2(BinaryTree<Nv<E>> tt, Graph<Nv<E>,DefaultEdge> graph) {
-		switch(tt) {
-		case BEmpty<Nv<E>> t: break;
-		case BLeaf<Nv<E>> t : break;
-		case BTree<Nv<E>> t : 
-			if(t.left() instanceof BLeaf<Nv<E>> tl) graph.addEdge(t.label(),tl.label());
-			if(t.left() instanceof BTree<Nv<E>> tl) graph.addEdge(t.label(),tl.label());
-			if(t.right() instanceof BLeaf<Nv<E>> tr) graph.addEdge(t.label(),tr.label());
-			if(t.right() instanceof BTree<Nv<E>> tr) graph.addEdge(t.label(),tr.label());
-			toDot2(t.left(),graph);
-			toDot2(t.right(),graph);
-			break;
-		}
-	}
-
-	private static Map<String, Attribute> label(String label) {
-		if(label.equals("")) return new HashMap<>();
-		return Map.of("label", DefaultAttribute.createAttribute(label));
-	}
-	
-	private static <V,E> void toDot3(Graph<V,E> graph, String file, 
-			Function<V,String> vertexLabel,
-			Function<E,String> edgeLabel) {		
-		DOTExporter<V,E> de = new DOTExporter<V,E>();
-		de.setVertexAttributeProvider(v->BinaryTrees.label(vertexLabel.apply(v)));
-		de.setEdgeAttributeProvider(e->BinaryTrees.label(edgeLabel.apply(e)));		
-		Writer f1 = Files2.getWriter(file);
-		de.exportGraph(graph, f1);
-	}
 	
 	public static <E> Optional<E> minLabel(BinaryTree<E> tree, Comparator<Optional<E>> cmp) {
 		return switch (tree) {
@@ -297,7 +217,7 @@ public class BinaryTrees {
 	
 	public static <E> BinaryTree<Integer> heights(BinaryTree<E> tree,int n){
 		return switch(tree) {
-		case BEmpty<E> t -> BinaryTree.leaf(0);
+		case BEmpty<E> t -> BinaryTree.leaf(-1);
 		case BLeaf<E> t -> BinaryTree.leaf(0);
 		case BTree<E> t -> 
 			n==0? BinaryTree.binary(t.height(),BinaryTree.leaf(t.left().height()),BinaryTree.leaf(t.right().height())) :
@@ -492,60 +412,7 @@ public class BinaryTrees {
 		BinaryTrees.byLevel(t7).forEach(t->System.out.println(t));
 	}
 	
-	public static void test4() {
-		String ex = "-43.7(2.1,56.7(-27.3(_,2),78.2(3,4)))";
-		String ex2 = "-43.7(2.1,5(_,8.(3.,5.)))";
-		BinaryTree<String> t7 = BinaryTree.parse(ex);	
-		BinaryTree<String> t8 = BinaryTree.parse(ex2);	
-		System.out.println(t7);
-		System.out.println(t8);
-		System.out.println(BinaryTrees.equilibrateType(t7));
-		System.out.println(BinaryTrees.equilibrateType(t8));
-		t7.toDot("ficheros/binary_tree.gv");
-		BinaryTree<String> t9 = t7.equilibrate();
-		BinaryTree<String> t10 = t8.equilibrate();
-		t9.toDot("ficheros/binary_tree_equilibrate.gv");
-		System.out.println(t9);
-		System.out.println(t10);
-		BinaryTree<Double> t11 =  t7.map(e->Double.parseDouble(e));
-		System.out.println(t11);
-	}
 	
-	public static void test5() {
-		String ex = "4(2(1(0,_),3),7(5(_,6),10(9(8,_),11(_,12))))";
-		BinaryTree<Integer> t0 = BinaryTree.parse(ex, e->Integer.parseInt(e));
-		System.out.println(BinaryTrees.equilibrateType(t0));
-		System.out.println(BinaryTrees.isOrdered(t0,Comparator.naturalOrder()));
-		BinaryTree<Integer> t1 = BinaryTrees.addOrdered(t0,13,Comparator.naturalOrder());
-		System.out.println("t1 = "+t1);
-		System.out.println(BinaryTrees.equilibrateType(t1));
-		System.out.println(BinaryTrees.isOrdered(t1,Comparator.naturalOrder()));
-		t1.toDot("ficheros/t1.gv");
-		BinaryTree<Integer> t2 = switch(t1) {
-		case BEmpty<Integer> t -> t;
-		case BLeaf<Integer> t  -> t;
-		case BTree<Integer> t -> BinaryTree.binary(t.label(),t.left(),t.right().equilibrate());
-		};
-		System.out.println("t2 = "+t2);
-		System.out.println(BinaryTrees.equilibrateType(t2));
-		System.out.println(BinaryTrees.isOrdered(t2,Comparator.naturalOrder()));
-		t2.toDot("ficheros/t2.gv");
-		String t4 = "10(_,11(_,12(_,13)))";
-		BinaryTree<Integer> t42 = BinaryTree.parse(t4, e->Integer.parseInt(e));
-		BinaryTree<Integer> t43 = t42.equilibrate();
-		System.out.println("t43 = "+t43);
-		t43.toDot("ficheros/t43.gv");
-	}
-	
-	public static void test6() {
-		BinaryTree<Integer> tree = BinaryTree.empty();
-		for (int i = 0; i < 50 ; i++) {
-			tree = BinaryTrees.addOrdered(tree, i, Comparator.naturalOrder());
-//			System.out.println(tree.tree().height()+" == "+tree.tree());
-		}	
-		tree = BinaryTrees.equilibrate(tree);
-		tree.toDot("ficheros/avl_tree.gv");
-	}
 	
 	public static void test7() {
 		String ex = "[4;7](2(1(0,_),3),7(5(_,6),10(9(8,_),11(_,12))))";

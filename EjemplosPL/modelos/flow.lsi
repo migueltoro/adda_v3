@@ -30,8 +30,9 @@ sum(x[j,i], j in 0 .. n | j != i && containsEdge(j,i)) = y[i], i in 0 .. n | ver
 
 bounds section
 
-x[i] <= vertexMax(Integer i), i in 0 .. n | vertexHasMax(i)
-x[i] >= vertexMin(Integer i), i in 0 .. n | vertexHasMin(i)
-y[i,j] <= edgeMax(i,j), i in 0 .. n, j in 0 .. n | i != j && containsEdge(i,j) && edgeHasMax(i,j)
-y[i,j] >= edgeMin(i,j), i in 0 .. n, j in 0 .. n | i != j && containsEdge(i,j) && edgeHasMin(i,j)
+y[i] <= vertexMax(i), i in 0 .. n | vertexHasMax(i)
+y[i] >= vertexMin(i), i in 0 .. n | vertexHasMin(i)
+x[i,j] <= edgeMax(i,j), i in 0 .. n, j in 0 .. n | i != j && containsEdge(i,j) && edgeHasMax(i,j)
+x[i,j] >= edgeMin(i,j), i in 0 .. n, j in 0 .. n | i != j && containsEdge(i,j) && edgeHasMin(i,j)
+
 

@@ -15,7 +15,7 @@ public class RepartoPLI {
 	
 	public static void reparto() throws IOException {
 		DatosReparto.iniDatos("data/reparto2.txt");
-		AuxGrammar.generate(DatosReparto.class,"models/reparto.lsi","ficheros/reparto.lp");
+		AuxGrammar.generate(DatosReparto.class,"modelos/reparto.lsi","ficheros/reparto.lp");
 		GurobiSolution solution = GurobiLp.gurobi("ficheros/reparto.lp");
 		Locale.setDefault(Locale.of("en", "US"));
 		Double b  = DatosReparto.getBeneficios();

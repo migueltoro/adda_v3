@@ -29,7 +29,7 @@ public class DatosFloyd {
 	public static Integer n;
 	
 	public static void datos() {
-		DatosFloyd.graph = leeDatos("./ficheros/andalucia.txt");
+		DatosFloyd.graph = leeDatos("ficheros/andalucia/andalucia.txt");
 		DatosFloyd.graphI = IntegerVertexGraphView.of(graph);
 		DatosFloyd.n = DatosFloyd.graphI.vertexSet().size();
 	}

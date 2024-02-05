@@ -16,6 +16,12 @@ public class Map2 {
 		c.put(key, value);
 		return c;
 	}
+	
+	public static <K,V> Map<K,V> putIfAbsent(Map<K,V> m, K key,V value){	
+		Map<K,V> c = new HashMap<>(m);
+		c.putIfAbsent(key, value);
+		return c;
+	}
 		
 	public static <K,V> Entry<K,V> entry(K key,V value){	
 		return new SimpleEntry<>(key,value);

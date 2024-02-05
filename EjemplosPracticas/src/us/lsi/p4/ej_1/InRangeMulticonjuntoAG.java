@@ -2,19 +2,13 @@ package us.lsi.p4.ej_1;
 
 import java.util.List;
 
-import us.lsi.ag.ValuesInRangeData;
-import us.lsi.ag.agchromosomes.ChromosomeFactory.ChromosomeType;
+import us.lsi.ag.RangeIntegerData;
 
 
-public class InRangeMulticonjuntoAG implements ValuesInRangeData<Integer, SolucionMulticonjunto> {
+public class InRangeMulticonjuntoAG implements RangeIntegerData<SolucionMulticonjunto> {
 
 	public InRangeMulticonjuntoAG(String linea) {
 		DatosMulticonjunto.iniDatos(linea);
-	}
-
-	@Override
-	public ChromosomeType type() {
-		return ChromosomeType.Range;
 	}
 
 	@Override
@@ -41,7 +35,7 @@ public class InRangeMulticonjuntoAG implements ValuesInRangeData<Integer, Soluci
 	public Double fitnessFunction(List<Integer> ls) {
 		double goal = 0, sum = 0, error = 0;
 		
-		System.out.println(ls);
+//		System.out.println(ls);
 		
 		for (int i = 0; i < size(); i++) {
 			if(ls.get(i)>0) {

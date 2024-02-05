@@ -29,7 +29,7 @@ public class SolucionSubconjunto {
 	@Override
 	public String toString() {
 		String s = subconjuntos.stream().map(e -> "S"+e.id())
-		.collect(Collectors.joining(", ", "Cursos elegidos: {", "}\n"));
+		.collect(Collectors.joining(", ", "Conjuntos elegidos: {", "}\n"));
 		return String.format("%sCoste Total: %.1f", s, total);	
 	}
 }

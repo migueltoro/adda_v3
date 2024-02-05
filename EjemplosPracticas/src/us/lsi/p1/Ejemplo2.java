@@ -58,6 +58,8 @@ public class Ejemplo2 {
 		
 		return  t.ac() + String.format("(%d)", t.a() * t.b());
 	}
+	
+	
 
 }
 

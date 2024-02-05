@@ -24,7 +24,7 @@ public class TestPD {
 		Locale.setDefault(Locale.of("en", "US"));
 		for (Integer id_fichero = 0; id_fichero < 7; id_fichero++) {
 
-			DatosMulticonjunto.iniDatos("ficheros/multiconjuntos.txt", id_fichero);
+			DatosMulticonjunto.iniDatos("ficheros/p5/multiconjuntos.txt", id_fichero);
 			System.out.println("\n\n>\tResultados para el test " + id_fichero + "\n");
 
 			// V�rtices clave

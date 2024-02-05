@@ -17,7 +17,7 @@ public class TestEquipoPL {
 	
 	public static void equipo_model(String fichero) throws IOException {
 		DatosEquipo.iniDatos(fichero);
-		AuxGrammar.generate(DatosEquipo.class,"models/equipo.lsi","ficheros/equipo.lp");
+		AuxGrammar.generate(DatosEquipo.class,"modelos/equipo.lsi","ficheros/equipo.lp");
 		GurobiSolution solution = GurobiLp.gurobi("ficheros/equipo.lp");
 		Locale.setDefault(Locale.of("en", "US"));
 		System.out.println(solution.values.keySet()

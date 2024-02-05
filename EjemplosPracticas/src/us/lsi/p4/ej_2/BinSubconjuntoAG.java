@@ -2,7 +2,6 @@ package us.lsi.p4.ej_2;
 
 import java.util.List;
 import java.util.Set;
-
 import us.lsi.ag.BinaryData;
 import us.lsi.common.Set2;
 
@@ -37,4 +36,7 @@ public class BinSubconjuntoAG implements BinaryData<SolucionSubconjunto> {
 		double error = DatosSubconjunto.getNumElementos()-se.size();
 		return -goal -10000*error*error; 
 	}
+
+	
+	
 }

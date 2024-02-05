@@ -17,8 +17,10 @@ import org.jgrapht.nio.dot.DOTExporter;
 
 import us.lsi.common.Files2;
 import us.lsi.common.Map2;
+import us.lsi.common.Pair;
 import us.lsi.graphs.views.TreeToGraph;
 import us.lsi.tiposrecursivos.BinaryTree;
+import us.lsi.tiposrecursivos.Tree;
 
 
 public class GraphColors {
@@ -121,8 +123,17 @@ public class GraphColors {
 	}
 	
 	public static <E> void toDot(BinaryTree<E> tree, String file) {	
-		SimpleDirectedGraph<BinaryTree<E>, DefaultEdge> graph = TreeToGraph.toGraph(tree);
-		GraphColors.toDot(graph, file);
+		SimpleDirectedGraph<Pair<E,Integer>, DefaultEdge> graph = TreeToGraph.toGraph(tree);
+		GraphColors.toDot(graph, file,
+				v->v.first()==null?"_":v.first().toString(),
+				e->"");
+	}
+	
+	public static <E> void toDot(Tree<E> tree, String file) {	
+		SimpleDirectedGraph<Pair<E,Integer>, DefaultEdge> graph = TreeToGraph.toGraph(tree);
+		GraphColors.toDot(graph, file,
+				v->v.first()==null?"_":v.first().toString(),
+				e->"");
 	}
 
 	public static <V,E> void toDot(Graph<V,E> graph, String file) {		
@@ -130,11 +141,6 @@ public class GraphColors {
 		de.setVertexAttributeProvider(v->GraphColors.label(v.toString()));
 		Writer f1 = Files2.getWriter(file);
 		de.exportGraph(graph, f1);
-	}
-	
-	public static <E> void toDot(BinaryTree<E> tree, String file, Function<BinaryTree<E>,String> vertexLabel) {	
-		SimpleDirectedGraph<BinaryTree<E>, DefaultEdge> graph = TreeToGraph.toGraph(tree);
-		GraphColors.toDot(graph,file,vertexLabel);
 	}
 	
 	public static <V,E> void toDot(Graph<V,E> graph, String file, Function<V,String> vertexLabel) {	

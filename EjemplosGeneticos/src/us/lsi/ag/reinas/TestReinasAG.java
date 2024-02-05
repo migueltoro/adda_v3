@@ -3,11 +3,10 @@ package us.lsi.ag.reinas;
 import java.util.List;
 import java.util.Set;
 
-import us.lsi.ag.Chromosome;
-import us.lsi.ag.SeqNormalData;
+import org.apache.commons.math3.genetics.Chromosome;
+
+import us.lsi.ag.PermutationData;
 import us.lsi.ag.agchromosomes.AlgoritmoAG;
-import us.lsi.ag.agchromosomes.ChromosomeFactory;
-import us.lsi.ag.agchromosomes.ChromosomeFactory.CrossoverType;
 import us.lsi.ag.agstopping.StoppingConditionFactory;
 import us.lsi.ag.agstopping.StoppingConditionFactory.StoppingConditionType;
 import us.lsi.common.Set2;
@@ -31,27 +30,20 @@ public class TestReinasAG {
 		StoppingConditionFactory.FITNESS_MIN = 0.;
 		StoppingConditionFactory.stoppingConditionType = StoppingConditionType.SolutionsNumber;
 		
-		ChromosomeFactory.crossoverType = CrossoverType.OnePoint;
 		
 		DatosReinasAG.numeroDeReinas = 10;
-		SeqNormalData<List<Reina>> p = DatosReinasAG.create();
+		PermutationData<List<Reina>> p = DatosReinasAG.create();
 		AlgoritmoAG<List<Integer>,List<Reina>> ap = AlgoritmoAG.of(p);
 		ap.ejecuta();
 		System.out.println("================================");
 		
 		System.out.println("================================");
 
-		Chromosome<List<Integer>> cr = ap.getBestChromosome();
+		Chromosome cr = ap.getBestChromosome();
 		System.out.println(cr.fitness());
 		System.out.println(ap.bestSolution());
-		List<Integer> ls = cr.decode();
 		Set<Integer> dp = Set2.empty();
-		Set<Integer> ds = Set2.empty();
-		for (int i = 0; i < ls.size(); i++) {
-			dp.add(ls.get(i)-i);
-			ds.add(ls.get(i)+i);
-		}
-		System.out.println(DatosReinasAG.numeroDeReinas+","+dp.size()+","+ds.size());
+		System.out.println(DatosReinasAG.numeroDeReinas+","+dp.size());
 		}	
 
 }

@@ -11,7 +11,7 @@ import us.lsi.solve.AuxGrammar;
 
 public class AsignacionPLI {
 	
-	private static int n;
+	private static Integer n;
 	private static Integer m;
 	private static Double[][] costes;
 	
@@ -44,9 +44,9 @@ public class AsignacionPLI {
 	
 	public static void asignacion_model() throws IOException {
 		AsignacionPLI.leeFichero("data/asignacionDeTareas_2.txt");
-		AuxGrammar.generate(AsignacionPLI.class,"models/asignacion.lsi","ficheros/asignacion.lp");
+		AuxGrammar.generate(AsignacionPLI.class,"modelos/asignacion.lsi","ficheros/asignacion.lp");
 		GurobiSolution solution = GurobiLp.gurobi("ficheros/asignacion.lp");
-		Locale.setDefault(new Locale("en", "US"));
+		Locale.setDefault(Locale.of("en", "US"));
 		System.out.println(solution.toString((s,d)->d>0.));
 	}
 

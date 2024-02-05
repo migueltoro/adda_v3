@@ -13,7 +13,7 @@ public class TestHeuristica {
 
 	public static void main(String[] args) {
 		Locale.setDefault(Locale.of("en", "US"));
-		Data.data("ficheros/pack1.txt");
+		Data.data("ficheros/pack/pack1.txt");
 		PackVertex e1 = PackVertex.first();
 		
 		EGraph<PackVertex,PackEdge> graph = 

@@ -4,14 +4,13 @@ import java.util.List;
 import java.util.Set;
 
 import us.lsi.ag.AuxiliaryAg;
-import us.lsi.ag.SeqNormalData;
-import us.lsi.ag.agchromosomes.ChromosomeFactory.ChromosomeType;
+import us.lsi.ag.PermutationData;
 import us.lsi.common.List2;
 import us.lsi.common.Set2;
 import us.lsi.reinas.datos.Reina;
 
 
-public class DatosReinasAG implements SeqNormalData<List<Reina>> {
+public class DatosReinasAG implements PermutationData<List<Reina>> {
 
 	public static int numeroDeReinas = 8;
 	
@@ -46,19 +45,5 @@ public class DatosReinasAG implements SeqNormalData<List<Reina>> {
 	public Integer itemsNumber() {
 		return  numeroDeReinas;
 	}
-	
-	@Override
-	public ChromosomeType type() {
-		return ChromosomeType.Permutation;
-	}
-	
-//	@Override
-//	public List<Integer> normalSequence() {
-//		return IntStream.range(0,numeroDeReinas).boxed().toList();
-//	}
-//	
-//	@Override
-//	public Integer size() {
-//		return numeroDeReinas;
-//	}
+
 }

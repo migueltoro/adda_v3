@@ -2,21 +2,15 @@ package us.lsi.ag.mochila;
 
 import java.util.List;
 
-import us.lsi.ag.SeqNormalData;
-import us.lsi.ag.agchromosomes.ChromosomeFactory.ChromosomeType;
+import us.lsi.ag.PermutationData;
 import us.lsi.ag.AuxiliaryAg;
 import us.lsi.mochila.datos.DatosMochila;
 import us.lsi.mochila.datos.SolucionMochila;
 
-public class DatosMochilaSubList implements SeqNormalData<SolucionMochila> {
+public class DatosMochilaSubList implements PermutationData<SolucionMochila> {
 
 	public DatosMochilaSubList(String fichero) {
 		DatosMochila.iniDatos(fichero);
-	}
-
-	@Override
-	public ChromosomeType type() {
-		return ChromosomeType.SubList;
 	}
 	
 	private Double valor;

@@ -4,7 +4,10 @@ package us.lsi.alg.mochila;
 import java.util.Locale;
 
 import org.jgrapht.GraphPath;
+import org.jgrapht.graph.SimpleDirectedGraph;
 
+import us.lsi.colors.GraphColors;
+import us.lsi.graphs.Graphs2;
 import us.lsi.graphs.alg.GreedyOnGraph;
 import us.lsi.graphs.virtual.EGraph;
 import us.lsi.graphs.virtual.EGraph.Type;
@@ -16,7 +19,7 @@ public class TestGreadyMochila {
 	
 	public static void main(String[] args) {
 		Locale.setDefault(Locale.of("en", "US"));
-		DatosMochila.iniDatos("ficheros/objetosMochila.txt");
+		DatosMochila.iniDatos("ficheros/mochila/objetosMochila.txt");
 		MochilaVertex.capacidadInicial = 78;
 		MochilaVertex v1 = MochilaVertex.initialVertex();
 //		MochilaVertex v2 = MochilaVertex.lastVertex();
@@ -54,7 +57,12 @@ public class TestGreadyMochila {
 //				e->e.equals(e2));
 //		System.out.println(rr.weightToEnd());
 		System.out.println("________________");
-		System.out.println(GreedyOnGraph.getPath(graph).getWeight());
+		System.out.println(gp.getWeight());
+		SimpleDirectedGraph<MochilaVertex, MochilaEdge> g = Graphs2.addPathToGraph(gp);
+		GraphColors.toDot(g,
+				"ficheros/MochilaGreadyPath.gv",
+				v->String.format("((%d,%d)",v.index(),v.capacidadRestante()),
+				e->e.action().toString());
 	}
 
 }

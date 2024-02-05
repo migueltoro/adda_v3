@@ -10,6 +10,7 @@ import java.util.function.Predicate;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
+import us.lsi.colors.GraphColors;
 import us.lsi.common.Set2;
 import us.lsi.common.String2;
 import us.lsi.iterativorecursivos.IterativosyRecursivosSimples;
@@ -35,7 +36,7 @@ public class TreesTest {
 	
 	public static <E> Integer height(Tree<E> tree) {
 		return switch(tree) {
-		case TEmpty<E> t -> 0; 
+		case TEmpty<E> t -> -1; 
 		case TLeaf<E> t -> 0; 
 		case TNary<E> t -> 1+ tree.children().stream().mapToInt(x->x.height()).max().getAsInt(); 
 		};	
@@ -192,6 +193,7 @@ public class TreesTest {
 		String2.toConsole("%s",palindromas2(tree));
 		Tree<String> tree2 = Tree.parse("[2.;3.](a(p(a(r)),d(a(_,r),i(o,_)),t),t,u(t(a)))");
 		String2.toConsole("%s",tree2);
+		GraphColors.toDot(tree2,"ficheros/tree3.gv");
 	}
 	
 	public static void main(String[] args) {

@@ -53,7 +53,7 @@ public class DatosMulticonjunto {
 
 	// Test de la lectura del fichero
 	public static void main(String[] args) {
-		for (String linea : Files2.linesFromFile("ficheros/multiconjuntos.txt")) {
+		for (String linea : Files2.linesFromFile("ficheros/p5/multiconjuntos.txt")) {
 			iniDatos(linea);
 			toConsole();
 		}

@@ -5,17 +5,11 @@ import java.util.List;
 import java.util.stream.IntStream;
 
 
-import us.lsi.ag.SeqNormalData;
-import us.lsi.ag.agchromosomes.ChromosomeFactory.ChromosomeType;
+import us.lsi.ag.PermutationData;
 import us.lsi.common.List2;
 import us.lsi.grafos.datos.Ciudad;
 
-public class CaminoData implements SeqNormalData<List<Ciudad>>{
-	
-	@Override
-	public ChromosomeType type() {
-		return ChromosomeType.PermutationSubList;
-	}
+public class CaminoData implements PermutationData<List<Ciudad>>{
 
 	@Override
 	public Double fitnessFunction(List<Integer> value) {

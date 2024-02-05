@@ -21,7 +21,7 @@ import us.lsi.tiposrecursivos.Trees.TreeLevel;
 import us.lsi.tiposrecursivos.parsers.TreeLexer;
 import us.lsi.tiposrecursivos.parsers.TreeParser;
 
-public sealed interface Tree<E> permits TEmpty<E>, TLeaf<E>, TNary<E>{
+public sealed interface Tree<E> permits TEmpty, TLeaf, TNary{
 	
 	public enum TreeType{Empty,Leaf,Nary}
 	
@@ -84,10 +84,6 @@ public sealed interface Tree<E> permits TEmpty<E>, TLeaf<E>, TNary<E>{
 		return Trees.byLevel(this);
 	}
 	
-	public default void toDot(String file) {
-		Trees.toDot(this, file);
-	}
-	
 	public default List<Tree<E>> level(Integer n){
 		return this.byLevel().filter(e->e.level().equals(n)).map(e->e.tree()).toList();
 	}
@@ -98,7 +94,7 @@ public sealed interface Tree<E> permits TEmpty<E>, TLeaf<E>, TNary<E>{
 		public Optional<E> optionalLabel() { return Optional.empty(); }
 		public List<Tree<E>> children() {return new ArrayList<>();}
 		public int size() { return 0; }
-		public int height() { return 0; }
+		public int height() { return -1; }
 		public Tree<E> copy() { return Tree.empty(); }
 		public Tree<E> reverse() { return Tree.empty(); }
 		public <R> Tree<R> map(Function<E, R> f) { return Tree.empty();}

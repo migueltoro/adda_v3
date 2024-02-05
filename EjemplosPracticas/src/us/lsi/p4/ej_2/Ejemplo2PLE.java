@@ -29,13 +29,13 @@ public class Ejemplo2PLE {
 	}
 	
 	public static void ejemplo2_model() throws IOException {
-		DatosSubconjunto.iniDatos("ficheros/Ejemplo2DatosEntrada2.txt");
+		DatosSubconjunto.iniDatos("ficheros/p4/ejemplo2_2.txt");
 		
 		subconjuntos = DatosSubconjunto.getSubconjuntos();
 		universo = DatosSubconjunto.getUniverso();
 		
-		AuxGrammar.generate(Ejemplo2PLE.class,"lsi_models/Ejemplo2.lsi","gurobi_models/Ejemplo2-2.lp");
-		GurobiSolution solution = GurobiLp.gurobi("gurobi_models/Ejemplo2-2.lp");
+		AuxGrammar.generate(Ejemplo2PLE.class,"modelos/ejemplo2.lsi","gurobi_models/ejemplo2_2.lp");
+		GurobiSolution solution = GurobiLp.gurobi("gurobi_models/ejemplo2_2.lp");
 		Locale.setDefault(Locale.of("en", "US"));
 		System.out.println(solution.toString((s,d)->d>0.));
 	}

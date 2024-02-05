@@ -20,7 +20,7 @@ public class TestPD {
 
 		for (Integer id_fichero = 1; id_fichero < 4; id_fichero++) {
 
-			DatosBufete.iniDatos("ficheros/bufete" + id_fichero + ".txt");
+			DatosBufete.iniDatos("ficheros/bufete/bufete" + id_fichero + ".txt");
 
 			System.out.println("\n\n>\tResultados para el test " + id_fichero + "\n");
 			final BufeteVertex start = BufeteVertex.initialVertex();

@@ -130,7 +130,7 @@ public class Collectors2 {
 	}
 	
 	public static <E> Collector<E,Map<E,Integer>,Multiset<E>> frequencies() {
-		return Collector.of(
+		return Collector.<E,Map<E,Integer>,Multiset<E>>of(
 				()->new HashMap<>(), 
 				(m,e)->m.put(e,m.getOrDefault(e,0)+1), 
 				(m1,m2)->Map2.merge(m1,m2,(x,y)->x+y), 

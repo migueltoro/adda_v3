@@ -7,7 +7,7 @@ public class TestBTManual {
 	public static void main(String[] args) {
 		for (Integer id_fichero = 1; id_fichero < 3; id_fichero++) {
 
-			DatosSubconjuntos.iniDatos("ficheros/subconjuntos" + id_fichero + ".txt");
+			DatosSubconjuntos.iniDatos("ficheros/p5/subconjuntos" + id_fichero + ".txt");
 			System.out.println("\n\n>\tResultados para el test " + id_fichero + "\n");
 			DatosSubconjuntos.toConsole();
 			

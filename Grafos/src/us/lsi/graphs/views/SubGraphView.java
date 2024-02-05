@@ -16,8 +16,12 @@ public class SubGraphView<V, E, G extends Graph<V,E>> implements Graph<V, E> {
 		return  new SubGraphView<V, E, G>(graph, vertices, edges);
 	}
 	
-	public static <V, E, G extends Graph<V,E>> SubGraphView<V, E, G> of(G graph, Set<V> vertices) {
-		return new SubGraphView<V, E, G>(graph, vertices);
+	public static <V, E, G extends Graph<V,E>> SubGraphView<V, E, G> of(G graph, Predicate<V> vertices) {
+		return  new SubGraphView<V, E, G>(graph, vertices,e->true);
+	}
+	
+	public static <V, E, G extends Graph<V,E>> SubGraphView<V, E, G> ofEdges(G graph, Predicate<E> edges) {
+		return  new SubGraphView<V, E, G>(graph, v->true, edges);
 	}
 	
 	private G graph;
@@ -173,7 +177,4 @@ public class SubGraphView<V, E, G extends Graph<V,E>> implements Graph<V, E> {
 	public String toString() {
 		return String.format("%s === %s",this.vertexSet(),this.edgeSet());
 	}
-	
-	
-	
 }

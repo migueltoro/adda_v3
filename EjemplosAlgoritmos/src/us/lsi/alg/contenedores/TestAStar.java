@@ -22,7 +22,7 @@ public class TestAStar {
 		
 		for (Integer i = 1; i < 2; i++) {
 
-			DatosContenedores.iniDatos("ficheros/contenedores"+ i +".txt");
+			DatosContenedores.iniDatos("ficheros/contenedores/contenedores"+ i +".txt");
 			DatosContenedores.toConsole();
 			System.out.println("\n\n>\tResultados para el test " + i + "\n");
 

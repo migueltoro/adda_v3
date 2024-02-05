@@ -54,7 +54,7 @@ public class TestAStar {
 		System.out.println(s_as);
 		System.out.println(gp_as);
 
-		GraphColors.toDot(aStar.outGraph(), "resultados/p5/ejemplo3/AlumnosAStarGraph1.gv", 
+		GraphColors.toDot(aStar.outGraph(), "ficheros_generados/p5/ejemplo3/AlumnosAStarGraph1.gv", 
 					v -> v.toGraph(),
 					e -> e.action().toString(), 
 					v -> GraphColors.colorIf(Color.red, AlumnosVertex.goal().test(v)),

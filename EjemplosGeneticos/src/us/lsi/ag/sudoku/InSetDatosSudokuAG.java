@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.IntStream;
 
-import us.lsi.ag.ValuesInSetData;
+import us.lsi.ag.InSetData;
 import us.lsi.alg.sudoku.Casilla;
 import us.lsi.alg.sudoku.DatosSudoku;
 import us.lsi.alg.sudoku.SolucionSudoku;
@@ -13,7 +13,7 @@ import us.lsi.alg.sudoku.SudokuVertex;
 import us.lsi.common.Preconditions;
 
 
-public class InSetDatosSudokuAG implements ValuesInSetData<SolucionSudoku> {
+public class InSetDatosSudokuAG implements InSetData<SolucionSudoku> {
 
 
 	SudokuVertex sv;

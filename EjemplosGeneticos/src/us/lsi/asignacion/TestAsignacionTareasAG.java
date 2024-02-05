@@ -2,9 +2,10 @@ package us.lsi.asignacion;
 
 import java.util.List;
 
-import us.lsi.ag.SeqNormalData;
+import org.apache.commons.math3.genetics.Chromosome;
+
+import us.lsi.ag.PermutationData;
 import us.lsi.ag.agchromosomes.AlgoritmoAG;
-import us.lsi.ag.Chromosome;
 import us.lsi.ag.agstopping.StoppingConditionFactory;
 import us.lsi.ag.agstopping.StoppingConditionFactory.StoppingConditionType;
 
@@ -27,19 +28,19 @@ public class TestAsignacionTareasAG {
 		StoppingConditionFactory.stoppingConditionType = StoppingConditionType.GenerationCount;
 		
 
-		SeqNormalData<List<Integer>> p = DatosAsignacionTareasAG.create("ficheros/asignacionDeTareas.txt");
+		PermutationData<List<Integer>> p = DatosAsignacionTareasAG.create("ficheros/asignacionDeTareas.txt");
 		AlgoritmoAG<List<Integer>,List<Integer>> ap = AlgoritmoAG.of(p);
 		ap.ejecuta();
 		System.out.println("================================");
 		
 		System.out.println("================================");
 
-		Chromosome<List<Integer>> cr = ap.getBestChromosome();
+		Chromosome cr = ap.getBestChromosome();
 		System.out.println(cr.fitness());
-		System.out.println(p.solucion(cr.decode()));
+		System.out.println(p.solucion(p.decode(cr)));
 		System.out.println("Asignacion de tareas: " );
 
-		List<Integer> ls = cr.decode();
+		List<Integer> ls = p.decode(cr);
 		Double sumCoste = 0.;
 		for (int i = 0; i < ls.size(); i++) {
 			Double coste = DatosAsignacionTareasAG.a.getCoste(i,ls.get(i));

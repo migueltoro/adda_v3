@@ -31,7 +31,7 @@ public class TestEjemplo1 {
 		
 		
 		//Para mostrar el grafo original
-		GraphColors.toDot(g,"resultados/ejemplo1/" + file + ".gv",
+		GraphColors.toDot(g,"ficheros_generados/ejemplo1/" + file + ".gv",
 				v->v.nombre(), //que etiqueta mostrar en vertices y aristas
 				e->e.nombre(),
 				v->GraphColors.color(Color.black), //color o estilo de vertices y aristas

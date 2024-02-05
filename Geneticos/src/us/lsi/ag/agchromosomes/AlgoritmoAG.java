@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import org.apache.commons.math3.genetics.Chromosome;
 import org.apache.commons.math3.genetics.CrossoverPolicy;
 import org.apache.commons.math3.genetics.ElitisticListPopulation;
 import org.apache.commons.math3.genetics.GeneticAlgorithm;
@@ -14,9 +15,7 @@ import org.apache.commons.math3.genetics.SelectionPolicy;
 import org.apache.commons.math3.genetics.StoppingCondition;
 import org.apache.commons.math3.random.JDKRandomGenerator;
 
-import us.lsi.ag.Chromosome;
 import us.lsi.ag.ChromosomeData;
-import us.lsi.ag.agchromosomes.ChromosomeFactory.ChromosomeType;
 import us.lsi.ag.agstopping.StoppingConditionFactory;
 import us.lsi.common.Preconditions;
 
@@ -82,25 +81,22 @@ public class AlgoritmoAG<E,S> {
 	
 	
 	public ChromosomeData<E,S>  data;
-	public static ChromosomeType tipo;
-	public static CrossoverPolicy crossOverPolicy;
-	public static MutationPolicy mutationPolicy;
-	public static SelectionPolicy selectionPolicy;
+	public CrossoverPolicy crossOverPolicy;
+	public MutationPolicy mutationPolicy;
+	public SelectionPolicy selectionPolicy;
 	private StoppingCondition stopCond;
-		
-	
 
 	/**
 	 * Lista con los mejores cromosomas de cada una de la generaciones si se usa la condici�n de parada SolutionsNumbers.
 	 * En otro caso null.
  	 */
-	public static List<org.apache.commons.math3.genetics.Chromosome> bestChromosomes;
+	public static List<Chromosome> bestChromosomes;
 	
 
 	protected static Population initialPopulation;
 	
 	
-	protected static org.apache.commons.math3.genetics.Chromosome bestFinal;
+	protected static Chromosome bestFinal;
 	protected static Population finalPopulation;
 	public static Double bestFitNess;
 	
@@ -110,29 +106,27 @@ public class AlgoritmoAG<E,S> {
 	/**
 	 * @param problema Problema a resolver
 	 */
+
 	public AlgoritmoAG(ChromosomeData<E,S> data) {
 		super();
 		AlgoritmoAG.random = new JDKRandomGenerator();		
 		AlgoritmoAG.random.setSeed((int)System.currentTimeMillis());
 		GeneticAlgorithm.setRandomGenerator(random);
-		this.data = data;
-		AlgoritmoAG.tipo = data.type();				
-		AlgoritmoAG.selectionPolicy =  ChromosomeFactory.getSelectionPolicy();
-		AlgoritmoAG.mutationPolicy = ChromosomeFactory.getMutationPolicy(tipo);
-		AlgoritmoAG.crossOverPolicy = ChromosomeFactory.getCrossoverPolicy(tipo);
+		this.data = data;			
+		this.selectionPolicy =  this.data.selectionPolicy();
+		this.mutationPolicy = this.data.mutationPolicy();
+		this.crossOverPolicy = this.data.crossOverPolicy();
 		this.stopCond = StoppingConditionFactory.getStoppingCondition();
-		ChromosomeFactory.iniValues(data,tipo);
+		this.data.iniValues(this.data);
 	}
 
 	/**
-	 * Inicializa aleatoriamente la poblaci�n.
+	 * Inicializa aleatoriamente la población.
 	 */
 	public ElitisticListPopulation randomPopulation() {
-		List<org.apache.commons.math3.genetics.Chromosome> popList = new LinkedList<>();
-
+		List<Chromosome> popList = new LinkedList<>();
 		for (int i = 0; i < POPULATION_SIZE; i++) {
-			org.apache.commons.math3.genetics.Chromosome randChrom = 
-					(org.apache.commons.math3.genetics.Chromosome) ChromosomeFactory.randomChromosome(AlgoritmoAG.tipo);
+			Chromosome randChrom = this.data.initialChromosome();
 			popList.add(randChrom);
 		}
 		return new ElitisticListPopulation(popList, popList.size(), ELITISM_RATE);
@@ -161,7 +155,7 @@ public class AlgoritmoAG<E,S> {
 	}
 
 	/**
-	 * @return Poblaci�n inicial
+	 * @return Población inicial
 	 */
 	public Population getInitialPopulation() {
 		return initialPopulation;
@@ -170,41 +164,36 @@ public class AlgoritmoAG<E,S> {
 	/**
 	 * @return El mejor cromosoma en la poblaci�n final
 	 */
-	@SuppressWarnings("unchecked")
-	public Chromosome<E> getBestChromosome() {
-		return (Chromosome<E>)bestFinal;
+	
+	public Chromosome getBestChromosome() {
+		return bestFinal;
 	}
 	
 	public Double getBestFitness() {
 		return bestFinal.fitness();
 	}
-	
-	@SuppressWarnings("unchecked")
-	public ChromosomeData<E,S> getBestChromosomeData() {
-		return (ChromosomeData<E, S>)bestFinal;
-	}
 
-	@SuppressWarnings("unchecked")
-	public List<Chromosome<E>> getBestChromosomes(){
+	public List<Chromosome> getBestChromosomes(){
 		return bestChromosomes.stream()
-				.map(x->(Chromosome<E>)x)
 				.collect(Collectors.toList());
 	}
 
 	/**
-	 * @return Poblaci�n final
+	 * @return Población final
 	 */
 	public Population getFinalPopulation() {
 		return finalPopulation;
 	}	
 	
 	public S bestSolution() {
-		return this.getBestChromosomeData().solucion(this.getBestChromosome().decode());
+		E d = this.data.decode(this.getBestChromosome());
+		return this.data.solucion(d);
 	}
 	
 	public Set<S> bestSolutions() {
-		ChromosomeData<E,S> d = this.getBestChromosomeData();
-		return this.getBestChromosomes().stream().map(c->d.solucion(c.decode())).collect(Collectors.toSet());
+		return this.getBestChromosomes().stream()
+				.<S>map(c->this.data.solucion(this.data.decode(c)))
+				.collect(Collectors.toSet());
 	} 
 	
 	public StoppingCondition stoppingCondition() {

@@ -1,9 +1,11 @@
 package us.lsi.common;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Comparator;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
@@ -77,6 +79,15 @@ public class Set2 {
 		Set<E> s = new HashSet<>(s1);
 		s.removeAll(s2);
 		return s;
+	}
+	
+	public static <E> Set<E> symmetricDifference(Collection<E> s1,  Collection<E> s2){
+		Set<E> symmetricDiff = new HashSet<E>(s1);
+	    symmetricDiff.addAll(s2);
+	    Set<E> tmp = new HashSet<E>(s1);
+	    tmp.retainAll(s2);
+	    symmetricDiff.removeAll(tmp);
+	    return symmetricDiff;
 	}
 	
 	public static <E> Set<E> union(Collection<E> s1,  Collection<E> s2){

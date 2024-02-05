@@ -1,6 +1,9 @@
 package us.lsi.ag;
 
-import us.lsi.ag.agchromosomes.ChromosomeFactory.ChromosomeType;
+import org.apache.commons.math3.genetics.Chromosome;
+import org.apache.commons.math3.genetics.CrossoverPolicy;
+import org.apache.commons.math3.genetics.MutationPolicy;
+import org.apache.commons.math3.genetics.SelectionPolicy;
 
 public interface ChromosomeData<E,S> {
 	
@@ -10,20 +13,27 @@ public interface ChromosomeData<E,S> {
 	Integer size();
 	
 	/**
-	 * @return El tipo del cromosoma
-	 */
-	ChromosomeType type();
-	
-	/**
 	 * @param cr Valores del cromosoma
-	 * @return La función de fitnes del cromosoma
+	 * @return La funciÃ³n de fitnes del cromosoma
 	 */
 	Double fitnessFunction(E value);
 	
 	/**
 	 * @param cr Valores del cromosoma
-	 * @return La solución definida por el cromosoma
+	 * @return La soluciÃ³n definida por el cromosoma
 	 */
 	S solucion(E value);
+
+	CrossoverPolicy crossOverPolicy();
+	
+	MutationPolicy mutationPolicy();
+	
+	SelectionPolicy selectionPolicy();
+	
+	void iniValues(ChromosomeData<E,S> data);
+	
+	Chromosome initialChromosome();
+	
+    E decode(Chromosome chromosome);
 
 }

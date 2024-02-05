@@ -12,17 +12,26 @@ import java.util.stream.Collectors;
 import org.jgrapht.Graph;
 import org.jgrapht.GraphPath;
 import org.jgrapht.Graphs;
+import org.jgrapht.graph.DefaultEdge;
 import org.jgrapht.graph.DirectedWeightedMultigraph;
 import org.jgrapht.graph.SimpleDirectedGraph;
 import org.jgrapht.graph.SimpleDirectedWeightedGraph;
 import org.jgrapht.graph.SimpleGraph;
 import org.jgrapht.graph.SimpleWeightedGraph;
+
+import us.lsi.common.Pair;
 import us.lsi.common.Preconditions;
+import us.lsi.graphs.views.CompleteGraphView;
+import us.lsi.graphs.views.PathToGraph;
+import us.lsi.graphs.views.SubGraphView;
+import us.lsi.graphs.views.TreeToGraph;
+import us.lsi.tiposrecursivos.BinaryTree;
+import us.lsi.tiposrecursivos.Tree;
 
 
 public class Graphs2 {
 	
-	public static <V, E> Double weightToVertex(Graph<V,E> graph, V v1, V v2) {
+	public static <V, E> Double weightOfEdge(Graph<V,E> graph, V v1, V v2) {
 		E e = graph.getEdge(v1,v2); 
 		Double w = graph.getEdgeWeight(e); 
 		return w;
@@ -35,7 +44,7 @@ public class Graphs2 {
 	public static <V, E> V closestVertex(Graph<V,E> graph, V vertex, Predicate<V> p) {
 		return (Graphs.neighborSetOf(graph,vertex)).stream()
 				.filter(p)
-				.min(Comparator.comparingDouble(v->weightToVertex(graph,vertex,v)))
+				.min(Comparator.comparingDouble(v->weightOfEdge(graph,vertex,v)))
 				.get();
 	}
 	
@@ -46,7 +55,7 @@ public class Graphs2 {
 	public static <V, E> V furthestVertex(Graph<V,E> graph, V vertex, Predicate<V> p) {
 		return (Graphs.neighborSetOf(graph,vertex)).stream()
 				.filter(p)
-				.max(Comparator.comparingDouble(v->weightToVertex(graph,vertex,v)))
+				.max(Comparator.comparingDouble(v->weightOfEdge(graph,vertex,v)))
 				.get();
 	}
 	
@@ -70,6 +79,23 @@ public class Graphs2 {
     public static <V,E> SimpleDirectedGraph<V, E> simpleDirectedGraph() {
 		return new SimpleDirectedGraph<>(null,null,false);
 	}
+    
+    public static <V,E> SimpleDirectedGraph<V, E> addPathToGraph(GraphPath<V,E> gp) {
+    	SimpleDirectedGraph<V, E> g = Graphs2.simpleDirectedGraph();
+    	return PathToGraph.addPathToGraph(g, gp);
+    }
+    
+    public static <V,E> SimpleDirectedGraph<V, E> addPathToGraph(SimpleDirectedGraph<V,E> g, GraphPath<V,E> gp) {
+    	return PathToGraph.addPathToGraph(g, gp);
+    }
+    
+    public static <V,E> SimpleDirectedGraph<Pair<V, Integer>, DefaultEdge> treeToGraph(Tree<V> tree) {
+    	return TreeToGraph.toGraph(tree);
+    }
+    
+    public static <V,E> SimpleDirectedGraph<Pair<V, Integer>, DefaultEdge> binaryTreeToGraph(BinaryTree<V> tree) {
+    	return TreeToGraph.toGraph(tree);
+    }
     
     public static <V,E> SimpleDirectedWeightedGraph<V, E> simpleDirectedWeightedGraph() {
 		return new SimpleDirectedWeightedGraph<>(null,null);
@@ -188,6 +214,22 @@ public class Graphs2 {
 		}
 		r.edgeSet().forEach(e->r.setEdgeWeight(e, edgeWeight.apply(e)));
 		return r;
+	}
+	
+	public static <V, E> Graph<V, E> completeGraphView(Graph<V, E> g, Supplier<E> edgeWeightFactory) {
+			return CompleteGraphView.of(g, edgeWeightFactory);
+	}
+	
+	public static <V, E, G extends Graph<V,E>> SubGraphView<V, E, G> subGraphView(G graph, Predicate<V> vertices, Predicate<E> edges) {
+		return  SubGraphView.of(graph, vertices, edges);
+	}
+	
+	public static <V, E, G extends Graph<V,E>> SubGraphView<V, E, G> subGraphView(G graph, Predicate<V> vertices) {
+		return  SubGraphView.of(graph, vertices,e->true);
+	}
+	
+	public static <V, E, G extends Graph<V,E>> SubGraphView<V, E, G> subGraphViewOfEdges(G graph, Predicate<E> edges) {
+		return  SubGraphView.of(graph, v->true, edges);
 	}
 
 	public static <V, E extends SimpleEdge<V>> V getOppositeVertex(Graph<V, E> graph, E edge, V vertex) {

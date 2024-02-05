@@ -1,11 +1,9 @@
 package us.lsi.ag.real;
 
 import java.util.List;
+import us.lsi.ag.RangeDoubleData;
 
-import us.lsi.ag.ValuesInRangeData;
-import us.lsi.ag.agchromosomes.ChromosomeFactory.ChromosomeType;
-
-public class DatosReal implements ValuesInRangeData<Double,List<Double>> {
+public class DatosReal implements RangeDoubleData<List<Double>> {
 
 	public DatosReal(){
 		
@@ -47,8 +45,5 @@ public class DatosReal implements ValuesInRangeData<Double,List<Double>> {
 		return 4;
 	}
 	
-	@Override
-	public ChromosomeType type() {
-		return ChromosomeType.Real;
-	}
+	
 }

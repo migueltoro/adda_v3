@@ -9,7 +9,7 @@ import us.lsi.hypergraphsD.GraphTreeD.Gtb;
 import us.lsi.hypergraphsD.GraphTreeD.Gtr;
 
 public sealed interface GraphTreeD<V extends HyperVertexD<V, E, A, ?>, E extends HyperEdgeD<V, E, A,?>, A> 
-		permits Gtb<V,E,A>,Gtr<V,E,A>{
+		permits Gtb,Gtr{
 
 	public static <V extends HyperVertexD<V, E, A, ?>, E extends HyperEdgeD<V, E, A, ?>, A> 
 		GraphTreeD<V, E, A> tb(V v) {

@@ -5,6 +5,7 @@ import java.util.function.Predicate;
 
 import org.jgrapht.Graph;
 import org.jgrapht.alg.connectivity.ConnectivityInspector;
+import org.jgrapht.alg.interfaces.SpanningTreeAlgorithm.SpanningTree;
 import org.jgrapht.alg.spanning.KruskalMinimumSpanningTree;
 import org.jgrapht.alg.vertexcover.GreedyVCImpl;
 
@@ -17,9 +18,9 @@ public class Ejemplo4 {
 	
 	// Apartado a)
 	public static Set<String> apartadoA (Graph<String,Pasillo> gf) {
-		var algA = new GreedyVCImpl<>(gf);
-		Set<String> cruces = algA.getVertexCover();		
-		return cruces;
+		GreedyVCImpl<String,Pasillo> algA = new GreedyVCImpl<>(gf);
+		Set<String> camaras = algA.getVertexCover();		
+		return camaras;
 	}
 		
 	
@@ -27,23 +28,22 @@ public class Ejemplo4 {
 	public static void apartadoB (Graph<String,Pasillo> gf, String file) {
 		
 		//Apartado b)
-		Set<String>cruces = apartadoA(gf);
-		Predicate<String> pv = c -> cruces.contains(c);
-		Predicate<Pasillo> pe = p -> cruces.contains(gf.getEdgeSource(p)) && cruces.contains(gf.getEdgeTarget(p));
-		Graph<String,Pasillo> sgf = SubGraphView.of(gf, pv, pe);
+		Set<String> camaras = apartadoA(gf);
+		Predicate<String> pc = c -> camaras.contains(c);
+		Graph<String,Pasillo> sgf = SubGraphView.of(gf, pc);
 		
-		var algB1 = new ConnectivityInspector<>(sgf);
-		System.out.println("Numero de equipos necesarios: "+algB1.connectedSets().size());
+		ConnectivityInspector<String,Pasillo> algB1 = new ConnectivityInspector<>(sgf);
+		Integer n = algB1.connectedSets().size();
+		System.out.println("Numero de equipos necesarios: "+n);
 		
-		var algB2 = new KruskalMinimumSpanningTree<>(sgf);
-		var tree = algB2.getSpanningTree();
+		KruskalMinimumSpanningTree<String,Pasillo> algB2 = new KruskalMinimumSpanningTree<>(sgf);
+		SpanningTree<Pasillo> tree = algB2.getSpanningTree();
 		System.out.println(String.format("Metros de cable necesarios: %.1f", tree.getWeight()));
 		
 		// Apartado c)
-		GraphColors.toDot(gf, "resultados/ejemplo4/" + file + ".gv", c->"", v->"", 
-				v -> GraphColors.colorIf(Color.blue, Color.blank, cruces.contains(v)),
-				e -> GraphColors.colorIf(Color.blue, Color.blank, tree.getEdges().contains(e)));
-		
+		GraphColors.toDot(gf, "ficheros_generados/ejemplo4/" + file + ".gv", c->"", v->"", 
+				v -> GraphColors.colorIf(Color.red, Color.blank, camaras.contains(v)),
+				e -> GraphColors.colorIf(Color.green, Color.blank, tree.getEdges().contains(e)));
 	}
 	
 }

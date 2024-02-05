@@ -21,7 +21,7 @@ public class TestSubconjuntosAGBinary {
 		StoppingConditionFactory.NUM_GENERATIONS = 5000;
 		StoppingConditionFactory.stoppingConditionType = StoppingConditionFactory.StoppingConditionType.GenerationCount;
 		
-		BinSubconjuntoAG p = new BinSubconjuntoAG("ficheros/Ejemplo2DatosEntrada1.txt");
+		BinSubconjuntoAG p = new BinSubconjuntoAG("ficheros/p4/ejemplo2_2.txt");
 		
 		AlgoritmoAG<List<Integer>,SolucionSubconjunto> ap = AlgoritmoAG.of(p);
 		ap.ejecuta();

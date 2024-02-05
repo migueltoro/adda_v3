@@ -20,7 +20,7 @@ public class TestFloyD {
 	public static void main(String[] args) {
 		Locale.setDefault(Locale.of("en", "US"));
 		
-Locale.setDefault(Locale.of("en", "US"));
+		Locale.setDefault(Locale.of("en", "US"));
 		
 		DatosFloyd.datos();
 		

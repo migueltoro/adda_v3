@@ -27,13 +27,13 @@ public class Ejemplo3 {
 		
 		Map<String, Integer> map = solucion.getColors(); 
 		
-		GraphColors.toDot(gf, "resultados/ejemplo3/" + file + ".gv", 
+		GraphColors.toDot(gf, "ficheros_generados/ejemplo3/" + file + ".gv", 
 				v->v.toString(), 
 				e->"",
 				v -> GraphColors.color(map.get(v)),
 				e -> GraphColors.style(Style.solid));
 		
-		System.out.println(file + "C.gv generado en " + "resultados/ejemplo3");
+		System.out.println(file + "C.gv generado en " + "ficheros_generados/ejemplo3");
 		
 		 
 	}

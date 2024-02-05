@@ -9,15 +9,14 @@ import java.util.stream.IntStream;
 
 import org.jgrapht.graph.SimpleWeightedGraph;
 
-import us.lsi.ag.ValuesInRangeData;
-import us.lsi.ag.agchromosomes.ChromosomeFactory.ChromosomeType;
+import us.lsi.ag.RangeIntegerData;
 import us.lsi.grafos.datos.Carretera;
 import us.lsi.grafos.datos.Ciudad;
 import us.lsi.graphs.GraphsReader;
 import us.lsi.graphs.Graphs2;
 
 
-public class DatosColorAG implements ValuesInRangeData<Integer,Map<Ciudad,Integer>> {
+public class DatosColorAG implements RangeIntegerData<Map<Ciudad,Integer>> {
 
 	
 	private static SimpleWeightedGraph<Ciudad,Carretera> grafo; 
@@ -81,10 +80,5 @@ public class DatosColorAG implements ValuesInRangeData<Integer,Map<Ciudad,Intege
 				   .collect(Collectors.groupingBy(e -> e.getValue(),Collectors.mapping(e->e.getKey(),Collectors.toSet())))
 				   .values().stream()
 				   .collect(Collectors.toSet());
-	}
-	
-	@Override
-	public ChromosomeType type() {
-		return ChromosomeType.Range;
 	}
 }

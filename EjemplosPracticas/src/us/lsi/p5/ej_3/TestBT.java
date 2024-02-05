@@ -44,7 +44,7 @@ public class TestBT {
 		if(outGraph!=null) {
 			Predicate<AlumnosVertex> vs = v -> res.getVertexList().contains(v);
 			Predicate<AlumnosEdge> es = e -> res.getEdgeList().contains(e);
-			GraphColors.toDot(outGraph, "resultados/p5/ejemplo3/AlumnosBTGraph1.gv", 
+			GraphColors.toDot(outGraph, "ficheros_generados/p5/ejemplo3/AlumnosBTGraph1.gv", 
 					v -> v.toGraph(),
 					e -> e.action().toString(), 
 					v -> GraphColors.colorIf(Color.red, vs.test(v)),

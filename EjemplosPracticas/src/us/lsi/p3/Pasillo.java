@@ -1,9 +1,13 @@
 package us.lsi.p3;
 
 
-public record Pasillo(String c1, String c2, Double mts) {
+
+public record Pasillo(Double mts,Integer id) {
+	public static Integer n =0;
 	public static Pasillo ofFormat(String[] v) {
-		return new Pasillo(v[0], v[1], Double.valueOf(v[2]));
+		Pasillo p = new Pasillo(Double.valueOf(v[2]),Pasillo.n);
+		Pasillo.n++;
+		return p;
 	}
 
 }

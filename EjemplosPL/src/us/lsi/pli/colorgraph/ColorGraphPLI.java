@@ -49,7 +49,7 @@ public class ColorGraphPLI {
 		ColorGraphPLI.n = graph.vertexSet().size();
 		ColorGraphPLI.m = 10;
 		System.out.println(graph);
-		AuxGrammar.generate(ColorGraphPLI.class,"models/color.lsi","ficheros/color.lp");
+		AuxGrammar.generate(ColorGraphPLI.class,"modelos/color.lsi","ficheros/color.lp");
 		GurobiSolution solution = GurobiLp.gurobi("ficheros/color.lp");
 		System.out.println(solution.toString((s,d)->d>0.));
 	}

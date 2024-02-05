@@ -50,7 +50,7 @@ public class BinaryTreeSize {
 	
 	public static void test0(Long n,String file) {	
 		BinaryTree<Long> t = BinaryTreeSize.btSize(n,new HashMap<>());
-		GraphColors.toDot(t,file,v->v.optionalLabel().get().toString());
+		GraphColors.toDot(t,file);
 	}
 	
 	public static void test1(Long n,String file,Predicate<Map.Entry<Long,BinaryTree<Long>>> p) {		

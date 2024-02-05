@@ -2,10 +2,9 @@ package us.lsi.asignacion;
 
 import java.util.List;
 
-import us.lsi.ag.SeqNormalData;
-import us.lsi.ag.agchromosomes.ChromosomeFactory.ChromosomeType;
+import us.lsi.ag.PermutationData;
 
-public class DatosAsignacionTareasAG implements SeqNormalData<List<Integer>> {
+public class DatosAsignacionTareasAG implements PermutationData<List<Integer>> {
 
 	public static AsignaciondeTareas a = null;
 
@@ -35,11 +34,6 @@ public class DatosAsignacionTareasAG implements SeqNormalData<List<Integer>> {
 	@Override
 	public Integer itemsNumber() {
 		return a.getN();
-	}
-	
-	@Override
-	public ChromosomeType type() {
-		return ChromosomeType.Permutation;
 	}
 
 

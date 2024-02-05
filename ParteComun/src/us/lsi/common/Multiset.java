@@ -28,7 +28,7 @@ public class Multiset<E>  {
 	 * @return Una copia
 	 */
 	public static <E> Multiset<E> copy(Multiset<E> m) {
-		return new Multiset<E>(m.elements);
+		return new Multiset<E>(m.map,m.size);
 	}
 
 	/**
@@ -46,7 +46,7 @@ public class Multiset<E>  {
 	 * @return Un Multiset construido a partir del Map
 	 */
 	public static <E> Multiset<E> of(Map<E,Integer> m){
-		return new Multiset<>(m);
+		return new Multiset<>(m,m.entrySet().stream().mapToInt(e->m.get(e)).sum());
 	}
 	
 	/**
@@ -74,101 +74,158 @@ public class Multiset<E>  {
 	}
 
 	
-	private Map<E,Integer>  elements;
+	private Map<E,Integer> map;
+	private Integer size;
 
 	private Multiset() {
 		super();
-		this.elements = new HashMap<>();
+		this.map = new HashMap<>();
+		this.size = 0;
 	}
 
-	private Multiset(Map<E, Integer> elements) {
+	private Multiset(Map<E, Integer> map, Integer size) {
 		super();
-		this.elements = new HashMap<>(elements);
+		this.map = new HashMap<>(map);
+		this.size = size;
 	}
 
 	public void clear() {
-		elements.clear();
+		map.clear();
 	}
 
 	public boolean containsKey(Object arg0) {
-		return elements.containsKey(arg0);
+		return map.containsKey(arg0);
 	}
 
 	public boolean containsValue(Object arg0) {
-		return elements.containsValue(arg0);
+		return map.containsValue(arg0);
 	}
 
 	public Set<E> elementSet() {
-		return elements.keySet();
+		return map.keySet();
 	}
 
-	public boolean equals(Object arg0) {
-		return elements.equals(arg0);
+	public boolean equals(Object m) {
+		return map.equals(m);
 	}
 
 	public Integer count(Object e) {
 		Integer r = 0;
-		if(this.elements.containsKey(e)) {
-		     r = elements.get(e);
+		if(this.map.containsKey(e)) {
+		     r = map.get(e);
 		}
 		return r;
 	}
 
 	public int hashCode() {
-		return elements.hashCode();
+		return map.hashCode();
 	}
 
 	public boolean isEmpty() {
-		return elements.isEmpty();
+		return map.isEmpty();
 	}
 
 
 	public Integer add(E e, Integer n) {
 		Preconditions.checkArgument(n>=0,"No se pueden a�adir cantidades negativas");
 		Integer r = n;
-		if(r>0) elements.put(e,elements.getOrDefault(e,0) + n);
+		if(r>0) map.put(e,map.getOrDefault(e,0) + n);
+		this.size = this.size + n;
 		return r;
 	}
 
 	public Integer add(E e) {
 		Integer r = 1;
-		if(this.elements.containsKey(e)) {
-		     r = elements.get(e) + r;
+		if(this.map.containsKey(e)) {
+		     r = map.get(e) + r;
 		}
-		return elements.put(e, r);
+		this.size = this.size + 1;
+		return map.put(e, r);
 	}	
 	
 	public static <E> Multiset<E> add(Multiset<E> m1, Multiset<E> m2) {
-		Multiset<E> r = Multiset.copy(m1);
-		m2.elements.keySet().forEach(x->r.add(x,m2.count(x)));
+		Set<E> st = Set2.union(m1.elementSet(),m2.elementSet());
+		Multiset<E> r = Multiset.empty();
+		st.stream().forEach(x->r.add(x,m1.count(x)+m2.count(x)));
 		return r;
 	}
 	
 	public Multiset<E> add(Multiset<E> m2) {
 		return Multiset.add(this,m2);
 	}
+	
+	public static <E> Multiset<E> difference(Multiset<E> m1, Multiset<E> m2) {
+		Set<E> st = Set2.union(m1.elementSet(),m2.elementSet());
+		Multiset<E> r = Multiset.empty();
+		st.stream().forEach(x->r.add(x,m1.count(x)-m2.count(x)>=0?m1.count(x)-m2.count(x):0));
+		return r;
+	}
+	
+	public Multiset<E> difference(Multiset<E> m2) {
+		return Multiset.difference(this,m2);
+	}
+	
+	public static <E> Multiset<E> union(Multiset<E> m1, Multiset<E> m2) {
+		Set<E> st = Set2.union(m1.elementSet(),m2.elementSet());
+		Multiset<E> r = Multiset.empty();
+		st.stream().forEach(x->r.add(x,Math.max(m1.count(x),m2.count(x))));
+		return r;
+	}
+	
+	public Multiset<E> union(Multiset<E> m2) {
+		return Multiset.union(this,m2);
+	}
+	
+	public static <E> Multiset<E> intersection(Multiset<E> m1, Multiset<E> m2) {
+		Set<E> st = Set2.union(m1.elementSet(),m2.elementSet());
+		Multiset<E> r = Multiset.empty();
+		st.stream().forEach(x->r.add(x,Math.min(m1.count(x),m2.count(x))));
+		return r;
+	}
+	
+	public Multiset<E> intersection(Multiset<E> m2) {
+		return Multiset.union(this,m2);
+	}
+	
+	public static <E> Multiset<E> symmetricDifference(Multiset<E> m1, Multiset<E> m2) {
+		Set<E> st = Set2.union(m1.elementSet(),m2.elementSet());
+		Multiset<E> r = Multiset.empty();
+		st.stream().forEach(x->r.add(x,Math.abs(m1.count(x)-m2.count(x))));
+		return r;
+	}
+	
+	public Multiset<E> symmetricDifference(Multiset<E> m2) {
+		return Multiset.symmetricDifference(this,m2);
+	}
+	
+	public static <E> Boolean isIncluded(Multiset<E> m1, Multiset<E> m2) {
+		Set<E> st = Set2.union(m1.elementSet(),m2.elementSet());
+		return st.stream().allMatch(x->m1.count(x) <= m2.count(x));
+	}
+	
+	public Boolean isIncluded(Multiset<E> m2) {
+		return Multiset.isIncluded(this,m2);
+	}
 
 	public Integer remove(Object e) {
-		return elements.remove(e);
+		return map.remove(e);
 	}
 
 	public List<Pair<E,Integer>> maxValues(Integer n) {
-		List<Pair<E,Integer>> r = this.elements.keySet().stream()			
-				.sorted(Comparator.comparing(k->this.elements.get(k)).reversed())
+		List<Pair<E,Integer>> r = this.map.keySet().stream()			
+				.sorted(Comparator.comparing(k->this.map.get(k)).reversed())
 				.limit(n)
-				.map(k->Pair.of(k,this.elements.get(k)))
+				.map(k->Pair.of(k,this.map.get(k)))
 				.toList();
 		return r;
 	}
 	
-	
-	
 	public int size() {
-		return elements.size();
+		return this.size();
 	}
 
 	public String toString() {
-		return elements
+		return map
 				.keySet()
 				.stream()
 				.filter(x->this.count(x)>0)

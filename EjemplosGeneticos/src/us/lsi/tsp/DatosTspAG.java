@@ -7,15 +7,14 @@ import java.util.stream.IntStream;
 
 import org.jgrapht.graph.SimpleWeightedGraph;
 
-import us.lsi.ag.SeqNormalData;
-import us.lsi.ag.agchromosomes.ChromosomeFactory.ChromosomeType;
+import us.lsi.ag.PermutationData;
 import us.lsi.grafos.datos.Carretera;
 import us.lsi.grafos.datos.Ciudad;
 import us.lsi.graphs.Graphs2;
 import us.lsi.graphs.GraphsReader;
 import us.lsi.graphs.views.IntegerVertexGraphView;
 
-public class DatosTspAG implements SeqNormalData<List<Ciudad>>{
+public class DatosTspAG implements PermutationData<List<Ciudad>>{
 	
 	public static IntegerVertexGraphView<Ciudad,Carretera> graph;
 	public static Integer n;
@@ -40,11 +39,6 @@ public class DatosTspAG implements SeqNormalData<List<Ciudad>>{
 	public Integer itemsNumber() {
 		return DatosTspAG.n;
 	}
-
-	@Override
-	public ChromosomeType type() {
-		return ChromosomeType.Permutation;
-	}
 	
 	private static Double edgeCost(Integer i, Integer j) {
 		Double r = 10000.;
@@ -56,7 +50,6 @@ public class DatosTspAG implements SeqNormalData<List<Ciudad>>{
 
 	@Override
 	public Double fitnessFunction(List<Integer> cr) {
-//		System.out.println(cr);
 		return -IntStream.range(0,n).boxed()
 				.mapToDouble(i->edgeCost(cr.get(i),cr.get((i+1)%n)))
 				.sum();

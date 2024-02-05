@@ -32,7 +32,7 @@ public class Test3 {
 
 	public static void main(String[] args) {
 		
-		test("ficheros/DatosEquipo1.txt");
+		test("ficheros/equipo/DatosEquipo1.txt");
 	
 	}
 

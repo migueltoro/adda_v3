@@ -63,7 +63,7 @@ public class DatosAlumnos {
 	
 	// Test de la lectura del fichero
 	public static void main(String[] args) {
-		iniDatos("ficheros/Ejemplo3DatosEntrada1.txt");		
+		iniDatos("ficheros/p4/ejemplo3_3.txt");		
 	}
 	
 }

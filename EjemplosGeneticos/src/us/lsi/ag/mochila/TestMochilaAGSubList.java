@@ -29,7 +29,7 @@ public static void main(String[] args) {
 		
 		System.out.println(DatosMochila.getObjetos());
 		System.out.println("================================");
-		List<Integer> dc = ap.getBestChromosome().decode();
+		List<Integer> dc = p.decode(ap.getBestChromosome());
 		System.out.println(dc);
 		System.out.println(ap.bestSolution());
 		System.out.println("================================");

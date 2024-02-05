@@ -8,7 +8,7 @@ public class TestHeuristic {
 		
 		Locale.setDefault(Locale.of("en", "US"));		
 		for (Integer i = 0; i < 1; i++) {
-			DatosProductos.iniDatos("ficheros/productoscomp"+ i +".txt");
+			DatosProductos.iniDatos("ficheros/productos_y_componentes/productoscomp"+ i +".txt");
 			VertexProductos start = VertexProductos.initial();
 			
 			System.out.println(start);

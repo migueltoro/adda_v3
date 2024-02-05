@@ -9,21 +9,21 @@ import us.lsi.math.Math2;
 
 
 	/**
-	 * <p> Implementación del Algoritmo de Simulated Annealing. Un problema que se quiera resolver por este algortimo
+	 * <p> Implementaciï¿½n del Algoritmo de Simulated Annealing. Un problema que se quiera resolver por este algortimo
 	 * debe implementar el interface ProblemaSA &lt; E,S,A &gt; </p>
 	 * 
-	 * <p> Para usar esta técnica hay que considerar un conjunto de estado y unas alternativas para pasar de unos a otros.
-	 * El estado que minimice el objetivo debe ser alcanzable desde el estado inicial a través de una secuencia de 
+	 * <p> Para usar esta tï¿½cnica hay que considerar un conjunto de estado y unas alternativas para pasar de unos a otros.
+	 * El estado que minimice el objetivo debe ser alcanzable desde el estado inicial a travï¿½s de una secuencia de 
 	 * alternativas. </p>
 	 * 
-	 * <p>La documentación puede encontarse en el: <a href="../../../document/Tema16.pdf" target="_blank">Tema16</a></p>
+	 * <p>La documentaciï¿½n puede encontarse en el: <a href="../../../document/Tema16.pdf" target="_blank">Tema16</a></p>
 	 * 
-	 * <p>Un resumen de la a documentación puede encontarse en el: <a href="../../../document/SimulatedAnn.html" target="_blank">Tema16</a></p>
+	 * <p>Un resumen de la a documentaciï¿½n puede encontarse en el: <a href="../../../document/SimulatedAnn.html" target="_blank">Tema16</a></p>
 	 * 
 	 * @author Miguel Toro
 	 *
 	 */
-public class AlgoritmoSA {
+public class AlgoritmoSA<E,S> {
 
 	/**
 	 *
@@ -31,30 +31,30 @@ public class AlgoritmoSA {
 	 * @return AlgoritmoSA
 	 */
 
-	public static AlgoritmoSA of(StateSa estado) {
-			return new AlgoritmoSA(estado);
+	public static <E,S> AlgoritmoSA<E,S> of(StateSa<E,S> estado) {
+			return new AlgoritmoSA<>(estado);
 	}
 
 	/**
 	 * Conjunto de soluciones encontradas
 	 */
-	public Set<StateSa> soluciones;
+	public Set<StateSa<E,S>> soluciones;
 	/**
-	 * Mejor solución encontrada
+	 * Mejor soluciï¿½n encontrada
 	 */
-	public StateSa mejorSolucionEncontrada = null;
+	public StateSa<E,S> mejorSolucionEncontrada = null;
 	/**
-	 * Número de intentos. En cada intento se parte del estado incial y se llevan a
-	 * cabo un número de iteraciones por intento. En cada iteración se llevan a cabo
-	 * un número de iteraciones sin disminuir la temperatura.
+	 * Nï¿½mero de intentos. En cada intento se parte del estado incial y se llevan a
+	 * cabo un nï¿½mero de iteraciones por intento. En cada iteraciï¿½n se llevan a cabo
+	 * un nï¿½mero de iteraciones sin disminuir la temperatura.
 	 */
 	public static Integer numeroDeIntentos = 10;
 	/**
-	 * El número iteraciones por intento. Los designaremos por n.
+	 * El nï¿½mero iteraciones por intento. Los designaremos por n.
 	 */
 	public static Integer numeroDeIteracionesPorIntento = 300;
 	/**
-	 * El número iteraciones a la misma temperatura. Lo designaremos por m.
+	 * El nï¿½mero iteraciones a la misma temperatura. Lo designaremos por m.
 	 */
 	public static Integer numeroDeIteracionesALaMismaTemperatura = 10;
 	/**
@@ -65,11 +65,12 @@ public class AlgoritmoSA {
 	public static double alfa = 0.99;
 
 	private double temperatura;
-	private StateSa estado;
-	private StateSa nextEstado;
+	private StateSa<E,S> estado;
+	private StateSa<E,S> nextEstado;
 
 	
-	private AlgoritmoSA(StateSa estado) {
+	private AlgoritmoSA(StateSa<E,S> estado) {
+		estado.data().iniValues(estado.data());
 		this.estado = estado;
 		this.mejorSolucionEncontrada = estado;
 		this.soluciones = new HashSet<>();
@@ -83,7 +84,7 @@ public class AlgoritmoSA {
 		Integer r = 0;
 		Double f = this.estado.fitness();
 		for(int i=0; i<n;i++) {
-			StateSa e = this.estado.random();
+			StateSa<E,S> e = this.estado.random();
 			if(e.fitness() > f) {
 				r++;
 				s = e.fitness()-f;
@@ -93,7 +94,7 @@ public class AlgoritmoSA {
 	}
 
 	/**
-	 * Ejecución del algoritmo
+	 * Ejecuciï¿½n del algoritmo
 	 */
 	public void ejecuta() {
 		this.mejorSolucionEncontrada = this.estado.random();

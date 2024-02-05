@@ -442,6 +442,15 @@ public class List2 {
 		return s;
 	}
 	
+	public static <E> List<E> symmetricDifference(Collection<E> s1,  Collection<E> s2){
+		List<E> symmetricDiff = new ArrayList<E>(s1);
+	    symmetricDiff.addAll(s2);
+	    List<E> tmp = new ArrayList<E>(s1);
+	    tmp.retainAll(s2);
+	    symmetricDiff.removeAll(tmp);
+	    return symmetricDiff;
+	}
+	
 	public static <E> List<E> union(Collection<E> s1,  Collection<E> s2){
 		List<E> s = new ArrayList<>(s1);
 		s.addAll(s2);

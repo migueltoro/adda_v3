@@ -1,22 +1,12 @@
 package us.lsi.tiposrecursivos;
 
-import java.io.Writer;
-import java.util.HashMap;
+
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
 import java.util.Queue;
 import java.util.Stack;
-import java.util.function.Function;
 import java.util.stream.Stream;
-
-import org.jgrapht.Graph;
-import org.jgrapht.graph.DefaultEdge;
-import org.jgrapht.graph.SimpleDirectedGraph;
-import org.jgrapht.nio.Attribute;
-import org.jgrapht.nio.DefaultAttribute;
-import org.jgrapht.nio.dot.DOTExporter;
 
 import us.lsi.common.Files2;
 import us.lsi.common.List2;
@@ -44,78 +34,6 @@ public class Trees {
 		};
 	}
 	
-	public static <E> void toDot(Tree<E> tree, String file) {
-		Graph<Nv<E>,DefaultEdge> graph = 
-				new SimpleDirectedGraph<Nv<E>,DefaultEdge>(null,()->new DefaultEdge(),true);
-		Tree<Nv<E>> tt = Trees.map(tree);
-		toDot1(tt,graph);
-		System.out.println(graph);
-		toDot2(tt,graph);
-		toDot3(graph,file,v->v.v()!=null?v.v().toString().toString():"_",e->"");
-	}
-	
-	private static Integer nv = 0;
-	public static Integer nextInteger() {
-		Integer n = nv;
-		nv++;
-		return n;
-	}
-	
-	public static record Nv<E>(Integer n, E v) {
-		public static <E> Nv<E> of(Integer n, E v) {return new Nv<E>(n,v);}
-		public String toString() {return String.format("(%d,%s)",this.n(),this.v());}
-	}
-	
-	public static <E> Tree<Nv<E>> map(Tree<E> tree) {
-		return switch(tree) {
-		case TEmpty<E> t -> Tree.leaf(Nv.of(Trees.nextInteger(),null));
-		case TLeaf<E> t -> Tree.leaf(Nv.of(Trees.nextInteger(),t.label()));
-		case TNary<E> t -> Tree.nary(Nv.of(Trees.nextInteger(),t.label()),
-				t.children().stream().map(e->Trees.map(e)).toList());
-		};
-	}
-	
-	private static <E> void toDot1(Tree<Nv<E>> tt, Graph<Nv<E>,DefaultEdge> graph) {
-		switch(tt) {
-		case TEmpty<Nv<E>> t: break;
-		case TLeaf<Nv<E>> t : graph.addVertex(t.label()); break;
-		case TNary<Nv<E>> t : 
-			graph.addVertex(t.label()); 
-			t.children().stream().forEach(e->toDot1(e,graph));
-			break;
-		}
-	}
-	
-	private static <E> void toDot2(Tree<Nv<E>> tt, Graph<Nv<E>,DefaultEdge> graph) {
-		switch(tt) {
-		case TEmpty<Nv<E>> t: break;
-		case TLeaf<Nv<E>> t : break;
-		case TNary<Nv<E>> t : 
-			t.children().stream().forEach(e -> 
-				{if(e instanceof TLeaf<Nv<E>> tl) graph.addEdge(t.label(),tl.label());
-				if(e instanceof TNary<Nv<E>> tn) graph.addEdge(t.label(),tn.label());
-				}
-			);
-			t.children().stream().forEach(e->toDot2(e,graph));
-			break;
-		}
-	}
-
-	private static Map<String, Attribute> label(String label) {
-		if(label.equals("")) return new HashMap<>();
-		return Map.of("label", DefaultAttribute.createAttribute(label));
-	}
-	
-	private static <V,E> void toDot3(Graph<V,E> graph, String file, 
-			Function<V,String> vertexLabel,
-			Function<E,String> edgeLabel) {		
-		DOTExporter<V,E> de = new DOTExporter<V,E>();
-		de.setVertexAttributeProvider(v->Trees.label(vertexLabel.apply(v)));
-		de.setEdgeAttributeProvider(e->Trees.label(edgeLabel.apply(e)));		
-		Writer f1 = Files2.getWriter(file);
-		de.exportGraph(graph, f1);
-	}
-
 	public static record TreeLevel<E>(Integer level, Tree<E> tree){
 		public static <R> TreeLevel<R> of(Integer level, Tree<R> tree){
 			return new TreeLevel<R>(level,tree);
@@ -273,14 +191,12 @@ public class Trees {
 		String ex = "4(2(1(0,_),3),7(5(_,6),10(9(8,_),11(_,12))))";
 		Tree<String> t7 = Tree.parse(ex);		
 		System.out.println(t7);
-		t7.toDot("ficheros/tree.gv");
 	}
 	
 	public static void test6() {
 		String ex = "Pepa/(Vera/,Antonio/)(2(1(0,_),3),7(5(_,6),10(9(8,_),11(_,12))))";
 		Tree<String> t7 = Tree.parse(ex);		
 		System.out.println(t7);
-		t7.toDot("ficheros/tree.gv");
 	}
 
 	public static void main(String[] args) {

@@ -8,15 +8,15 @@ import us.lsi.solve.AuxGrammar;
 
 public class ReinasPLI {
 	
-	public static int n = 5;
+	public static int n = 100;
 	
 	public static void reinas_gen() throws IOException {
-		AuxGrammar.generate(ReinasPLI.class,"models/reinas_1.lsi","ficheros/reinas_1.lp");
+		AuxGrammar.generate(ReinasPLI.class,"modelos/reinas_1.lsi","ficheros/reinas_1.lp");
 	}
 	
 	public static void reinas_model_2() throws IOException {
-		AuxGrammar.generate(ReinasPLI.class,"models/reinas_3.lsi","ficheros/reinas_3.lp");
-		GurobiSolution solution = GurobiLp.gurobi("ficheros/reinas_2.lp");
+		AuxGrammar.generate(ReinasPLI.class,"modelos/reinas_1.lsi","ficheros/reinas_1.lp");
+		GurobiSolution solution = GurobiLp.gurobi("ficheros/reinas_1.lp");
 		Locale.setDefault(Locale.of("en", "US"));
 		System.out.println(solution.toString((s,d)->!s.contains("$") && d >0));
 	}

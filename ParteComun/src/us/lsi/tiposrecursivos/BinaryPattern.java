@@ -15,7 +15,7 @@ import us.lsi.tiposrecursivos.BinaryPattern.PVarLabel;
 import us.lsi.tiposrecursivos.BinaryPattern.PVarTree;
 
 
-public sealed interface  BinaryPattern<E> permits PTree<E>, PEmpty<E>, PLeaf<E>, PVarLabel<E>, PVarTree<E> {
+public sealed interface  BinaryPattern<E> permits PTree, PEmpty, PLeaf, PVarLabel, PVarTree {
 	
 	public enum PatternType{Empty, Leaf, Binary, VarLabel , VarTree}
 	

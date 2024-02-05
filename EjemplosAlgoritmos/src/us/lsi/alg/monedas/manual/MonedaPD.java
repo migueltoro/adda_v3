@@ -103,7 +103,7 @@ public class MonedaPD {
 	
 	public static void main(String[] args) {
 		Locale.setDefault(Locale.of("en", "US"));
-		DatosMonedas.datosIniciales("ficheros/monedas2.txt");
+		DatosMonedas.datosIniciales("ficheros/monedas/monedas2.txt");
 		Integer valorInicial = 401;
 		String2.toConsole("%s",DatosMonedas.n);
 		String2.toConsole("%s",DatosMonedas.monedas);

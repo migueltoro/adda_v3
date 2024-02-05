@@ -1,7 +1,5 @@
 package us.lsi.ag.real;
-
-import us.lsi.ag.Chromosome;
-import us.lsi.ag.ValuesInRangeData;
+import us.lsi.ag.RangeData;
 import us.lsi.ag.agchromosomes.AlgoritmoAG;
 import us.lsi.ag.agstopping.StoppingConditionFactory;
 import us.lsi.ag.agstopping.StoppingConditionFactory.StoppingConditionType;
@@ -21,15 +19,14 @@ public class TestReal {
 		StoppingConditionFactory.stoppingConditionType = StoppingConditionType.GenerationCount;
 		StoppingConditionFactory.NUM_GENERATIONS = 100;
 		
-		ValuesInRangeData<Double,List<Double>> p = new DatosReal();
+		RangeData<Double,List<Double>> p = new DatosReal();
 		AlgoritmoAG<List<Double>,List<Double>> ap = AlgoritmoAG.of(p);
 		ap.ejecuta();
 		
 		
-		Locale.setDefault(new Locale("en", "US"));
-		Chromosome<List<Double>> cr = ap.getBestChromosome();
+		Locale.setDefault(Locale.of("en", "US"));
 		System.out.println("================================");
-		System.out.println(ap.bestSolution()+","+(cr.fitness()));
+		System.out.println(ap.bestSolution());
 		System.out.println("================================");
 		
 	}	

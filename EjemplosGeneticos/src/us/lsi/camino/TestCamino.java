@@ -1,5 +1,6 @@
 package us.lsi.camino;
 
+import java.util.List;
 import java.util.Locale;
 import java.util.function.Predicate;
 
@@ -27,12 +28,12 @@ public class TestCamino {
 			
 			CaminoDatos.sh = false;	
 			CaminoData d = new CaminoData();
-			var alg = AlgoritmoAG.of(d);
+			AlgoritmoAG<List<Integer>, List<Ciudad>> alg = AlgoritmoAG.of(d);
 			alg.ejecuta();
 			System.out.println("Genetico "+i+" ####################");
 			System.out.println(alg.bestSolution());
 			CaminoDatos.sh = true;	
-			d.fitnessFunction(alg.getBestChromosome().decode());	
+			d.fitnessFunction(d.decode(alg.getBestChromosome()));	
 			System.out.println("####################");
 	}
 

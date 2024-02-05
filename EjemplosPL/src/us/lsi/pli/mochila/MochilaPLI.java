@@ -37,7 +37,7 @@ public class MochilaPLI {
 		CI = DatosMochila.capacidadInicial;
 		objetos = DatosMochila.getObjetos();
 		n = objetos.size();
-		AuxGrammar.generate(MochilaPLI.class,"models/mochila.lsi","ficheros/mochila.lp");
+		AuxGrammar.generate(MochilaPLI.class,"modelos/mochila.lsi","ficheros/mochila.lp");
 		GurobiSolution solution = GurobiLp.gurobi("ficheros/mochila.lp");
 		Locale.setDefault(Locale.of("en", "US"));
 		System.out.println(solution.toString((s,d)->d>0.));

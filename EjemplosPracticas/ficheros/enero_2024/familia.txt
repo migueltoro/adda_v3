@@ -1,0 +1,4 @@
+Felipe-H(Felipe-H(Felipe-H,Maria-M),Ana-M(Felipe-H,Isabel-M),Juan-H)
+Felipe-H(Feipe-H(Felpe-H,Maria-M),Ana-M(Felpe-H,Isabel-M),Juan-H)
+Felipe-H(Alois-H(Felpe-H,Maria-M),Felipe-H(Felipe-H,Isabel-M),Juan-H)
+Felipe-H(Luisa-M(Lola-M,Maria-M),Carlota-M(Felipina-M,Isabel-M),Elena-M)

@@ -45,9 +45,9 @@ public class PackPLI {
 	
 	public static void pack_model() throws IOException {
 		PackPLI.data("data/pack.txt",12,18);
-		AuxGrammar.generate(PackPLI.class,"models/pack.lsi","ficheros/pack.lp");
+		AuxGrammar.generate(PackPLI.class,"modelos/pack.lsi","ficheros/pack.lp");
 		GurobiSolution solution = GurobiLp.gurobi("ficheros/pack.lp");
-		Locale.setDefault(new Locale("en", "US"));
+		Locale.setDefault(Locale.of("en", "US"));
 		System.out.println(solution.toString((s,d)->d>0.));
 	}
 

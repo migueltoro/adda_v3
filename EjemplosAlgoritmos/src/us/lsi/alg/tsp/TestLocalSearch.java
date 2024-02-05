@@ -19,7 +19,7 @@ public class TestLocalSearch {
 	public static void main(String[] args) {
 		Locale.setDefault(Locale.of("en", "US"));
 		
-		Graph<Ciudad,Carretera> graph1 = AuxiliaryTsp.leeGraph("ficheros/andalucia.txt");
+		Graph<Ciudad,Carretera> graph1 = AuxiliaryTsp.leeGraph("ficheros/andalucia/andalucia.txt");
 		Graph<Ciudad,Carretera> graph2 = AuxiliaryTsp.completeGraph(graph1);
 		List<Ciudad> camino = new ArrayList<>(graph2.vertexSet().stream().toList());
 		

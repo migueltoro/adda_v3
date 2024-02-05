@@ -23,7 +23,7 @@ public class TestBT {
 
 		for (Integer id_fichero = 0; id_fichero < 2; id_fichero++) {
 
-			DatosProductos.iniDatos("ficheros/productoscomp"+ id_fichero +".txt");
+			DatosProductos.iniDatos("ficheros/productos_y_componentes/productoscomp"+ id_fichero +".txt");
 			System.out.println("\n\n>\tResultados para el test " + id_fichero + "\n");
 //			DatosSubconjuntos.toConsole();
 			

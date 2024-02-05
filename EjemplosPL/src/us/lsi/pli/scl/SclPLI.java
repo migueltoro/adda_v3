@@ -30,7 +30,7 @@ public class SclPLI {
 
 	
 	public static void main(String[] args) throws IOException {
-		Locale.setDefault(new Locale("en", "US"));
+		Locale.setDefault(Locale.of("en", "US"));
 			
 		C1= "affcddae";
 		C2 = "aade2ebbdbaad";		
@@ -39,7 +39,7 @@ public class SclPLI {
 		T1 = C1.length();
 		T2 = C2.length();
 		
-		AuxGrammar.generate(SclPLI.class, "models/scl.lsi", "ficheros/scl.lp");
+		AuxGrammar.generate(SclPLI.class, "modelos/scl.lsi", "ficheros/scl.lp");
 		GurobiSolution sol= GurobiLp.gurobi("ficheros/scl.lp");
 		System.out.println(sol.toString((k,v)->v > 0.));
 		

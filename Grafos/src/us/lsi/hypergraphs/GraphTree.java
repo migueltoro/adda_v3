@@ -11,7 +11,7 @@ import us.lsi.hypergraphs.GraphTree.Gtb;
 import us.lsi.hypergraphs.GraphTree.Gtr;
 
 public sealed interface GraphTree<V extends VirtualHyperVertex<V, E, A, S>, E extends SimpleHyperEdge<V, E, A>, A, S> 
-	permits Gtb<V, E, A, S>, Gtr<V, E, A, S> {
+	permits Gtb, Gtr {
 
 	public static <V extends VirtualHyperVertex<V, E, A, S>, E extends SimpleHyperEdge<V, E, A>, A, S> 
 		GraphTree<V, E, A, S> tb(V v, Double weight) {

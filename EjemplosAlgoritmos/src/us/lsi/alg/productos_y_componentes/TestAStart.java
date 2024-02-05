@@ -23,7 +23,7 @@ public class TestAStart {
 		
 		for (Integer i = 0; i < 2; i++) {
 
-			DatosProductos.iniDatos("ficheros/productoscomp"+ i +".txt");
+			DatosProductos.iniDatos("ficheros/productos_y_componentes/productoscomp"+ i +".txt");
 			System.out.println("\n\n>\tResultados para el test " + i + "\n");
 
 			// V�rtices clave

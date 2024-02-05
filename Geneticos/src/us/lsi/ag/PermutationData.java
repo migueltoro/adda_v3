@@ -23,7 +23,7 @@ import us.lsi.common.List2;
  * es un multiconjunto o una lista, posiblemente con repetici�n, de los objetos dados. </p>
  */
 
-public interface SeqNormalData<S> extends ChromosomeData<List<Integer>,S> {	
+public interface PermutationData<S> extends ChromosomeDoubleData<List<Integer>,S> {	
 		
 		Integer itemsNumber();
 	
@@ -53,5 +53,10 @@ public interface SeqNormalData<S> extends ChromosomeData<List<Integer>,S> {
 	    default Integer size() {
 	    	return normalSequence().size();
 	    }
-	
+	    
+	    default List<Integer> decode(List<Double> ls){
+			return AuxiliaryAg.convert(ls,this.normalSequence());
+		}
+	    
+	    
 }

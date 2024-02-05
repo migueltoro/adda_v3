@@ -23,7 +23,7 @@ public class TspPLI {
  
 
 	public static Graph<Integer, SimpleEdge<Integer>> graph(Integer n, Double pb) {
-		Locale.setDefault(new Locale("en", "US"));
+		Locale.setDefault(Locale.of("en", "US"));
 		Graph<Integer, SimpleEdge<Integer>> graph = Graphs2.simpleWeightedGraph();
 		IntStream.range(0, n).forEach(v -> graph.addVertex(v));
 		Stream2.allPairs(0,n, 0,n).filter(p -> p.second() > p.first()).forEach(p -> {
@@ -60,9 +60,9 @@ public class TspPLI {
 		TspPLI.graph = graph(200,0.6);
 		TspPLI.n = TspPLI.graph.vertexSet().size();
 		System.out.println(TspPLI.graph);
-		AuxGrammar.generate(TspPLI.class,"models/tsp_1.lsi","ficheros/tsp_1.lp");
+		AuxGrammar.generate(TspPLI.class,"modelos/tsp_1.lsi","ficheros/tsp_1.lp");
 		GurobiSolution solution = GurobiLp.gurobi("ficheros/tsp_1.lp");
-		Locale.setDefault(new Locale("en", "US"));
+		Locale.setDefault(Locale.of("en", "US"));
 		System.out.println(solution.toString((s,d)->d>0.));
 	}
 	

@@ -1,34 +1,44 @@
 package us.lsi.sa;
 
-//import org.apache.commons.math3.genetics.Chromosome;
-import org.apache.commons.math3.genetics.MutationPolicy;
-
-import us.lsi.ag.Chromosome;
+import org.apache.commons.math3.genetics.Chromosome;
 import us.lsi.ag.ChromosomeData;
-import us.lsi.ag.agchromosomes.AlgoritmoAG;
-import us.lsi.ag.agchromosomes.ChromosomeFactory;
-import us.lsi.ag.agchromosomes.ChromosomeFactory.ChromosomeType;
 
-public class StateSaChromosome implements StateSa  {
+public class StateSaChromosome<E,S> implements StateSa<E,S>  {
 
-	public static  StateSaChromosome of(Chromosome<?> chromosome) {	
-		return new StateSaChromosome(chromosome);
+	public static <E,S> StateSaChromosome<E,S> of(ChromosomeData<E,S> data){
+		return new StateSaChromosome<>(data);
 	}
 	
-	public static <E,S> StateSaChromosome random(ChromosomeData<E,S> data, ChromosomeType tipo) {	
-		ChromosomeFactory.iniValues(data,tipo);
-		MutationPolicy mutationPolicy = ChromosomeFactory.getMutationPolicy(tipo);
-		AlgoritmoAG.mutationPolicy = mutationPolicy;
-		AlgoritmoAG.tipo = data.type();
-		Chromosome<?> chr = ChromosomeFactory.randomChromosome(tipo);
-		return new StateSaChromosome(chr);
+	public static <E,S> StateSaChromosome<E,S> of(Chromosome chromosome){
+		return new StateSaChromosome<>(chromosome);
 	}
 	
-	public final Chromosome<?> chromosome;
+	public static <E,S> Chromosome random(ChromosomeData<E,S> data) {	
+		Chromosome chr = data.initialChromosome();
+		return chr;
+	}
 	
-	private StateSaChromosome(Chromosome<?> chromosome) {
+	private static ChromosomeData<?, ?> data;
+	private Chromosome chromosome;
+	
+	private StateSaChromosome(ChromosomeData<E,S> data) {
+		super();
+		StateSaChromosome.data = data;	
+		this.chromosome = StateSaChromosome.random(data);	
+	}
+	
+	private StateSaChromosome(Chromosome chromosome) {
 		super();
 		this.chromosome = chromosome;	
+	}
+	
+	@SuppressWarnings("unchecked")
+	public ChromosomeData<E, S> data() {
+		return (ChromosomeData<E, S>) data;
+	}
+
+	public Chromosome chromosome() {
+		return chromosome;
 	}
 	
 	@Override
@@ -36,23 +46,24 @@ public class StateSaChromosome implements StateSa  {
 		return -this.chromosome.fitness();
 	}
 	@Override
-	public StateSa mutate() {
-		return StateSaChromosome.of( 
-				(Chromosome<?>) AlgoritmoAG.mutationPolicy.mutate((org.apache.commons.math3.genetics.Chromosome) this.chromosome));
+	public StateSa<E,S> mutate() {
+		Chromosome c = StateSaChromosome.data.mutationPolicy().mutate(this.chromosome);
+		return StateSaChromosome.of(c);
 	}
 
 	@Override
-	public StateSa random() {
-		return StateSaChromosome.of(ChromosomeFactory.randomChromosome(AlgoritmoAG.tipo));
+	public StateSa<E,S> random() {
+		Chromosome c = StateSaChromosome.random(data);
+		return StateSaChromosome.of(c);
 	}
 
 	@Override
-	public StateSa copy() {
+	public StateSa<E,S> copy() {
 		return StateSaChromosome.of(this.chromosome);
 	}
 	
-	public Object decode() {
-		return this.chromosome.decode();
+	public E decode() {
+		return this.data().decode(this.chromosome);
 	}
 	
 }
