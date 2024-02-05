@@ -54,6 +54,7 @@ public class DatosTspAG implements PermutationData<List<Ciudad>>{
 				.mapToDouble(i->edgeCost(cr.get(i),cr.get((i+1)%n)))
 				.sum();
 	}
+	
 
 	@Override
 	public List<Ciudad> solucion(List<Integer> cr) {
