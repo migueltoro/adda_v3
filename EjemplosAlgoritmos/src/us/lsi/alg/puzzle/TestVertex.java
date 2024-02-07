@@ -25,13 +25,13 @@ public class TestVertex {
 		VertexPuzzle v5 = VertexPuzzle.of(8,1,2,0,4,3,7,6,5); // no soluble con respecto a 
 		VertexPuzzle v6 = VertexPuzzle.of(1,2,3,4,0,5,8,6,7); // no soluble con respecto a 
 		Integer[][] puzzle = {{1, 8, 2},{0, 4, 3},{7, 6, 5}};
-		VertexPuzzle v42 = VertexPuzzle.of(puzzle,IntPair.of(1, 0));
+		VertexPuzzleI v42 = VertexPuzzleI.of(puzzle,IntPair.of(1, 0));
 		System.out.println("______________");
-		System.out.println(VertexPuzzle.getInvCount(goal.datos()));
-		System.out.println(VertexPuzzle.getInvCount(v4.datos()));
-		System.out.println(VertexPuzzle.getInvCount(v42.datos()));
-		System.out.println(VertexPuzzle.getInvCount(v5.datos()));
-		System.out.println(VertexPuzzle.getInvCount(v6.datos()));
+		System.out.println(goal.getInvCount());
+		System.out.println(v4.getInvCount());
+		System.out.println(v42.getInvCount());
+		System.out.println(v5.getInvCount());
+		System.out.println(v6.getInvCount());
 	}
 
 }

@@ -12,8 +12,8 @@ import us.lsi.path.EGraphPath.PathType;
 public class TestMinimoPuzzle {
 
 	public static void main(String[] args) {
-		VertexPuzzle start = VertexPuzzle.of(1, 2, 3, 4, 5, 0, 6, 7, 8);
-		VertexPuzzle end = VertexPuzzle.of(1,2,3,4,6,5,8,7,0);
+		VertexPuzzle start = VertexPuzzleI.of(1, 2, 3, 4, 5, 0, 6, 7, 8);
+		VertexPuzzle end = VertexPuzzleI.of(1,2,3,4,6,5,8,7,0);
 		EGraph<VertexPuzzle, EdgePuzzle> graph = 
 				EGraph.virtual(start,x->x.equals(end),PathType.Sum, Type.Min)
 				.edgeWeight(x->x.weight())
