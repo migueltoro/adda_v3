@@ -6,7 +6,7 @@ import java.util.Locale;
 
 import us.lsi.alg.sudoku.DatosSudoku;
 import us.lsi.alg.sudoku.SolucionSudoku;
-import us.lsi.alg.sudoku.SudokuVertex;
+import us.lsi.alg.sudoku.SudokuVertexI;
 import us.lsi.common.List2;
 import us.lsi.common.String2;
 
@@ -40,7 +40,7 @@ public class SudokuBTR {
 		return iteraciones;
 	}
 
-	public void bt(SudokuVertex start, Integer iteracionesMax, Integer threshold) {
+	public void bt(SudokuVertexI start, Integer iteracionesMax, Integer threshold) {
 		this.threshold = threshold;
 		this.iteracionesMax = iteracionesMax;
 		this.time = System.nanoTime();
@@ -75,7 +75,7 @@ public class SudokuBTR {
 		DatosSudoku.tamSubCuadro = 3;
 		DatosSudoku.leeFichero("ficheros/sudoku/sudoku1.txt");	
 		SudokuBTR a = SudokuBTR.of();		
-		a.bt(SudokuVertex.first(),15000,10);
+		a.bt(SudokuVertexI.first(),15000,10);
 		System.out.println("Tiempo = " + a.time());
 		System.out.println("Iteraciones = " + a.iteraciones());
 		String2.toConsole(a.solucion().toString(), "Solucion");

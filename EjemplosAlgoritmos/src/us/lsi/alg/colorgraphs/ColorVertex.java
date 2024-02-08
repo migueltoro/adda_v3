@@ -3,7 +3,6 @@ package us.lsi.alg.colorgraphs;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.function.Predicate;
 
 import us.lsi.common.IntegerSet;
 import us.lsi.common.List2;
@@ -26,8 +25,14 @@ public record ColorVertex(Integer index, Map<Integer,Integer> cav)
 		return new ColorVertex(DatosColor.n,new HashMap<>());
 	}
 	
-	public static Predicate<ColorVertex> goal() {
-		return v -> v.index() == DatosColor.n;
+	@Override
+	public Boolean goal() {
+		return this.index() == DatosColor.n;
+	}
+	
+	@Override
+	public Boolean goalHasSolution() {
+		return true;
 	}
 	
 	public IntegerSet ca(){
@@ -83,5 +88,6 @@ public record ColorVertex(Integer index, Map<Integer,Integer> cav)
 	public ColorEdge edge(Integer a) {
 		return ColorEdge.of(this,this.neighbor(a), a);
 	}
+
 	
 }

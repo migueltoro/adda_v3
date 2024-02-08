@@ -18,8 +18,7 @@ public class TestAStar {
 		DatosCursos.iniDatos("ficheros/cursos/cursos3.txt");
 		
 		EGraph<CursosVertex, CursosEdge> graph = 
-				EGraph.virtual(CursosVertex.first(),CursosVertex.goal(), PathType.Sum, Type.Min)
-					.goalHasSolution(CursosVertex.goalHasSolution())
+				EGraph.virtual(CursosVertex.first(), PathType.Sum, Type.Min)
 					.greedyEdge(CursosVertex::greedyEdge)
 					.heuristic(CursosHeuristic::heuristic)
 					.build();

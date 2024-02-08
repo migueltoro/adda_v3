@@ -18,8 +18,7 @@ public class TestBT {
 		ReinasVertex e1 = ReinasVertex.first();
 		
 		EGraph<ReinasVertex,SimpleEdgeAction<ReinasVertex,Integer>> graph = 
-				EGraph.virtual(e1,ReinasVertex.goal(), PathType.Last, Type.All)
-				.goalHasSolution(ReinasVertex.goalHasSolution())
+				EGraph.virtual(e1, PathType.Last, Type.All)
 				.vertexWeight(v->v.errores().doubleValue())
 				.solutionNumber(1000)
 				.build();

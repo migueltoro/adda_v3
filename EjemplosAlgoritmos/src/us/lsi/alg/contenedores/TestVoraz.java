@@ -1,7 +1,6 @@
 package us.lsi.alg.contenedores;
 
 import java.util.Locale;
-import java.util.function.Predicate;
 
 import org.jgrapht.GraphPath;
 
@@ -22,12 +21,11 @@ public class TestVoraz {
 			// V�rtices clave
 
 			VertexContenedores start = VertexContenedores.initial();
-			Predicate<VertexContenedores> goal = VertexContenedores.goal();
 
 			// Grafo
 			
 			EGraph<VertexContenedores, EdgeContenedores> graph = 
-					EGraph.virtual(start,goal,PathType.Last,Type.Max)
+					EGraph.virtual(start,PathType.Last,Type.Max)
 					.vertexWeight(x -> (double)x.contenedoresCompletos().size())
 					.heuristic(ContenedoresHeuristic::heuristic)
 					.build();
@@ -36,16 +34,16 @@ public class TestVoraz {
 			
 			GraphPath<VertexContenedores, EdgeContenedores> max = ContenedoresHeuristic.caminoVoraz(graph,50);
 			GraphPath<VertexContenedores, EdgeContenedores> max2 = ContenedoresHeuristic.caminoVoraz2(graph);
-			Double hu = ContenedoresHeuristic.heuristic(start,goal, null);
+			Double hu = ContenedoresHeuristic.heuristic(start,v->v.goal(), null);
 			System.out.println(String.format("%.2f,%.2f,%.2f", max.getWeight(),max2.getWeight(),hu));
 			
-			graph = EGraph.virtual(start.neighbor(start.greadyAction()),goal,PathType.Last,Type.Max)
+			graph = EGraph.virtual(start.neighbor(start.greadyAction()),PathType.Last,Type.Max)
 					.vertexWeight(x -> (double)x.contenedoresCompletos().size())
 					.heuristic(ContenedoresHeuristic::heuristic)
 					.build();
 			
 			max2 = ContenedoresHeuristic.caminoVoraz2(graph);
-			hu = ContenedoresHeuristic.heuristic(start.neighbor(start.greadyAction()),goal, null);
+			hu = ContenedoresHeuristic.heuristic(start.neighbor(start.greadyAction()),v->v.goal(), null);
 			System.out.println(String.format("%.2f,%.2f,%.2f", max.getWeight(),max2.getWeight(),hu));
 		}
 

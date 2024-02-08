@@ -21,7 +21,7 @@ public class TestBTTyP {
 		TyPVertex e1 = TyPVertex.first();
 		
 		EGraph<TyPVertex,SimpleEdgeAction<TyPVertex,Integer>> graph = 
-				EGraph.virtual(e1,v->v.goal(), PathType.Last, Type.Min)
+				EGraph.virtual(e1, PathType.Last, Type.Min)
 				.vertexWeight(v->v.maxCarga())
 				.greedyEdge(TyPVertex::greadyEdge)
 				.heuristic(Heuristica::heuristic)

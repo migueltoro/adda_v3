@@ -10,17 +10,17 @@ import us.lsi.ag.BlocksData;
 import us.lsi.alg.sudoku.Casilla;
 import us.lsi.alg.sudoku.DatosSudoku;
 import us.lsi.alg.sudoku.SolucionSudoku;
-import us.lsi.alg.sudoku.SudokuVertex;
+import us.lsi.alg.sudoku.SudokuVertexI;
 
 public class BlocksDatosSudokuSubTablaAG implements BlocksData<SolucionSudoku> {
 	
-	SudokuVertex sv;
+	SudokuVertexI sv;
 	Integer n; 
 	public List<Integer> blocksLimits;
 	public List<Integer> initialValues;
 	public List<Integer> decode;
 	
-	public BlocksDatosSudokuSubTablaAG(SudokuVertex sv){
+	public BlocksDatosSudokuSubTablaAG(SudokuVertexI sv){
 		super();
 		this.sv = sv;
 		this.n = DatosSudoku.n-sv.index();

@@ -18,7 +18,7 @@ public class TestBT {
 		RobotVertex v0 = RobotVertex.of();	
 		
 		EGraph<RobotVertex, RobotEdge> graph = 
-				EGraph.virtual(v0,v->v.goal(), PathType.Sum, Type.Max)
+				EGraph.virtual(v0,PathType.Sum, Type.Max)
 				.edgeWeight(e->e.weight())
 				.heuristic((v1,p,v2)->3.*(RobotVertex.N-v1.t()))
 				.solutionNumber(4)

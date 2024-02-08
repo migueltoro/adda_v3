@@ -20,13 +20,13 @@ public class TestState {
 //		MochilaVertex v2 = MochilaVertex.lastVertex();
 		
 		EGraph<MochilaVertex, MochilaEdge> graph = 
-				EGraph.virtual(v1,MochilaVertex.goal(), PathType.Sum, Type.Max)
+				EGraph.virtual(v1,PathType.Sum, Type.Max)
 				.greedyEdge(MochilaVertex::greedyEdge)
 				.heuristic(MochilaHeuristic::heuristic1)
 				.build();
 		
 		
-		State<MochilaVertex,MochilaEdge> initialState = StatePath.of(graph,MochilaVertex.goal(),null);
+		State<MochilaVertex,MochilaEdge> initialState = StatePath.of(graph,v->v.goal(),null);
 		System.out.println(initialState);
 		MochilaEdge e1 = initialState.getActualVertex().edge(2);
 		initialState.forward(e1);
@@ -38,7 +38,7 @@ public class TestState {
 		System.out.println(initialState);
 		initialState.back(e1);
 		System.out.println(initialState);
-		State<MochilaVertex, MochilaEdge> f = StatePath.of(graph, MochilaVertex.goal(), null);
+		State<MochilaVertex, MochilaEdge> f = StatePath.of(graph, v->v.goal(), null);
 		System.out.println(f);
 	}
 

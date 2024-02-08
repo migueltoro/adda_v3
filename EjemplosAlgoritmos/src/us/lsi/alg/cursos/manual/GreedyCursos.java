@@ -15,7 +15,7 @@ public class GreedyCursos {
 	
 	public static Double cota(CursosVertex vertex, Integer a) {
 		return a * DatosCursos.getCoste(vertex.index()) + 
-				CursosHeuristic.heuristic(vertex.neighbor(a), CursosVertex.goal(), null);
+				CursosHeuristic.heuristic(vertex.neighbor(a), v->v.goal(), null);
 	}
 	
 	public static SolucionCursos solucionVoraz(CursosVertex v1) {

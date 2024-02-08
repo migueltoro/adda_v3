@@ -4,7 +4,6 @@ package us.lsi.p5.ej_2;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Set;
-import java.util.function.Predicate;
 
 import us.lsi.common.IntegerSet;
 import us.lsi.common.Set2;
@@ -21,12 +20,12 @@ public record SubconjuntosVertex(Integer index, IntegerSet remaining)
 		return new SubconjuntosVertex(i, rest);
 	}
 
-	public static Predicate<SubconjuntosVertex> goal() {
-		return v-> v.index() == DatosSubconjuntos.NUM_SC;
+	public Boolean goal() {
+		return this.index() == DatosSubconjuntos.NUM_SC;
 	}
 
-	public static Predicate<SubconjuntosVertex> goalHasSolution() {
-		return v -> v.remaining().isEmpty();
+	public Boolean goalHasSolution() {
+		return this.remaining().isEmpty();
 	}
 
 

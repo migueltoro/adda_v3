@@ -33,7 +33,7 @@ public record SeqVertex(Integer	index,String s) implements VirtualVertex<SeqVert
 	
 	public static String s1; //compartida
 	public static String s2; // compartida
-	public static Integer n2; // Integer, tamaño de s2, derivada
+	public static Integer n2; // Integer, tamaï¿½o de s2, derivada
 	
 
 	@Override
@@ -91,5 +91,17 @@ public record SeqVertex(Integer	index,String s) implements VirtualVertex<SeqVert
 	public String toString() {
 		return String.format("(%d,%s,%s)",this.index(),this.s(),SeqVertex.s2);
 	}
+
+	@Override
+	public Boolean goal() {
+		return this.equals(last());
+	}
+
+	@Override
+	public Boolean goalHasSolution() {
+		return true;
+	}
+	
+	
 	
 }

@@ -26,7 +26,7 @@ public class Tests {
 		DatosEquipo.iniDatos(fichero);
 		
 		EGraph<EquipoVertex, EquipoEdge> g = 
-				EGraph.virtual(EquipoVertex.first(),EquipoVertex::goal,PathType.Sum, Type.Max)
+				EGraph.virtual(EquipoVertex.first(),PathType.Sum, Type.Max)
 				.heuristic((v1,p,v2)->1000.)
 				.build();
 		

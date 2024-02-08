@@ -18,7 +18,7 @@ public class TestJarrasAstar {
 			JarrasVertex e1 = JarrasVertex.first();
 			JarrasVertex e2 = JarrasVertex.last();
 			
-			EGraph<JarrasVertex, JarrasEdge> graph = EGraph.virtual(e1,v->v.equals(e2))
+			EGraph<JarrasVertex, JarrasEdge> graph = EGraph.virtual(e1)
 					.endVertex(e2)
 					.heuristic((v1,p,v2)->0.)
 					.build();		

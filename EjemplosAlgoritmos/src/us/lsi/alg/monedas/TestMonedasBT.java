@@ -26,8 +26,7 @@ public class TestMonedasBT {
 
 		MonedaVertex e1 = MonedaVertex.first(valorInicial);
 		
-		EGraph<MonedaVertex, MonedaEdge> graph = EGraph.virtual(e1,MonedaVertex.goal(),PathType.Sum,Type.Max)
-				.goalHasSolution(MonedaVertex.goalHasSolution())
+		EGraph<MonedaVertex, MonedaEdge> graph = EGraph.virtual(e1,PathType.Sum,Type.Max)
 				.greedyEdge(MonedaVertex::aristaVoraz)
 				.heuristic(MonedasHeuristica::heuristic)
 				.build();
@@ -55,7 +54,7 @@ public class TestMonedasBT {
 			SimpleDirectedGraph<MonedaVertex, MonedaEdge> g = ms1.outGraph();
 			GraphColors.toDot(g, "ficheros/MonedasBTGraph1.gv",
 					v -> String.format("(%d,%d)", v.index(), v.valorRestante()), e -> e.action().toString(),
-					v -> GraphColors.colorIf(Color.red, MonedaVertex.goal().test(v)),
+					v -> GraphColors.colorIf(Color.red, v.goal()),
 					e -> GraphColors.color(Color.black));
 		} else
 			System.out.println("2 = No hay solucion");
@@ -64,8 +63,7 @@ public class TestMonedasBT {
 
 		MonedaVertex e3 = MonedaVertex.first(valorInicial);
 
-		graph = EGraph.virtual(e3,MonedaVertex.goal(),PathType.Sum,Type.Min)
-				.goalHasSolution(MonedaVertex.goalHasSolution())
+		graph = EGraph.virtual(e3,PathType.Sum,Type.Min)
 				.greedyEdge(MonedaVertex::aristaVoraz)
 				.heuristic(MonedasHeuristica::heuristic)
 				.build();

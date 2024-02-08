@@ -3,7 +3,6 @@ package us.lsi.alg.candidatos;
 import java.util.List;
 import java.util.Locale;
 import java.util.Set;
-import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 import us.lsi.common.IntegerSet;
@@ -21,12 +20,14 @@ public record VertexCandidatos(Integer index,IntegerSet seleccion,Integer pRest)
 		return VertexCandidatos.of(0,IntegerSet.empty(),DatosCandidatos.getPresupuestoMax());
 	}
 
-	public static Predicate<VertexCandidatos> goal() {
-		return v-> v.index() == DatosCandidatos.getNumCandidatos();
+	@Override
+	public Boolean goal() {
+		return this.index() == DatosCandidatos.getNumCandidatos();
 	}
 	
-	public static Predicate<VertexCandidatos> goalHasSolution() {
-		return v-> v.cualidadesCubiertas().size() == DatosCandidatos.getNumCualidades();
+	@Override
+	public Boolean goalHasSolution() {
+		return this.cualidadesCubiertas().size() == DatosCandidatos.getNumCualidades();
 	}
 	
 	public Set<Integer> cualidadesCubiertas(){
@@ -64,7 +65,7 @@ public record VertexCandidatos(Integer index,IntegerSet seleccion,Integer pRest)
 	public String toString() {
 		Locale.setDefault(Locale.of("en", "US"));
 		return String.format("%d,%d,%.0f",index,this.cualidadesCubiertas().size(),
-				CandidatosHeuristic.heuristic(this,VertexCandidatos.goal(), null));
+				CandidatosHeuristic.heuristic(this,v->v.goal(), null));
 	}
 	
 	

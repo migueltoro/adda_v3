@@ -15,7 +15,7 @@ public class Test3 {
 		
 		DatosEquipo.iniDatos(file);
 		
-		EGraph<EquipoVertex, EquipoEdge> g = EGraph.virtual(EquipoVertex.first(),EquipoVertex::goal)
+		EGraph<EquipoVertex, EquipoEdge> g = EGraph.virtual(EquipoVertex.first())
 				.build();
 		
 		GreedyOnGraph<EquipoVertex, EquipoEdge> vr2 = GreedyOnGraph.random(g);

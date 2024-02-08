@@ -2,7 +2,6 @@ package us.lsi.p5.ej_3;
 
 import java.util.List;
 import java.util.Locale;
-import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 import org.jgrapht.GraphPath;
@@ -27,7 +26,6 @@ public class TestAStar {
 		// V�rtices clave
 
 		AlumnosVertex start = AlumnosVertex.initial();
-		Predicate<AlumnosVertex> goal = AlumnosVertex.goal();
 
 		// Grafo
 
@@ -35,10 +33,9 @@ public class TestAStar {
 
 		// Algoritmo A*
 		EGraph<AlumnosVertex, AlumnosEdge> graph =
-					EGraph.virtual(start,goal,PathType.Sum, Type.Max)
+					EGraph.virtual(start,PathType.Sum, Type.Max)
 					.edgeWeight(x -> x.weight())
 					.greedyEdge(AlumnosVertex::greedyEdge)
-					.goalHasSolution(AlumnosVertex.goalHasSolution())
 					.heuristic(AlumnosHeuristic::heuristic)
 					.build();
 					
@@ -57,7 +54,7 @@ public class TestAStar {
 		GraphColors.toDot(aStar.outGraph(), "ficheros_generados/p5/ejemplo3/AlumnosAStarGraph1.gv", 
 					v -> v.toGraph(),
 					e -> e.action().toString(), 
-					v -> GraphColors.colorIf(Color.red, AlumnosVertex.goal().test(v)),
+					v -> GraphColors.colorIf(Color.red,v.goal()),
 					e -> GraphColors.colorIf(Color.red, gp.getEdgeList().contains(e)));
 	}
 	

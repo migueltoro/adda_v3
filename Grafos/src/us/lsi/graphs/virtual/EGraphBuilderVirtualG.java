@@ -1,7 +1,5 @@
 package us.lsi.graphs.virtual;
 
-import java.util.function.Predicate;
-
 import org.jgrapht.Graph;
 
 import us.lsi.common.Preconditions;
@@ -12,8 +10,8 @@ public class EGraphBuilderVirtualG<V, E> extends EGraphBuilderVirtual<VirtualVer
 
 	private Graph<V,E> graph;
 
-	public EGraphBuilderVirtualG(Graph<V,E> graph, V startVertex, Predicate<V> goal, PathType pathType, Type type) {	
-		super(VirtualVertexG.of(startVertex, graph),v->goal.test(v.vertex()), pathType, type);		
+	public EGraphBuilderVirtualG(Graph<V,E> graph, V startVertex, PathType pathType, Type type) {	
+		super(VirtualVertexG.of(startVertex, graph), pathType, type);		
 		this.graph = graph;
 		Preconditions.checkArgument(graph.getType().isSimple(),"El grafo debe ser simple");
 	}

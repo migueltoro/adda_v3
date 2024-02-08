@@ -61,14 +61,12 @@ public class MulticonjuntoHeuristic {
 			MulticonjuntoVertex start = MulticonjuntoVertex.initial();
 //			Predicate<MulticonjuntoVertex> finalVertex = v -> MulticonjuntoVertex.goal(v);
 		
-			Predicate<MulticonjuntoVertex> goal = MulticonjuntoVertex.goal();
 
 			// Grafo
 			
 			EGraph<MulticonjuntoVertex, MulticonjuntoEdge> graph =
-					EGraph.virtual(start,goal,PathType.Sum, Type.Min)
+					EGraph.virtual(start,PathType.Sum, Type.Min)
 					.edgeWeight(x -> x.weight())
-					.goalHasSolution(MulticonjuntoVertex.goalHasSolution())
 					.heuristic(MulticonjuntoHeuristic::heuristic)
 					.build();
 			
@@ -79,9 +77,9 @@ public class MulticonjuntoHeuristic {
 			
 			System.out.println();
 //			System.out.println(valEntero(start,DatosMulticonjunto.NUM_E));
-			System.out.println(MulticonjuntoVertex.goalHasSolution().test(r.getEndVertex()));
+			System.out.println(r.getEndVertex().goalHasSolution());
 			System.out.println(r.getWeight());
-			System.out.println(heuristic(start,MulticonjuntoVertex.goal(),null));
+			System.out.println(heuristic(start,v->v.goal(),null));
 		}
 	}
 

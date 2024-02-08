@@ -62,7 +62,7 @@ public class AStarCursos {
 		this.time = System.nanoTime();
 		this.minValue = minValue;
 		this.solucion = s;
-		Double distanceToEnd = CursosHeuristic.heuristic(start,CursosVertex.goal(),null);
+		Double distanceToEnd = CursosHeuristic.heuristic(start,x->x.goal(),null);
 		AStarDataCursos a = AStarDataCursos.of(start, null,null,0.);
 		this.cmp = Comparator.naturalOrder();
 		this.heap = new FibonacciHeap<>(cmp);
@@ -82,11 +82,11 @@ public class AStarCursos {
 			Handle<Double, AStarDataCursos> ha = heap.deleteMin();
 			AStarDataCursos dataActual = ha.getValue();
 			vertexActual = dataActual.vertex();
-			if(this.minValue != null &&  CursosHeuristic.heuristic(vertexActual,CursosVertex.goal(),null) >= this.minValue) continue;
+			if(this.minValue != null &&  CursosHeuristic.heuristic(vertexActual,v->v.goal(),null) >= this.minValue) continue;
 			for (Integer a : vertexActual.actions()) {
 				CursosVertex v = vertexActual.neighbor(a);
 				Double newDistance = dataActual.distanceToOrigin()+a*DatosCursos.getCoste(vertexActual.index());
-				Double newDistanceToEnd = newDistance + CursosHeuristic.heuristic(v,CursosVertex.goal(),null);				
+				Double newDistanceToEnd = newDistance + CursosHeuristic.heuristic(v,x->x.goal(),null);				
 				if (!tree.containsKey(v)) {	
 					AStarDataCursos ac = AStarDataCursos.of(v, a, vertexActual, newDistance);
 					Handle<Double, AStarDataCursos> nh = heap.insert(newDistanceToEnd,ac);

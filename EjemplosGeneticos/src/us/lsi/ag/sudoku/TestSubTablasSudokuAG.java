@@ -7,7 +7,7 @@ import us.lsi.ag.agstopping.StoppingConditionFactory;
 import us.lsi.ag.agstopping.StoppingConditionFactory.StoppingConditionType;
 import us.lsi.alg.sudoku.DatosSudoku;
 import us.lsi.alg.sudoku.SolucionSudoku;
-import us.lsi.alg.sudoku.SudokuVertex;
+import us.lsi.alg.sudoku.SudokuVertexI;
 
 public class TestSubTablasSudokuAG {
 
@@ -24,7 +24,7 @@ public class TestSubTablasSudokuAG {
 		
 		DatosSudoku.leeFichero("ficheros/sudoku2.txt");
 
-		SudokuVertex sv = SudokuVertex.first();
+		SudokuVertexI sv = SudokuVertexI.first();
 		
 		BlocksDatosSudokuSubTablaAG p = new BlocksDatosSudokuSubTablaAG(sv);
 		

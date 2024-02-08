@@ -2,7 +2,6 @@ package us.lsi.alg.productos_y_componentes;
 
 import java.util.List;
 import java.util.Locale;
-import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 import org.jgrapht.GraphPath;
@@ -29,7 +28,6 @@ public class TestAStart {
 			// V�rtices clave
 
 			VertexProductos start = VertexProductos.initial();
-			Predicate<VertexProductos> goal = VertexProductos.goal();
 
 			// Grafo
 
@@ -38,7 +36,7 @@ public class TestAStart {
 			// Algoritmo A*
 			
 			EGraph<VertexProductos, EdgeProductos> graph = 
-					EGraph.virtual(start,goal,PathType.Sum,Type.Max)
+					EGraph.virtual(start,PathType.Sum,Type.Max)
 					.edgeWeight(x -> x.weight())
 					.heuristic(ProductosHeuristic::heuristic)
 					.build();
@@ -60,7 +58,7 @@ public class TestAStart {
 			GraphColors.toDot(aStar.outGraph(), "ficheros/productosAStarGraph.gv", 
 					v -> v.toGraph(),
 					e -> e.action().toString(), 
-					v -> GraphColors.colorIf(Color.red, VertexProductos.goal().test(v)),
+					v -> GraphColors.colorIf(Color.red, v.goal()),
 					e -> GraphColors.colorIf(Color.red, gp.getEdgeList().contains(e)));
 		}
 	}

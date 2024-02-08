@@ -2,7 +2,6 @@ package us.lsi.p5.ej_3;
 
 import java.util.Comparator;
 import java.util.List;
-import java.util.function.Predicate;
 import java.util.stream.IntStream;
 
 import us.lsi.common.List2;
@@ -20,12 +19,12 @@ public record AlumnosVertex(Integer index, List<Integer> remaining)
 		return new AlumnosVertex(i, rest);
 	}
 	
-	public static Predicate<AlumnosVertex> goal() {
-		return v-> v.index() == DatosAlumnos.getNumAlumnos();
+	public Boolean goal() {
+		return this.index() == DatosAlumnos.getNumAlumnos();
 	}
 	
-	public static Predicate<AlumnosVertex> goalHasSolution() {
-		return v -> v.remaining().stream().allMatch(e -> e.equals(0));
+	public Boolean goalHasSolution() {
+		return this.remaining().stream().allMatch(e -> e.equals(0));
 	}
 	
 	@Override

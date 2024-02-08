@@ -65,5 +65,16 @@ public record JarrasVertex(Integer c1,Integer c2) implements VirtualVertex<Jarra
 	public JarrasEdge edge(Action<JarrasVertex> a) {
 		return JarrasEdge.of(this,a.neighbor(this),a);
 	}
+
+
+	@Override
+	public Boolean goal() {
+		return this.equals(JarrasVertex.last());
+	}
+
+	@Override
+	public Boolean goalHasSolution() {
+		return true;
+	}
 	
 }

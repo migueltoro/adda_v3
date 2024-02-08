@@ -2,7 +2,6 @@ package us.lsi.alg.sudoku;
 
 import java.util.Locale;
 import java.util.Optional;
-import java.util.function.Predicate;
 
 import org.jgrapht.GraphPath;
 
@@ -19,12 +18,9 @@ public class TestSudokuBTRandom {
 		DatosSudoku.leeFichero("ficheros/sudoku/sudoku3.txt");
 		SudokuVertex e1 = SudokuVertex.first();
 		
-		Predicate<SudokuVertex> goal = SudokuVertex.goal();
-		
 		EGraph<SudokuVertex,SimpleEdgeAction<SudokuVertex,Integer>> graph = 
-				EGraph.virtual(e1,goal,PathType.Last, Type.One)
+				EGraph.virtual(e1,PathType.Last, Type.One)
 				.vertexWeight(v->(double)v.errores())
-				.goalHasSolution(SudokuVertex.goalHasSolution())
 				.build();
 		
 		

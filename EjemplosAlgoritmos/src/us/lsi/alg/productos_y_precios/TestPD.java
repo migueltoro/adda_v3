@@ -2,7 +2,6 @@ package us.lsi.alg.productos_y_precios;
 
 import java.util.List;
 import java.util.Locale;
-import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 import us.lsi.colors.GraphColors;
@@ -22,10 +21,9 @@ public class TestPD {
 			
 
 			ProductosVertex start = ProductosVertex.initial();
-			Predicate<ProductosVertex> goal = ProductosVertex.goal();
 			
 			EGraph<ProductosVertex, ProductosEdge> graph = 
-					EGraph.virtual(start,goal)
+					EGraph.virtual(start)
 					.edgeWeight(x -> x.weight())
 					.heuristic(ProductosHeuristic::heuristic)
 					.build();
@@ -44,7 +42,7 @@ public class TestPD {
 			GraphColors.toDot(pdr.outGraph,"ficheros/productosPDRGraph.gv",
 					v->v.toGraph(),
 					e->e.action().toString(),
-					v->GraphColors.colorIf(Color.red,goal.test(v)),
+					v->GraphColors.colorIf(Color.red,v.goal()),
 					e->GraphColors.colorIf(Color.red,pdr.optimalPath().get().getEdgeList().contains(e))
 					);
 		}

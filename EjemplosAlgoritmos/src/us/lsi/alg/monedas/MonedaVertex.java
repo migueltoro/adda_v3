@@ -4,7 +4,6 @@ package us.lsi.alg.monedas;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.function.Predicate;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -24,12 +23,14 @@ public record MonedaVertex(Integer index,Integer valorRestante) implements Virtu
 		return new MonedaVertex(DatosMonedas.n,0);
 	}
 	
-	public static Predicate<MonedaVertex> goal() {
-		return v->v.index() == DatosMonedas.n;
+	@Override
+	public Boolean goal() {
+		return this.index() == DatosMonedas.n;
 	}
 	
-	public static Predicate<MonedaVertex> goalHasSolution() {
-		return v->v.valorRestante() == 0;
+	@Override
+	public Boolean goalHasSolution() {
+		return this.valorRestante() == 0;
 	}
 	
 	public MonedaVertex copy() {

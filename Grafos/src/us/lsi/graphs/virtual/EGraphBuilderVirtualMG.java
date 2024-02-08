@@ -13,7 +13,7 @@ public class EGraphBuilderVirtualMG<V, E> extends EGraphBuilderVirtual<VirtualVe
 	private DirectedMultigraph<V,E> graph;
 
 	public EGraphBuilderVirtualMG(DirectedMultigraph<V,E> graph, V startVertex, Predicate<V> goal, PathType pathType, Type type) {	
-		super(VirtualVertexMG.of(startVertex, null, graph),v->goal.test(v.vertex()), pathType, type);
+		super(VirtualVertexMG.of(startVertex, null, graph), pathType, type);
 		this.graph = graph;
 		Preconditions.checkArgument(graph.getType().isMultigraph(),"El grafo debe ser Multigraph");
 	}

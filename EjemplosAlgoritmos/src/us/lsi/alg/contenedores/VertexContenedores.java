@@ -5,7 +5,6 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Set;
 import java.util.function.Function;
-import java.util.function.Predicate;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -25,8 +24,13 @@ public record VertexContenedores(Integer index, List<Integer> capRest)
 		return VertexContenedores.of(0,capRest);
 	}
 
-	public static Predicate<VertexContenedores> goal() {
-		return v-> v.index() == DatosContenedores.getNumElementos();
+	@Override
+	public Boolean goalHasSolution() {
+		return true;
+	}
+	
+	public Boolean goal() {
+		return this.index() == DatosContenedores.getNumElementos();
 	}	
 	
 	public Set<Integer>contenedoresCompletos(){

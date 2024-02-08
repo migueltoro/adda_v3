@@ -60,7 +60,7 @@ public class MonedaPD {
 		if(memory.containsKey(vertex)) {
 			r = memory.get(vertex);
 		} else if(vertex.index() == DatosMonedas.n) {
-			if (MonedaVertex.goalHasSolution().test(vertex)) {
+			if (vertex.goalHasSolution()) {
 				r = Spm.of(null, 0);
 				memory.put(vertex, r);
 				if (this.maxValue == null || accumulateValue > this.maxValue) this.maxValue = accumulateValue;

@@ -3,7 +3,6 @@ package us.lsi.alg.asignaturas;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
-import java.util.function.Predicate;
 import java.util.stream.IntStream;
 
 import us.lsi.common.List2;
@@ -28,8 +27,14 @@ public record AsignaturasVertice(Integer index,List<Integer>diasAsignatura,Integ
 		return this.index>=0 &&this.index<=DatosAsignaturas.ND;
 	}
 	
-	public static Predicate<AsignaturasVertice> goalHasSolution() {
-		return x->x.diasAsignatura.stream().allMatch(da->da>=1 && da<=4);
+	@Override
+	public Boolean goalHasSolution() {
+		return this.diasAsignatura.stream().allMatch(da->da>=1 && da<=4);
+	}
+	
+	@Override
+	public Boolean goal() {
+		return this.index==DatosAsignaturas.ND;
 	}
 	
 	public Optional<Integer> mejor() {

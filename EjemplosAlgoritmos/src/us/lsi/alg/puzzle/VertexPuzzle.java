@@ -7,6 +7,9 @@ import us.lsi.graphs.virtual.VirtualVertex;
 
 public interface VertexPuzzle extends VirtualVertex<VertexPuzzle, EdgePuzzle, ActionPuzzle>{
 	
+	public static Integer numFilas = 3;
+	public static Integer n = numFilas;
+	
 	public static VertexPuzzle of(Integer... d){
 		return VertexPuzzleI.of(d);
 	}

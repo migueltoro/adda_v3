@@ -17,11 +17,7 @@ public interface EGraphBuilder<V, E> {
 
 	EGraphBuilder<V, E> startVertex(V startVertex);
 
-	EGraphBuilder<V, E> goal(Predicate<V> goal);
-
 	EGraphBuilder<V, E> endVertex(V endVertex);
-	
-	EGraphBuilder<V, E> goalHasSolution(Predicate<V> goalHasSolution);
 
 	EGraphBuilder<V, E> pathType(PathType pathType);
 

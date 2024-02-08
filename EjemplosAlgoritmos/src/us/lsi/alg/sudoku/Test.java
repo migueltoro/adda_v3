@@ -8,7 +8,7 @@ public class Test {
 		Locale.setDefault(Locale.of("en", "US"));
 		DatosSudoku.leeFichero("ficheros/sudoku/sudoku3.txt");
 		
-		SudokuVertex e1 = SudokuVertex.first();
+		SudokuVertexI e1 = SudokuVertexI.first();
 		System.out.println(e1);
 		for(int i =0; i<50;i++) {
 			System.out.println(i+" = "+e1.valoresLibresEnCasilla(e1.casilla(i)));

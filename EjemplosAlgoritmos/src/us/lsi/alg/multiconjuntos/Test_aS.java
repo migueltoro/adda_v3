@@ -2,7 +2,6 @@ package us.lsi.alg.multiconjuntos;
 
 import java.util.List;
 import java.util.Locale;
-import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 import org.jgrapht.GraphPath;
@@ -26,7 +25,6 @@ public class Test_aS {
 			// V�rtices clave
 
 			MulticonjuntoVertex start = MulticonjuntoVertex.initial();
-			Predicate<MulticonjuntoVertex> goal = MulticonjuntoVertex.goal();
 
 			// Grafo
 
@@ -34,9 +32,8 @@ public class Test_aS {
 
 			// Algoritmo A*
 			EGraph<MulticonjuntoVertex, MulticonjuntoEdge> graph =
-					EGraph.virtual(start,goal,PathType.Sum, Type.Min)
+					EGraph.virtual(start,PathType.Sum, Type.Min)
 					.edgeWeight(x -> x.weight())
-					.goalHasSolution(MulticonjuntoVertex.goalHasSolution())
 					.heuristic(MulticonjuntoHeuristic::heuristic)
 					.build();
 					

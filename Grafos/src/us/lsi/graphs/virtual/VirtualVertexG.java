@@ -26,8 +26,16 @@ public record VirtualVertexG<V,E>(V vertex, Graph<V,E> graph) implements Virtual
 	public VirtualEdgeG<V, E> edge(E edge) {
 		return VirtualEdgeG.of(this,neighbor(edge),edge,graph.getEdgeWeight(edge));
 	}
-	
-	
+
+	@Override
+	public Boolean goal() {
+		return this.goal();
+	}
+
+	@Override
+	public Boolean goalHasSolution() {
+		return this.goalHasSolution();
+	}
 	
 }
 

@@ -2,7 +2,6 @@ package us.lsi.alg.candidatos;
 
 import java.util.Locale;
 import java.util.Optional;
-import java.util.function.Predicate;
 
 import org.jgrapht.GraphPath;
 
@@ -28,13 +27,11 @@ public class TestBT {
 			// V�rtices clave
 
 			VertexCandidatos start = VertexCandidatos.initial();
-			Predicate<VertexCandidatos> goal = VertexCandidatos.goal();
 
 			// Grafo
 			
-			EGraph<VertexCandidatos, EdgeCandidatos> graph = EGraph.virtual(start,goal,PathType.Sum,Type.Max)
+			EGraph<VertexCandidatos, EdgeCandidatos> graph = EGraph.virtual(start,PathType.Sum,Type.Max)
 					.edgeWeight(x -> x.weight())
-					.goalHasSolution(VertexCandidatos.goalHasSolution())
 					.heuristic(CandidatosHeuristic::heuristic)
 					.build();
 

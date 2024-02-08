@@ -26,7 +26,7 @@ public class TestAStar {
 		// Grafo
 		
 		EGraph<SubconjuntosVertex, SubconjuntosEdge> graph = 
-				EGraph.virtual(start,SubconjuntosVertex.goal())
+				EGraph.virtual(start)
 				.edgeWeight(x-> x.weight())
 				.heuristic(SubconjuntosHeuristic::heuristic)
 				.build();

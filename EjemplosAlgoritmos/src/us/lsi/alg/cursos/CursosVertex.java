@@ -2,7 +2,6 @@ package us.lsi.alg.cursos;
 
 
 import java.util.List;
-import java.util.function.Predicate;
 
 import us.lsi.common.IntegerSet;
 import us.lsi.common.List2;
@@ -19,12 +18,14 @@ public record CursosVertex(Integer index, IntegerSet remaining, IntegerSet cente
 		return new CursosVertex(i, rest, cs);
 	}
 	
-	public static Predicate<CursosVertex> goal() {
-		return v-> v.index() == DatosCursos.n;
+	@Override
+	public Boolean goal() {
+		return this.index() == DatosCursos.n;
 	}
 	
-	public static Predicate<CursosVertex> goalHasSolution() {
-		return v -> v.remaining().isEmpty();
+	@Override
+	public Boolean goalHasSolution() {
+		return this.remaining().isEmpty();
 	}
 	
 	@Override

@@ -4,7 +4,6 @@ package us.lsi.alg.productos_y_componentes;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.function.Predicate;
 import java.util.stream.IntStream;
 
 import us.lsi.graphs.virtual.VirtualVertex;
@@ -20,9 +19,15 @@ public record VertexProductos(Integer index,Integer tpR,Integer teR)
 		return VertexProductos.of(0,DatosProductos.getTotalProd(),DatosProductos.getTotalElab());
 	}
 
-	public static Predicate<VertexProductos> goal() {
-		return v-> v.index() == DatosProductos.getNumProductos();
+	@Override
+	public Boolean goal() {
+		return this.index() == DatosProductos.getNumProductos();
 	}	
+	
+	@Override
+	public Boolean goalHasSolution() {
+		return true;
+	}
 	
 	public EdgeProductos greedyEdge() {
 		return edge(DatosProductos.maxActionInt(DatosProductos.getProducto(index),this.tpR,this.teR));
@@ -55,4 +60,6 @@ public record VertexProductos(Integer index,Integer tpR,Integer teR)
 	public String toGraph() {
 		return String.format("%d,%d,%d",this.index(),this.tpR,this.teR());
 	}
+
+	
 }

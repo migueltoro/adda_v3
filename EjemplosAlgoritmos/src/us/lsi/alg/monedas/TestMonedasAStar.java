@@ -25,8 +25,7 @@ public class TestMonedasAStar {
 		Integer valorInicial = 401;
 		MonedaVertex e1 = MonedaVertex.first(valorInicial);
 		
-		EGraph<MonedaVertex, MonedaEdge> graph = EGraph.virtual(e1,MonedaVertex.goal(),PathType.Sum,Type.Max)
-				.goalHasSolution(MonedaVertex.goalHasSolution())
+		EGraph<MonedaVertex, MonedaEdge> graph = EGraph.virtual(e1,PathType.Sum,Type.Max)
 				.greedyEdge(MonedaVertex::aristaVoraz)
 				.heuristic(MonedasHeuristica::heuristic)
 				.build();	
@@ -57,7 +56,7 @@ public class TestMonedasAStar {
 			GraphColors.toDot(g,"ficheros/MonedasAstarGraph1.gv",
 					v->String.format("(%d,%d)",v.index(),v.valorRestante()),
 					e->e.action().toString(),
-					v->GraphColors.colorIf(Color.red,MonedaVertex.goal().test(v)),
+					v->GraphColors.colorIf(Color.red,v.goal()),
 					e->GraphColors.color(Color.black)
 					);
 		} else {
@@ -75,8 +74,7 @@ public class TestMonedasAStar {
 		
 		
 
-		graph = EGraph.virtual(e3,MonedaVertex.goal(),PathType.Sum,Type.Min)
-				.goalHasSolution(MonedaVertex.goalHasSolution())
+		graph = EGraph.virtual(e3,PathType.Sum,Type.Min)
 				.greedyEdge(MonedaVertex::aristaVoraz)
 				.heuristic(MonedasHeuristica::heuristic)
 				.build();	
@@ -102,7 +100,7 @@ public class TestMonedasAStar {
 			GraphColors.toDot(g,"ficheros/MonedasAstarGraph2.gv",
 					v->String.format("(%d,%d)",v.index(),v.valorRestante()),
 					e->e.action().toString(),
-					v->GraphColors.colorIf(Color.red,MonedaVertex.goal().test(v)),
+					v->GraphColors.colorIf(Color.red,v.goal()),
 					e->GraphColors.color(Color.black)
 					);
 		} else {			

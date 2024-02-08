@@ -1,7 +1,6 @@
 package us.lsi.p5.ej_1;
 
 import java.util.List;
-import java.util.function.Predicate;
 
 import org.jgrapht.GraphPath;
 
@@ -21,12 +20,12 @@ public record MulticonjuntoVertex(Integer indice,Integer sr_suma_restante) imple
 		return  new MulticonjuntoVertex(0, DatosMulticonjunto.SUM);
 	}
 	
-	public static Predicate<MulticonjuntoVertex> goal() {
-		return  v->v.indice == DatosMulticonjunto.NUM_E;
+	public Boolean goal() {
+		return  this.indice == DatosMulticonjunto.NUM_E;
 	}
 	
-	public static Predicate<MulticonjuntoVertex> goalHasSolution() {
-		return  v->v.sr_suma_restante == 0;
+	public Boolean goalHasSolution() {
+		return  this.sr_suma_restante == 0;
 	}
 
 //	public static MulticonjuntoVertex copy(MulticonjuntoVertex c) {

@@ -15,11 +15,10 @@ import us.lsi.common.Preconditions;
 import us.lsi.graphs.virtual.VirtualVertex;
 import us.lsi.streams.Stream2;
 
-
-
 public record VertexPuzzleI(IntPair blackPosition,Integer[][] datos)
          implements VirtualVertex<VertexPuzzle, EdgePuzzle, ActionPuzzle>, VertexPuzzle {
 	
+	public static VertexPuzzle end = VertexPuzzle.of(1,2,3,4,6,5,8,7,0);
 	
 	public static VertexPuzzle copy(VertexPuzzle m) {
 		VertexPuzzleI m2 = (VertexPuzzleI) m;
@@ -31,8 +30,8 @@ public record VertexPuzzleI(IntPair blackPosition,Integer[][] datos)
 	 * @return Un EstadoPuzzle
 	 */
 	
-	public static VertexPuzzle of(Integer... d) {	
-		Integer dt[][] = Arrays2.toMultiArray(d, VertexPuzzleI.n, VertexPuzzleI.n);	
+	public static VertexPuzzle of(Integer... d) {
+		Integer dt[][] = Arrays2.toMultiArray(d, VertexPuzzle.n, VertexPuzzle.n);	
 		IntPair bp = Arrays2.findPosition(dt, e->e==0);
 		Preconditions.checkArgument(validData(dt),"No es valido");
 		return VertexPuzzleI.of(dt,bp);
@@ -49,7 +48,7 @@ public record VertexPuzzleI(IntPair blackPosition,Integer[][] datos)
 	public static VertexPuzzleI of(Integer[][] datos, IntPair blackPosition) {
 		Integer[][] dt = Arrays2.copyArray(datos);
 		VertexPuzzleI r = new VertexPuzzleI(blackPosition,dt);
-		Preconditions.checkArgument(r.isValid(),"No es v�lido");
+		Preconditions.checkArgument(r.isValid(),"No es válido");
 		return r;
 	}
 	
@@ -90,21 +89,19 @@ public record VertexPuzzleI(IntPair blackPosition,Integer[][] datos)
 	public Boolean isSolvable() {
 		return isSolvable(this.datos);
 	}
-	
-	public static Integer numFilas = 3;
-	public static Integer n = numFilas;
+
 	
 	@Override
 	public Integer numFilas() {
-		return numFilas;
+		return VertexPuzzle.numFilas;
 	}
 
 	private static boolean validDato(Integer d) {
-		return 0<=d && d < VertexPuzzleI.numFilas*VertexPuzzleI.numFilas;
+		return 0<=d && d < VertexPuzzle.numFilas*VertexPuzzle.numFilas;
 	}
 	
 	public static Boolean validPosition(IntPair p) {
-		return p.first()>=0 && p.first()< VertexPuzzleI.numFilas && p.second()>=0 && p.second()<VertexPuzzleI.numFilas;
+		return p.first()>=0 && p.first()< VertexPuzzle.numFilas && p.second()>=0 && p.second()<VertexPuzzle.numFilas;
 	}
 	
 	@Override
@@ -129,7 +126,7 @@ public record VertexPuzzleI(IntPair blackPosition,Integer[][] datos)
 	public VertexPuzzleI neighbor(ActionPuzzle a) {
 		Preconditions.checkArgument(
 				VertexPuzzleI.validPosition(this.blackPosition().add(ActionPuzzle.direction(a))), 
-				String.format("La acci�n %s no es aplicable",a.toString()));
+				String.format("La acción %s no es aplicable",a.toString()));
 		VertexPuzzleI v = this.swap(this.blackPosition().add(ActionPuzzle.direction(a)));
 		Preconditions.checkState(!this.equals(v),String.format("No deben ser iguales %s \n %s \n %s",a.toString(),this.toString(),v.toString()));
 		return v;
@@ -213,7 +210,15 @@ public record VertexPuzzleI(IntPair blackPosition,Integer[][] datos)
 			return false;
 		return true;
 	}
-	
-	
+
+	@Override
+	public Boolean goal() {
+		return this.equals(VertexPuzzleI.end);
+	}
+
+	@Override
+	public Boolean goalHasSolution() {
+		return true;
+	}
 	
 }

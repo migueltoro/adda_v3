@@ -25,14 +25,14 @@ public class TestMainPuzzle {
 		VertexPuzzle v7 = VertexPuzzleI.of(1,2,3,4,5,6,7,8,0);
 		VertexPuzzle v8 = VertexPuzzleI.of(8,1,3,4,0,2,7,6,5);
 		
-		VertexPuzzle e1 = v1;
-		VertexPuzzle e2 = v3;
-		System.out.println(e1.isSolvable(e2));
+		VertexPuzzle start = v1;
+		VertexPuzzleI.end = v3;
+		System.out.println(start.isSolvable(VertexPuzzleI.end));
 		
 		EGraph<VertexPuzzle, EdgePuzzle> graph = 
-				EGraph.virtual(e1,x->x.equals(e2),PathType.Sum, Type.Min)
+				EGraph.virtual(start,PathType.Sum, Type.Min)
 				.edgeWeight(x->x.weight())
-				.endVertex(e2)
+				.endVertex(VertexPuzzleI.end)
 				.heuristic(HeuristicaPuzzle::heuristica)
 				.build();		
 		

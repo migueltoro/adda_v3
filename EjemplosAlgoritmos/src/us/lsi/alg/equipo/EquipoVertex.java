@@ -18,7 +18,6 @@ public record EquipoVertex(Integer index,IntegerSet players) implements VirtualV
 		return new EquipoVertex(v.index(), v.players());
 	}
 
-
 	public static EquipoVertex first() {
 		return of(0, IntegerSet.range(0,DatosEquipo.N));
 	}
@@ -49,9 +48,14 @@ public record EquipoVertex(Integer index,IntegerSet players) implements VirtualV
 		return SolucionEquipo.create(Arrays.asList(v));
 	}
 	
+	@Override
+	public Boolean goal() {
+		return this.index == DatosEquipo.M;
+	}
 
-	public static Boolean goal(EquipoVertex v) {
-		return v.index == DatosEquipo.M;		
+	@Override
+	public Boolean goalHasSolution() {
+		return true;
 	}
 	
 	public Optional<Integer> mejorEnPosicion(Integer p) {

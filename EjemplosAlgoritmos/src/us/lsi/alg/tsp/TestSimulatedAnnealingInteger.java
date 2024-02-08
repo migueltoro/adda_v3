@@ -43,7 +43,7 @@ public class TestSimulatedAnnealingInteger {
 		System.out.println(e1);
 		
 		EGraph<TravelVertexInteger,TravelEdgeInteger> graph2 = 
-				EGraph.virtual(e1,null).vertexWeight(v->v.weight()).build();
+				EGraph.virtual(e1).vertexWeight(v->v.weight()).build();
 		SA<TravelVertexInteger, TravelEdgeInteger> m = 
 				SA.simulatedAnnealing(graph2,e1,e->e.weight());
 		

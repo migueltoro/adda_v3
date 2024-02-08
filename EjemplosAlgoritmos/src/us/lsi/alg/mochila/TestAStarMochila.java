@@ -28,7 +28,7 @@ public class TestAStarMochila {
 		MochilaVertex e1 = MochilaVertex.initialVertex();
 		
 		EGraph<MochilaVertex, MochilaEdge> graph = 
-				EGraph.virtual(e1,MochilaVertex.goal(), PathType.Sum, Type.Max)
+				EGraph.virtual(e1,PathType.Sum, Type.Max)
 				.greedyEdge(MochilaVertex::greedyEdge)
 				.heuristic(MochilaHeuristic::heuristic1)
 				.build();

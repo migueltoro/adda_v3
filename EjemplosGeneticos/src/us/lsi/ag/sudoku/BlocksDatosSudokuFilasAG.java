@@ -9,16 +9,16 @@ import us.lsi.ag.BlocksData;
 import us.lsi.alg.sudoku.Casilla;
 import us.lsi.alg.sudoku.DatosSudoku;
 import us.lsi.alg.sudoku.SolucionSudoku;
-import us.lsi.alg.sudoku.SudokuVertex;
+import us.lsi.alg.sudoku.SudokuVertexI;
 
 public class BlocksDatosSudokuFilasAG implements BlocksData<SolucionSudoku>{
 	
-	SudokuVertex sv;
+	SudokuVertexI sv;
 	public List<Integer> blocksLimits;
 	public List<Integer> initialValues;
 	public List<Integer> decode;
 	
-	public BlocksDatosSudokuFilasAG(SudokuVertex sv){
+	public BlocksDatosSudokuFilasAG(SudokuVertexI sv){
 		super();
 		this.sv = sv;
 		Comparator<Casilla> cmp = Comparator.comparing(c->c.f());

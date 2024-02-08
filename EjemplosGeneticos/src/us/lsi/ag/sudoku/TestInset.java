@@ -3,7 +3,7 @@ package us.lsi.ag.sudoku;
 import java.util.List;
 
 import us.lsi.alg.sudoku.DatosSudoku;
-import us.lsi.alg.sudoku.SudokuVertex;
+import us.lsi.alg.sudoku.SudokuVertexI;
 
 public class TestInset {
 
@@ -11,7 +11,7 @@ public class TestInset {
 		DatosSudoku.tamSubCuadro = 3;
 		DatosSudoku.leeFichero("ficheros/sudoku.txt");
 		
-		SudokuVertex sv = SudokuVertex.first();
+		SudokuVertexI sv = SudokuVertexI.first();
 		
 		InSetDatosSudokuAG p = new InSetDatosSudokuAG(sv);
 		

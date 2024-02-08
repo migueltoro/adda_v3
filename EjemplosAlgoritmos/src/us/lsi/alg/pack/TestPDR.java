@@ -18,7 +18,7 @@ public class TestPDR {
 		PackVertex e1 = PackVertex.first();
 		
 		EGraph<PackVertex,PackEdge> graph = 
-				EGraph.virtual(e1,PackVertex.goal(),PathType.Last,Type.Min)
+				EGraph.virtual(e1,PathType.Last,Type.Min)
 				.vertexWeight(v->(double)v.nc())
 				.edgeWeight(e->e.weight())
 				.greedyEdge(PackVertex::greedyEdge)
@@ -32,7 +32,7 @@ public class TestPDR {
 	
 		Integer nc = sp.nc();
 		System.out.println("Valor Voraz = "+nc);
-		System.out.println("Heuristica = "+Heuristica.heuristic(e1, PackVertex.goal(), null));
+		System.out.println("Heuristica = "+Heuristica.heuristic(e1, v->v.goal(), null));
 		
 		PDR<PackVertex, PackEdge,?> ms = PDR.of(
 				graph,

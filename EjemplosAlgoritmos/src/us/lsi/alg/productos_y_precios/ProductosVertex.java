@@ -2,7 +2,6 @@ package us.lsi.alg.productos_y_precios;
 
 import java.util.Comparator;
 import java.util.List;
-import java.util.function.Predicate;
 
 import org.jgrapht.GraphPath;
 
@@ -20,8 +19,14 @@ public record ProductosVertex(Integer indice,IntegerSet funcionalidades_restante
 		return ProductosVertex.of(0,DatosProductos.funcionesDeseadas());
 	}
 	
-	public static Predicate<ProductosVertex> goal() {
-		return v->v.indice == DatosProductos.NUM_PRODUCTOS;
+	@Override
+	public Boolean goalHasSolution() {
+		return true;
+	}
+	
+	@Override
+	public Boolean goal() {
+		return this.indice == DatosProductos.NUM_PRODUCTOS;
 	}
 
 	public static ProductosVertex of(Integer indice, IntegerSet funcionalidades_restantes) {

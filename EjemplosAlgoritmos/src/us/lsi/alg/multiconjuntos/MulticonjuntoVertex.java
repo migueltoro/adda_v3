@@ -1,8 +1,6 @@
 package us.lsi.alg.multiconjuntos;
 
 import java.util.List;
-import java.util.function.Predicate;
-
 import org.jgrapht.GraphPath;
 
 import us.lsi.common.List2;
@@ -21,12 +19,14 @@ public record MulticonjuntoVertex(Integer indice,Integer sr_suma_restante) imple
 		return  new MulticonjuntoVertex(0, DatosMulticonjunto.SUM);
 	}
 	
-	public static Predicate<MulticonjuntoVertex> goal() {
-		return  v->v.indice == DatosMulticonjunto.NUM_E;
+	@Override
+	public Boolean goal() {
+		return  this.indice == DatosMulticonjunto.NUM_E;
 	}
 	
-	public static Predicate<MulticonjuntoVertex> goalHasSolution() {
-		return  v->v.sr_suma_restante == 0;
+	@Override
+	public Boolean goalHasSolution() {
+		return  this.sr_suma_restante == 0;
 	}
 
 //	public static MulticonjuntoVertex copy(MulticonjuntoVertex c) {

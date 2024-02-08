@@ -2,7 +2,6 @@ package us.lsi.alg.reinas;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.function.Predicate;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -30,12 +29,14 @@ public record ReinasVertex(Integer index, List<Integer> fo, IntegerSet dpo, Inte
 		return new ReinasVertex(n,List2.empty(),IntegerSet.empty(-n,10),IntegerSet.empty());
 	}
 	
-	public static Predicate<ReinasVertex> goal() {
-		return v->v.index == ReinasVertex.n;
+	@Override
+	public Boolean goal() {
+		return this.index == ReinasVertex.n;
 	}
 	
-	public static Predicate<ReinasVertex> goalHasSolution() {
-		return v->v.errores() == 0;
+	@Override
+	public Boolean goalHasSolution() {
+		return this.errores() == 0;
 	}
 	
 	

@@ -32,7 +32,7 @@ public class TestBT {
 			// Grafo
 
 			EGraph<SubconjuntosVertex, SubconjuntosEdge> graph = 
-					EGraph.virtual(start,SubconjuntosVertex.goal())
+					EGraph.virtual(start)
 					.edgeWeight(x-> x.weight())
 					.heuristic(SubconjuntosHeuristic::heuristic)
 					.build();
@@ -68,7 +68,7 @@ public class TestBT {
 				GraphColors.toDot(bta.outGraph(),"ficheros/subconjuntosBTGraph.gv",
 					v->v.toGraph(),
 					e->e.action().toString(),
-					v->GraphColors.colorIf(Color.red,SubconjuntosVertex.goal().test(v)),
+					v->GraphColors.colorIf(Color.red,v.goal()),
 					e->GraphColors.colorIf(Color.red,le.contains(e))
 					);
 			

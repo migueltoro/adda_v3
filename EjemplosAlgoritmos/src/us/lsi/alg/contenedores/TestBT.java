@@ -2,7 +2,6 @@ package us.lsi.alg.contenedores;
 
 import java.util.Locale;
 import java.util.Optional;
-import java.util.function.Predicate;
 
 import org.jgrapht.GraphPath;
 
@@ -28,12 +27,11 @@ public class TestBT {
 			// V�rtices clave
 
 			VertexContenedores start = VertexContenedores.initial();
-			Predicate<VertexContenedores> goal = VertexContenedores.goal();
 
 			// Grafo
 			
 			EGraph<VertexContenedores, EdgeContenedores> graph = 
-					EGraph.virtual(start,goal,PathType.Last,Type.Max)
+					EGraph.virtual(start,PathType.Last,Type.Max)
 					.vertexWeight(x -> (double)x.contenedoresCompletos().size())
 					.heuristic(ContenedoresHeuristic::heuristic)
 					.build();
@@ -45,7 +43,7 @@ public class TestBT {
 			
 			System.out.println("Solucion Voraz ="+max.getWeight());
 			System.out.println("Solucion Voraz 2 ="+max2.getWeight());
-			System.out.println("Heuristica ="+ContenedoresHeuristic.heuristic(start, goal, null));
+			System.out.println("Heuristica ="+ContenedoresHeuristic.heuristic(start,v->v.goal(), null));
 			// Algoritmo BT
 			BT<VertexContenedores, EdgeContenedores, SolucionContenedores> bta = 
 					BT.ofGreedy(graph);

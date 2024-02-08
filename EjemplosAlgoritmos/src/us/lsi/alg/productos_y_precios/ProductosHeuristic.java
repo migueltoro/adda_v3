@@ -26,7 +26,7 @@ public class ProductosHeuristic {
 	public static GraphPath<ProductosVertex, ProductosEdge> graphPathVoraz(ProductosVertex start,
 			Predicate<ProductosVertex> goal) {
 		EGraph<ProductosVertex, ProductosEdge> graph = 
-				EGraph.virtual(start,goal)
+				EGraph.virtual(start)
 				.edgeWeight(x -> x.weight())
 				.heuristic(ProductosHeuristic::heuristic)
 				.build();
@@ -64,7 +64,7 @@ public class ProductosHeuristic {
 			ProductosVertex start = ProductosVertex.initial();
 //			Predicate<ProductosVertex> finalVertex = v -> ProductosVertex.goal(v);
 			GraphPath<ProductosVertex,ProductosEdge> path = 
-					ProductosHeuristic.graphPathVoraz(start,ProductosVertex.goal());
+					ProductosHeuristic.graphPathVoraz(start,v->v.goal());
 			List<Integer> la = path.getEdgeList().stream().map(e->e.action()).toList();
 			System.out.println(SolucionProductos.of(la).precioTotal());
 			System.out.println(heuristic2(start,DatosProductos.NUM_PRODUCTOS));

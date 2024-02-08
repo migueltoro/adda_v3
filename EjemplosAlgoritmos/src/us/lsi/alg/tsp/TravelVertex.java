@@ -56,4 +56,14 @@ public record TravelVertex(List<Ciudad> camino)
 		return GraphPath2.ofVertices(TravelVertex.graph,this.camino()).getWeight();
 	}
 
+	@Override
+	public Boolean goal() {
+		return null;
+	}
+
+	@Override
+	public Boolean goalHasSolution() {
+		return null;
+	}
+
 }

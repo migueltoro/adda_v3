@@ -6,7 +6,6 @@ import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.function.Predicate;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -19,9 +18,16 @@ public record PackVertex(Integer index, Map<Integer, Integer> carga) implements 
 		return new PackVertex(index, carga);
 	}
 	
-	public static Predicate<PackVertex> goal() { 
-		return  v->v.index == n; 
+	@Override
+	public Boolean goal() { 
+		return  this.index == n; 
 	}
+	
+	@Override
+	public Boolean goalHasSolution() {
+		return true;
+	}
+	
 	public static PackVertex first() { 
 		return PackVertex.of(0, new HashMap<>()); 
 	}

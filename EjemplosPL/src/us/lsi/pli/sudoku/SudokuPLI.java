@@ -13,7 +13,7 @@ import java.util.List;
 import us.lsi.alg.sudoku.Casilla;
 import us.lsi.alg.sudoku.DatosSudoku;
 import us.lsi.alg.sudoku.SolucionSudoku;
-import us.lsi.alg.sudoku.SudokuVertex;
+import us.lsi.alg.sudoku.SudokuVertexI;
 import us.lsi.common.Files2;
 import us.lsi.common.String2;
 import us.lsi.gurobi.GurobiLp;
@@ -61,7 +61,7 @@ public class SudokuPLI {
 	public static void sudoku() throws IOException {	
 		String txt = "ficheros/sudoku/sudoku1.txt";
 		DatosSudoku.leeFichero(txt);
-		System.out.println(SolucionSudoku.of(SudokuVertex.first()));
+		System.out.println(SolucionSudoku.of(SudokuVertexI.first()));
 		include(txt,"modelos/sudoku_p.lsi","modelos/sudoku.lsi");
 		AuxGrammar.generate(SudokuPLI.class, "modelos/sudoku.lsi", "ficheros/sudoku.lp");
 		GurobiSolution st = GurobiLp.gurobi("ficheros/sudoku.lp");
@@ -69,14 +69,14 @@ public class SudokuPLI {
 		List<Casilla> lc = solucion(st);
 		Collections.sort(lc,Comparator.comparing(c->c.p()));	
 		
-		System.out.println(SudokuVertex.first());
+		System.out.println(SudokuVertexI.first());
 		Collections.sort(DatosSudoku.casillas,Comparator.comparing(c->c.p()));	
 		for(int i = 0; i < DatosSudoku.n;i++) {
 			if(!DatosSudoku.casillas.get(i).isWithInitialValue())
 				DatosSudoku.casillas.set(i,lc.get(i));
 		}
-		System.out.println(SolucionSudoku.of(SudokuVertex.first()));
-		System.out.println(SudokuVertex.first());
+		System.out.println(SolucionSudoku.of(SudokuVertexI.first()));
+		System.out.println(SudokuVertexI.first());
 	}
 	
 	

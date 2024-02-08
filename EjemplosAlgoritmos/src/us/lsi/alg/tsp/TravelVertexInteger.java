@@ -69,5 +69,15 @@ public record TravelVertexInteger(List<Integer> camino) implements VirtualVertex
 	public Double weight() {
 		return GraphPath2.ofVertices(TravelVertexInteger.graph,this.camino()).getWeight();
 	}
+	
+	@Override
+	public Boolean goal() {
+		return null;
+	}
+
+	@Override
+	public Boolean goalHasSolution() {
+		return null;
+	}
 
 }

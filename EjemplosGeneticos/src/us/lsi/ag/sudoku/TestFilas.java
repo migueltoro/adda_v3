@@ -1,7 +1,7 @@
 package us.lsi.ag.sudoku;
 
 import us.lsi.alg.sudoku.DatosSudoku;
-import us.lsi.alg.sudoku.SudokuVertex;
+import us.lsi.alg.sudoku.SudokuVertexI;
 
 public class TestFilas {
 	
@@ -10,7 +10,7 @@ public class TestFilas {
 		DatosSudoku.tamSubCuadro = 3;
 		DatosSudoku.leeFichero("ficheros/sudoku.txt");
 		
-		SudokuVertex sv = SudokuVertex.first();
+		SudokuVertexI sv = SudokuVertexI.first();
 		
 		BlocksDatosSudokuFilasAG p = new BlocksDatosSudokuFilasAG(sv);
 		

@@ -3,7 +3,6 @@ package us.lsi.alg.asignaturas;
 
 import java.util.Locale;
 import java.util.Optional;
-import java.util.function.Predicate;
 
 import org.jgrapht.GraphPath;
 import us.lsi.graphs.alg.AStar;
@@ -20,13 +19,11 @@ public class TestAstar {
 		DatosAsignaturas.iniciarDatos(fichero);
 		System.out.println(DatosAsignaturas.mejoras);
 		AsignaturasVertice v0 = AsignaturasVertice.inicial();
-		Predicate<AsignaturasVertice> predicado = t ->AsignaturasVertice.goal(t);
 
 		
 		EGraph<AsignaturasVertice,AsignaturasEdge> grafo = 
-				EGraph.virtual(v0,predicado,PathType.Last,Type.Max)
+				EGraph.virtual(v0,PathType.Last,Type.Max)
 				.vertexWeight(v->(double)v.getPeso())
-				.goalHasSolution(AsignaturasVertice.goalHasSolution())
 				.heuristic(Heuristica::heuristic)
 				.build();
 	

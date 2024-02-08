@@ -3,7 +3,6 @@ package us.lsi.alg.multiconjuntos;
 import java.util.List;
 import java.util.Locale;
 import java.util.Optional;
-import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 import org.jgrapht.GraphPath;
@@ -30,7 +29,6 @@ public class TestPD {
 			// V�rtices clave
 
 			MulticonjuntoVertex start = MulticonjuntoVertex.initial();
-			Predicate<MulticonjuntoVertex> goal = MulticonjuntoVertex.goal();
 
 			// Grafo
 
@@ -40,10 +38,9 @@ public class TestPD {
 			// Algoritmo PD
 			
 			EGraph<MulticonjuntoVertex, MulticonjuntoEdge> graph =
-					EGraph.virtual(start,goal,PathType.Sum, Type.Min)
+					EGraph.virtual(start,PathType.Sum, Type.Min)
 					.edgeWeight(x -> x.weight())
 					.greedyEdge(MulticonjuntoVertex::greedyEdge)
-					.goalHasSolution(MulticonjuntoVertex.goalHasSolution())
 					.heuristic(MulticonjuntoHeuristic::heuristic)
 					.build();
 			
@@ -82,7 +79,7 @@ public class TestPD {
 			GraphColors.toDot(pdr.outGraph, "ficheros/multiconjuntosPDRGraph.gv", 
 					v -> v.toGraph(),
 					e -> e.action().toString(), 
-					v -> GraphColors.colorIf(Color.red, MulticonjuntoVertex.goal().test(v)),
+					v -> GraphColors.colorIf(Color.red, v.goal()),
 					e -> GraphColors.colorIf(Color.red, gp.isPresent()?gp.get().getEdgeList().contains(e):false));
 
 		}

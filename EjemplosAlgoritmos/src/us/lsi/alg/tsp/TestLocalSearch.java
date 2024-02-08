@@ -32,7 +32,7 @@ public class TestLocalSearch {
 		TravelVertex e1 = TravelVertex.of(camino);
 		System.out.println(e1);
 		
-		EGraph<TravelVertex,TravelEdge> graph = EGraph.virtual(e1,null).vertexWeight(v->v.weight()).build();
+		EGraph<TravelVertex,TravelEdge> graph = EGraph.virtual(e1).vertexWeight(v->v.weight()).build();
 		
 		LocalSearch<TravelVertex,TravelEdge> ml = LocalSearch.of(graph,0.,3);
 		Optional<TravelVertex> vr = Stream2.findLast(ml.stream().peek(v->System.out.println(v.weight())));

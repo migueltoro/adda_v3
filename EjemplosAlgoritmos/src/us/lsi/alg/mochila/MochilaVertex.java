@@ -3,7 +3,6 @@ package us.lsi.alg.mochila;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.function.Predicate;
 import java.util.stream.*;
 
 import org.jgrapht.GraphPath;
@@ -33,8 +32,14 @@ public record MochilaVertex(Integer index, Integer capacidadRestante)
 		return new MochilaVertex(n, 0);
 	}
 	
-	public static Predicate<MochilaVertex> goal() {
-		return v->v.index == MochilaVertex.n;
+	@Override
+	public Boolean goal() {
+		return this.index == MochilaVertex.n;
+	}
+	
+	@Override
+	public Boolean goalHasSolution() {
+		return true;
 	}
 
 	public static Integer n = DatosMochila.numeroDeObjetos;

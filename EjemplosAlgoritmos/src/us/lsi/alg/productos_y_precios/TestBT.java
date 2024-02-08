@@ -23,10 +23,10 @@ public class TestBT {
 			System.out.println("\n\n>\tResultados para el test " + id_fichero + "\n");
 
 			ProductosVertex start = ProductosVertex.initial();
-			Predicate<ProductosVertex> goal = ProductosVertex.goal();
+			Predicate<ProductosVertex> goal = v->v.goal();
 			
 			EGraph<ProductosVertex, ProductosEdge> graph = 
-					EGraph.virtual(start,goal)
+					EGraph.virtual(start)
 					.edgeWeight(x -> x.weight())
 					.heuristic(ProductosHeuristic::heuristic)
 					.build();

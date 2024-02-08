@@ -39,8 +39,14 @@ public record RobotVertex(List<Integer> r, List<Integer> x, Integer t)
 		return this.edge(this.actions().get(0));
 	}
 	
+	@Override
 	public Boolean goal() {
 		return this.t == N;
+	}
+	
+	@Override
+	public Boolean goalHasSolution() {
+		return true;
 	}
 
 	@Override

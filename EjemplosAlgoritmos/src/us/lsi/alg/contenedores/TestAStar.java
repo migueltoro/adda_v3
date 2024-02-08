@@ -2,7 +2,6 @@ package us.lsi.alg.contenedores;
 
 import java.util.Locale;
 import java.util.Optional;
-import java.util.function.Predicate;
 
 import org.jgrapht.GraphPath;
 
@@ -29,7 +28,6 @@ public class TestAStar {
 			// V�rtices clave
 
 			VertexContenedores start = VertexContenedores.initial();
-			Predicate<VertexContenedores> goal = VertexContenedores.goal();
 
 			// Grafo
 
@@ -38,7 +36,7 @@ public class TestAStar {
 			// Algoritmo A*
 			
 			EGraph<VertexContenedores, EdgeContenedores> graph = 
-					EGraph.virtual(start,goal,PathType.Last,Type.Max)
+					EGraph.virtual(start,PathType.Last,Type.Max)
 					.vertexWeight(x -> (double)x.contenedoresCompletos().size())
 					.heuristic(ContenedoresHeuristic::heuristic)
 					.build();
@@ -58,7 +56,7 @@ public class TestAStar {
 			GraphColors.toDot(aStar.outGraph(), "ficheros/contenedoresAStarGraph.gv", 
 					v -> v.toString(),
 					e -> e.action().toString(), 
-					v -> GraphColors.colorIf(Color.red, VertexContenedores.goal().test(v)),
+					v -> GraphColors.colorIf(Color.red, v.goal()),
 					e -> GraphColors.colorIf(Color.red, gp.get().getEdgeList().contains(e)));
 		}
 	}

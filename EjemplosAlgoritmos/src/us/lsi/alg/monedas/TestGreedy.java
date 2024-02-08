@@ -31,8 +31,7 @@ public class TestGreedy {
 //			System.out.println(DatosMonedas.valorInicial + "--------");
 			MonedaVertex e1 = MonedaVertex.first(400+i);
 			//		MonedaVertex e2 = MonedaVertex.last();
-			EGraph<MonedaVertex, MonedaEdge> graph = EGraph.virtual(e1,MonedaVertex.goal(),PathType.Sum,Type.Max)
-					.goalHasSolution(MonedaVertex.goalHasSolution())
+			EGraph<MonedaVertex, MonedaEdge> graph = EGraph.virtual(e1,PathType.Sum,Type.Max)
 					.greedyEdge(MonedaVertex::aristaVoraz)
 					.heuristic(MonedasHeuristica::heuristic)
 					.build();
@@ -41,21 +40,20 @@ public class TestGreedy {
 			GraphPath<MonedaVertex, MonedaEdge> path = rr.path();
 			System.out.println(String.format("%s,%s,%.2f,%.2f,",400+i,rr.isSolution(path),
 					path.getWeight(),
-					MonedasHeuristica.heuristic(e1, MonedaVertex.goal(), null)));
+					MonedasHeuristica.heuristic(e1, v->v.goal(), null)));
 //			System.out.println(String.format("%s",path.getEdgeList().stream().map(e->e.action()).toList()));
 //			System.out.println(String.format("%s",SolucionMonedas.of(path.getEdgeList().stream().map(e->e.action()).toList())));
 			Collections.sort(DatosMonedas.monedas, Comparator.comparing(m -> m.pesoUnitario()));
 			//		System.out.println(Moneda.monedas);
 			e1 = MonedaVertex.first(400+i);
-			graph = EGraph.virtual(e1,MonedaVertex.goal(),PathType.Sum,Type.Min)
-					.goalHasSolution(MonedaVertex.goalHasSolution())
+			graph = EGraph.virtual(e1,PathType.Sum,Type.Min)
 					.greedyEdge(MonedaVertex::aristaVoraz)
 					.heuristic(MonedasHeuristica::heuristic)
 					.build();	
 			rr = GreedyOnGraph.of(graph, MonedaVertex::aristaVoraz);
 			path = rr.path();
 			System.out.println(String.format("%s,%s,%.2f,%.2f",400+i,rr.isSolution(path),path.getWeight(),
-					MonedasHeuristica.heuristic(e1, MonedaVertex.goal(), null)));
+					MonedasHeuristica.heuristic(e1, v->v.goal(), null)));
 		}
 	}
 

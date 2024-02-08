@@ -27,7 +27,7 @@ public class TestBTMochila {
 		MochilaVertex e1 = MochilaVertex.initialVertex();
 		
 		EGraph<MochilaVertex, MochilaEdge> graph = 
-				EGraph.virtual(e1,MochilaVertex.goal(), PathType.Sum, Type.Max)
+				EGraph.virtual(e1,PathType.Sum, Type.Max)
 				.greedyEdge(MochilaVertex::greedyEdge)
 				.heuristic(MochilaHeuristic::heuristic1)
 				.build();	
@@ -55,7 +55,7 @@ public class TestBTMochila {
 		GraphColors.toDot(ms.outGraph(),"ficheros/MochilaBTGraph2.gv",
 				v->String.format("(%d,%d)",v.index(),v.capacidadRestante()),
 				e->e.action().toString(),
-				v->GraphColors.colorIf(Color.red,MochilaVertex.goal().test(v)),
+				v->GraphColors.colorIf(Color.red,v.goal()),
 				e->GraphColors.colorIf(Color.red,sp.getEdgeList().contains(e))
 				);
 	}

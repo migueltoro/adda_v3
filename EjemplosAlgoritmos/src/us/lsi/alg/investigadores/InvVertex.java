@@ -1,7 +1,6 @@
 package us.lsi.alg.investigadores;
 
 import java.util.List;
-import java.util.function.Predicate;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -35,13 +34,15 @@ public record InvVertex(Integer index, List<Integer> ldIr, List<List<Integer>> l
 	   return new InvVertex(index, ldIr, ldEr);
 	}
 
-	public static Predicate<InvVertex> goal() {
-		return v-> v.index() == DatosInv.na;
+	@Override
+	public Boolean goal() {
+		return this.index() == DatosInv.na;
 	}	
 	
-	public static Predicate<InvVertex> goalHasSolution() {
-		return v -> v.index() == DatosInv.na && IntStream.range(0, DatosInv.m).boxed()
-				.allMatch(t -> v.esTrabajoAcabado(t) || !v.esTrabajoIniciado(t));
+	@Override
+	public Boolean goalHasSolution() {
+		return this.index() == DatosInv.na && IntStream.range(0, DatosInv.m).boxed()
+				.allMatch(t -> this.esTrabajoAcabado(t) || !this.esTrabajoIniciado(t));
 	}
 	
 	public Boolean isValid() {
@@ -133,7 +134,7 @@ public record InvVertex(Integer index, List<Integer> ldIr, List<List<Integer>> l
 
 	@Override
 	public List<Integer> actions() {
-		if(InvVertex.goal().test(this)) return List.of();
+		if(this.goal()) return List.of();
 		List<Integer> alternativas = IntStream.rangeClosed(0, this.mayorAccionPosible()).boxed()
 				.filter(a->this.ldIr().get(this.i()) - a >= 0)
 				.filter(a->this.ldEr().get(this.j()).get(this.k())-a >= 0)
@@ -159,7 +160,7 @@ public record InvVertex(Integer index, List<Integer> ldIr, List<List<Integer>> l
 	}
 	
 	public InvEdge greedyEdge() {
-		if(InvVertex.goal().test(this)) return edge(0);
+		if(this.goal()) return edge(0);
 		Integer a = this.esTrabajoTerminable(this.j())?this.mayorAccionPosible():0;
 		return edge(a);
 	}	

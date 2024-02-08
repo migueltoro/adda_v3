@@ -16,7 +16,7 @@ public class TestPackVertex {
 //		Predicate<PackVertex> goal  = PackVertex.goal;
 		
 		EGraph<PackVertex,PackEdge> graph = 
-				EGraph.virtual(e1,PackVertex.goal(),PathType.Last,Type.Min)
+				EGraph.virtual(e1,PathType.Last,Type.Min)
 				.vertexWeight(v->(double)v.nc())
 				.edgeWeight(e->e.weight())
 				.greedyEdge(PackVertex::greedyEdge)

@@ -28,7 +28,7 @@ public class LocalSearch<V,E> implements  Iterator<V>, Iterable<V>{
 		int i = 0;
 		while (i < m) {
 			V s = start.get();
-			EGraph<V, E> g = EGraph.virtual(s, x -> true).vertexWeight(x -> graph.getVertexWeight(x)).build();
+			EGraph<V, E> g = EGraph.virtual(s).vertexWeight(x -> graph.getVertexWeight(x)).build();
 			LocalSearch<V, E> ls = LocalSearch.of(g, error, n);
 			V vr = Stream2.findLast(ls.stream()).get();
 			if (v == null || graph.getVertexWeight(vr) < w) {

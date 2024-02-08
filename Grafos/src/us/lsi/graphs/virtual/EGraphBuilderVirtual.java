@@ -11,13 +11,11 @@ public class EGraphBuilderVirtual<V extends VirtualVertex<V,E,?>, E extends Simp
 	implements EGraphBuilder<V, E> {
 	
 
-	V startVertex = null;
-	Predicate<V> goal = null;	
+	V startVertex = null;	
 	Function<E,Double> edgeWeight = e -> e.weight();
 	Function<V,Double> vertexWeight = e -> 0.;
 	TriFunction<V,E,E,Double> vertexPassWeight= (v,e1,e2)->0.;
 	V endVertex = null;	
-	Predicate<V> goalHasSolution = v->true;
 	PathType pathType = PathType.Sum;
 	Function<V,E> greedyEdge = v -> v.edgesListOf().isEmpty()? null : v.edgesListOf().get(0);
 	TriFunction<V, Predicate<V>, V, Double> heuristic = (v1,p,v2) -> 0.;
@@ -28,16 +26,14 @@ public class EGraphBuilderVirtual<V extends VirtualVertex<V,E,?>, E extends Simp
 		super();
 	}
 		
-	public EGraphBuilderVirtual(V startVertex,Predicate<V> goal) {
+	public EGraphBuilderVirtual(V startVertex) {
 		super();
 		this.startVertex = startVertex;
-		this.goal = goal;
 	}
 	
-	public EGraphBuilderVirtual(V startVertex,Predicate<V> goal,PathType pathType,Type type) {
+	public EGraphBuilderVirtual(V startVertex,PathType pathType,Type type) {
 		super();
 		this.startVertex = startVertex;
-		this.goal = goal;
 		this.pathType = pathType;
 		this.type = type;
 	}
@@ -59,18 +55,11 @@ public class EGraphBuilderVirtual<V extends VirtualVertex<V,E,?>, E extends Simp
 		this.startVertex = startVertex;
 		return this;
 	}
-	public EGraphBuilderVirtual<V, E> goal(Predicate<V> goal) {
-		this.goal = goal;
-		return this;
-	}
 	public EGraphBuilderVirtual<V, E> endVertex(V endVertex) {
 		this.endVertex = endVertex;
 		return this;
 	}
-	public EGraphBuilderVirtual<V, E> goalHasSolution(Predicate<V> goalHasSolution) {
-		this.goalHasSolution = goalHasSolution;
-		return this;
-	}
+
 	public EGraphBuilderVirtual<V, E> pathType(PathType pathType) {
 		this.pathType = pathType;
 		return this;

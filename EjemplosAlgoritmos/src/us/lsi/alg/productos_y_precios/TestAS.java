@@ -2,7 +2,6 @@ package us.lsi.alg.productos_y_precios;
 
 import java.util.List;
 import java.util.Locale;
-import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 import org.jgrapht.GraphPath;
@@ -21,10 +20,9 @@ public class TestAS {
 			System.out.println("#### Algoritmo A* ####");
 
 			ProductosVertex start = ProductosVertex.initial();
-			Predicate<ProductosVertex> goal = ProductosVertex.goal();
 			
 			EGraph<ProductosVertex, ProductosEdge> graph = 
-					EGraph.virtual(start,goal)
+					EGraph.virtual(start)
 					.edgeWeight(x -> x.weight())
 					.heuristic(ProductosHeuristic::heuristic)
 					.build();

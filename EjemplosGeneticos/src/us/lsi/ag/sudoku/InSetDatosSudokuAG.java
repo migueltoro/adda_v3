@@ -9,18 +9,18 @@ import us.lsi.ag.InSetData;
 import us.lsi.alg.sudoku.Casilla;
 import us.lsi.alg.sudoku.DatosSudoku;
 import us.lsi.alg.sudoku.SolucionSudoku;
-import us.lsi.alg.sudoku.SudokuVertex;
+import us.lsi.alg.sudoku.SudokuVertexI;
 import us.lsi.common.Preconditions;
 
 
 public class InSetDatosSudokuAG implements InSetData<SolucionSudoku> {
 
 
-	SudokuVertex sv;
+	SudokuVertexI sv;
 	Map<Integer,List<Integer>> values = new HashMap<>();
 	public List<Integer> decode;
 	
-	public InSetDatosSudokuAG(SudokuVertex sv) {	
+	public InSetDatosSudokuAG(SudokuVertexI sv) {	
 		super();
 		this.sv = sv;	  
 		for(int i = sv.index(); i<DatosSudoku.n;i++) {

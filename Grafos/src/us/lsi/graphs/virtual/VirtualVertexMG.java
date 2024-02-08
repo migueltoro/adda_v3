@@ -25,5 +25,17 @@ public record VirtualVertexMG<V,E>(V vertex, E edge, DirectedMultigraph<V,E> gra
 	public VirtualEdgeMG<V, E> edge(E edge) {
 		return VirtualEdgeMG.of(this,neighbor(edge),edge,graph.getEdgeWeight(edge));
 	}
+
+	@Override
+	public Boolean goal() {
+		return this.goal();
+	}
+
+	@Override
+	public Boolean goalHasSolution() {
+		return this.goalHasSolution();
+	}
+	
+	
 	
 }

@@ -57,8 +57,8 @@ public class DatosSudoku {
 		Locale.setDefault(Locale.of("en", "US"));
 		DatosSudoku.tamSubCuadro = 3;
 		DatosSudoku.leeFichero("ficheros/sudoku/sudoku3.txt");
-		System.out.println(SudokuVertex.first());
-		SolucionSudoku s = SolucionSudoku.of(SudokuVertex.first());
+		System.out.println(SudokuVertexI.first());
+		SolucionSudoku s = SolucionSudoku.of(SudokuVertexI.first());
 		System.out.println(s);
 		System.out.println(s.casilla(8,8));
 		System.out.println("_____________");

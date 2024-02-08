@@ -20,7 +20,7 @@ public class TestColorAstar {
 					
 		
 		EGraph<ColorVertex, ColorEdge> graph = 
-				EGraph.virtual(e1,ColorVertex.goal(),PathType.Last,Type.Min)
+				EGraph.virtual(e1,PathType.Last,Type.Min)
 				.vertexWeight(v->v.nc().doubleValue())
 				.heuristic((v1,p,v2)->(double) v1.nc())
 				.build();

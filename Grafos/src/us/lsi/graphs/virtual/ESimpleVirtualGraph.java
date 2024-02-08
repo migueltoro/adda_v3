@@ -43,9 +43,7 @@ public class ESimpleVirtualGraph<V extends VirtualVertex<V,E,?>, E extends Simpl
 	private TriFunction<V,E,E,Double> vertexPassWeight= null;	
 	private EGraphPath<V,E> path;
 	private V startVertex;
-	private Predicate<V> goal;
-	private V endVertex;
-	private Predicate<V> goalHasSolution;	
+	private V endVertex;	
 	private PathType pathType;
 	private Function<V,E> greedyEdge;
 	private TriFunction<V, Predicate<V>, V, Double> heuristic;
@@ -61,9 +59,7 @@ public class ESimpleVirtualGraph<V extends VirtualVertex<V,E,?>, E extends Simpl
 		this.vertexSet = new HashSet<V>();
 		this.vertexSet.add(this.startVertex);
 		this.pathType = builder.pathType;
-		this.goal = builder.goal;
 		this.endVertex = builder.endVertex;
-		this.goalHasSolution = builder.goalHasSolution;
 		this.path = EGraphPath.ofVertex(this,this.startVertex,this.pathType);
 		this.greedyEdge = builder.greedyEdge;
 		this.heuristic = builder.heuristic;
@@ -337,7 +333,7 @@ public class ESimpleVirtualGraph<V extends VirtualVertex<V,E,?>, E extends Simpl
 	
 	@Override
 	public Predicate<V> goal() {
-		return goal;
+		return v->v.goal();
 	}
 	@Override
 	public V endVertex() {
@@ -345,7 +341,7 @@ public class ESimpleVirtualGraph<V extends VirtualVertex<V,E,?>, E extends Simpl
 	}		
 	@Override
 	public Predicate<V> goalHasSolution() {
-		return goalHasSolution;
+		return v->v.goalHasSolution();
 	}
 	@Override
 	public Integer solutionNumber() {

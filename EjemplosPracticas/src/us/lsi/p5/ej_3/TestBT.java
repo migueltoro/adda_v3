@@ -21,11 +21,9 @@ public class TestBT {
 		DatosAlumnos.iniDatos("ficheros/p5/alumnos_1.txt");
 
 		AlumnosVertex vInicial = AlumnosVertex.initial();
-		Predicate<AlumnosVertex> goal = AlumnosVertex.goal(); 
 		
 		EGraph<AlumnosVertex, AlumnosEdge> graph = //(AlumnosVertex v_inicial, Predicate<AlumnosVertex> es_terminal) { 
-			EGraph.virtual(vInicial, goal, PathType.Sum, Type.Max)
-					.goalHasSolution(AlumnosVertex.goalHasSolution())
+			EGraph.virtual(vInicial, PathType.Sum, Type.Max)
 					.greedyEdge(AlumnosVertex::greedyEdge)
 					.heuristic(AlumnosHeuristic::heuristic)
 					.build();
@@ -58,11 +56,6 @@ public class TestBT {
 			System.out.println("BT no obtuvo solucion\n");
 		
 		
-	}
-
-		
-		
-		
-		
+	}	
 
 }

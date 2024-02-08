@@ -25,7 +25,7 @@ public class SolucionInv {
 			diasInvAsignados.put(v.pij(),a);
 			v = v.neighbor(a);
 		}
-		if(!InvVertex.goalHasSolution().test(v))
+		if(!v.goalHasSolution())
 			System.out.println(diasInvAsignados);
 //		Preconditions.checkArgument(InvVertex.goalHasSolution().test(v),"La solucion no es valida");
 		
@@ -39,7 +39,7 @@ public class SolucionInv {
 			diasInvAsignados.put(v.pij(),a);
 			v = v.neighbor(a);
 		}
-		if(!InvVertex.goalHasSolution().test(v))
+		if(!v.goalHasSolution())
 			System.out.println(diasInvAsignados);
 //		Preconditions.checkArgument(InvVertex.goalHasSolution().test(v),"La solucion no es valida");
 		
@@ -51,7 +51,7 @@ public class SolucionInv {
 		List<InvEdge> edgeList = path.getEdgeList();
 		edgeList.stream().forEach(e->diasInvAsignados.put(e.source().pij(),e.action()));
 		Integer fo = path.getEndVertex().fo();
-		if(!InvVertex.goalHasSolution().test(path.getEndVertex()))
+		if(!path.getEndVertex().goalHasSolution())
 			System.out.println(diasInvAsignados);
 //		Preconditions.checkArgument(InvVertex.goalHasSolution().test(path.getEndVertex()),"La solucion no es valida");
 		return of(diasInvAsignados, fo);

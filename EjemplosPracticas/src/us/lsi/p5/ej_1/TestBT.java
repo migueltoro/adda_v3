@@ -2,7 +2,6 @@ package us.lsi.p5.ej_1;
 
 import java.util.Locale;
 import java.util.Optional;
-import java.util.function.Predicate;
 
 import org.jgrapht.GraphPath;
 
@@ -30,7 +29,6 @@ public class TestBT {
 			// V�rtices clave
 
 			MulticonjuntoVertex start = MulticonjuntoVertex.initial();
-			Predicate<MulticonjuntoVertex> goal = MulticonjuntoVertex.goal();
 
 			// Grafo
 
@@ -41,10 +39,9 @@ public class TestBT {
 			// Algoritmo BT
 			
 			EGraph<MulticonjuntoVertex, MulticonjuntoEdge> graph =
-					EGraph.virtual(start,goal,PathType.Sum, Type.Min)
+					EGraph.virtual(start,PathType.Sum, Type.Min)
 					.edgeWeight(x -> x.weight())
 					.greedyEdge(MulticonjuntoVertex::greedyEdge)
-					.goalHasSolution(MulticonjuntoVertex.goalHasSolution())
 					.heuristic(MulticonjuntoHeuristic::heuristic)
 					.build();
 			

@@ -19,7 +19,7 @@ public class TestVertexContenedores {
 			// V�rtices clave
 
 			VertexContenedores start = VertexContenedores.initial();
-			Predicate<VertexContenedores> goal = VertexContenedores.goal();
+			Predicate<VertexContenedores> goal = v->v.goal();
 
 			List<Integer> r = IntStream.range(0, DatosContenedores.getNumContenedores() + 1).boxed()
 					.filter(j -> !start.contenedoresCompletos().contains(j))

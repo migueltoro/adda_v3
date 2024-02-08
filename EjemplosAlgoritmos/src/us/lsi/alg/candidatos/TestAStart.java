@@ -3,7 +3,6 @@ package us.lsi.alg.candidatos;
 import java.util.List;
 import java.util.Locale;
 import java.util.Optional;
-import java.util.function.Predicate;
 
 import org.jgrapht.GraphPath;
 
@@ -31,7 +30,6 @@ public class TestAStart {
 			// V�rtices clave
 
 			VertexCandidatos start = VertexCandidatos.initial();
-			Predicate<VertexCandidatos> goal = VertexCandidatos.goal();
 
 			// Grafo
 			
@@ -40,9 +38,8 @@ public class TestAStart {
 			System.out.println("#### Algoritmo A* ####");
 
 			// Algoritmo A*
-			EGraph<VertexCandidatos, EdgeCandidatos> graph = EGraph.virtual(start,goal,PathType.Sum,Type.Max)
+			EGraph<VertexCandidatos, EdgeCandidatos> graph = EGraph.virtual(start,PathType.Sum,Type.Max)
 					.edgeWeight(x -> x.weight())
-					.goalHasSolution(VertexCandidatos.goalHasSolution())
 					.heuristic(CandidatosHeuristic::heuristic)
 					.build();
 			
@@ -63,8 +60,8 @@ public class TestAStart {
 					e -> e.action().toString(), 
 					v -> GraphColors.colorIf(
 							List.of(!aStar.closed(v),
-									VertexCandidatos.goal().and(VertexCandidatos.goalHasSolution()).test(v),
-									VertexCandidatos.goal().test(v)),
+									v.goal() && (v.goalHasSolution()),
+									v.goal()),
 						    List.of(Color.green,Color.red,Color.blue)),
 					e -> GraphColors.colorIf(Color.red, gp.get().getEdgeList().contains(e)));
 		}

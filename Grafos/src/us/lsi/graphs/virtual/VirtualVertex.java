@@ -6,9 +6,11 @@ import java.util.stream.Collectors;
 
 public interface VirtualVertex<V extends VirtualVertex<V,E,A>, E extends SimpleEdgeAction<V,A>, A> {
 	
-	public List<A> actions();
-	public V neighbor(A a);
-	public E edge(A a);
+	List<A> actions();
+	V neighbor(A a);
+	E edge(A a);
+	Boolean goal();
+	Boolean goalHasSolution();
 	
 	/**
 	 * @param v Otro v&eacute;rtice

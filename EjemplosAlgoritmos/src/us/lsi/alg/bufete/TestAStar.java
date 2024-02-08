@@ -1,7 +1,7 @@
 package us.lsi.alg.bufete;
 
 import java.util.Locale;
-import java.util.function.Predicate;
+
 
 import org.jgrapht.GraphPath;
 
@@ -22,12 +22,11 @@ public class TestAStar {
 			System.out.println("\n\n>\tResultados para el test " + id_fichero + "\n");
 
 			BufeteVertex start = BufeteVertex.initialVertex();
-			Predicate<BufeteVertex> goal = BufeteVertex.goal();
 
 			/**
 			 * IMPORTANTE. En este tipo se usa el tipo "Last".
 			 */
-			EGraph<BufeteVertex, BufeteEdge> graph = EGraph.virtual(start,goal,PathType.Last,Type.Min)
+			EGraph<BufeteVertex, BufeteEdge> graph = EGraph.virtual(start,PathType.Last,Type.Min)
 					.vertexWeight(v -> (double) v.maxCarga())
 					.heuristic(Heuristica::heuristic)
 					.build();

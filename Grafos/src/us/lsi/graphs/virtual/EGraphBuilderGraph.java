@@ -72,21 +72,13 @@ public class EGraphBuilderGraph<G extends Graph<V,E>, V, E> implements EGraphBui
 		this.startVertex = startVertex;
 		return this;
 	}
-	@Override
-	public EGraphBuilder<V, E> goal(Predicate<V> goal) {
-		this.goal = goal;
-		return this;
-	}
+	
 	@Override
 	public EGraphBuilder<V, E> endVertex(V endVertex) {
 		this.endVertex = endVertex;
 		return this;
 	}
-	@Override
-	public EGraphBuilder<V, E> goalHasSolution(Predicate<V> goalHasSolution) {
-		this.goalHasSolution = goalHasSolution;
-		return this;
-	}
+	
 	@Override
 	public EGraphBuilder<V, E> pathType(PathType pathType) {
 		this.pathType = pathType;

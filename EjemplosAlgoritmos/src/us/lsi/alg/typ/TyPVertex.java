@@ -28,8 +28,14 @@ public record TyPVertex(Integer index, List<Double> cargas)
 		return new TyPVertex(index,cargasC);
 	}
 	
+	@Override
 	public Boolean goal() {
 		return this.index()==DatosTyP.n;
+	}
+	
+	@Override
+	public Boolean goalHasSolution() {
+		return true;
 	}
 	
 	public Integer npMax() {
@@ -94,5 +100,7 @@ public record TyPVertex(Integer index, List<Double> cargas)
 	public static TyPVertex copy(TyPVertex vertex) {
 		return new TyPVertex(vertex.index,vertex.cargas);
 	}
+
+	
 
 }

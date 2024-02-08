@@ -3,7 +3,6 @@ package us.lsi.alg.contenedores;
 import java.util.List;
 import java.util.Locale;
 import java.util.Optional;
-import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 import org.jgrapht.GraphPath;
@@ -28,12 +27,11 @@ public class TestPD {
 			// V�rtices clave
 
 			VertexContenedores start = VertexContenedores.initial();
-			Predicate<VertexContenedores> goal = VertexContenedores.goal();
 
 			// Grafo
 			
 			EGraph<VertexContenedores, EdgeContenedores> graph = 
-					EGraph.virtual(start,goal,PathType.Last,Type.Max)
+					EGraph.virtual(start,PathType.Last,Type.Max)
 					.vertexWeight(x -> (double)x.contenedoresCompletos().size())
 					.heuristic(ContenedoresHeuristic::heuristic)
 					.build();
@@ -46,7 +44,7 @@ public class TestPD {
 			
 			System.out.println("Solucion Voraz ="+max.getWeight());	
 			System.out.println("Solucion Voraz 2 ="+max2.getWeight());
-			System.out.println("Heuristica ="+ContenedoresHeuristic.heuristic(start, goal, null));
+			System.out.println("Heuristica ="+ContenedoresHeuristic.heuristic(start,x->x.goal(), null));
 
 
 			// Algoritmo PD

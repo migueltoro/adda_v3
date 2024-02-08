@@ -20,7 +20,7 @@ public class TestSeqAStar {
 		
 		
 		EGraph<SeqVertex, SeqEdge> graph =
-				EGraph.virtual(e1,v->v.equals(e2))
+				EGraph.virtual(e1)
 				.edgeWeight(e->e.weight())
 				.endVertex(e2)
 				.heuristic(SeqHeuristic::heuristic)

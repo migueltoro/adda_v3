@@ -29,7 +29,7 @@ public class TestLocalSearchInteger {
 		TravelVertexInteger e1 = TravelVertexInteger.of(camino);
 		
 		EGraph<TravelVertexInteger,TravelEdgeInteger> g = 
-				EGraph.virtual(e1,null).vertexWeight(v->v.weight()).build();
+				EGraph.virtual(e1).vertexWeight(v->v.weight()).build();
 		
 		Supplier<TravelVertexInteger> sp = () -> {
 			Collections.shuffle(camino.subList(1, camino.size() - 2));
