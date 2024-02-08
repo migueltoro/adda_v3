@@ -45,6 +45,7 @@ public class TestPD {
 
 		}	
 
+		
 		if(res!=null)
 			System.out.println("Solucion PDR: " + SolucionAlumnos.of(res) + "\n");
 		else 
