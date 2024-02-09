@@ -43,6 +43,7 @@ public class TestPD {
 					.heuristic(MulticonjuntoHeuristic::heuristic)
 					.build();
 			
+	
 			
 			GreedyOnGraph<MulticonjuntoVertex, MulticonjuntoEdge> rr = 
 					GreedyOnGraph.of(graph);
