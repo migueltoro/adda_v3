@@ -13,8 +13,7 @@ public class TestGreedy {
 		DatosInv.iniDatos("ficheros/investigadores/inv1.txt");
 		DatosInv.toConsole();
 		
-		EGraph<InvVertex, InvEdge> graph = EGraph.virtual(InvVertex.first(), PathType.Last, Type.Max)
-				.greedyEdge(InvVertex::greedyEdge)
+		EGraph<InvVertex, InvEdge> graph = EGraph.virtual(InvVertexI.first(), PathType.Last, Type.Max)
 				.vertexWeight(v->v.fo().doubleValue())
 				.heuristic(InvHeuristic::heuristic).build();
 	
@@ -27,11 +26,11 @@ public class TestGreedy {
 		System.out.println(path.getEndVertex());
 		System.out.println("==================");
 //		System.out.println(InvVertex.first());
-		InvVertex v = InvHeuristic.greedy(InvVertex.first());
+		InvVertex v = InvHeuristic.greedy(InvVertexI.first());
 //		SolucionInv s = SolucionInv.of(path);
 		System.out.println(v);
 		System.out.println("==================");
-		System.out.println(InvHeuristic.heuristic(InvVertex.first(),x->x.goal(),null));
+		System.out.println(InvHeuristic.heuristic(InvVertexI.first(),x->x.goal(),null));
 	}
 
 }

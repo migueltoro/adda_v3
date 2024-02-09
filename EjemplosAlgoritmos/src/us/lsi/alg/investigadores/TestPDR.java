@@ -15,8 +15,7 @@ public class TestPDR {
 		DatosInv.iniDatos("ficheros/investigadores/inv3.txt");
 		DatosInv.toConsole();
 		
-		EGraph<InvVertex, InvEdge> graph = EGraph.virtual(InvVertex.first(), PathType.Last, Type.Max)
-				.greedyEdge(InvVertex::greedyEdge)
+		EGraph<InvVertex, InvEdge> graph = EGraph.virtual(InvVertexI.first(), PathType.Last, Type.Max)
 				.vertexWeight(v->v.fo().doubleValue())
 				.heuristic(InvHeuristic::heuristic).build();
 		

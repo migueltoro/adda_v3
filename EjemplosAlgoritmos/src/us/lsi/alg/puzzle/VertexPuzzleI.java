@@ -4,6 +4,7 @@ package us.lsi.alg.puzzle;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -219,6 +220,14 @@ public record VertexPuzzleI(IntPair blackPosition,Integer[][] datos)
 	@Override
 	public Boolean goalHasSolution() {
 		return true;
+	}
+	
+	@Override
+	public ActionPuzzle greedyAction() {
+		Random r = new Random();
+		List<ActionPuzzle> actions = this.actions();
+		Integer n = actions.size();
+		return actions.get(r.nextInt(n));
 	}
 	
 }

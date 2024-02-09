@@ -4,6 +4,7 @@ import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
+import java.util.Random;
 import java.util.stream.Collectors;
 
 import org.jgrapht.GraphPath;
@@ -56,6 +57,14 @@ public record EquipoVertex(Integer index,IntegerSet players) implements VirtualV
 	@Override
 	public Boolean goalHasSolution() {
 		return true;
+	}
+	
+	@Override
+	public Integer greedyAction() {
+		Random r = new Random();
+		List<Integer> actions = this.actions();
+		Integer n = actions.size();
+		return actions.get(r.nextInt(n));
 	}
 	
 	public Optional<Integer> mejorEnPosicion(Integer p) {

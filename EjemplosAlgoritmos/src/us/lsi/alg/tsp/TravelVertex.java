@@ -66,4 +66,11 @@ public record TravelVertex(List<Ciudad> camino)
 		return null;
 	}
 
+	@Override
+	public IntPair greedyAction() {
+		return null;
+	}
+	
+	
+
 }

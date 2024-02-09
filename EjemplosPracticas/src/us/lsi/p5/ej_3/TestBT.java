@@ -24,7 +24,6 @@ public class TestBT {
 		
 		EGraph<AlumnosVertex, AlumnosEdge> graph = //(AlumnosVertex v_inicial, Predicate<AlumnosVertex> es_terminal) { 
 			EGraph.virtual(vInicial, PathType.Sum, Type.Max)
-					.greedyEdge(AlumnosVertex::greedyEdge)
 					.heuristic(AlumnosHeuristic::heuristic)
 					.build();
 

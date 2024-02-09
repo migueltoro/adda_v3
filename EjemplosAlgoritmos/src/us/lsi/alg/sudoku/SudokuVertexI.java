@@ -4,6 +4,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Objects;
+import java.util.Random;
 import java.util.function.Predicate;
 import java.util.stream.IntStream;
 import us.lsi.common.IntegerSet;
@@ -44,6 +45,14 @@ public class SudokuVertexI implements SudokuVertex{
 	@Override
 	public Boolean goalHasSolution() {
 		return this.errores() == 0;
+	}
+	
+	@Override
+	public Integer greedyAction() {
+		Random r = new Random();
+		List<Integer> actions = this.actions();
+		Integer n = actions.size();
+		return actions.get(r.nextInt(n));
 	}
 	
 	public static Double heuristic(SudokuVertex v1, Predicate<SudokuVertexI> goal, SudokuVertex v2) {
@@ -224,4 +233,6 @@ public class SudokuVertexI implements SudokuVertex{
 				+ "\nvaloresLibresEnCasilla="+
 					(this.index<DatosSudoku.n?this.valoresLibresEnCasilla(this.casilla()):"___");
 	}
+
+	
 }

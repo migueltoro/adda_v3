@@ -84,11 +84,7 @@ public class EGraphBuilderGraph<G extends Graph<V,E>, V, E> implements EGraphBui
 		this.pathType = pathType;
 		return this;
 	}
-	@Override
-	public EGraphBuilder<V, E> greedyEdge(Function<V, E> greedyEdge) {
-		this.greedyEdge = greedyEdge;
-		return this;
-	}
+	
 	@Override
 	public EGraphBuilder<V, E> heuristic(TriFunction<V, Predicate<V>, V, Double> heuristic) {
 		this.heuristic = heuristic;

@@ -3,8 +3,8 @@ package us.lsi.alg.asignaturas;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
+import java.util.Random;
 import java.util.stream.IntStream;
-
 import us.lsi.common.List2;
 import us.lsi.graphs.virtual.VirtualVertex;
 
@@ -35,6 +35,14 @@ public record AsignaturasVertice(Integer index,List<Integer>diasAsignatura,Integ
 	@Override
 	public Boolean goal() {
 		return this.index==DatosAsignaturas.ND;
+	}
+	
+	@Override
+	public Integer greedyAction() {
+		Random r = new Random();
+		List<Integer> actions = this.actions();
+		Integer n = actions.size();
+		return actions.get(r.nextInt(n));
 	}
 	
 	public Optional<Integer> mejor() {

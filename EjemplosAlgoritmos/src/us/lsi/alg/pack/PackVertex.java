@@ -8,7 +8,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
-
 import us.lsi.graphs.virtual.VirtualVertex;
 
 public record PackVertex(Integer index, Map<Integer, Integer> carga) implements VirtualVertex<PackVertex,PackEdge,Integer> {
@@ -95,12 +94,13 @@ public record PackVertex(Integer index, Map<Integer, Integer> carga) implements 
 		return PackEdge.of(this,neighbor(a),a);
 	}
 	
-	public PackEdge greedyEdge() {
+	@Override
+	public Integer greedyAction() {
 		Integer a = IntStream.range(0,this.nc()+1).boxed()
 				.filter(c->carga.getOrDefault(c,0)+volumen(index)<= volumenContenedor())
 				.max(Comparator.comparing(c->carga.getOrDefault(c,0)))
 				.orElseGet(()->0);
-		return PackEdge.of(this,this.neighbor(a),a);
+		return a;
 	}
 	
 	public PackVertex copy() {
@@ -113,5 +113,7 @@ public record PackVertex(Integer index, Map<Integer, Integer> carga) implements 
 		return "PackVertex [index=" + index +  ", carga=" + carga + ", cmax=" + cMax() + ", cmin=" + cMin()
 				+ ", nc=" + nc() + "]";
 	}
+
+	
 
 }

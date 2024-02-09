@@ -21,8 +21,6 @@ public interface EGraphBuilder<V, E> {
 
 	EGraphBuilder<V, E> pathType(PathType pathType);
 
-	EGraphBuilder<V, E> greedyEdge(Function<V, E> greedyEdge);
-
 	EGraphBuilder<V, E> heuristic(TriFunction<V, Predicate<V>, V, Double> heuristic);
 
 	EGraphBuilder<V, E> type(Type type);

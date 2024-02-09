@@ -15,7 +15,6 @@ public class TestBT {
 		DatosInv.toConsole();
 		
 		EGraph<InvVertex, InvEdge> graph = EGraph.virtual(InvVertex.first(), PathType.Last, Type.Max)
-				.greedyEdge(InvVertex::greedyEdge)
 				.vertexWeight(v->v.fo().doubleValue())
 				.heuristic(InvHeuristic::heuristic).build();
 		

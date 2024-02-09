@@ -76,7 +76,8 @@ public record TyPVertex(Integer index, List<Double> cargas)
         return List2.setElement(this.cargas(), a, d);
 	}
 	
-	public Integer greadyAction() {
+	@Override
+	public Integer greedyAction() {
 		return IntStream.range(0,DatosTyP.m)
 				.boxed()
 				.min(Comparator.comparing(a->cargasDespues(a).get(a)))
@@ -84,7 +85,7 @@ public record TyPVertex(Integer index, List<Double> cargas)
 	}
 	
 	public  SimpleEdgeAction<TyPVertex, Integer> greadyEdge() {
-		return this.edge(this.greadyAction());
+		return this.edge(this.greedyAction());
 	}
 
 	@Override

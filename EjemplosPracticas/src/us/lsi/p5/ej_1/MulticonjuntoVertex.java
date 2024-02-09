@@ -56,11 +56,11 @@ public record MulticonjuntoVertex(Integer indice,Integer sr_suma_restante) imple
 		if (this.indice < DatosMulticonjunto.NUM_E) {
 			if (this.indice == DatosMulticonjunto.NUM_E - 1) {
 				if (this.sr_suma_restante % DatosMulticonjunto.getElemento(this.indice) == 0) {
-					Integer max_div = this.accionEntera();
+					Integer max_div = this.greedyAction();
 					alternativas.add(max_div);
 				}
 			} else {
-				Integer max_div = this.accionEntera();
+				Integer max_div = this.greedyAction();
 				alternativas = List2.rangeList(0, max_div + 1);
 			}
 		}	
@@ -77,12 +77,9 @@ public record MulticonjuntoVertex(Integer indice,Integer sr_suma_restante) imple
 	public MulticonjuntoEdge edge(Integer a) {
 		return MulticonjuntoEdge.of(this, this.neighbor(a), a);
 	}
-	
-	public MulticonjuntoEdge greedyEdge() {
-		return edge(accionEntera());
-	}
 
-	public Integer accionEntera() {
+	@Override
+	public Integer greedyAction() {
 		return this.sr_suma_restante / DatosMulticonjunto.getElemento(this.indice);
 	}
 	
@@ -106,6 +103,8 @@ public record MulticonjuntoVertex(Integer indice,Integer sr_suma_restante) imple
 
 		return s;
 	}
+
+	
 
 }
 

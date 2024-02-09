@@ -23,7 +23,6 @@ public class TestAStar {
 				EGraph.virtual(e1,PathType.Last,Type.Min)
 				.vertexWeight(v->(double)v.nc())
 				.edgeWeight(e->e.weight())
-				.greedyEdge(PackVertex::greedyEdge)
 				.heuristic(Heuristica::heuristic)
 				.build();	
 		

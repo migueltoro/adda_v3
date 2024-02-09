@@ -41,7 +41,6 @@ public class TestBT {
 			EGraph<MulticonjuntoVertex, MulticonjuntoEdge> graph =
 					EGraph.virtual(start,PathType.Sum, Type.Min)
 					.edgeWeight(x -> x.weight())
-					.greedyEdge(MulticonjuntoVertex::greedyEdge)
 					.heuristic(MulticonjuntoHeuristic::heuristic)
 					.build();
 			

@@ -15,11 +15,11 @@ module ejemplos_pl {
 	exports us.lsi.pli.tsp;
 	exports us.lsi.pli.tareas;
 
-	requires datos_compartidos;
-	requires ejemplos_algoritmos;
-	requires grafos;
-	requires org.jgrapht.core;
-	requires org.jgrapht.io;
-	requires partecomun;
-	requires solve;
+	requires transitive datos_compartidos;
+	requires transitive ejemplos_algoritmos;
+	requires transitive grafos;
+	requires transitive org.jgrapht.core;
+	requires transitive org.jgrapht.io;
+	requires transitive partecomun;
+	requires transitive solve;
 }

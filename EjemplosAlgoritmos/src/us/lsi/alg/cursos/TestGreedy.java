@@ -18,7 +18,6 @@ public class TestGreedy {
 		
 		EGraph<CursosVertex, CursosEdge> graph = 
 				EGraph.virtual(CursosVertex.first(), PathType.Sum, Type.Min)
-					.greedyEdge(CursosVertex::greedyEdge)
 					.heuristic(CursosHeuristic::heuristic)
 					.build();
 		

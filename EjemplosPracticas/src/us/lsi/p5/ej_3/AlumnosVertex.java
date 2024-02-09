@@ -48,14 +48,13 @@ public record AlumnosVertex(Integer index, List<Integer> remaining)
 		return AlumnosEdge.of(this,this.neighbor(a),a);
 	}
 	
-	public AlumnosEdge greedyEdge() {
+	@Override
+	public Integer greedyAction() {
 		Comparator<Integer> cmp = Comparator.comparing(j -> DatosAlumnos.getAfinidad(index, j));
-		
 		Integer a = IntStream.range(0, DatosAlumnos.getNumGrupos())
-		.filter(j -> DatosAlumnos.getAfinidad(index, j)>0 && remaining.get(j)>0)
-		.boxed().max(cmp).orElse(0);
-		
-		return edge(a);
+				.filter(j -> DatosAlumnos.getAfinidad(index, j) > 0 && remaining.get(j) > 0)
+				.boxed().max(cmp).orElse(0);
+		return a;
 	}
 	
 	@Override
@@ -66,5 +65,7 @@ public record AlumnosVertex(Integer index, List<Integer> remaining)
 	public String toGraph() {
 		return String.format("%d", index);
 	}
+
+	
 
 }

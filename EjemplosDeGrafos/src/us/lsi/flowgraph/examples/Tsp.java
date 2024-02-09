@@ -42,7 +42,7 @@ public class Tsp {
 	}
 	
 	public static void shortestPath() throws IOException {	
-		Locale.setDefault(new Locale("en", "US"));
+		Locale.setDefault(Locale.of("en", "US"));
 		SimpleWeightedGraph<Ciudad,Carretera> graph =  
 				GraphsReader.newGraph("ficheros/andalucia.txt",
 						Ciudad::ofFormat, 

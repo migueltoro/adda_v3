@@ -2,9 +2,9 @@ package us.lsi.alg.candidatos;
 
 import java.util.List;
 import java.util.Locale;
+import java.util.Random;
 import java.util.Set;
 import java.util.stream.Collectors;
-
 import us.lsi.common.IntegerSet;
 import us.lsi.common.List2;
 import us.lsi.graphs.virtual.VirtualVertex;
@@ -28,6 +28,14 @@ public record VertexCandidatos(Integer index,IntegerSet seleccion,Integer pRest)
 	@Override
 	public Boolean goalHasSolution() {
 		return this.cualidadesCubiertas().size() == DatosCandidatos.getNumCualidades();
+	}
+	
+	@Override
+	public Boolean greedyAction() {
+		Random r = new Random();
+		List<Boolean> actions = this.actions();
+		Integer n = actions.size();
+		return actions.get(r.nextInt(n));
 	}
 	
 	public Set<Integer> cualidadesCubiertas(){

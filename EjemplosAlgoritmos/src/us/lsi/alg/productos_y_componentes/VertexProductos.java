@@ -29,8 +29,9 @@ public record VertexProductos(Integer index,Integer tpR,Integer teR)
 		return true;
 	}
 	
-	public EdgeProductos greedyEdge() {
-		return edge(DatosProductos.maxActionInt(DatosProductos.getProducto(index),this.tpR,this.teR));
+	@Override
+	public Integer greedyAction() {
+		return DatosProductos.maxActionInt(DatosProductos.getProducto(index),this.tpR,this.teR);
 	}
 	
 	@Override
@@ -60,6 +61,5 @@ public record VertexProductos(Integer index,Integer tpR,Integer teR)
 	public String toGraph() {
 		return String.format("%d,%d,%d",this.index(),this.tpR,this.teR());
 	}
-
 	
 }

@@ -1,6 +1,7 @@
 package us.lsi.alg.jarras;
 
 import java.util.List;
+import java.util.Random;
 import java.util.stream.Collectors;
 
 import us.lsi.graphs.virtual.Action;
@@ -75,6 +76,14 @@ public record JarrasVertex(Integer c1,Integer c2) implements VirtualVertex<Jarra
 	@Override
 	public Boolean goalHasSolution() {
 		return true;
+	}
+	
+	@Override
+	public Action<JarrasVertex> greedyAction() {
+		Random r = new Random();
+		List<Action<JarrasVertex>> actions = this.actions();
+		Integer n = actions.size();
+		return actions.get(r.nextInt(n));
 	}
 	
 }

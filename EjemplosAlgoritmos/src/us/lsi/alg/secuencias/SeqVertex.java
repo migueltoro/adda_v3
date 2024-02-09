@@ -2,6 +2,8 @@ package us.lsi.alg.secuencias;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Random;
+
 import us.lsi.graphs.virtual.VirtualVertex;
 
 public record SeqVertex(Integer	index,String s) implements VirtualVertex<SeqVertex,SeqEdge,SeqAction>{
@@ -102,6 +104,12 @@ public record SeqVertex(Integer	index,String s) implements VirtualVertex<SeqVert
 		return true;
 	}
 	
-	
+	@Override
+	public SeqAction greedyAction() {
+		Random r = new Random();
+		List<SeqAction> actions = this.actions();
+		Integer n = actions.size();
+		return actions.get(r.nextInt(n));
+	}
 	
 }

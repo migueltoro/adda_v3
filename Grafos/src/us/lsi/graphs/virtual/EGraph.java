@@ -69,11 +69,11 @@ public interface EGraph<V, E> extends Graph<V, E> {
 	V endVertex();
 	
 	Predicate<V> goalHasSolution();
-
-	PathType pathType();
 	
 	Function<V, E> greedyEdge();
 
+	PathType pathType();
+	
 	TriFunction<V, Predicate<V>, V, Double> heuristic(); 
 	
 	public static enum Type{Min,Max,All,One}

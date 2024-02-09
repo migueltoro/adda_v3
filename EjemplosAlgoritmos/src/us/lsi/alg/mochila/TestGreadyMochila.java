@@ -33,7 +33,6 @@ public class TestGreadyMochila {
 		
 		EGraph<MochilaVertex, MochilaEdge> graph = 
 				EGraph.virtual(v1,PathType.Sum, Type.Max)
-				.greedyEdge(MochilaVertex::greedyEdge)
 				.heuristic(MochilaHeuristic::heuristic1)
 				.build();
 		

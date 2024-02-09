@@ -2,6 +2,7 @@ package us.lsi.alg.reinas;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -37,6 +38,14 @@ public record ReinasVertex(Integer index, List<Integer> fo, IntegerSet dpo, Inte
 	@Override
 	public Boolean goalHasSolution() {
 		return this.errores() == 0;
+	}
+	
+	@Override
+	public Integer greedyAction() {
+		Random r = new Random();
+		List<Integer> actions = this.actions();
+		Integer n = actions.size();
+		return actions.get(r.nextInt(n));
 	}
 	
 	

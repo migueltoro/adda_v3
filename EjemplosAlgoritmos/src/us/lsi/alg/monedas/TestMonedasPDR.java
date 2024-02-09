@@ -26,7 +26,6 @@ public class TestMonedasPDR {
 		MonedaVertex e1 = MonedaVertex.first(valorInicial);
 		
 		EGraph<MonedaVertex, MonedaEdge> graph = EGraph.virtual(e1,PathType.Sum,Type.Max)
-				.greedyEdge(MonedaVertex::greedyEdge)
 				.heuristic(MonedasHeuristica::heuristic)
 				.build();
 
@@ -53,7 +52,6 @@ public class TestMonedasPDR {
 		MonedaVertex e3 = MonedaVertex.first(valorInicial);
 		
 		graph = EGraph.virtual(e3,PathType.Sum,Type.Min)
-				.greedyEdge(MonedaVertex::greedyEdge)
 				.heuristic(MonedasHeuristica::heuristic)
 				.build();
 

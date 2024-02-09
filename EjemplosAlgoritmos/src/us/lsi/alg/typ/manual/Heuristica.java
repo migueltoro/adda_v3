@@ -24,7 +24,7 @@ public class Heuristica {
 		TyPVertex v = v1;
 		Integer r = 0;
 		while (v.index() < DatosTyP.n) {
-			Integer a = v.greadyAction();
+			Integer a = v.greedyAction();
 			r = v.maxCarga().intValue();
 			v = v.neighbor(a);
 		}
@@ -35,7 +35,7 @@ public class Heuristica {
 		TyPVertex v = v1;
 		List<Integer> acciones = new ArrayList<>();
 		while (v.index() < DatosTyP.n) {
-			Integer a = v.greadyAction();
+			Integer a = v.greedyAction();
 			acciones.add(a);
 			v = v.neighbor(a);
 		}

@@ -26,7 +26,6 @@ public class TestAStarTyP {
 		EGraph<TyPVertex,SimpleEdgeAction<TyPVertex,Integer>> graph = 
 				EGraph.virtual(e1, PathType.Last, Type.Min)
 				.vertexWeight(v->v.maxCarga())
-				.greedyEdge(TyPVertex::greadyEdge)
 				.heuristic(Heuristica::heuristic)
 				.build();	
 		

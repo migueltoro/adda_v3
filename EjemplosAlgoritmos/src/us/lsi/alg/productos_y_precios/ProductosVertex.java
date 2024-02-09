@@ -46,12 +46,9 @@ public record ProductosVertex(Integer indice,IntegerSet funcionalidades_restante
 		return indice >= 0 && indice <= DatosProductos.productos().size();
 	}
 	
-	public Integer geedyAction() {
+	@Override
+	public Integer greedyAction() {
 		return actions().stream().max(Comparator.naturalOrder()).get();
-	}
-	
-	public ProductosEdge greedyEdge() {
-		return this.edge(geedyAction());
 	}
 
 	@Override
