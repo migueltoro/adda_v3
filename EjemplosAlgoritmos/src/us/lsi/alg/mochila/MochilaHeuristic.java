@@ -7,7 +7,6 @@ import us.lsi.graphs.alg.Greedy;
 import us.lsi.graphs.alg.GreedyOnGraph;
 import us.lsi.graphs.virtual.EGraph;
 import us.lsi.mochila.datos.DatosMochila;
-import us.lsi.mochila.datos.SolucionMochila;
 
 public class MochilaHeuristic {
 	
@@ -44,6 +43,6 @@ public class MochilaHeuristic {
 	public static SolucionMochila solucionVoraz(MochilaVertex v, EGraph<MochilaVertex, MochilaEdge> graph) {
 		GraphPath<MochilaVertex, MochilaEdge> r = 
 				GreedyOnGraph.of(graph,MochilaVertex::greedyEdge).path();
-		return MochilaVertex.getSolucion(r);
+		return SolucionMochila.of(r);
 	}
 }

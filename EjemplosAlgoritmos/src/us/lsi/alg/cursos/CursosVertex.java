@@ -55,9 +55,10 @@ public record CursosVertex(Integer index, IntegerSet remaining, IntegerSet cente
 	public CursosEdge edge(Integer a) {
 		return CursosEdge.of(this, neighbor(a), a);
 	}
-	
-	public CursosEdge greedyEdge() {
-		Integer ac = this.actions().stream().mapToInt(a->a).max().getAsInt();
-		return this.edge(ac);
+
+
+	@Override
+	public Integer greedyAction() {
+		return this.actions().stream().mapToInt(a->a).max().getAsInt();
 	}
 }

@@ -36,6 +36,9 @@ public record VirtualVertexMG<V,E>(V vertex, E edge, DirectedMultigraph<V,E> gra
 		return this.goalHasSolution();
 	}
 	
-	
+	@Override
+	public E greedyAction() {
+		return this.greedyAction();
+	}
 	
 }

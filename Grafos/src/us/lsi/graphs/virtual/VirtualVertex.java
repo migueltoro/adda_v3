@@ -11,6 +11,11 @@ public interface VirtualVertex<V extends VirtualVertex<V,E,A>, E extends SimpleE
 	E edge(A a);
 	Boolean goal();
 	Boolean goalHasSolution();
+	A greedyAction();
+	
+    public default E greedyEdge() {
+    	return this.edge(this.greedyAction());
+    }
 	
 	/**
 	 * @param v Otro v&eacute;rtice

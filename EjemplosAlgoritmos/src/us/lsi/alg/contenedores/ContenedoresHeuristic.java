@@ -34,7 +34,7 @@ public class ContenedoresHeuristic {
 	public static GraphPath<VertexContenedores, EdgeContenedores> caminoVoraz2(
 			EGraph<VertexContenedores, EdgeContenedores> graph) {
 			GreedyOnGraph<VertexContenedores, EdgeContenedores> ga = GreedyOnGraph.of(graph,
-					v -> v.edge(v.greadyAction()));
+					v -> v.edge(v.greedyAction()));
 			GraphPath<VertexContenedores, EdgeContenedores> path = ga.path();
 //			Integer m = path.getEndVertex().contenedoresCompletos().size();
 		return path;

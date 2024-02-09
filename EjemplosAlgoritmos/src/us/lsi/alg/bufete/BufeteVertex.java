@@ -61,7 +61,8 @@ public record BufeteVertex(Integer index,List<Integer> cargas)
         return List2.setElement(this.cargas(), a, d);
 	}
 	
-	public Integer greadyAction() {
+	@Override
+	public Integer greedyAction() {
 		return IntStream.range(0,DatosBufete.NUM_ABOGADOS)
 				.boxed()
 				.min(Comparator.comparing(a->cargasDespues(a).get(a)))
@@ -69,13 +70,13 @@ public record BufeteVertex(Integer index,List<Integer> cargas)
 	}
 	
 	public  BufeteEdge greadyEdge() {
-		return this.edge(this.greadyAction());
+		return this.edge(this.greedyAction());
 	}
 
 	@Override
 	public List<Integer> actions() {
 		if(this.goal()) return List2.of();
-		else if(this.index() == DatosBufete.NUM_CASOS-1) return List.of(this.greadyAction());
+		else if(this.index() == DatosBufete.NUM_CASOS-1) return List.of(this.greedyAction());
 		return List2.rangeList(0,DatosBufete.NUM_ABOGADOS);
 	}
 

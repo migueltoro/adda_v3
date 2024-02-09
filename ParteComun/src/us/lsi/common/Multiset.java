@@ -127,18 +127,17 @@ public class Multiset<E>  {
 
 
 	public Integer add(E e, Integer n) {
-		Preconditions.checkArgument(n>=0,"No se pueden a�adir cantidades negativas");
+		Preconditions.checkArgument(n>=0,"No se pueden añadir cantidades negativas");
 		Integer r = n;
-		if(r>0) map.put(e,map.getOrDefault(e,0) + n);
-		this.size = this.size + n;
+		if(r>0) {
+			r = map.put(e,map.getOrDefault(e,0) + n);
+			this.size = this.size + n;
+		}
 		return r;
 	}
 
 	public Integer add(E e) {
-		Integer r = 1;
-		if(this.map.containsKey(e)) {
-		     r = map.get(e) + r;
-		}
+		Integer r = map.getOrDefault(e,0) + 1;
 		this.size = this.size + 1;
 		return map.put(e, r);
 	}	
@@ -211,7 +210,7 @@ public class Multiset<E>  {
 		return map.remove(e);
 	}
 
-	public List<Pair<E,Integer>> maxValues(Integer n) {
+	public List<Pair<E,Integer>> mostCommon(Integer n) {
 		List<Pair<E,Integer>> r = this.map.keySet().stream()			
 				.sorted(Comparator.comparing(k->this.map.get(k)).reversed())
 				.limit(n)

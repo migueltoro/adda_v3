@@ -47,7 +47,7 @@ public class MochilaBT {
 			Integer value = estado.valorAcumulado();
 			if(this.maxValue == null || value > this.maxValue) {
 				this.maxValue = value;
-				this.solucion = SolucionMochila.of(this.start,this.estado.acciones());
+				this.solucion = SolucionMochila.of(this.estado.acciones());
 			}
 		} else {
 			List<Integer> alternativas = this.estado.vertice().actions();

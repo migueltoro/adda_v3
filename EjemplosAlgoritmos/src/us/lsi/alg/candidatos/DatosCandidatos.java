@@ -10,6 +10,7 @@ import us.lsi.common.Set2;
 import us.lsi.common.String2;
 
 public class DatosCandidatos {
+	
 	public static record Candidato(String nombre, List<String> cualidades, Double sueldo, Integer valoracion, List<String> incompatibilidades) {
 		public static Candidato create(String s) {
 			String[] v0 = s.split(":");

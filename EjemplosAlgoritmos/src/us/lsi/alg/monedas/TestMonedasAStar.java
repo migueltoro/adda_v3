@@ -26,7 +26,7 @@ public class TestMonedasAStar {
 		MonedaVertex e1 = MonedaVertex.first(valorInicial);
 		
 		EGraph<MonedaVertex, MonedaEdge> graph = EGraph.virtual(e1,PathType.Sum,Type.Max)
-				.greedyEdge(MonedaVertex::aristaVoraz)
+				.greedyEdge(MonedaVertex::greedyEdge)
 				.heuristic(MonedasHeuristica::heuristic)
 				.build();	
 		
@@ -75,11 +75,11 @@ public class TestMonedasAStar {
 		
 
 		graph = EGraph.virtual(e3,PathType.Sum,Type.Min)
-				.greedyEdge(MonedaVertex::aristaVoraz)
+				.greedyEdge(MonedaVertex::greedyEdge)
 				.heuristic(MonedasHeuristica::heuristic)
 				.build();	
 		
-		rr = GreedyOnGraph.of(graph, MonedaVertex::aristaVoraz);
+		rr = GreedyOnGraph.of(graph, MonedaVertex::greedyEdge);
 
 		GraphPath<MonedaVertex, MonedaEdge> path2 = rr.path();
 	    

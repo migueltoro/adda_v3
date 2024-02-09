@@ -36,6 +36,13 @@ public record VirtualVertexG<V,E>(V vertex, Graph<V,E> graph) implements Virtual
 	public Boolean goalHasSolution() {
 		return this.goalHasSolution();
 	}
+
+	@Override
+	public E greedyAction() {
+		return this.greedyAction();
+	}
+	
+	
 	
 }
 

@@ -37,13 +37,13 @@ public class TestVoraz {
 			Double hu = ContenedoresHeuristic.heuristic(start,v->v.goal(), null);
 			System.out.println(String.format("%.2f,%.2f,%.2f", max.getWeight(),max2.getWeight(),hu));
 			
-			graph = EGraph.virtual(start.neighbor(start.greadyAction()),PathType.Last,Type.Max)
+			graph = EGraph.virtual(start.neighbor(start.greedyAction()),PathType.Last,Type.Max)
 					.vertexWeight(x -> (double)x.contenedoresCompletos().size())
 					.heuristic(ContenedoresHeuristic::heuristic)
 					.build();
 			
 			max2 = ContenedoresHeuristic.caminoVoraz2(graph);
-			hu = ContenedoresHeuristic.heuristic(start.neighbor(start.greadyAction()),v->v.goal(), null);
+			hu = ContenedoresHeuristic.heuristic(start.neighbor(start.greedyAction()),v->v.goal(), null);
 			System.out.println(String.format("%.2f,%.2f,%.2f", max.getWeight(),max2.getWeight(),hu));
 		}
 

@@ -39,7 +39,8 @@ public record VertexContenedores(Integer index, List<Integer> capRest)
 			.collect(Collectors.toSet());
 	}
 	
-	public Integer greadyAction() {
+	@Override
+	public Integer greedyAction() {
 		Function<Integer,Integer> f = a->this.capRest().get(a)-DatosContenedores.getTamElemento(this.index());
 		List<Integer> ls  = this.actions();
 		return ls.stream()

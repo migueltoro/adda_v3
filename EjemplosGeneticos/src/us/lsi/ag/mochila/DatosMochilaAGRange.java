@@ -4,8 +4,9 @@ import java.util.List;
 
 import us.lsi.ag.AuxiliaryAg;
 import us.lsi.ag.RangeIntegerData;
+import us.lsi.alg.mochila.SolucionMochila;
 import us.lsi.mochila.datos.DatosMochila;
-import us.lsi.mochila.datos.SolucionMochila;
+
 
 
 public class DatosMochilaAGRange implements RangeIntegerData<SolucionMochila> {
@@ -14,15 +15,6 @@ public class DatosMochilaAGRange implements RangeIntegerData<SolucionMochila> {
 	public DatosMochilaAGRange(String fichero) {
 		DatosMochila.iniDatos(fichero);
 	}	
-
-	@Override
-	public SolucionMochila solucion(List<Integer> dc) {
-		SolucionMochila s = SolucionMochila.empty();
-		for (int i=0; i< this.size();i++) {
-			s.add(DatosMochila.getObjeto(i),dc.get(i));
-		}
-		return s;
-	}
 	
 	private Double valor;
 	private Double peso;
@@ -57,6 +49,11 @@ public class DatosMochilaAGRange implements RangeIntegerData<SolucionMochila> {
 	@Override
 	public Integer min(Integer i) {
 		return 0;
+	}
+
+	@Override
+	public SolucionMochila solucion(List<Integer> acciones) {
+		return SolucionMochila.of(acciones);
 	}
 	
 }

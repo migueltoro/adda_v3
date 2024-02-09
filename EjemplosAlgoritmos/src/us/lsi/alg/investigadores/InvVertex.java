@@ -159,11 +159,6 @@ public record InvVertex(Integer index, List<Integer> ldIr, List<List<Integer>> l
 		return InvEdge.of(this, neighbor(a), a);
 	}
 	
-	public InvEdge greedyEdge() {
-		if(this.goal()) return edge(0);
-		Integer a = this.esTrabajoTerminable(this.j())?this.mayorAccionPosible():0;
-		return edge(a);
-	}	
 	
 	public String toString() {
 		String st = String.format("fo = %d, index = %d, i = %d, j = %d, k = %d",this.fo(),this.index(),this.i(),this.j(),this.k());
@@ -177,5 +172,10 @@ public record InvVertex(Integer index, List<Integer> ldIr, List<List<Integer>> l
 				.map(i->this.esTrabajoTerminable(i)).toList();
 		String line = String2.line("=",50);
 		return String.format("%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s",line,st,sinv,sesp,ste,tp,tm,line);
+	}
+
+	@Override
+	public Integer greedyAction() {
+		return this.esTrabajoTerminable(this.j())?this.mayorAccionPosible():0;
 	}
 }

@@ -33,7 +33,6 @@ public class MochilaAStar {
 		return time;
 	}
 	
-	private MochilaVertex start;
 	private Integer maxValue;
 	private SolucionMochila solucion;
 	private Map<MochilaVertex,Handle<Double,AStarMochila>> tree;
@@ -60,7 +59,6 @@ public class MochilaAStar {
 
 	public SolucionMochila search(MochilaVertex start, Integer maxValue, SolucionMochila s) {
 		this.time = System.nanoTime();
-		this.start = start;
 		this.maxValue = maxValue;
 		this.solucion = s;
 		Double distanceToEnd = Heuristica.heuristica(start);
@@ -74,7 +72,7 @@ public class MochilaAStar {
 		List<Integer> r = search();
 		if(r==null) return this.solucion;
 		this.time = System.nanoTime() - this.time;
-		return SolucionMochila.of(start, r);
+		return SolucionMochila.of(r);
 	}
 
 	public List<Integer> search() {		
@@ -106,7 +104,7 @@ public class MochilaAStar {
 	}
 	
 	public SolucionMochila solucion(List<Integer> acciones) {
-		return SolucionMochila.of(start,acciones);
+		return SolucionMochila.of(acciones);
 	}
 	
 	

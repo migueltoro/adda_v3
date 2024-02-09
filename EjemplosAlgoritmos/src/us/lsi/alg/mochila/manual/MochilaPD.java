@@ -92,7 +92,7 @@ public class MochilaPD {
 			v = v.neighbor(s.a());	
 			s = this.memory.get(v);
 		}
-		return SolucionMochila.of(this.start,acciones);
+		return SolucionMochila.of(acciones);
 	}
 	
 	public static void main(String[] args) {

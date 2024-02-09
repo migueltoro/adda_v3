@@ -28,7 +28,8 @@ public record TravelVertexInteger(List<Integer> camino) implements VirtualVertex
 		return true;
 	}
 	
-	IntPair greedyAction() {
+	@Override
+	public IntPair greedyAction() {
 		return this.actions().stream().min(Comparator.comparing(a->this.neighbor(a).weight())).get();
 	}
 	

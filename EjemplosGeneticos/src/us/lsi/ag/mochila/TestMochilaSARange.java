@@ -8,7 +8,7 @@ import java.util.Locale;
 import us.lsi.ag.RangeIntegerData;
 import us.lsi.common.String2;
 import us.lsi.mochila.datos.DatosMochila;
-import us.lsi.mochila.datos.SolucionMochila;
+import us.lsi.alg.mochila.SolucionMochila;
 import us.lsi.sa.AlgoritmoSA;
 import us.lsi.sa.StateSa;
 import us.lsi.sa.StateSaChromosome;

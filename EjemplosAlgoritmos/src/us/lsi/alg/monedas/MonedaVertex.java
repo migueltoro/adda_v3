@@ -46,9 +46,9 @@ public record MonedaVertex(Integer index,Integer valorRestante) implements Virtu
 		return this.index() >=0 && this.index() <= DatosMonedas.n && this.valorRestante() >=0;
 	}
 
-	public MonedaEdge aristaVoraz() {
-		Integer a = this.valorRestante()/DatosMonedas.valor(this.index());
-		return MonedaEdge.of(this,this.neighbor(a),a);
+	@Override
+	public Integer greedyAction() {
+		return this.valorRestante()/DatosMonedas.valor(this.index());
 	}
 	
 	@Override
@@ -56,7 +56,7 @@ public record MonedaVertex(Integer index,Integer valorRestante) implements Virtu
 		List<Integer> r;
 		if(this.index() == DatosMonedas.n) r = new ArrayList<>();
 		else if(this.index() == DatosMonedas.n-1 && this.valorRestante%DatosMonedas.valor(this.index) == 0) {
-			r = List.of(this.aristaVoraz().action());
+			r = List.of(this.greedyAction());
 		} else if(this.index() == DatosMonedas.n-1 && this.valorRestante%DatosMonedas.valor(this.index) != 0) {
 		    r = new ArrayList<>();
 		} else {
@@ -79,5 +79,7 @@ public record MonedaVertex(Integer index,Integer valorRestante) implements Virtu
 	public MonedaEdge edge(Integer a) {
 		return MonedaEdge.of(this,this.neighbor(a),a);
 	}
+
+	
 	
 }

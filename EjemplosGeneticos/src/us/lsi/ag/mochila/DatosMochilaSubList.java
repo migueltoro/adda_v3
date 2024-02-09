@@ -5,7 +5,7 @@ import java.util.List;
 import us.lsi.ag.PermutationData;
 import us.lsi.ag.AuxiliaryAg;
 import us.lsi.mochila.datos.DatosMochila;
-import us.lsi.mochila.datos.SolucionMochila;
+import us.lsi.alg.mochila.SolucionMochila;
 
 public class DatosMochilaSubList implements PermutationData<SolucionMochila> {
 
@@ -35,11 +35,7 @@ public class DatosMochilaSubList implements PermutationData<SolucionMochila> {
 
 	@Override
 	public SolucionMochila solucion(List<Integer> cr) {
-		SolucionMochila s = SolucionMochila.empty();
-		for (int i=0; i< cr.size();i++) {
-			s.add(DatosMochila.getObjeto(cr.get(i)),1);
-		}
-		return s;
+		return us.lsi.alg.mochila.SolucionMochila.of(cr);
 	}
 	
 	@Override

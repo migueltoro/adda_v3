@@ -10,7 +10,6 @@ import org.jgrapht.GraphPath;
 
 import us.lsi.common.Preconditions;
 import us.lsi.graphs.virtual.VirtualVertex;
-import us.lsi.mochila.datos.SolucionMochila;
 import us.lsi.mochila.datos.DatosMochila;
 
 public record MochilaVertex(Integer index, Integer capacidadRestante)
@@ -47,13 +46,7 @@ public record MochilaVertex(Integer index, Integer capacidadRestante)
 
 	
 	public static SolucionMochila getSolucion(GraphPath<MochilaVertex, MochilaEdge> path){
-		return MochilaVertex.getSolucion(path.getEdgeList());
-	}
-
-	public static SolucionMochila getSolucion(List<MochilaEdge> ls){
-		SolucionMochila s = SolucionMochila.empty();
-		ls.stream().forEach(e->s.add(DatosMochila.getObjeto(e.source().index),e.action().intValue()));
-		return s;
+		return SolucionMochila.of(path);
 	}
 
 	@Override
@@ -61,12 +54,7 @@ public record MochilaVertex(Integer index, Integer capacidadRestante)
 		return index>=0 && index<=DatosMochila.getObjetos().size();
 	}
 	
-	public MochilaEdge greedyEdge() {
-		Preconditions.checkElementIndex(index, DatosMochila.numeroDeObjetos);
-		Integer a = Math.min(this.capacidadRestante/DatosMochila.getPeso(index),DatosMochila.getNumMaxDeUnidades(index));
-		return MochilaEdge.of(this,this.neighbor(a), a);
-	}
-	
+	@Override
 	public Integer greedyAction() {
 		Preconditions.checkElementIndex(index, DatosMochila.numeroDeObjetos);
 		return Math.min(this.capacidadRestante/DatosMochila.getPeso(index),DatosMochila.getNumMaxDeUnidades(index));

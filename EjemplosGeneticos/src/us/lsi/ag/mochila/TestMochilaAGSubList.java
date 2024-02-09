@@ -5,7 +5,7 @@ import java.util.List;
 import us.lsi.ag.agchromosomes.AlgoritmoAG;
 import us.lsi.ag.agstopping.StoppingConditionFactory;
 import us.lsi.mochila.datos.DatosMochila;
-import us.lsi.mochila.datos.SolucionMochila;
+import us.lsi.alg.mochila.SolucionMochila;
 
 public class TestMochilaAGSubList {
 	

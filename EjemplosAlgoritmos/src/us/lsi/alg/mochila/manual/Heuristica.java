@@ -46,7 +46,7 @@ public class Heuristica {
 			acciones.add(a);
 			v = v.neighbor(a);
 		}
-		return SolucionMochila.of(v1, acciones);
+		return SolucionMochila.of(acciones);
 	}
 	
 	
