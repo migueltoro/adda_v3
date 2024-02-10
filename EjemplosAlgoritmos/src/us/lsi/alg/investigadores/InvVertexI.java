@@ -15,7 +15,7 @@ import us.lsi.common.String2;
  * j = this.index()/DatosInvestigadores.n;
  * k = DatosInvestigadores.getEspecialidadDeInvestigador(this.i());
  * p = IntPair.of(this.j(),k);
- * ldIr: diasInvestigadorRestantes: dias restantes de cada trabajador, dIr.get(i) los restantes del trabajador i
+ * ldIr: diasInvestigadorRestantes: dias restantes de cada trabajador, ldIr.get(i) los restantes del trabajador i
  * tA: El trabajo estaAcabado[j] is true si el trabajo j está acabado
  * ldEr: diasEspecialidadRestantes[j,k] dias que faltan dedicar al trabajo j de la especialidad k
  *
@@ -121,7 +121,6 @@ public record InvVertexI(Integer index, List<Integer> ldIr, List<List<Integer>> 
 		else return DatosInv.VertexType.SinIniciar;
 	}
 	
-	@Override
 	public List<VertexType> tipos() {
 		return IntStream.range(0,DatosInv.m).boxed().map(i->this.tipo(i)).toList();
 	}
@@ -187,4 +186,6 @@ public record InvVertexI(Integer index, List<Integer> ldIr, List<List<Integer>> 
 	public Integer greedyAction() {
 		return this.esTrabajoTerminable(this.j())?this.mayorAccionPosible():0;
 	}
+
+	
 }
