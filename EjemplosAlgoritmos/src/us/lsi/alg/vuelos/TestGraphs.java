@@ -49,6 +49,7 @@ public class TestGraphs {
 		return graphOut;
 	}
 
+	
 	public static void main(String[] args) {
 		Locale.setDefault(Locale.of("en", "US"));
 		Vuelo.fecha = LocalDate.now();
