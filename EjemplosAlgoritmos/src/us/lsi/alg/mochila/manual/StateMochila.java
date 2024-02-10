@@ -3,18 +3,18 @@ package us.lsi.alg.mochila.manual;
 import java.util.ArrayList;
 import java.util.List;
 
-import us.lsi.alg.mochila.MochilaVertex;
+import us.lsi.alg.mochila.MochilaVertexI;
 import us.lsi.mochila.datos.DatosMochila;
 
 	
 public class StateMochila {
-	private MochilaVertex vertice;
+	private MochilaVertexI vertice;
 	private Integer valorAcumulado;
 	private List<Integer> acciones;
-	private List<MochilaVertex> vertices;
+	private List<MochilaVertexI> vertices;
 
-	private StateMochila(MochilaVertex vertice, Integer valorAcumulado, List<Integer> acciones,
-			List<MochilaVertex> vertices) {
+	private StateMochila(MochilaVertexI vertice, Integer valorAcumulado, List<Integer> acciones,
+			List<MochilaVertexI> vertices) {
 		super();
 		this.vertice = vertice;
 		this.valorAcumulado = valorAcumulado;
@@ -22,15 +22,15 @@ public class StateMochila {
 		this.vertices = vertices;
 	}
 
-	public static StateMochila of(MochilaVertex vertex) {
-		List<MochilaVertex> vt = new ArrayList<>();
+	public static StateMochila of(MochilaVertexI vertex) {
+		List<MochilaVertexI> vt = new ArrayList<>();
 		vt.add(vertex);
 		return new StateMochila(vertex, 0, new ArrayList<>(), vt);
 	}
 
 	void forward(Integer a) {
 		this.acciones.add(a);
-		MochilaVertex vcn = this.vertice().neighbor(a);
+		MochilaVertexI vcn = this.vertice().neighbor(a);
 		this.vertices.add(vcn);
 		this.valorAcumulado = this.valorAcumulado() + a * DatosMochila.getValor(this.vertice().index());
 		this.vertice = vcn;
@@ -43,7 +43,7 @@ public class StateMochila {
 		this.valorAcumulado = this.valorAcumulado() - a * DatosMochila.getValor(this.vertice.index());
 	}
 
-	public MochilaVertex vertice() {
+	public MochilaVertexI vertice() {
 		return vertice;
 	}
 

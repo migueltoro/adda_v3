@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Locale;
 
 import us.lsi.alg.monedas.DatosMonedas;
-import us.lsi.alg.monedas.MonedaVertex;
+import us.lsi.alg.monedas.MonedasVertexI;
 import us.lsi.alg.monedas.SolucionMonedas;
 import us.lsi.common.String2;
 
@@ -32,13 +32,13 @@ public class MonedasHeuristica {
 		return p;
 	}
 
-	public static Double cota(MonedaVertex vertex, Integer a) {
-		MonedaVertex nv = vertex.neighbor(a);
+	public static Double cota(MonedasVertexI vertex, Integer a) {
+		MonedasVertexI nv = vertex.neighbor(a);
 		return a*DatosMonedas.peso(vertex.index())+
 				heuristic(nv.index(),nv.valorRestante().doubleValue(),DatosMonedas.n);
 	}
 	
-	public static SolucionMonedas solucionVoraz(MonedaVertex v1) {	
+	public static SolucionMonedas solucionVoraz(MonedasVertexI v1) {	
 		List<Integer> acciones = new ArrayList<>();
 		Integer valorRestante = v1.valorRestante();
 		Integer index = 0;
@@ -52,10 +52,10 @@ public class MonedasHeuristica {
 		else return null;
 	}
 	
-	public static SolucionMonedas solucionVoraz2(MonedaVertex v1) {	
+	public static SolucionMonedas solucionVoraz2(MonedasVertexI v1) {	
 		SolucionMonedas s = null;
 		for(Integer i=0;true;i++) {
-			s = solucionVoraz(MonedaVertex.first(v1.valorRestante()-i));
+			s = solucionVoraz(MonedasVertexI.first(v1.valorRestante()-i));
 			if(s!=null) break;
 		}
 		return s;
@@ -67,7 +67,7 @@ public class MonedasHeuristica {
 		Integer valorInicial = 401;
 		String2.toConsole("%s",DatosMonedas.n);
 		String2.toConsole("%s",DatosMonedas.monedas);
-		MonedaVertex v1 = MonedaVertex.first(valorInicial);
+		MonedasVertexI v1 = MonedasVertexI.first(valorInicial);
 		SolucionMonedas s = MonedasHeuristica.solucionVoraz2(v1);
 		Double h = MonedasHeuristica.heuristic(v1.index(),v1.valorRestante().doubleValue(),DatosMonedas.n);
 		Double h2 = MonedasHeuristica.heuristic2(v1.index(),v1.valorRestante().doubleValue(),DatosMonedas.n);

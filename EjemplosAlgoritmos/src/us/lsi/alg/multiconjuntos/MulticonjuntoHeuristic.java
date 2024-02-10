@@ -15,8 +15,9 @@ import us.lsi.path.EGraphPath.PathType;
 
 public class MulticonjuntoHeuristic {
 
-	public static Double heuristic(MulticonjuntoVertex v1, Predicate<MulticonjuntoVertex> goal, MulticonjuntoVertex v2) {
-		return hu(Md.of(v1.indice(),(double)v1.sr_suma_restante()),
+	public static Double heuristic(MulticonjuntoVertex v1, Predicate<MulticonjuntoVertex> goal, 
+			MulticonjuntoVertex v2) {
+		return hu(Md.of(v1.indice(),(double)v1.sumaRestante()),
 				v->v.index()==DatosMulticonjunto.NUM_E|| v.cr()==0.);
 	}
 	
@@ -58,8 +59,7 @@ public class MulticonjuntoHeuristic {
 			
 			// V�rtices clave
 
-			MulticonjuntoVertex start = MulticonjuntoVertex.initial();
-//			Predicate<MulticonjuntoVertex> finalVertex = v -> MulticonjuntoVertex.goal(v);
+			MulticonjuntoVertex start = MulticonjuntoVertex.start();
 		
 
 			// Grafo

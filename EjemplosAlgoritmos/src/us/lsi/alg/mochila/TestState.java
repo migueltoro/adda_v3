@@ -15,8 +15,8 @@ public class TestState {
 	public static void main(String[] args) {
 		Locale.setDefault(Locale.of("en", "US"));
 		DatosMochila.iniDatos("ficheros/mochila/objetosMochila.txt");
-		MochilaVertex.capacidadInicial = 78;
-		MochilaVertex v1 = MochilaVertex.initialVertex();
+		MochilaVertexI.capacidadInicial = 78;
+		MochilaVertex v1 = MochilaVertexI.initialVertex();
 //		MochilaVertex v2 = MochilaVertex.lastVertex();
 		
 		EGraph<MochilaVertex, MochilaEdge> graph = 

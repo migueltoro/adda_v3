@@ -9,11 +9,11 @@ import us.lsi.common.Multiset;
 public record SolucionMonedas(Multiset<Moneda> monedas, Integer peso, Integer valor) 
                implements Comparable<SolucionMonedas> {
 	
-	public static SolucionMonedas of(GraphPath<MonedaVertex,MonedaEdge> path) {	
+	public static SolucionMonedas of(GraphPath<MonedasVertex,MonedasEdge> path) {	
 		Multiset<Moneda> monedas = Multiset.empty();
 		Integer peso = 0;
 		Integer valor = 0;
-		for (MonedaEdge e : path.getEdgeList()) {
+		for (MonedasEdge e : path.getEdgeList()) {
 			Integer i = e.source().index();
 			Moneda m = DatosMonedas.get(i);
 			Integer p = DatosMonedas.peso(i);

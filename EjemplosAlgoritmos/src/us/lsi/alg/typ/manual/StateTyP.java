@@ -4,17 +4,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 import us.lsi.alg.typ.SolucionTyP;
-import us.lsi.alg.typ.TyPVertex;
+import us.lsi.alg.typ.TyPVertexI;
 import us.lsi.common.List2;
 
 public class StateTyP {
 
-	TyPVertex vertice;
+	TyPVertexI vertice;
 	Integer valorAcumulado;
 	List<Integer> acciones;
-	List<TyPVertex> vertices;
+	List<TyPVertexI> vertices;
 
-	public StateTyP(TyPVertex vertice, Integer valorAcumulado, List<Integer> acciones, List<TyPVertex> vertices) {
+	public StateTyP(TyPVertexI vertice, Integer valorAcumulado, List<Integer> acciones, List<TyPVertexI> vertices) {
 		super();
 		this.vertice = vertice;
 		this.valorAcumulado = valorAcumulado;
@@ -22,14 +22,14 @@ public class StateTyP {
 		this.vertices = vertices;
 	}
 
-	public static StateTyP of(TyPVertex vertex) {
-		List<TyPVertex> vt = List2.of(vertex);
+	public static StateTyP of(TyPVertexI vertex) {
+		List<TyPVertexI> vt = List2.of(vertex);
 		return new StateTyP(vertex, 0, new ArrayList<>(), vt);
 	}
 
 	public void forward(Integer a) {
 		this.acciones.add(a);
-		TyPVertex vcn = this.vertice.neighbor(a);
+		TyPVertexI vcn = this.vertice.neighbor(a);
 		this.vertices.add(vcn);
 		this.valorAcumulado = vcn.maxCarga().intValue();
 		this.vertice = vcn;
@@ -44,10 +44,10 @@ public class StateTyP {
 	
 
 	public SolucionTyP solucion() {
-		return SolucionTyP.of(TyPVertex.first(), this.acciones);
+		return SolucionTyP.of(TyPVertexI.first(), this.acciones);
 	}
 
-	public TyPVertex vertice() {
+	public TyPVertexI vertice() {
 		return vertice;
 	}
 	

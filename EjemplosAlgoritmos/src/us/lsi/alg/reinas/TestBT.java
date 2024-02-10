@@ -14,7 +14,7 @@ import us.lsi.graphs.virtual.EGraph;
 public class TestBT {
 
 	public static void main(String[] args) {
-		ReinasVertex.n = 10;
+		ReinasVertexI.n = 10;
 		ReinasVertex e1 = ReinasVertex.first();
 		
 		EGraph<ReinasVertex,SimpleEdgeAction<ReinasVertex,Integer>> graph = 

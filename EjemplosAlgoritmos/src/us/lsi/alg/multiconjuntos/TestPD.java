@@ -28,7 +28,7 @@ public class TestPD {
 
 			// V�rtices clave
 
-			MulticonjuntoVertex start = MulticonjuntoVertex.initial();
+			MulticonjuntoVertex start = MulticonjuntoVertexI.start();
 
 			// Grafo
 
@@ -49,7 +49,7 @@ public class TestPD {
 			
 			GraphPath<MulticonjuntoVertex, MulticonjuntoEdge> r = rr.path();
 			
-			System.out.println("Voraz = "+r.getWeight()+"  == "+MulticonjuntoVertex.getSolucion(r));
+			System.out.println("Voraz = "+r.getWeight()+"  == "+SolucionMulticonjunto.of(r));
 			
 			PDR<MulticonjuntoVertex, MulticonjuntoEdge, ?> pdr = PDR
 					.of(graph, null,null, null, true);
@@ -67,7 +67,7 @@ public class TestPD {
 				System.out.println(gp.get().getEdgeList().stream().map(x -> x.action()).collect(Collectors.toList()));
 				List<Integer> gp_pdr = gp.get().getEdgeList().stream().map(x -> x.action()).collect(Collectors.toList()); // getEdgeList();
 
-				s_pdr = SolucionMulticonjunto.create(gp_pdr);
+				s_pdr = SolucionMulticonjunto.of(gp_pdr);
 
 			} 
 			
@@ -76,11 +76,10 @@ public class TestPD {
 			
 			
 			GraphColors.toDot(pdr.outGraph, "ficheros/multiconjuntosPDRGraph.gv", 
-					v -> v.toGraph(),
+					v -> String.format("(%d,%d)", v.indice(), v.sumaRestante()),
 					e -> e.action().toString(), 
 					v -> GraphColors.colorIf(Color.red, v.goal()),
 					e -> GraphColors.colorIf(Color.red, gp.isPresent()?gp.get().getEdgeList().contains(e):false));
-
 		}
 	}
 }

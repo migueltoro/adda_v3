@@ -30,9 +30,9 @@ public class SolucionReinas implements Comparable<SolucionReinas> {
 	private SolucionReinas(ReinasVertex lastVertex) {
 		super();
 		this.lastVertex  = lastVertex;
-		this.error1 = (ReinasVertex.n - this.lastVertex.fo().stream().collect(Collectors.toSet()).size());
-		this.error2 = ReinasVertex.n - this.lastVertex.dpo().size();
-		this.error3 = ReinasVertex.n - this.lastVertex.dso().size();
+		this.error1 = (ReinasVertexI.n - this.lastVertex.fo().stream().collect(Collectors.toSet()).size());
+		this.error2 = ReinasVertexI.n - this.lastVertex.dpo().size();
+		this.error3 = ReinasVertexI.n - this.lastVertex.dso().size();
 		this.errores = this.error1+this.error2+this.error3;
 	}
 

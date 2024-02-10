@@ -16,7 +16,7 @@ public class TestPDRTyP {
 	public static void main(String[] args) {
 		Locale.setDefault(Locale.of("en", "US"));
 		DatosTyP.datos("ficheros/tareas.txt",5);
-		TyPVertex e1 = TyPVertex.first();
+		TyPVertex e1 = TyPVertexI.first();
 		
 		EGraph<TyPVertex,SimpleEdgeAction<TyPVertex,Integer>> graph = 
 				EGraph.virtual(e1, PathType.Last, Type.Min)

@@ -25,7 +25,7 @@ public class TestAStar {
 
 			// V�rtices clave
 
-			MulticonjuntoVertex start = MulticonjuntoVertex.initial();
+			MulticonjuntoVertex start = MulticonjuntoVertex.start();
 
 			// Grafo
 
@@ -46,7 +46,7 @@ public class TestAStar {
 					.collect(Collectors.toList()); // getEdgeList();
 			
 			
-			SolucionMulticonjunto s_as = SolucionMulticonjunto.create(gp_as);
+			SolucionMulticonjunto s_as = SolucionMulticonjunto.of(gp_as);
 			
 			
 			System.out.println(s_as);

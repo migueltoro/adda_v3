@@ -6,11 +6,11 @@ import java.util.function.Predicate;
 
 public class MonedasHeuristica {
 	
-	public static Double heuristic(MonedaVertex v1, Predicate<MonedaVertex> goal, MonedaVertex v2) {
+	public static Double heuristic(MonedasVertex v1, Predicate<MonedasVertex> goal, MonedasVertex v2) {
 		return heuristic(v1);
 	}
 	
-	public static Double heuristic(MonedaVertex v1) {
+	public static Double heuristic(MonedasVertex v1) {
 		
 		Double r = 0.;
 		Double p = 0.;

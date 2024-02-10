@@ -3,11 +3,14 @@ package us.lsi.p5.ej_1;
 
 import java.util.List;
 
+import org.jgrapht.GraphPath;
+
+import us.lsi.common.List2;
 import us.lsi.common.Multiset;
 
 public record SolucionMulticonjunto(Integer diferencia, Multiset<Integer> ms, List<Integer> solucion) implements Comparable<SolucionMulticonjunto>{
 	
-	public static SolucionMulticonjunto create(List<Integer> ls) {
+	public static SolucionMulticonjunto of(List<Integer> ls) {
 		Integer diferencia = DatosMulticonjunto.SUM;
 		Multiset<Integer> ms = Multiset.of();
 		for(int i=0; i<ls.size(); i++) {
@@ -17,6 +20,18 @@ public record SolucionMulticonjunto(Integer diferencia, Multiset<Integer> ms, Li
 		return new SolucionMulticonjunto(diferencia,ms,ls);
 	}
 	
+	public static SolucionMulticonjunto ofEdges(List<MulticonjuntoEdge> ls) {
+		List<Integer> alternativas = List2.empty();
+		for (MulticonjuntoEdge alternativa : ls) {
+			alternativas.add(alternativa.action());
+		}
+		SolucionMulticonjunto s = SolucionMulticonjunto.of(alternativas);
+		return s;
+	}
+
+	public static SolucionMulticonjunto of(GraphPath<MulticonjuntoVertex, MulticonjuntoEdge> path) {
+		return SolucionMulticonjunto.ofEdges(path.getEdgeList());
+	}
 
 	public Integer size() {
 		return ms.size();

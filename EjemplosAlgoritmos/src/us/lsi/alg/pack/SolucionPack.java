@@ -44,7 +44,4 @@ public class SolucionPack implements Comparable<SolucionPack>{
 	public int compareTo(SolucionPack other) {
 		return this.nc().compareTo(other.nc());
 	}
-
-	
-
 }

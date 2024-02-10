@@ -84,7 +84,7 @@ public class MulticonjuntoPDR {
 			prob = old.neighbor(spm.a);
 			spm = memory.get(prob);
 		}
-		return SolucionMulticonjunto.create(acciones);
+		return SolucionMulticonjunto.of(acciones);
 	}
 
 }

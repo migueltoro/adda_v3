@@ -33,7 +33,4 @@ public record SolucionSubconjuntos(Double peso, Set<String> conjuntos, Boolean c
 	public int compareTo(SolucionSubconjuntos other) {
 		return this.peso().compareTo(other.peso());
 	}
-	
-	
-	
 }

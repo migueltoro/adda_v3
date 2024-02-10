@@ -17,7 +17,7 @@ public class Heuristica {
 	}
 	
 	public static Double heuristic(PackVertex v1, Predicate<PackVertex> goal, PackVertex v2) {
-		return (double)(PackVertex.n-v1.index());
+		return (double)(PackVertexI.n-v1.index());
 //		return ncD(v1);
 	}
 

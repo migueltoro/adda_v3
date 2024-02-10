@@ -4,7 +4,7 @@ package us.lsi.alg.mochila.manual;
 import java.util.List;
 import java.util.Locale;
 
-import us.lsi.alg.mochila.MochilaVertex;
+import us.lsi.alg.mochila.MochilaVertexI;
 import us.lsi.alg.mochila.SolucionMochila;
 import us.lsi.mochila.datos.DatosMochila;
 
@@ -14,7 +14,7 @@ public class MochilaBT {
 		return new MochilaBT();
 	}
 	
-	private MochilaVertex start;
+	private MochilaVertexI start;
 	private StateMochila estado;
 	private SolucionMochila solucion;
 	public Integer maxValue;
@@ -28,7 +28,7 @@ public class MochilaBT {
 		this.time = System.nanoTime();
 		this.solucion = s;
 		this.maxValue = maxValue;
-		this.start = MochilaVertex.of(0,capacidadInicial);
+		this.start = MochilaVertexI.of(0,capacidadInicial);
 		this.estado = StateMochila.of(start);
 		btm();
 		this.time = System.nanoTime() - this.time;
@@ -65,7 +65,7 @@ public class MochilaBT {
 		Locale.setDefault(Locale.of("en", "US"));
 		DatosMochila.iniDatos("ficheros/mochila/objetosMochila.txt");
 		DatosMochila.capacidadInicial = 78;
-		MochilaVertex v1 = MochilaVertex.of(0, DatosMochila.capacidadInicial);
+		MochilaVertexI v1 = MochilaVertexI.of(0, DatosMochila.capacidadInicial);
 		SolucionMochila s = Heuristica.solucionVoraz(v1);
 		MochilaBT bt = MochilaBT.of();
 		bt.btm(DatosMochila.capacidadInicial,null,null);	

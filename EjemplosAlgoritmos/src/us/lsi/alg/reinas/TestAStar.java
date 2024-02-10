@@ -13,7 +13,7 @@ import us.lsi.graphs.virtual.EGraph.Type;
 public class TestAStar {
 	
 	public static void main(String[] args) {
-		ReinasVertex.n = 20;	
+		ReinasVertexI.n = 20;	
 		ReinasVertex v1 = ReinasVertex.first();
 		
 		EGraph<ReinasVertex,SimpleEdgeAction<ReinasVertex,Integer>> graph = 

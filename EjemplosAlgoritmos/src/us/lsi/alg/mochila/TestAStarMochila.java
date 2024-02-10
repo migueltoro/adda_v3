@@ -22,7 +22,7 @@ public class TestAStarMochila {
 		DatosMochila.iniDatos("ficheros/mochila/objetosMochila.txt");
 //		Integer n = DatosMochila.numeroDeObjetos;
 //		MochilaVertex.capacidadInicial = 2457;
-		MochilaVertex.capacidadInicial = 78;
+		MochilaVertexI.capacidadInicial = 78;
 		System.out.println(Double.MAX_VALUE);
 		MochilaVertex e1 = MochilaVertex.initialVertex();
 		

@@ -21,7 +21,7 @@ public class TestAStar {
 
 		// V�rtices clave
 
-		SubconjuntosVertex start = SubconjuntosVertex.initial();
+		SubconjuntosVertex start = SubconjuntosVertexI.initial();
 
 		// Grafo
 		

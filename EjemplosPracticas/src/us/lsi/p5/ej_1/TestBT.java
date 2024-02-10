@@ -28,7 +28,7 @@ public class TestBT {
 
 			// V�rtices clave
 
-			MulticonjuntoVertex start = MulticonjuntoVertex.initial();
+			MulticonjuntoVertex start = MulticonjuntoVertex.start();
 
 			// Grafo
 
@@ -49,16 +49,16 @@ public class TestBT {
 			
 			GraphPath<MulticonjuntoVertex, MulticonjuntoEdge> r = rr.path();
 			
-			System.out.println("Voraz = "+r.getWeight()+"  == "+MulticonjuntoVertex.getSolucion(r));
+			System.out.println("Voraz = "+r.getWeight()+"  == "+SolucionMulticonjunto.of(r));
 			
 			BT<MulticonjuntoVertex, MulticonjuntoEdge, SolucionMulticonjunto> bta = BT.of(graph,
-					MulticonjuntoVertex::getSolucion, null, null, true);
+					SolucionMulticonjunto::of, null, null, true);
 
 			if (rr.isSolution(r)) {
-				bta = BT.of(graph, MulticonjuntoVertex::getSolucion, r.getWeight(), r, true);
+				bta = BT.of(graph, SolucionMulticonjunto::of, r.getWeight(), r, true);
 			}
 			Optional<GraphPath<MulticonjuntoVertex, MulticonjuntoEdge>> gp = bta.search();
-			System.out.println(MulticonjuntoVertex.getSolucion(gp.get()));
+			System.out.println(SolucionMulticonjunto.of(gp.get()));
 			
 //			System.out.println(bta.path.getEdgeList().stream().map(x -> x.action())
 //					.collect(Collectors.toList()));

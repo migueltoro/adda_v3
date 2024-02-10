@@ -22,19 +22,20 @@ public class TestMonedasBT {
 	public static void main(String[] args) {
 		Locale.setDefault(Locale.of("en", "US"));
 		DatosMonedas.datosIniciales("ficheros/monedas/monedas2.txt");
-		Integer valorInicial = 401;
+		Integer valorInicial = 400;
 
-		MonedaVertex e1 = MonedaVertex.first(valorInicial);
+		MonedasVertex e1 = MonedasVertexI.first(valorInicial);
 		
-		EGraph<MonedaVertex, MonedaEdge> graph = EGraph.virtual(e1,PathType.Sum,Type.Max)
+		EGraph<MonedasVertex, MonedasEdge> graph = 
+				EGraph.virtual(e1,PathType.Sum,Type.Max)
 				.heuristic(MonedasHeuristica::heuristic)
 				.build();
 
-		GreedyOnGraph<MonedaVertex, MonedaEdge> rr = GreedyOnGraph.of(graph);
+		GreedyOnGraph<MonedasVertex, MonedasEdge> rr = GreedyOnGraph.of(graph);
 
-		GraphPath<MonedaVertex, MonedaEdge> path1 = rr.path();
+		GraphPath<MonedasVertex, MonedasEdge> path1 = rr.path();
 
-		BT<MonedaVertex, MonedaEdge, SolucionMonedas> ms1;
+		BT<MonedasVertex, MonedasEdge, SolucionMonedas> ms1;
 
 		if (rr.isSolution(path1)) {
 			System.out.println("Hay solucion voraz 1"+path1.getWeight());
@@ -45,12 +46,12 @@ public class TestMonedasBT {
 		
 		ms1.search();
 
-		Optional<GraphPath<MonedaVertex, MonedaEdge>> ps = ms1.optimalPath();
+		Optional<GraphPath<MonedasVertex, MonedasEdge>> ps = ms1.optimalPath();
 
 		if (ps.isPresent()) {
 			SolucionMonedas s = SolucionMonedas.of(ps.get());
 			System.out.println("2 = " + s.toString());
-			SimpleDirectedGraph<MonedaVertex, MonedaEdge> g = ms1.outGraph();
+			SimpleDirectedGraph<MonedasVertex, MonedasEdge> g = ms1.outGraph();
 			GraphColors.toDot(g, "ficheros/MonedasBTGraph1.gv",
 					v -> String.format("(%d,%d)", v.index(), v.valorRestante()), e -> e.action().toString(),
 					v -> GraphColors.colorIf(Color.red, v.goal()),
@@ -60,15 +61,15 @@ public class TestMonedasBT {
 
 		Collections.sort(DatosMonedas.monedas, Comparator.comparing(m -> m.pesoUnitario()));
 
-		MonedaVertex e3 = MonedaVertex.first(valorInicial);
+		MonedasVertex e3 = MonedasVertexI.first(valorInicial);
 
 		graph = EGraph.virtual(e3,PathType.Sum,Type.Min)
 				.heuristic(MonedasHeuristica::heuristic)
 				.build();
 
-		rr = GreedyOnGraph.of(graph, MonedaVertex::greedyEdge);
+		rr = GreedyOnGraph.of(graph, MonedasVertex::greedyEdge);
 
-		GraphPath<MonedaVertex, MonedaEdge> path2 = rr.path();
+		GraphPath<MonedasVertex, MonedasEdge> path2 = rr.path();
 
 		if (rr.isSolution(path1)) {
 			System.out.println("Hay solucion voraz 1"+path1.getWeight());
@@ -77,7 +78,7 @@ public class TestMonedasBT {
 			ms1 = BT.of(graph,SolucionMonedas::of,null,null,true);
 		}
 		
-		Optional<GraphPath<MonedaVertex, MonedaEdge>> gp = ms1.search();
+		Optional<GraphPath<MonedasVertex, MonedasEdge>> gp = ms1.search();
 
 		if (gp.isPresent()) {
 			System.out.println("4 = " + SolucionMonedas.of(gp.get()).toString());

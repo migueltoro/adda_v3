@@ -59,7 +59,7 @@ public class TestGraphs {
 		SimpleDirectedWeightedGraph<Pair<String,Integer>,Vuelo> gs = toGraph(graph,"Sevilla");
 		System.out.println(gs);
 		System.out.println(gs.edgeSet().size());
-		String end = "Malaga";
+//		String end = "Malaga";
 		String v0 = "Barcelona";
 		System.out.println("__________________");
 		System.out.println(gs.vertexSet().stream().filter(p->p.first().equals(v0)).collect(Collectors.toSet()));

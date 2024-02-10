@@ -4,7 +4,7 @@ package us.lsi.alg.colorgraphs.manual;
 import java.util.List;
 import java.util.Locale;
 
-import us.lsi.alg.colorgraphs.ColorVertex;
+import us.lsi.alg.colorgraphs.ColorVertexI;
 import us.lsi.alg.colorgraphs.DatosColor;
 import us.lsi.alg.colorgraphs.SolucionColor;
 
@@ -34,7 +34,7 @@ public class BTColor {
 	public void btm(Integer minValue, SolucionColor s) {
 		this.time = System.nanoTime();
 		this.minValue = minValue;
-		this.estado = StateColor.of(ColorVertex.first());
+		this.estado = StateColor.of(ColorVertexI.first());
 		btm();
 		this.time = System.nanoTime() - this.time;
 	}
@@ -67,8 +67,8 @@ public class BTColor {
 		
 		BTColor bt = BTColor.of();
 		
-		Integer vr = GreedyColor.valoVoraz(ColorVertex.first());
-		SolucionColor sv = GreedyColor.solucionVoraz(ColorVertex.first());
+		Integer vr = GreedyColor.valoVoraz(ColorVertexI.first());
+		SolucionColor sv = GreedyColor.solucionVoraz(ColorVertexI.first());
 		bt.btm(null,null);
 		System.out.println("1 = "+bt.time());
 		bt.btm(vr,sv);

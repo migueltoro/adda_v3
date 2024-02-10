@@ -7,20 +7,19 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
-import us.lsi.graphs.virtual.VirtualVertex;
+public record MonedasVertexI(Integer index,Integer valorRestante) 
+	implements  MonedasVertex{
 
-public record MonedaVertex(Integer index,Integer valorRestante) implements VirtualVertex<MonedaVertex, MonedaEdge, Integer>{
-
-	public static MonedaVertex of(Integer index, Integer valorRestante) {
-		return new MonedaVertex(index, valorRestante);
+	public static MonedasVertexI of(Integer index, Integer valorRestante) {
+		return new MonedasVertexI(index, valorRestante);
 	}
 
-	public static MonedaVertex first(Integer valorInicial) {
-		return new MonedaVertex(0,valorInicial);
+	public static MonedasVertexI first(Integer valorInicial) {
+		return new MonedasVertexI(0,valorInicial);
 	}
 	
-	public static MonedaVertex last() {
-		return new MonedaVertex(DatosMonedas.n,0);
+	public static MonedasVertexI last() {
+		return new MonedasVertexI(DatosMonedas.n,0);
 	}
 	
 	@Override
@@ -33,8 +32,8 @@ public record MonedaVertex(Integer index,Integer valorRestante) implements Virtu
 		return this.valorRestante() == 0;
 	}
 	
-	public MonedaVertex copy() {
-		return MonedaVertex.of(this.index(), this.valorRestante());
+	public MonedasVertex copy() {
+		return MonedasVertexI.of(this.index(), this.valorRestante());
 	}
 	
 	public Integer size() {
@@ -68,16 +67,16 @@ public record MonedaVertex(Integer index,Integer valorRestante) implements Virtu
 	}
 
 	@Override
-	public MonedaVertex neighbor(Integer a) {
-		MonedaVertex r;
-		if(this.valorRestante() == 0) r = MonedaVertex.last();
-		else r = MonedaVertex.of(this.index()+1,this.valorRestante()-a*DatosMonedas.valor(this.index()));
+	public MonedasVertexI neighbor(Integer a) {
+		MonedasVertexI r;
+		if(this.valorRestante() == 0) r = MonedasVertexI.last();
+		else r = MonedasVertexI.of(this.index()+1,this.valorRestante()-a*DatosMonedas.valor(this.index()));
 		return r;
 	}
 
 	@Override
-	public MonedaEdge edge(Integer a) {
-		return MonedaEdge.of(this,this.neighbor(a),a);
+	public MonedasEdge edge(Integer a) {
+		return MonedasEdge.of(this,this.neighbor(a),a);
 	}
 
 	

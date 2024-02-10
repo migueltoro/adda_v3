@@ -8,7 +8,7 @@ import java.util.Locale;
 import java.util.Map;
 
 import us.lsi.alg.monedas.DatosMonedas;
-import us.lsi.alg.monedas.MonedaVertex;
+import us.lsi.alg.monedas.MonedasVertexI;
 import us.lsi.alg.monedas.SolucionMonedas;
 import us.lsi.common.String2;
 
@@ -31,8 +31,8 @@ public class MonedaPD {
 	}
 	
 	private Integer maxValue;
-	private MonedaVertex start;
-	public Map<MonedaVertex,Spm> memory;
+	private MonedasVertexI start;
+	public Map<MonedasVertexI,Spm> memory;
 	private SolucionMonedas solucion;
 	private Long time;
 	
@@ -48,14 +48,14 @@ public class MonedaPD {
 		this.time = System.nanoTime();
 		this.maxValue = maxValue;
 		this.solucion = s;
-		this.start = MonedaVertex.first(initialValue);
+		this.start = MonedasVertexI.first(initialValue);
 		this.memory = new HashMap<>();
 		pd(start,0,memory);
 		this.time = System.nanoTime() - this.time;
 		return this.solucion();
 	}
 	
-	private Spm pd(MonedaVertex vertex,Integer accumulateValue, Map<MonedaVertex,Spm> memory) {
+	private Spm pd(MonedasVertexI vertex,Integer accumulateValue, Map<MonedasVertexI,Spm> memory) {
 		Spm r=null;
 		if(memory.containsKey(vertex)) {
 			r = memory.get(vertex);
@@ -89,7 +89,7 @@ public class MonedaPD {
 	
 	public SolucionMonedas solucion(){
 		List<Integer> acciones = new ArrayList<>();
-		MonedaVertex v = this.start;
+		MonedasVertexI v = this.start;
 		Spm s = this.memory.get(v);
 		if(s==null && this.solucion!=null) return this.solucion;
 		if(s==null) return null;
@@ -107,7 +107,7 @@ public class MonedaPD {
 		Integer valorInicial = 401;
 		String2.toConsole("%s",DatosMonedas.n);
 		String2.toConsole("%s",DatosMonedas.monedas);
-		MonedaVertex v1 = MonedaVertex.first(valorInicial);
+		MonedasVertexI v1 = MonedasVertexI.first(valorInicial);
 		SolucionMonedas s1 = MonedasHeuristica.solucionVoraz(v1);
 		SolucionMonedas s2 = MonedasHeuristica.solucionVoraz2(v1);
 		MonedaPD a = MonedaPD.of();

@@ -3,11 +3,19 @@ package us.lsi.alg.multiconjuntos;
 
 import java.util.List;
 
+import org.jgrapht.GraphPath;
+
+import us.lsi.common.List2;
 import us.lsi.common.Multiset;
 
 public record SolucionMulticonjunto(Integer diferencia, Multiset<Integer> ms, List<Integer> solucion) implements Comparable<SolucionMulticonjunto>{
 	
-	public static SolucionMulticonjunto create(List<Integer> ls) {
+	
+	public static SolucionMulticonjunto of(GraphPath<MulticonjuntoVertex, MulticonjuntoEdge> path) {
+		return SolucionMulticonjunto.ofEdges(path.getEdgeList());
+	}
+	
+	public static SolucionMulticonjunto of(List<Integer> ls) {
 		Integer diferencia = DatosMulticonjunto.SUM;
 		Multiset<Integer> ms = Multiset.of();
 		for(int i=0; i<ls.size(); i++) {
@@ -15,6 +23,15 @@ public record SolucionMulticonjunto(Integer diferencia, Multiset<Integer> ms, Li
 			diferencia-=DatosMulticonjunto.getNumeros().get(i)*ls.get(i);
 		}
 		return new SolucionMulticonjunto(diferencia,ms,ls);
+	}
+	
+	public static SolucionMulticonjunto ofEdges(List<MulticonjuntoEdge> ls) {
+		List<Integer> alternativas = List2.empty();
+		for (MulticonjuntoEdge alternativa : ls) {
+			alternativas.add(alternativa.action());
+		}
+		SolucionMulticonjunto s = SolucionMulticonjunto.of(alternativas);
+		return s;
 	}
 	
 
@@ -41,7 +58,7 @@ public record SolucionMulticonjunto(Integer diferencia, Multiset<Integer> ms, Li
 		}
 		String aux = diferencia==0? "sol. exacta)":"sol. apox. con dif="+diferencia+")";
 		if(msg.isEmpty()) {
-			msg = "No se cogió ningún número ("+aux+" -> Multiset = "+ms;
+			msg = "No se cogiï¿½ ningï¿½n nï¿½mero ("+aux+" -> Multiset = "+ms;
 		} else {
 			msg = msg.substring(0, msg.length() - 2)+" ("+n+" elems; "+aux+" -> Multiset = "+ms;
 		}

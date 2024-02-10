@@ -13,7 +13,7 @@ import us.lsi.path.EGraphPath.PathType;
 public class TestPDR {
 
 	public static void main(String[] args) {
-		ReinasVertex.n = 10;	
+		ReinasVertexI.n = 10;	
 		ReinasVertex v1 = ReinasVertex.first();
 		
 		EGraph<ReinasVertex,SimpleEdgeAction<ReinasVertex,Integer>> graph = 

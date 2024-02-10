@@ -9,7 +9,7 @@ import java.util.Map;
 
 import us.lsi.alg.typ.DatosTyP;
 import us.lsi.alg.typ.SolucionTyP;
-import us.lsi.alg.typ.TyPVertex;
+import us.lsi.alg.typ.TyPVertexI;
 
 
 public class TyPPD {
@@ -37,20 +37,20 @@ public class TyPPD {
 
 	private Integer minValue;
 	private SolucionTyP solucion;
-	private TyPVertex start;
-	private Map<TyPVertex,Sptp> memory;
+	private TyPVertexI start;
+	private Map<TyPVertexI,Sptp> memory;
 	private Long time;
 	
 	public Long time() {
 		return time;
 	}
 	
-	public SolucionTyP pdr(TyPVertex start,Integer minValue, SolucionTyP s) {
+	public SolucionTyP pdr(TyPVertexI start,Integer minValue, SolucionTyP s) {
 		this.time = System.nanoTime();
 		this.start = start;
 		this.solucion = s;
 		this.minValue = minValue;
-		this.start = TyPVertex.first();
+		this.start = TyPVertexI.first();
 		this.memory = new HashMap<>();
 		pd(start,0,memory);
 		this.time = System.nanoTime() - this.time;
@@ -58,7 +58,7 @@ public class TyPPD {
 		else return this.solucion;
 	}
 	
-	private Sptp pd(TyPVertex vertex,Integer accumulateValue, Map<TyPVertex,Sptp> memory) {
+	private Sptp pd(TyPVertexI vertex,Integer accumulateValue, Map<TyPVertexI,Sptp> memory) {
 		Sptp r=null;
 		if(memory.containsKey(vertex)) {
 			r = memory.get(vertex);
@@ -73,7 +73,7 @@ public class TyPPD {
 			for(Integer a:vertex.actions()) {	
 				Integer cota = Heuristica.cota(vertex,a);
 				if(this.minValue != null && cota >= this.minValue) continue;	
-				TyPVertex vecino = vertex.neighbor(a);
+				TyPVertexI vecino = vertex.neighbor(a);
 				Sptp s = pd(vecino,vecino.maxCarga().intValue(),memory);
 				if(s!=null) {
 					Sptp sp = Sptp.of(a,s.weight());
@@ -90,7 +90,7 @@ public class TyPPD {
 	
 	public SolucionTyP solucion(){
 		List<Integer> acciones = new ArrayList<>();
-		TyPVertex v = this.start;
+		TyPVertexI v = this.start;
 		Sptp s = this.memory.get(v);
 		while(s.a() != null) {
 			acciones.add(s.a());
@@ -104,7 +104,7 @@ public class TyPPD {
 		Locale.setDefault(Locale.of("en", "US"));
 		DatosTyP.datos("ficheros/tareas.txt",5);
 		DatosTyP.toConsole();
-		TyPVertex v1 = TyPVertex.first();
+		TyPVertexI v1 = TyPVertexI.first();
 		SolucionTyP s = Heuristica.solucionVoraz(v1);	
 		TyPPD a = TyPPD.of();
 		a.pdr(v1,s.getMaxCarga().intValue(),s);

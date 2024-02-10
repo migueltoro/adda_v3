@@ -6,6 +6,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 import us.lsi.alg.reinas.ReinasVertex;
+import us.lsi.alg.reinas.ReinasVertexI;
 import us.lsi.alg.reinas.SolucionReinas;
 import us.lsi.common.List2;
 
@@ -26,7 +27,7 @@ public class ReinasBTRandom {
 	
 	private ReinasBTRandom(Integer nr) {
 		super();
-		ReinasVertex.n = nr;
+		ReinasVertexI.n = nr;
 	}
 	
 	public Long time() {
@@ -58,7 +59,7 @@ public class ReinasBTRandom {
 	}
 	
 	private void bt() {
-		if(this.estado.vertice().index() == ReinasVertex.n) {
+		if(this.estado.vertice().index() == ReinasVertex.n()) {
 			SolucionReinas s = this.estado.solucion();
 			if(s != null) this.soluciones.add(s);
 		} else {
