@@ -17,8 +17,6 @@ import org.jgrapht.nio.dot.DOTExporter;
 
 import us.lsi.common.Files2;
 import us.lsi.common.Map2;
-import us.lsi.common.Pair;
-import us.lsi.graphs.views.TreeToGraph;
 import us.lsi.tiposrecursivos.BinaryTree;
 import us.lsi.tiposrecursivos.Tree;
 
@@ -122,18 +120,18 @@ public class GraphColors {
 		return r;
 	}
 	
-	public static <E> void toDot(BinaryTree<E> tree, String file) {	
-		SimpleDirectedGraph<Pair<E,Integer>, DefaultEdge> graph = TreeToGraph.toGraph(tree);
-		GraphColors.toDot(graph, file,
-				v->v.first()==null?"_":v.first().toString(),
-				e->"");
+	public static <V> void toDot(BinaryTree<V> tree, String file) {
+		SimpleDirectedGraph<BinaryTree<V>, DefaultEdge> g2 = tree.toGraph();
+		GraphColors.toDot(g2,file,
+			v->v.isEmpty()?"_":v.optionalLabel().get().toString(),
+			e->"");
 	}
 	
-	public static <E> void toDot(Tree<E> tree, String file) {	
-		SimpleDirectedGraph<Pair<E,Integer>, DefaultEdge> graph = TreeToGraph.toGraph(tree);
-		GraphColors.toDot(graph, file,
-				v->v.first()==null?"_":v.first().toString(),
-				e->"");
+	public static <V> void toDot(Tree<V> tree, String file) {
+		SimpleDirectedGraph<Tree<V>, DefaultEdge> g2 = tree.toGraph();
+		GraphColors.toDot(g2,file,
+			v->v.isEmpty()?"_":v.optionalLabel().get().toString(),
+			e->"");
 	}
 
 	public static <V,E> void toDot(Graph<V,E> graph, String file) {		

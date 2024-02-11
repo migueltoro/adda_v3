@@ -10,6 +10,9 @@ import java.util.function.Predicate;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
+import org.jgrapht.graph.DefaultEdge;
+import org.jgrapht.graph.SimpleDirectedGraph;
+
 import us.lsi.colors.GraphColors;
 import us.lsi.common.Set2;
 import us.lsi.common.String2;
@@ -193,7 +196,12 @@ public class TreesTest {
 		String2.toConsole("%s",palindromas2(tree));
 		Tree<String> tree2 = Tree.parse("[2.;3.](a(p(a(r)),d(a(_,r),i(o,_)),t),t,u(t(a)))");
 		String2.toConsole("%s",tree2);
-		GraphColors.toDot(tree2,"ficheros/tree3.gv");
+//		GraphColors.toDot(tree2,"ficheros/tree3.gv");
+		SimpleDirectedGraph<Tree<Character>, DefaultEdge> graph = tree.toGraph();
+		GraphColors.toDot(graph,"ficheros/tree5.gv",
+				v->v.isEmpty()?"_":v.optionalLabel().get().toString(),
+				e->"");
+		System.out.println(tree);
 	}
 	
 	public static void main(String[] args) {

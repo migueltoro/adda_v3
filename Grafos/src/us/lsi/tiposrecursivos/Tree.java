@@ -12,6 +12,8 @@ import java.util.stream.Stream;
 import org.antlr.v4.runtime.CharStreams;
 import org.antlr.v4.runtime.CommonTokenStream;
 import org.antlr.v4.runtime.tree.ParseTree;
+import org.jgrapht.graph.DefaultEdge;
+import org.jgrapht.graph.SimpleDirectedGraph;
 
 import us.lsi.common.List2;
 import us.lsi.tiposrecursivos.Tree.TEmpty;
@@ -75,6 +77,14 @@ public sealed interface Tree<E> permits TEmpty, TLeaf, TNary{
 	Optional<E> optionalLabel();
 	boolean equals(Object obj);
 	int hashCode();
+	void toGraph(SimpleDirectedGraph<Tree<E>, DefaultEdge> graph);
+	
+	default SimpleDirectedGraph<Tree<E>, DefaultEdge> toGraph() {
+		SimpleDirectedGraph<Tree<E>, DefaultEdge> graph = 
+				new SimpleDirectedGraph<>(null,()->new DefaultEdge(), false);
+		this.toGraph(graph);
+		return graph;
+	}
 	
 	public default Stream<Tree<E>> byDepth(){
 		return Trees.byDeph(this);
@@ -100,6 +110,9 @@ public sealed interface Tree<E> permits TEmpty, TLeaf, TNary{
 		public <R> Tree<R> map(Function<E, R> f) { return Tree.empty();}
 		public String toString() { return "_"; }
 		public int childrenNumber() { return 0;}
+		public void toGraph(SimpleDirectedGraph<Tree<E>, DefaultEdge> graph) {
+			if(!graph.containsVertex(this)) graph.addVertex(this);
+		}
 	}
 	
 	public static record TLeaf<E>(E label) implements Tree<E> {
@@ -114,29 +127,52 @@ public sealed interface Tree<E> permits TEmpty, TLeaf, TNary{
 		public <R> Tree<R> map(Function<E, R> f) { return Tree.leaf(f.apply(this.label()));}
 		public String toString() { return this.label().toString(); }
 		public int childrenNumber() { return 0;}
+		public void toGraph(SimpleDirectedGraph<Tree<E>, DefaultEdge> graph) {
+			if(!graph.containsVertex(this)) graph.addVertex(this);
+		}
 	}
 	
 	public static record TNary<E>(E label, List<Tree<E>> children) implements Tree<E> {
 		public TreeType type() { return TreeType.Nary;}
-		public boolean isEmpty() {return false;};
-		public Optional<E> optionalLabel() { return Optional.of(this.label()); }
-		public int size() { return  1+(int)children().stream().mapToInt(x->x.size()).sum();}
-		public int height() { return 1+ this.children().stream().mapToInt(x->x.height()).max().getAsInt();}
-		public Tree<E> copy() { return Tree.nary(label(),children().stream().map(x->x.copy()).toList()); }
-		public Tree<E> reverse() { 
+		public boolean isEmpty() { return false;}
+		public Optional<E> optionalLabel() { return Optional.of(this.label());}
+		public int size() {
+			return 1 + (int) children().stream().mapToInt(x -> x.size()).sum();
+		}
+		public int height() {
+			return 1 + this.children().stream().mapToInt(x -> x.height()).max().getAsInt();
+		}
+		public Tree<E> copy() {
+			return Tree.nary(label(), children().stream().map(x -> x.copy()).toList());
+		}
+		public Tree<E> reverse() {
 			List<Tree<E>> nElements = List2.reverse(this.children()).stream().map(x -> x.reverse()).toList();
 			return Tree.nary(this.label(), nElements);
 		}
-		public <R> Tree<R> map(Function<E, R> f) { 
-			List<Tree<R>> nElements = this.children().stream().map(x->x.map(f)).collect(Collectors.toList());	
+		public <R> Tree<R> map(Function<E, R> f) {
+			List<Tree<R>> nElements = this.children().stream().map(x -> x.map(f)).collect(Collectors.toList());
 			return Tree.nary(f.apply(label), nElements);
 		}
 		public String toString() {
 			return label().toString()
 					+ children().stream().map(x -> x.toString()).collect(Collectors.joining(",", "(", ")"));
 		}
-		public Tree<E> element(int index) {return this.children().get(index); }
-		public int childrenNumber() { return this.children().size();}
+		public Tree<E> element(int index) {
+			return this.children().get(index);
+		}
+		public int childrenNumber() {
+			return this.children().size();
+		}
+		public void toGraph(SimpleDirectedGraph<Tree<E>, DefaultEdge> graph) {
+			if (!graph.containsVertex(this))
+				graph.addVertex(this);
+			this.children.stream().forEach(v -> {
+				if (!graph.containsVertex(v))
+					graph.addVertex(v);
+			});
+			this.children.stream().forEach(v -> graph.addEdge(this, v));
+			this.children.stream().forEach(v -> v.toGraph(graph));
+		}
 	}
 	
 }

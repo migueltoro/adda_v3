@@ -16,9 +16,9 @@ module ejemplos_parte_comun {
 	exports us.lsi.recursivos.puntos;
 
 	requires transitive datos_compartidos;
-	requires junit;
+	requires transitive junit;
 	requires transitive partecomun;
 	requires transitive commons.math3;
 	requires transitive org.jgrapht.core;
-	requires grafos;
+	requires transitive grafos;
 }

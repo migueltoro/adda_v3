@@ -6,6 +6,9 @@ import java.util.List;
 import java.util.function.Predicate;
 import java.util.stream.Stream;
 
+import org.jgrapht.graph.DefaultEdge;
+import org.jgrapht.graph.SimpleDirectedGraph;
+
 import us.lsi.colors.GraphColors;
 import us.lsi.common.List2;
 import us.lsi.common.String2;
@@ -139,23 +142,27 @@ public class BinaryTreesTest {
 	public static void test2() {
 		BinaryTree<Integer> tree =  BinaryTree.parse("1(2(-1,-4(3,/_)),10(-5(7(/_,-2),4),-6))")
 				.map(label->Integer.parseInt(label));
-		GraphColors.toDot(tree,"ficheros/tree.gv");
+		SimpleDirectedGraph<BinaryTree<Integer>, DefaultEdge> graph = tree.toGraph();
+		GraphColors.toDot(graph,"ficheros/tree4.gv",
+				v->v.isEmpty()?"_":v.optionalLabel().get().toString(),
+				e->"");
+		System.out.println(tree);
 		String2.toConsole("%s",maxCamino(tree));	
 	}
 	
 	public static void test4() {
-		String ex = "-43.7(2.1,56.7(-27.3(_,2),78.2(3,4)))";
-		String ex2 = "-43.7(2.1,5(_,8.(3.,5.)))";
+		String ex = "-43.7(2.1,56.7(-27.3(/_,2),78.2(3,4)))";
+		String ex2 = "-43.7(2.1,5(/_,8.(3.,5.)))";
 		BinaryTree<String> t7 = BinaryTree.parse(ex);	
 		BinaryTree<String> t8 = BinaryTree.parse(ex2);	
 		System.out.println(t7);
 		System.out.println(t8);
 		System.out.println(BinaryTrees.equilibrateType(t7));
 		System.out.println(BinaryTrees.equilibrateType(t8));
-		GraphColors.toDot(t7,"ficheros/binary_tree.gv");
 		BinaryTree<String> t9 = t7.equilibrate();
+		GraphColors.toDot(t9,"ficheros/binary_tree_9.gv");
 		BinaryTree<String> t10 = t8.equilibrate();
-		GraphColors.toDot(t9,"ficheros/binary_tree_equilibrate.gv");
+		GraphColors.toDot(t10,"ficheros/binary_tree_10.gv");
 		System.out.println(t9);
 		System.out.println(t10);
 		BinaryTree<Double> t11 =  t7.map(e->Double.parseDouble(e));
@@ -224,7 +231,7 @@ public class BinaryTreesTest {
 	}
 
 	public static void main(String[] args) {
-		test2();
+		test4();
 	}	
 	
 }

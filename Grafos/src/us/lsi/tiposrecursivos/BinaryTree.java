@@ -8,6 +8,8 @@ import java.util.stream.Stream;
 import org.antlr.v4.runtime.CharStreams;
 import org.antlr.v4.runtime.CommonTokenStream;
 import org.antlr.v4.runtime.tree.ParseTree;
+import org.jgrapht.graph.DefaultEdge;
+import org.jgrapht.graph.SimpleDirectedGraph;
 
 import us.lsi.common.Preconditions;
 import us.lsi.tiposrecursivos.BinaryTree.BEmpty;
@@ -34,6 +36,14 @@ public sealed interface BinaryTree<E> permits BEmpty,BLeaf,BTree {
 	Optional<E> optionalLabel();
 	boolean equals(Object t);
 	int hashCode();
+	void toGraph(SimpleDirectedGraph<BinaryTree<E>, DefaultEdge> graph);
+	
+	default SimpleDirectedGraph<BinaryTree<E>, DefaultEdge> toGraph() {
+		SimpleDirectedGraph<BinaryTree<E>, DefaultEdge> graph = 
+				new SimpleDirectedGraph<>(null,()->new DefaultEdge(), false);
+		this.toGraph(graph);
+		return graph;
+	}
 	
 	public default Stream<BinaryTree<E>> byDepth() {
 		return BinaryTrees.byDeph(this);
@@ -105,6 +115,9 @@ public sealed interface BinaryTree<E> permits BEmpty,BLeaf,BTree {
 		public BinaryTree<E> reverse() { return BinaryTree.empty(); }
 		public <R> BinaryTree<R> map(Function<E, R> f) { return BinaryTree.empty();}
 		public String toString() { return "_"; }
+		public void toGraph(SimpleDirectedGraph<BinaryTree<E>, DefaultEdge> graph) {
+			if(!graph.containsVertex(this)) graph.addVertex(this);
+		}
 	}
 	
 	public static record BLeaf<E>(E label) implements BinaryTree<E> {
@@ -117,8 +130,11 @@ public sealed interface BinaryTree<E> permits BEmpty,BLeaf,BTree {
 		public BinaryTree<E> reverse() { return BinaryTree.leaf(this.label()); }
 		public <R> BinaryTree<R> map(Function<E, R> f) { return BinaryTree.leaf(f.apply(this.label()));}
 		public String toString() { return this.label().toString(); }
+		public void toGraph(SimpleDirectedGraph<BinaryTree<E>, DefaultEdge> graph) {
+			if(!graph.containsVertex(this)) graph.addVertex(this);
+		}
 	}
-	
+
 	public static record BTree<E>(E label, BinaryTree<E> left, BinaryTree<E> right) 
 			implements BinaryTree<E> {
 		public BinaryType type() { return BinaryType.Binary;}
@@ -132,6 +148,15 @@ public sealed interface BinaryTree<E> permits BEmpty,BLeaf,BTree {
 				this.left().map(f),this.right().map(f));}
 		public String toString() { return String.format("%s(%s,%s)",
 				this.label().toString(),this.left().toString(),this.right().toString());}
+		public void toGraph(SimpleDirectedGraph<BinaryTree<E>, DefaultEdge> graph) {
+			if(!graph.containsVertex(this)) graph.addVertex(this);
+			if(!graph.containsVertex(this.left())) graph.addVertex(this.left());
+			if(!graph.containsVertex(this.right())) graph.addVertex(this.right());
+			graph.addEdge(this,this.left());
+			graph.addEdge(this,this.right());
+			this.left().toGraph(graph);
+			this.right().toGraph(graph);
+		}
 	}
 	
 }
