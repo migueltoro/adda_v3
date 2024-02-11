@@ -150,6 +150,7 @@ public class BinaryTreesTest {
 		String2.toConsole("%s",maxCamino(tree));	
 	}
 	
+	
 	public static void test4() {
 		String ex = "-43.7(2.1,56.7(-27.3(/_,2),78.2(3,4)))";
 		String ex2 = "-43.7(2.1,5(/_,8.(3.,5.)))";
