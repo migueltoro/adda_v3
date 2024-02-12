@@ -14,6 +14,7 @@ import us.lsi.gurobi.GurobiSolution;
 import us.lsi.solve.AuxGrammar;
 
 public class AcademiaPLI {
+
 	
 	public record Alumno(Integer codigo, String nombre, List<Integer> afinidades) {
 		
