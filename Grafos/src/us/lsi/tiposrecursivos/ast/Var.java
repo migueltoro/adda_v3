@@ -1,8 +1,9 @@
 package us.lsi.tiposrecursivos.ast;
 
-import java.io.PrintStream;
-import java.util.Map;
 import java.util.Set;
+
+import org.jgrapht.graph.DefaultEdge;
+import org.jgrapht.graph.SimpleDirectedGraph;
 
 import us.lsi.common.Preconditions;
 import us.lsi.common.Set2;
@@ -47,11 +48,6 @@ public final class Var implements Exp, Declaration, Operator {
 	public String toString() {
 		return String.format("%s",this.name());
 	}
-	
-	@Override
-	public void toDot(PrintStream file, Map<Object, Integer> map) {
-		Ast.getIndex(this,map,this.name(),file);
-	}
 
 	@Override
 	public Operator operator() {
@@ -82,4 +78,15 @@ public final class Var implements Exp, Declaration, Operator {
 	public Var simplify() {
 		return this;
 	}
+	
+	@Override
+	public void toGraph(SimpleDirectedGraph<Vertex, DefaultEdge> graph) {
+		if(!graph.containsVertex(this)) graph.addVertex(this);
+	}
+
+	@Override
+	public String label() {
+		return this.name();
+	}
+	
 }

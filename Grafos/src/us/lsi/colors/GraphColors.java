@@ -19,6 +19,9 @@ import us.lsi.common.Files2;
 import us.lsi.common.Map2;
 import us.lsi.tiposrecursivos.BinaryTree;
 import us.lsi.tiposrecursivos.Tree;
+import us.lsi.tiposrecursivos.ast.Ast;
+import us.lsi.tiposrecursivos.ast.Exp;
+import us.lsi.tiposrecursivos.ast.Vertex;
 
 
 public class GraphColors {
@@ -131,6 +134,20 @@ public class GraphColors {
 		SimpleDirectedGraph<Tree<V>, DefaultEdge> g2 = tree.toGraph();
 		GraphColors.toDot(g2,file,
 			v->v.isEmpty()?"_":v.optionalLabel().get().toString(),
+			e->"");
+	}
+	
+	public static <V> void toDot(Ast ast, String file) {
+		SimpleDirectedGraph<Vertex, DefaultEdge> g2 = ast.toGraph();
+		GraphColors.toDot(g2,file,
+			v->v.label(),
+			e->"");
+	}
+	
+	public static <V> void toDot(Exp exp, String file) {
+		SimpleDirectedGraph<Vertex, DefaultEdge> g2 = exp.toGraph();
+		GraphColors.toDot(g2,file,
+			v->v.label(),
 			e->"");
 	}
 

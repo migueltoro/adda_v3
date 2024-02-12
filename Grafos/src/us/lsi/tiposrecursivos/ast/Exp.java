@@ -1,36 +1,22 @@
 package us.lsi.tiposrecursivos.ast;
 
-import java.io.PrintStream;
+
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 
 import us.lsi.common.Preconditions;
-import us.lsi.common.Printers;
 
-public sealed interface Exp permits Unary, Binary, Var, Const, CallFunction, Nary{
+public sealed interface Exp extends Vertex 
+	permits Unary, Binary, Var, Const, CallFunction, Nary{
 	
 	Set<Var> vars();
 	Operator operator();
 	Object value();
 	Type type();
 	String name();
-	void toDot(PrintStream file, Map<Object,Integer> map);
 	Boolean isConst();
 	Exp simplify();
-	
-	public static void toDot(String file, Exp e) {
-		PrintStream p = Printers.file(file);
-		Map<Object,Integer> map = new HashMap<>();
-		map.put("maxValue",0);
-		String txt = "digraph Exp { \n \n"; 
-		p.println(txt);
-		e.toDot(p,map);
-		p.println("}");
-		p.close();
-	}
 	
 	public static Exp of(List<Exp> operands, Operator op) {
 		Exp r = switch(op.id().arity()) {

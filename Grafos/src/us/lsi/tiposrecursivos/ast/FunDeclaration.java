@@ -1,9 +1,11 @@
 package us.lsi.tiposrecursivos.ast;
 
-import java.io.PrintStream;
+
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
+
+import org.jgrapht.graph.DefaultEdge;
+import org.jgrapht.graph.SimpleDirectedGraph;
 
 public record FunDeclaration(String id,Type resultType,List<ParamDeclaration> parameters) implements Declaration {
 
@@ -25,8 +27,16 @@ public record FunDeclaration(String id,Type resultType,List<ParamDeclaration> pa
 	}
 	
 	@Override
-	public void toDot(PrintStream file, Map<Object, Integer> map) {
-		Ast.getIndex(this,map,this.name(),file);
+	public void toGraph(SimpleDirectedGraph<Vertex, DefaultEdge> graph) {
+		if(!graph.containsVertex(this)) graph.addVertex(this);
+		this.parameters().stream()
+			.forEach(v->{if(!graph.containsVertex(v)) graph.addVertex(v);});
+		this.parameters().stream().forEach(v->graph.addEdge(this,v));
+		this.parameters().stream().forEach(v->v.toGraph(graph));
 	}
 
+	@Override
+	public String label() {
+			return String.format("%s:%s",this.id(),this.resultType());
+	}
 }

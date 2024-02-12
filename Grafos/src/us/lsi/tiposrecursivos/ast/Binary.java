@@ -1,8 +1,9 @@
 package us.lsi.tiposrecursivos.ast;
 
-import java.io.PrintStream;
-import java.util.Map;
 import java.util.Set;
+
+import org.jgrapht.graph.DefaultEdge;
+import org.jgrapht.graph.SimpleDirectedGraph;
 
 import us.lsi.common.Preconditions;
 import us.lsi.common.Set2;
@@ -36,16 +37,6 @@ public record Binary(Exp left, Exp right, String name) implements Exp {
 		return String.format("(%s %s %s)", this.left, this.name, this.right);
 	}
 
-	@Override
-	public void toDot(PrintStream file, Map<Object, Integer> map) {
-		Integer n = Ast.getIndex(this,map,this.name(),file);
-		Integer left = Ast.getIndex(this.left(),map,this.left().name(),file);
-		Integer right = Ast.getIndex(this.right(),map,this.right().name(),file);
-		Ast.edge(n,left, file);
-		Ast.edge(n,right, file);
-		this.left().toDot(file, map);
-		this.right().toDot(file, map);
-	}
 	
 	@Override
 	public Set<Var> vars() {
@@ -64,4 +55,22 @@ public record Binary(Exp left, Exp right, String name) implements Exp {
 		else r = this;
 		return r;
 	}
+
+	@Override
+	public void toGraph(SimpleDirectedGraph<Vertex, DefaultEdge> graph) {
+		if(!graph.containsVertex(this)) graph.addVertex(this);
+		if(!graph.containsVertex(this.left())) graph.addVertex(this.left());
+		if(!graph.containsVertex(this.right())) graph.addVertex(this.right());
+		graph.addEdge(this,this.left());
+		graph.addEdge(this,this.right());
+		this.left().toGraph(graph);
+		this.right().toGraph(graph);
+	}
+
+	@Override
+	public String label() {
+		return this.operator().id().name();
+	}
+	
+	
 }

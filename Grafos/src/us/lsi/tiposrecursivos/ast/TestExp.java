@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import us.lsi.colors.GraphColors;
 import us.lsi.common.List2;
 import us.lsi.common.Map2;
 import us.lsi.common.String2;
@@ -35,7 +36,7 @@ public class TestExp {
 		String2.toConsole("5 %s",be2.value());
 		String2.toConsole("6 %s",ue1.value());
 		String2.toConsole("7 %s",ue2.value());
-		Exp.toDot("ficheros/exp.gv",ue2);
+		GraphColors.toDot(ue2,"ficheros/exp.gv");
 	}
 	
 	public static void test2() {

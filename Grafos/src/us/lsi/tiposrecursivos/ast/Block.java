@@ -1,9 +1,11 @@
 package us.lsi.tiposrecursivos.ast;
-
-import java.io.PrintStream;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
+
+import org.jgrapht.graph.DefaultEdge;
+import org.jgrapht.graph.SimpleDirectedGraph;
+import org.jgrapht.nio.Attribute;
 
 public record Block(List<Sentence> sentences, Map<String,Object> symbolTable) implements Sentence{
 	
@@ -23,17 +25,23 @@ public record Block(List<Sentence> sentences, Map<String,Object> symbolTable) im
 		return "Bloque";
 	}
 	
+	
 	@Override
-	public void toDot(PrintStream file, Map<Object,Integer> map) {
-		List<Sentence> dc = this.sentences();
-		Integer d0n = Ast.getIndex(dc.get(0),map,dc.get(0).name(),file);
-		for(int i=1;i<dc.size();i++) {
-			Integer dn = Ast.getIndex(dc.get(i),map,dc.get(i).name(),file);
-			Ast.edgeColor(d0n, dn, "next","red",file);
-			d0n = dn;
-		}
-		for(Sentence s:dc)
-			s.toDot(file, map);
+	public void toGraph(SimpleDirectedGraph<Vertex, DefaultEdge> graph) {
+		if(!graph.containsVertex(this)) graph.addVertex(this);
+		this.sentences().stream()
+			.forEach(v->{if(!graph.containsVertex(v)) graph.addVertex(v);});
+		this.sentences().stream().forEach(v->graph.addEdge(this,v));
+		this.sentences().stream().forEach(v->v.toGraph(graph));
+	}
+
+	@Override
+	public String label() {
+		return "B";
+	}
+	
+	public Map<String,Attribute> style() {
+		return Map.of();
 	}
 
 }

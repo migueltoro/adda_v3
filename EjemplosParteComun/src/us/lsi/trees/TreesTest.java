@@ -75,7 +75,8 @@ public class TreesTest {
 		case TNary<E> t when t2 instanceof TNary<E> s -> 
 					t.label().equals(s.label()) 
 					&& t.childrenNumber() == s.childrenNumber()
-					&& IntStream.range(0, t.childrenNumber()).allMatch(i -> t.element(i).equals(s.element(i)));
+					&& IntStream.range(0, t.childrenNumber())
+					.allMatch(i -> t.child(i).equals(s.child(i)));
 		default -> false;
 		};
 	}
@@ -196,11 +197,9 @@ public class TreesTest {
 		String2.toConsole("%s",palindromas2(tree));
 		Tree<String> tree2 = Tree.parse("[2.;3.](a(p(a(r)),d(a(_,r),i(o,_)),t),t,u(t(a)))");
 		String2.toConsole("%s",tree2);
-//		GraphColors.toDot(tree2,"ficheros/tree3.gv");
+		GraphColors.toDot(tree2,"ficheros/tree2.gv");
 		SimpleDirectedGraph<Tree<Character>, DefaultEdge> graph = tree.toGraph();
-		GraphColors.toDot(graph,"ficheros/tree5.gv",
-				v->v.isEmpty()?"_":v.optionalLabel().get().toString(),
-				e->"");
+		GraphColors.toDot(graph,"ficheros/tree5.gv");
 		System.out.println(tree);
 	}
 	

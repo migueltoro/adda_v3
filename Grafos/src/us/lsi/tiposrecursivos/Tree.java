@@ -157,7 +157,7 @@ public sealed interface Tree<E> permits TEmpty, TLeaf, TNary{
 			return label().toString()
 					+ children().stream().map(x -> x.toString()).collect(Collectors.joining(",", "(", ")"));
 		}
-		public Tree<E> element(int index) {
+		public Tree<E> child(int index) {
 			return this.children().get(index);
 		}
 		public int childrenNumber() {

@@ -1,7 +1,7 @@
 package us.lsi.tiposrecursivos.ast;
 
-import java.io.PrintStream;
-import java.util.Map;
+import org.jgrapht.graph.DefaultEdge;
+import org.jgrapht.graph.SimpleDirectedGraph;
 
 public record IfThenElse(Exp guard,Block trueBlock,Block falseBlock) implements Sentence {
 	
@@ -20,19 +20,22 @@ public record IfThenElse(Exp guard,Block trueBlock,Block falseBlock) implements 
 	}
 	
 	@Override
-	public void toDot(PrintStream file, Map<Object, Integer> map) {
-		Integer n = Ast.getIndex(this,map,this.name(),file);
-		Integer guard = Ast.getIndex(this.guard(),map,this.guard().name(),file);
-		Integer trueBlock = Ast.getIndex(this.trueBlock().sentences().get(0),map,
-				this.trueBlock().sentences().get(0).name(),file);
-		Integer falseBlock = Ast.getIndex(this.falseBlock().sentences().get(0),map,
-				this.falseBlock().sentences().get(0).name(),file);
-		Ast.edge(n,guard,"Guarda",file);
-		Ast.edgeColor(n,trueBlock,"nextTrue","red",file);
-		Ast.edgeColor(n,falseBlock,"nextFalse","red",file);
-		this.guard().toDot(file,map);
-		this.trueBlock().toDot(file,map);
-		this.falseBlock().toDot(file,map);
+	public void toGraph(SimpleDirectedGraph<Vertex, DefaultEdge> graph) {
+		if(!graph.containsVertex(this)) graph.addVertex(this);
+		if(!graph.containsVertex(this.guard())) graph.addVertex(this.guard());
+		if(!graph.containsVertex(this.falseBlock())) graph.addVertex(this.falseBlock());
+		if(!graph.containsVertex(this.trueBlock())) graph.addVertex(this.trueBlock());
+		graph.addEdge(this,this.guard());
+		graph.addEdge(this,this.falseBlock());
+		graph.addEdge(this,this.trueBlock());
+		this.guard().toGraph(graph);
+		this.falseBlock().toGraph(graph);
+		this.trueBlock().toGraph(graph);
+	}
+
+	@Override
+	public String label() {
+		return "If";
 	}
 
 }

@@ -1,7 +1,7 @@
 package us.lsi.tiposrecursivos.ast;
 
-import java.io.PrintStream;
-import java.util.Map;
+import org.jgrapht.graph.DefaultEdge;
+import org.jgrapht.graph.SimpleDirectedGraph;
 
 public record Assign(Exp id, Exp exp) implements Sentence {
 
@@ -18,16 +18,21 @@ public record Assign(Exp id, Exp exp) implements Sentence {
 	public String name() {
 		return "<==";
 	}
+
 	
 	@Override
-	public void toDot(PrintStream file, Map<Object, Integer> map) {
-		Integer n = Ast.getIndex(this,map,this.name(),file);
-		Integer id = Ast.getIndex(this.id(),map,this.id.name(),file);
-		Integer exp = Ast.getIndex(this.exp(),map,this.exp().name(),file);
-		Ast.edge(n,id,"left",file);
-		Ast.edge(n,exp,"right",file);
-		this.id().toDot(file, map);
-		this.exp().toDot(file, map);
+	public void toGraph(SimpleDirectedGraph<Vertex, DefaultEdge> graph) {
+		if(!graph.containsVertex(this)) graph.addVertex(this);
+		if(!graph.containsVertex(this.id())) graph.addVertex(this.exp());
+		graph.addEdge(this,this.id());
+		graph.addEdge(this,this.exp());
+		this.id().toGraph(graph);
+		this.exp().toGraph(graph);
+	}
+
+	@Override
+	public String label() {
+		return "A";
 	}
 	
 }

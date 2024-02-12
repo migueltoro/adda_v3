@@ -2,6 +2,8 @@ package us.lsi.tiposrecursivos.ast;
 
 import java.io.IOException;
 
+import us.lsi.colors.GraphColors;
+
 public class TestAst {
 
 	public static void main(String[] args) throws IOException {
@@ -9,10 +11,12 @@ public class TestAst {
 		
 		if(p!=null) {
 //			System.out.println(p);
-			p.toDot("ficheros/program.gv");
+//			p.toDot("ficheros/program.gv");
 //			System.out.println(p.block().sentences());
 			IfThenElse s = (IfThenElse)p.block().sentences().get(0);
-			Exp.toDot("ficheros/exp.gv",((Assign)s.trueBlock().sentences().get(0)).exp());
+//			Exp.toDot("ficheros/exp.gv",((Assign)s.trueBlock().sentences().get(0)).exp());
+			GraphColors.toDot(p, "ficheros/program.gv");
+//			GraphColors.toDot(s, "ficheros/exp.gv");
 		}
 		
 	}

@@ -1,10 +1,12 @@
 package us.lsi.tiposrecursivos.ast;
 
-import java.io.PrintStream;
+
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
+
+import org.jgrapht.graph.DefaultEdge;
+import org.jgrapht.graph.SimpleDirectedGraph;
 
 public record Nary(List<Exp> operands, String name) implements Exp {
 
@@ -26,11 +28,6 @@ public record Nary(List<Exp> operands, String name) implements Exp {
 	
 	public Type type() {
 		return this.operator().resultType();
-	}
-
-	@Override
-	public void toDot(PrintStream file, Map<Object, Integer> map) {
-		
 	}
 	
 	@Override
@@ -56,4 +53,19 @@ public record Nary(List<Exp> operands, String name) implements Exp {
 		else r = Nary.of(operands.stream().map(op->op.simplify()).toList(),this.name());
 		return r;
 	}
+	
+	@Override
+	public void toGraph(SimpleDirectedGraph<Vertex, DefaultEdge> graph) {
+		if(!graph.containsVertex(this)) graph.addVertex(this);
+		this.operands().stream()
+			.forEach(v->{if(!graph.containsVertex(v)) graph.addVertex(v);});
+		this.operands().stream().forEach(v->graph.addEdge(this,v));
+		this.operands().stream().forEach(v->v.toGraph(graph));
+	}
+
+	@Override
+	public String label() {
+		return this.operator().id().name();
+	}
+	
 }

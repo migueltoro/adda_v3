@@ -1,8 +1,9 @@
 package us.lsi.tiposrecursivos.ast;
 
-import java.io.PrintStream;
-import java.util.Map;
 import java.util.Set;
+
+import org.jgrapht.graph.DefaultEdge;
+import org.jgrapht.graph.SimpleDirectedGraph;
 
 import us.lsi.common.Set2;
 
@@ -19,11 +20,6 @@ public record Const(String name, Type type, Object value) implements Exp, Operat
 	@Override
 	public String toString() {
 		return String.format("%s",this.value);
-	}
-	
-	@Override
-	public void toDot(PrintStream file, Map<Object, Integer> map) {
-		Ast.getIndex(this,map,this.name(),file);
 	}
 	
 	@Override
@@ -55,5 +51,16 @@ public record Const(String name, Type type, Object value) implements Exp, Operat
 	public Const simplify() {
 		return this;
 	}
+	
+	@Override
+	public void toGraph(SimpleDirectedGraph<Vertex, DefaultEdge> graph) {
+		if(!graph.containsVertex(this)) graph.addVertex(this);
+	}
+
+	@Override
+	public String label() {
+		return this.value().toString();
+	}
+	
 	
 }

@@ -1,7 +1,7 @@
 package us.lsi.tiposrecursivos.ast;
 
-import java.io.PrintStream;
-import java.util.Map;
+import org.jgrapht.graph.DefaultEdge;
+import org.jgrapht.graph.SimpleDirectedGraph;
 
 public record While(Exp guard, Block block) implements Sentence {
 	
@@ -20,15 +20,19 @@ public record While(Exp guard, Block block) implements Sentence {
 	}
 	
 	@Override
-	public void toDot(PrintStream file, Map<Object, Integer> map) {
-		Integer n = Ast.getIndex(this,map,this.name(),file);
-		Integer guard = Ast.getIndex(this.guard(),map,this.guard().name(),file);
-		Integer block = Ast.getIndex(this.block().sentences().get(0),map,
-				this.block().sentences().get(0).name(),file);
-		Ast.edge(n,guard, file);
-		Ast.edge(n,block, file);
-		this.guard().toDot(file, map);
-		this.block().toDot(file, map);
+	public void toGraph(SimpleDirectedGraph<Vertex, DefaultEdge> graph) {
+		if(!graph.containsVertex(this)) graph.addVertex(this);
+		if(!graph.containsVertex(this.guard())) graph.addVertex(this.guard());
+		if(!graph.containsVertex(this.block())) graph.addVertex(this.block());
+		graph.addEdge(this,this.guard());
+		graph.addEdge(this,this.block());
+		this.guard().toGraph(graph);
+		this.block().toGraph(graph);
+	}
+
+	@Override
+	public String label() {
+		return "W";
 	}
 
 }

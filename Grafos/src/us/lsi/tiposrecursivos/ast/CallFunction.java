@@ -1,10 +1,12 @@
 package us.lsi.tiposrecursivos.ast;
 
-import java.io.PrintStream;
+
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
+
+import org.jgrapht.graph.DefaultEdge;
+import org.jgrapht.graph.SimpleDirectedGraph;
 
 
 public record CallFunction(String name,List<Exp> parameters, FunDeclaration funDeclaration) implements Exp {
@@ -25,16 +27,6 @@ public record CallFunction(String name,List<Exp> parameters, FunDeclaration funD
 	public String toString() {
 		String d = this.parameters.stream().map(x->x.toString()).collect(Collectors.joining(","));
 		return String.format("%s(%s)",this.name,d);
-	}
-	
-	@Override
-	public void toDot(PrintStream file, Map<Object,Integer> map) {
-		Integer pn = Ast.getIndex(this,map,this.name(), file);
-		for(Exp e:this.parameters()) {
-			Integer dn = Ast.getIndex(e,map,e.name(),file);
-			Ast.edge(pn, dn, file);
-			e.toDot(file, map);
-		}
 	}
 
 	@Override
@@ -59,4 +51,19 @@ public record CallFunction(String name,List<Exp> parameters, FunDeclaration funD
 		else r = this;
 		return r;
 	}
+	
+	@Override
+	public void toGraph(SimpleDirectedGraph<Vertex, DefaultEdge> graph) {
+		if(!graph.containsVertex(this)) graph.addVertex(this);
+		this.parameters().stream()
+			.forEach(v->{if(!graph.containsVertex(v)) graph.addVertex(v);});
+		this.parameters().stream().forEach(v->graph.addEdge(this,v));
+		this.parameters().stream().forEach(v->v.toGraph(graph));
+	}
+
+	@Override
+	public String label() {
+		return this.name();
+	}
+
 }
