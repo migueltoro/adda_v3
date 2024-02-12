@@ -31,12 +31,12 @@ public class Caminos {
 	
 	public static void caminos_model(String model) throws IOException {
 		Graph<Integer,SimpleEdge<Integer>>  graph = leeGrafo("data/ruta_tren.txt");
-		Locale.setDefault(new Locale("en", "US"));
+		Locale.setDefault(Locale.of("en", "US"));
 		System.out.println(graph);	
 		GraphData.graph = graph;
 		GraphData.n = graph.vertexSet().size();
 		AuxGrammar.generate(GraphData.class,model,"ficheros/disjuntas.lp");
-		Locale.setDefault(new Locale("en", "US"));
+		Locale.setDefault(Locale.of("en", "US"));
 		GurobiSolution solution = GurobiLp.gurobi("ficheros/disjuntas.lp");
 		System.out.println(solution.toString((s,d)->s.contains("y") || d>0.));
 	}

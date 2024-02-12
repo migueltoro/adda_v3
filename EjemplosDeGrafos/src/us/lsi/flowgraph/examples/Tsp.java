@@ -37,7 +37,7 @@ public class Tsp {
 		GraphData.n = graph3.vertexSet().size();
 		AuxGrammar.generate(GraphData.class,"models/tsp.lsi","ficheros/tsp.lp");
 		GurobiSolution solution = GurobiLp.gurobi("ficheros/tsp.lp");
-		Locale.setDefault(new Locale("en", "US"));
+		Locale.setDefault(Locale.of("en", "US"));
 		System.out.println(solution.toString((s,d)->d>0.));		
 	}
 	

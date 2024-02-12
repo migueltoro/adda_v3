@@ -1,0 +1,20 @@
+Declaraciones
+
+r : Int = 3
+a : Int = 1 
+b : Int = 2
+c : Double = 20.
+d : String = "Antonio"
+e : Boolean = true
+
+Codigo  { 
+ if ( a >= b ) { 
+	  r = a + b
+  } else {
+	  r = a - b
+	  r = r+1
+  }
+ while(c>0){
+ 	  c = c-1
+ }
+}

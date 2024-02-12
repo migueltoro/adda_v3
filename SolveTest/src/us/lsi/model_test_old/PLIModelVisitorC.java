@@ -18,6 +18,7 @@ import us.lsi.solve.AuxGrammar.Type;
 import us.lsi.streams.Stream2;
 
 
+@SuppressWarnings("deprecation")
 public class PLIModelVisitorC extends PLIModelBaseVisitor<Object>{
 	
 	/**

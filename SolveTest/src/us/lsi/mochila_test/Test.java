@@ -61,7 +61,7 @@ public class Test {
 	}
 	
 	public static void main(String[] args) throws IOException {
-		Locale.setDefault(new Locale("en", "US"));
+		Locale.setDefault(Locale.of("en", "US"));
 		mochila();
 	}
 

@@ -67,7 +67,7 @@ public class ProjectsData {
 	
 	public static void proyects() throws IOException {
 		data("data/projects.txt");
-		Locale.setDefault(new Locale("en", "US"));
+		Locale.setDefault(Locale.of("en", "US"));
 		AuxGrammar.generate(ProjectsData.class,"models/projects.lsi","ficheros/proyects.lp");
 		GurobiSolution solution = GurobiLp.gurobi("ficheros/proyects.lp");
 		System.out.println(solution.toString((s,d)-> d>0.));

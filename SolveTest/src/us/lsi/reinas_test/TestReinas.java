@@ -27,7 +27,7 @@ public class TestReinas {
 	}
 	
 	public static void main(String[] args) throws IOException {
-		Locale.setDefault(new Locale("en", "US"));
+		Locale.setDefault(Locale.of("en", "US"));
 		Long a = System.nanoTime();
 		reinas("ficheros/reinas_2.lsi");
 		Long b = System.nanoTime();

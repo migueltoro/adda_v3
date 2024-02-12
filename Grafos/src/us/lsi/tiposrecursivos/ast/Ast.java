@@ -17,11 +17,15 @@ public record Ast(Block block) implements Vertex {
 	}
 	
 	public static Ast parse(String file) throws IOException {
-		ProgramLexer lexer = new ProgramLexer(CharStreams.fromFileName("ficheros/program.txt"));
+		ProgramLexer lexer = new ProgramLexer(CharStreams.fromFileName(file));
+		System.out.println("_________________");
 		ProgramParser parser = new ProgramParser(new CommonTokenStream(lexer));
+		System.out.println("_________________");
 	    ParseTree parseTree = parser.program();
-	    Ast program =  (Ast) parseTree.accept(new AstVisitorC());
-	    return program;
+	    System.out.println("_________________");
+//	    Ast program =  (Ast) parseTree.accept(new AstVisitorC());
+//	    return program;
+		return null;
 	}
 	
 
