@@ -7,6 +7,8 @@ import org.jgrapht.graph.DefaultEdge;
 import org.jgrapht.graph.SimpleDirectedGraph;
 import org.jgrapht.nio.Attribute;
 
+import us.lsi.common.Preconditions;
+
 public record Block(List<Sentence> sentences, Map<String,Object> symbolTable) implements Sentence{
 	
 	public static Block of(List<Sentence> sentences, Map<String,Object> symbolTable) {
@@ -28,6 +30,7 @@ public record Block(List<Sentence> sentences, Map<String,Object> symbolTable) im
 	
 	@Override
 	public void toGraph(SimpleDirectedGraph<Vertex, DefaultEdge> graph) {
+		Preconditions.checkNotNull(graph);
 		if(!graph.containsVertex(this)) graph.addVertex(this);
 		this.sentences().stream()
 			.forEach(v->{if(!graph.containsVertex(v)) graph.addVertex(v);});

@@ -8,6 +8,8 @@ import org.antlr.v4.runtime.tree.ParseTree;
 
 import us.lsi.tiposrecursivos.ast.Ast;
 import us.lsi.tiposrecursivos.ast.AstVisitorC;
+import us.lsi.tiposrecursivos.parsers.program.ProgramLexer;
+import us.lsi.tiposrecursivos.parsers.program.ProgramParser;
 
 
 public class TestProgram {

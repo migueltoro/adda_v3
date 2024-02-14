@@ -19,6 +19,7 @@ module grafos {
 	exports us.lsi.tiposrecursivos;
 	exports us.lsi.tiposrecursivos.ast;
 	exports us.lsi.tiposrecursivos.parsers;
+	exports us.lsi.tiposrecursivos.parsers.program;
 
 	requires transitive org.jgrapht.core;
 	requires transitive org.jheaps;

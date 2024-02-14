@@ -1,5 +1,5 @@
 // Generated from Program.g4 by ANTLR 4.9.3
-package us.lsi.tiposrecursivos.parsers;
+package us.lsi.tiposrecursivos.parsers.program;
 
 import org.antlr.v4.runtime.tree.ParseTreeVisitor;
 
@@ -25,13 +25,6 @@ public interface ProgramVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitVarDeclaration(ProgramParser.VarDeclarationContext ctx);
 	/**
-	 * Visit a parse tree produced by the {@code funDeclarationSP}
-	 * labeled alternative in {@link ProgramParser#declaration}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitFunDeclarationSP(ProgramParser.FunDeclarationSPContext ctx);
-	/**
 	 * Visit a parse tree produced by the {@code funDeclaration}
 	 * labeled alternative in {@link ProgramParser#declaration}.
 	 * @param ctx the parse tree
@@ -39,11 +32,19 @@ public interface ProgramVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitFunDeclaration(ProgramParser.FunDeclarationContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link ProgramParser#formal_parameters}.
+	 * Visit a parse tree produced by the {@code formal_parameter_empty}
+	 * labeled alternative in {@link ProgramParser#formal_parameters}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitFormal_parameters(ProgramParser.Formal_parametersContext ctx);
+	T visitFormal_parameter_empty(ProgramParser.Formal_parameter_emptyContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code formal_parameter_not_empty}
+	 * labeled alternative in {@link ProgramParser#formal_parameters}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitFormal_parameter_not_empty(ProgramParser.Formal_parameter_not_emptyContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link ProgramParser#formal_parameter}.
 	 * @param ctx the parse tree

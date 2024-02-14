@@ -144,6 +144,7 @@ public class AuxExpression {
 		case Double -> Operators.toDouble(value);
 		case Int -> Operators.toInt(value);
 		case String -> null;
+		case None -> throw new UnsupportedOperationException("Unimplemented case: " + data.constType());
 		};
 		return Const.of(nombresDeConstantes.get(i),value,data.constType());
 	}

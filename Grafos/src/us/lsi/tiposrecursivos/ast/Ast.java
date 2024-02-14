@@ -7,8 +7,8 @@ import org.antlr.v4.runtime.CommonTokenStream;
 import org.antlr.v4.runtime.tree.ParseTree;
 import org.jgrapht.graph.DefaultEdge;
 import org.jgrapht.graph.SimpleDirectedGraph;
-import us.lsi.tiposrecursivos.parsers.ProgramLexer;
-import us.lsi.tiposrecursivos.parsers.ProgramParser;
+import us.lsi.tiposrecursivos.parsers.program.ProgramLexer;
+import us.lsi.tiposrecursivos.parsers.program.ProgramParser;
 
 public record Ast(Block block) implements Vertex {
 	
@@ -18,14 +18,18 @@ public record Ast(Block block) implements Vertex {
 	
 	public static Ast parse(String file) throws IOException {
 		ProgramLexer lexer = new ProgramLexer(CharStreams.fromFileName(file));
-		System.out.println("_________________");
 		ProgramParser parser = new ProgramParser(new CommonTokenStream(lexer));
-		System.out.println("_________________");
 	    ParseTree parseTree = parser.program();
-	    System.out.println("_________________");
-//	    Ast program =  (Ast) parseTree.accept(new AstVisitorC());
-//	    return program;
-		return null;
+	    Ast program =  (Ast) parseTree.accept(new AstVisitorC());
+	    return program;
+	}
+	
+	public static Block parseBlock(String file) throws IOException {
+		ProgramLexer lexer = new ProgramLexer(CharStreams.fromFileName(file));
+		ProgramParser parser = new ProgramParser(new CommonTokenStream(lexer));
+	    ParseTree parseTree = parser.block();
+	    Block block =  (Block) parseTree.accept(new AstVisitorC());
+	    return block;
 	}
 	
 

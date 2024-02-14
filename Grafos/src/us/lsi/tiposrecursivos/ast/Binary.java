@@ -4,8 +4,6 @@ import java.util.Set;
 
 import org.jgrapht.graph.DefaultEdge;
 import org.jgrapht.graph.SimpleDirectedGraph;
-
-import us.lsi.common.Preconditions;
 import us.lsi.common.Set2;
 
 public record Binary(Exp left, Exp right, String name) implements Exp {
@@ -19,7 +17,7 @@ public record Binary(Exp left, Exp right, String name) implements Exp {
 		Type t2 = right.type();
 		OperatorId id = OperatorId.of2(name,t1,t2);
 		Operator op = Operators.operators.get(id);
-		Preconditions.checkArgument(op != null,String.format("No existe el operador %s",id));
+		if(op != null) System.out.println(String.format("No existe el operador %s",id));
 		return op;
 	}
 	
@@ -29,7 +27,7 @@ public record Binary(Exp left, Exp right, String name) implements Exp {
 	}
 	
 	public Type type() {
-		return this.operator().resultType();
+		return this.operator()==null?Type.None: this.operator().resultType();
 	}
 	
 	@Override
@@ -59,6 +57,7 @@ public record Binary(Exp left, Exp right, String name) implements Exp {
 	@Override
 	public void toGraph(SimpleDirectedGraph<Vertex, DefaultEdge> graph) {
 		if(!graph.containsVertex(this)) graph.addVertex(this);
+		System.out.println(this.left());
 		if(!graph.containsVertex(this.left())) graph.addVertex(this.left());
 		if(!graph.containsVertex(this.right())) graph.addVertex(this.right());
 		graph.addEdge(this,this.left());
@@ -69,7 +68,7 @@ public record Binary(Exp left, Exp right, String name) implements Exp {
 
 	@Override
 	public String label() {
-		return this.operator().id().name();
+		return this.operator()==null?"?": this.operator().id().name();
 	}
 	
 	

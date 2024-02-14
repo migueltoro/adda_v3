@@ -23,7 +23,8 @@ public record Assign(Exp id, Exp exp) implements Sentence {
 	@Override
 	public void toGraph(SimpleDirectedGraph<Vertex, DefaultEdge> graph) {
 		if(!graph.containsVertex(this)) graph.addVertex(this);
-		if(!graph.containsVertex(this.id())) graph.addVertex(this.exp());
+		if(!graph.containsVertex(this.id())) graph.addVertex(this.id());
+		if(!graph.containsVertex(this.exp())) graph.addVertex(this.exp());
 		graph.addEdge(this,this.id());
 		graph.addEdge(this,this.exp());
 		this.id().toGraph(graph);

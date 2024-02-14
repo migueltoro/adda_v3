@@ -1,5 +1,5 @@
 package us.lsi.tiposrecursivos.ast;
 
 public enum Type {
-	Int,Double,Boolean,String;
+	None,Int,Double,Boolean,String;
 }

@@ -11,7 +11,7 @@ public record IfThenElse(Exp guard,Block trueBlock,Block falseBlock) implements 
 	
 	@Override
 	public String toString() {
-		return String.format("if (%s) {\n%s} else {\n%s}\n", this.guard, this.trueBlock,this.falseBlock);
+		return String.format("if (%s) {\n%s} else {\n%s}", this.guard, this.trueBlock,this.falseBlock);
 	}
 	
 	@Override

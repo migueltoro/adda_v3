@@ -32,8 +32,8 @@ DOUBLE=31
 ID=32
 STR=33
 WS=34
-'Declaraciones'=1
-'Codigo'=2
+'Head'=1
+'Block'=2
 ':'=3
 '='=4
 '('=5

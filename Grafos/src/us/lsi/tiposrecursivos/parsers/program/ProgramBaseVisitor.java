@@ -1,5 +1,5 @@
 // Generated from Program.g4 by ANTLR 4.9.3
-package us.lsi.tiposrecursivos.parsers;
+package us.lsi.tiposrecursivos.parsers.program;
 
 import org.antlr.v4.runtime.tree.AbstractParseTreeVisitor;
 
@@ -32,13 +32,6 @@ public class ProgramBaseVisitor<T> extends AbstractParseTreeVisitor<T> implement
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public T visitFunDeclarationSP(ProgramParser.FunDeclarationSPContext ctx) { return visitChildren(ctx); }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation returns the result of calling
-	 * {@link #visitChildren} on {@code ctx}.</p>
-	 */
 	@Override public T visitFunDeclaration(ProgramParser.FunDeclarationContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
@@ -46,7 +39,14 @@ public class ProgramBaseVisitor<T> extends AbstractParseTreeVisitor<T> implement
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public T visitFormal_parameters(ProgramParser.Formal_parametersContext ctx) { return visitChildren(ctx); }
+	@Override public T visitFormal_parameter_empty(ProgramParser.Formal_parameter_emptyContext ctx) { return visitChildren(ctx); }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation returns the result of calling
+	 * {@link #visitChildren} on {@code ctx}.</p>
+	 */
+	@Override public T visitFormal_parameter_not_empty(ProgramParser.Formal_parameter_not_emptyContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
 	 *

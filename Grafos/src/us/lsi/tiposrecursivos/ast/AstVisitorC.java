@@ -8,8 +8,8 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 import us.lsi.common.Preconditions;
-import us.lsi.tiposrecursivos.parsers.ProgramBaseVisitor;
-import us.lsi.tiposrecursivos.parsers.ProgramParser;
+import us.lsi.tiposrecursivos.parsers.program.ProgramBaseVisitor;
+import us.lsi.tiposrecursivos.parsers.program.ProgramParser;
 
 
 public class AstVisitorC extends ProgramBaseVisitor<Object> {
@@ -33,22 +33,6 @@ public class AstVisitorC extends ProgramBaseVisitor<Object> {
 		return Ast.of(block);
 	}
 	
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation returns the result of calling
-	 * {@link #visitChildren} on {@code ctx}.</p>
-	 */
-	@Override
-	public Declaration visitFunDeclarationSP(ProgramParser.FunDeclarationSPContext ctx) { 
-		String id = ctx.id.getText();
-		Type type = Type.valueOf(ctx.type.getText());
-		FunDeclaration d = FunDeclaration.of(id,type,List.of());
-		Preconditions.checkState(!AstVisitorC.symbolTable.containsKey(id),
-				String.format("La variable %s ya ha sido declarada",id));
-		AstVisitorC.symbolTable.put(id,d);
-		return d;
-	}
 	
 	/**
 	 * {@inheritDoc}
@@ -69,8 +53,7 @@ public class AstVisitorC extends ProgramBaseVisitor<Object> {
 		AstVisitorC.symbolTable.put(id,d);
 		return d;
 	}
-	
-	
+		
 	/**
 	 * {@inheritDoc}
 	 *
@@ -80,28 +63,26 @@ public class AstVisitorC extends ProgramBaseVisitor<Object> {
 	@Override public Declaration visitVarDeclaration(ProgramParser.VarDeclarationContext ctx) { 
 		String id = ctx.id.getText();
 		Type type = Type.valueOf(ctx.type.getText());
-		Object value = null;
-		if(ctx.exp() != null) value = ((Exp)visit(ctx.exp())).value();
-		Var r = Var.of(id,type,value);
+		Exp exp = (Exp)visit(ctx.exp());
+		Var r = Var.of(id,type,exp.value());
 		Preconditions.checkState(!AstVisitorC.symbolTable.containsKey(id),
 				String.format("La variable %s ya ha sido declarada",id));
 		AstVisitorC.symbolTable.put(id,r);
 		return Var.of(r.name(), r.type(), r.value());
 	}
 
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation returns the result of calling
-	 * {@link #visitChildren} on {@code ctx}.</p>
-	 */
-	@Override 
-	public List<ParamDeclaration> visitFormal_parameters(ProgramParser.Formal_parametersContext ctx) { 
+	
+	@Override public List<ParamDeclaration> visitFormal_parameter_empty(ProgramParser.Formal_parameter_emptyContext ctx) { 
+		List<ParamDeclaration> r = List.of();
+		return r; 
+	}
+	
+	@Override public List<ParamDeclaration> visitFormal_parameter_not_empty(ProgramParser.Formal_parameter_not_emptyContext ctx) { 
 		Integer n = ctx.formal_parameter().size();
 		List<ParamDeclaration> r = IntStream.range(0, n).boxed()
 				.map(i->(ParamDeclaration)visit(ctx.formal_parameter(i)))
 				.collect(Collectors.toList());
-		return r;
+		return r; 
 	}
 	
 	/**
@@ -127,7 +108,8 @@ public class AstVisitorC extends ProgramBaseVisitor<Object> {
 		String idText =ctx.id.getText();
 		Preconditions.checkState(AstVisitorC.symbolTable.containsKey(idText), 
 				String.format("La variable %s no ha sido declarada",idText));
-		Var id = (Var)AstVisitorC.symbolTable.get(idText);
+		Var id0 = (Var)AstVisitorC.symbolTable.get(idText);
+		Var id = Var.of(idText,id0.type());
 		Exp exp = (Exp) visit(ctx.exp());
 		return Assign.of(id,exp); 
 	}
@@ -215,7 +197,7 @@ public class AstVisitorC extends ProgramBaseVisitor<Object> {
 		List<Exp> parameters = new ArrayList<>();
 		if(ctx.real_parameters() != null) parameters = (List<Exp>) visit(ctx.real_parameters());
 		Preconditions.checkState(AstVisitorC.symbolTable.containsKey(id), 
-				String.format("La función %s no ha sido declarada",id));
+				String.format("La funciï¿½n %s no ha sido declarada",id));
 		FunDeclaration d = (FunDeclaration)AstVisitorC.symbolTable.get(id);
 		return CallFunction.of(id,parameters,d);
 	}
@@ -261,7 +243,8 @@ public class AstVisitorC extends ProgramBaseVisitor<Object> {
 		String idText = ctx.id.getText();
 		Preconditions.checkState(AstVisitorC.symbolTable.containsKey(idText), 
 				String.format("La variable %s no ha sido declarada",idText));
-		Var id = (Var)AstVisitorC.symbolTable.get(idText);
+		Var id0 = (Var)AstVisitorC.symbolTable.get(idText);
+		Var id = Var.of(idText, id0.type());
 		return id;
 	}
 	/**
