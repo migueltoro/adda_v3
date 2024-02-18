@@ -101,8 +101,7 @@ public class AstVisitorC extends ProgramBaseVisitor<Object> {
 	 *
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
-	 */
-	
+	 */	
 	@Override 
 	public Sentence visitAsignSentence(ProgramParser.AsignSentenceContext ctx) { 
 		String idText =ctx.id.getText();
