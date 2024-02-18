@@ -20,6 +20,10 @@ public interface OperatorId {
 		return new OperatorId2(name,tp1,tp2,2);
 	}
 	
+	public static OperatorId of3(String name,Type tp1,Type tp2, Type tp3) {
+		return new OperatorId3(name,tp1,tp2,tp3,3);
+	}
+	
 	public static OperatorId ofN(String name,Type tp) {
 		return new OperatorIdN(name,tp,-1);
 	}
@@ -39,6 +43,12 @@ public interface OperatorId {
 	public static record OperatorId2(String name,Type tp1,Type tp2,Integer arity) implements OperatorId {
 		public String longName() {
 			return String.format("%s%d%s%s",name,arity,tp1,tp2);
+		}
+	}
+	
+	public static record OperatorId3(String name,Type tp1,Type tp2,Type tp3,Integer arity) implements OperatorId {
+		public String longName() {
+			return String.format("%s%d%s%s%s",name,arity,tp1,tp2,tp3);
 		}
 	}
 	

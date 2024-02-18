@@ -4,12 +4,14 @@ import java.util.Set;
 
 import org.jgrapht.graph.DefaultEdge;
 import org.jgrapht.graph.SimpleDirectedGraph;
+
+import us.lsi.common.Preconditions;
 import us.lsi.common.Set2;
 
-public record Binary(Exp left, Exp right, String name) implements Exp {
+public record Ternary(Exp guard, Exp left, Exp right, String name) implements Exp {
 	
-	public static Binary of(Exp left, Exp right, String op) {
-		return new Binary(left, right, op);
+	public static Ternary of(Exp guard, Exp left, Exp right, String op) {
+		return new Ternary(guard,left, right, op);
 	}
 	
 	public Operator operator() {
@@ -17,7 +19,7 @@ public record Binary(Exp left, Exp right, String name) implements Exp {
 		Type t2 = right.type();
 		OperatorId id = OperatorId.of2(name,t1,t2);
 		Operator op = Operators.operators.get(id);
-		if(op == null) System.out.println(String.format("No existe el operador %s",id));
+		Preconditions.checkArgument(op != null,String.format("No existe el operador %s",id));
 		return op;
 	}
 	
@@ -27,14 +29,13 @@ public record Binary(Exp left, Exp right, String name) implements Exp {
 	}
 	
 	public Type type() {
-		return this.operator()==null?Type.None: this.operator().resultType();
+		return this.operator().resultType();
 	}
 	
 	@Override
 	public String toString() {
 		return String.format("(%s %s %s)", this.left, this.name, this.right);
 	}
-
 	
 	@Override
 	public Set<Var> vars() {
@@ -53,15 +54,18 @@ public record Binary(Exp left, Exp right, String name) implements Exp {
 		else r = this;
 		return r;
 	}
-
+	
 	@Override
 	public void toGraph(SimpleDirectedGraph<Vertex, DefaultEdge> graph) {
 		if(!graph.containsVertex(this)) graph.addVertex(this);
 //		System.out.println(this.left());
+		if(!graph.containsVertex(this.guard())) graph.addVertex(this.guard());
 		if(!graph.containsVertex(this.left())) graph.addVertex(this.left());
 		if(!graph.containsVertex(this.right())) graph.addVertex(this.right());
+		graph.addEdge(this,this.guard());
 		graph.addEdge(this,this.left());
 		graph.addEdge(this,this.right());
+		this.guard().toGraph(graph);
 		this.left().toGraph(graph);
 		this.right().toGraph(graph);
 	}
@@ -70,6 +74,5 @@ public record Binary(Exp left, Exp right, String name) implements Exp {
 	public String label() {
 		return this.name();
 	}
-	
 	
 }

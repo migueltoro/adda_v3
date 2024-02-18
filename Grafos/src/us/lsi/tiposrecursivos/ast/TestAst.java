@@ -7,7 +7,7 @@ import us.lsi.colors.GraphColors;
 public class TestAst {
 
 	public static void main(String[] args) throws IOException {
-		Ast p = Ast.parse("ficheros/program.txt");
+		Ast p = Ast.parse("ficheros/program3.txt");
 	
 		
 		if(p!=null) {

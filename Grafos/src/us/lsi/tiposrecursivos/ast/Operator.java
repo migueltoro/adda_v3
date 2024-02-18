@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.function.BiFunction;
 import java.util.function.Function;
 
+import us.lsi.common.TriFunction;
+
 public interface Operator {
 	
 	OperatorId id();
@@ -24,6 +26,11 @@ public interface Operator {
 		return new Binary(id,tr,function);
 	}
 	
+	public static Operator of3(String name,Type tp1,Type tp2, Type tp3,Type tr,BiFunction<Object,Object,Object> function) {
+		OperatorId id = OperatorId.of3(name,tp1,tp2,tp3);
+		return new Binary(id,tr,function);
+	}
+	
 	public static Operator ofN(String name,Type tps,Type tr,Function<List<Object>,Object> function) {
 		OperatorId id = OperatorId.ofN(name, tps);
 		return new Nary(id,tr,function);
@@ -34,6 +41,8 @@ public interface Operator {
 	public record Unary(OperatorId id, Type resultType, Function<Object,Object> function) implements Operator {}
 	
 	public record Binary(OperatorId id, Type resultType, BiFunction<Object,Object,Object> function) implements Operator {}
+	
+	public record Ternary(OperatorId id, Type resultType, TriFunction<Object,Object,Object,Object> function) implements Operator {}
 	
 	public record Nary(OperatorId id, Type resultType, Function<List<Object>,Object> function) implements Operator {}
 	

@@ -142,7 +142,9 @@ public class GraphColors {
 		SimpleDirectedGraph<Vertex, DefaultEdge> g2 = ast.toGraph();
 		GraphColors.toDot(g2,file,
 			v->v.label(),
-			e->"");
+			e->"",
+			v->v.color(),
+			e->Map.of());
 	}
 	
 	public static <V> void toDot(Block block, String file) {

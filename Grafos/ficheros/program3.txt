@@ -1,0 +1,29 @@
+Program (r : Double, a : Int)
+
+b : Int = a
+c : Double = r
+d : String = "Antonio"
+e : Boolean = true
+min ( a : Double , b : Double ) : Double {
+	return a <= b ? a : b
+}
+abs (a :Double) : Double {
+	return a < 0 ? - a : a
+}
+
+Block 
+{ 
+
+b : Double = 2.
+c : Int = 20
+
+ if ( a >= b ) { 
+	  r = a + b + abs(2 - c)
+  } else {
+	  r = a - b - sqrt(23.)
+	  r = min(a+b,c-a,2*b)
+  }
+ while(c>0){
+ 	  c = c-1
+ }
+}

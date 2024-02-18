@@ -8,7 +8,7 @@ import java.util.Set;
 import us.lsi.common.Preconditions;
 
 public sealed interface Exp extends Vertex 
-	permits Unary, Binary, Var, Const, CallFunction, Nary{
+	permits Unary, Binary, Ternary, Var, Const, CallFunction, Nary{
 	
 	Set<Var> vars();
 	Operator operator();

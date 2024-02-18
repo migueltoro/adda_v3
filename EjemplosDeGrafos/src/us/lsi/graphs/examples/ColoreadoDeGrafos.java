@@ -38,7 +38,9 @@ public class ColoreadoDeGrafos {
 		Integer nc = vc.getNumberColors();
 		String2.toConsole("%s,%s",nc,colorDeCiudad);
 		
-		GraphColors.toDot(graph,"ficheros/coloresAndalucia.gv",x->x.nombre(),x->x.nombre(),
+		GraphColors.toDot(graph,"ficheros/coloresAndalucia.gv",
+				x->x.nombre(),
+				x->x.nombre(),
 				x->GraphColors.color(colorDeCiudad.get(x)),
 				e->GraphColors.style(Style.solid));
 

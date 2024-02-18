@@ -19,7 +19,7 @@ public interface Vertex {
 	
 	String label();
 	
-	default Map<String,Attribute> style() {
+	default Map<String,Attribute> color() {
 		return Map.of();
 	}
 	

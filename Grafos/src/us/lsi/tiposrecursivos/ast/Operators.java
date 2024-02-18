@@ -11,12 +11,17 @@ public class Operators {
 	public static Map<OperatorId,Operator> operators = new HashMap<>();
 	
 	public static Integer toInt(Object value) {
-		return ((Number)value).intValue();
+		return (Integer) value;
 	}
 	
 	public static Double toDouble(Object value) {
-		return ((Number)value).doubleValue();
+		return (Double) value;
 	}
+	
+	public static Double toDouble(String value) {
+		return Double.parseDouble(value);
+	}
+
 	
 	public static Operator get0(String name) {
 		OperatorId id = OperatorId.of0(name);

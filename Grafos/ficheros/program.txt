@@ -13,7 +13,7 @@ sqrt (a: Double) : Double
 Block
 
   { 
- if ( a > b ) { 
+ if ( a >= b ) { 
 	  r = a + b + abs(2 - c)
   } else {
 	  r = a - b - sqrt(23.)

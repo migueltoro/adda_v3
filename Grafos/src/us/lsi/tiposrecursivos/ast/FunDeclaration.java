@@ -37,6 +37,6 @@ public record FunDeclaration(String id,Type resultType,List<ParamDeclaration> pa
 
 	@Override
 	public String label() {
-			return String.format("%s:%s",this.id(),this.resultType());
+			return this.id();
 	}
 }

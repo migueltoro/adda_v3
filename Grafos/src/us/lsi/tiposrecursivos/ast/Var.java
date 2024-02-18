@@ -30,7 +30,8 @@ public final class Var implements Exp, Declaration, Operator {
 	}
 	
 	public Object value() {
-		Preconditions.checkNotNull(this.value,String.format("Valor nulo de %s",this.name()));
+		if(this.value==null)
+			Ast.printError1("Valor nulo de %s",this.name());
 		return value;
 	}
 	

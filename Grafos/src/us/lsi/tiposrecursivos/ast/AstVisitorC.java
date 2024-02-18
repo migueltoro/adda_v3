@@ -48,8 +48,8 @@ public class AstVisitorC extends ProgramBaseVisitor<Object> {
 		List<ParamDeclaration> parameters = new ArrayList<>();
 		if(ctx.formal_parameters() != null) parameters = (List<ParamDeclaration>) visit(ctx.formal_parameters());
 		FunDeclaration d = FunDeclaration.of(id,type,parameters);	
-		Preconditions.checkState(!AstVisitorC.symbolTable.containsKey(id),
-				String.format("La variable %s ya ha sido declarada",id));
+		if(!AstVisitorC.symbolTable.containsKey(id))
+				Ast.printError1("La variable %s ya ha sido declarada",id);
 		AstVisitorC.symbolTable.put(id,d);
 		return d;
 	}
@@ -106,10 +106,10 @@ public class AstVisitorC extends ProgramBaseVisitor<Object> {
 	@Override 
 	public Sentence visitAsignSentence(ProgramParser.AsignSentenceContext ctx) { 
 		String idText =ctx.id.getText();
-		Preconditions.checkState(AstVisitorC.symbolTable.containsKey(idText), 
-				String.format("La variable %s no ha sido declarada",idText));
+		if(AstVisitorC.symbolTable.containsKey(idText)) 
+				Ast.printError1("La variable %s no ha sido declarada",idText);
 		Var id0 = (Var)AstVisitorC.symbolTable.get(idText);
-		Var id = Var.of(idText,id0.type());
+		Var id = Var.of(idText,id0==null?null:id0.type());
 		Exp exp = (Exp) visit(ctx.exp());
 		return Assign.of(id,exp); 
 	}
@@ -183,8 +183,16 @@ public class AstVisitorC extends ProgramBaseVisitor<Object> {
 		String op = ctx.op.getText();
 		Exp left = (Exp) visit(ctx.left);
 		Exp right = (Exp) visit(ctx.right);
-		return Binary.of(left, right,op);
+		return Binary.of(left,right,op);
 	}
+	
+	@Override public Exp visitTernaryExpr(ProgramParser.TernaryExprContext ctx) { 
+		Exp guard = (Exp) visit(ctx.guard);
+		Exp left = (Exp) visit(ctx.left);
+		Exp right = (Exp) visit(ctx.right);		
+		return Ternary.of(guard,left,right,"IfExp"); 
+	}
+	
 	/**
 	 * {@inheritDoc}
 	 *
@@ -241,10 +249,10 @@ public class AstVisitorC extends ProgramBaseVisitor<Object> {
 	@Override 
 	public Exp visitIdExpr(ProgramParser.IdExprContext ctx) { 
 		String idText = ctx.id.getText();
-		Preconditions.checkState(AstVisitorC.symbolTable.containsKey(idText), 
-				String.format("La variable %s no ha sido declarada",idText));
+		if(AstVisitorC.symbolTable.containsKey(idText))
+				Ast.printError1("La variable %s no ha sido declarada",idText);
 		Var id0 = (Var)AstVisitorC.symbolTable.get(idText);
-		Var id = Var.of(idText, id0.type());
+		Var id = Var.of(idText, id0==null?null:id0.type());
 		return id;
 	}
 	/**
@@ -259,5 +267,10 @@ public class AstVisitorC extends ProgramBaseVisitor<Object> {
 				.map(i->(Exp)visit(ctx.exp(i)))
 				.collect(Collectors.toList());
 		return parameters;
+	}
+	
+	@Override public Exp visitReturnSentence(ProgramParser.ReturnSentenceContext ctx) { 
+		Exp exp = (Exp) visit(ctx.exp());
+		return exp;
 	}
 }

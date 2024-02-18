@@ -73,6 +73,13 @@ public interface ProgramVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitWhileSentence(ProgramParser.WhileSentenceContext ctx);
 	/**
+	 * Visit a parse tree produced by the {@code returnSentence}
+	 * labeled alternative in {@link ProgramParser#sentence}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitReturnSentence(ProgramParser.ReturnSentenceContext ctx);
+	/**
 	 * Visit a parse tree produced by {@link ProgramParser#block}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
@@ -99,6 +106,13 @@ public interface ProgramVisitor<T> extends ParseTreeVisitor<T> {
 	 * @return the visitor result
 	 */
 	T visitIntExpr(ProgramParser.IntExprContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code ternaryExpr}
+	 * labeled alternative in {@link ProgramParser#exp}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitTernaryExpr(ProgramParser.TernaryExprContext ctx);
 	/**
 	 * Visit a parse tree produced by the {@code binaryExpr}
 	 * labeled alternative in {@link ProgramParser#exp}.

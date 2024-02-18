@@ -67,7 +67,7 @@ public record Unary(Exp operand, String name) implements Exp {
 
 	@Override
 	public String label() {
-		return this.operator().id().name();
+		return this.name();
 	}
 	
 }
