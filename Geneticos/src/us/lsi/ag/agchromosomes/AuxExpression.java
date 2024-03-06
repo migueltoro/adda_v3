@@ -177,9 +177,9 @@ public class AuxExpression {
 		List<List<Operator>> r = new ArrayList<>();
 		r.add(List2.of(operatorOfInt(g.get(index))));
 		index++;
-		Integer a = r.get(level).stream().mapToInt(op -> op.id().arity()).sum();
+		Integer a = r.get(level).stream().mapToInt(op -> op.operatorId().arity()).sum();
 		while (a >0 && index < g.size()) {
-			a = r.get(level).stream().mapToInt(op -> op.id().arity()).sum();
+			a = r.get(level).stream().mapToInt(op -> op.operatorId().arity()).sum();
 			List<Operator> lv = new ArrayList<>();
 			Integer i = index;
 			while (a > 0 && i < index + a) {

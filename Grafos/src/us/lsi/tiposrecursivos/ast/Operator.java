@@ -8,7 +8,7 @@ import us.lsi.common.TriFunction;
 
 public interface Operator {
 	
-	OperatorId id();
+	OperatorId operatorId();
 	Type resultType();
 	
 	public static Operator of0(String name,Type rt,Object value) {
@@ -36,14 +36,14 @@ public interface Operator {
 		return new Nary(id,tr,function);
 	}
 	
-	public record Zero(OperatorId id, Type resultType, Object value) implements Operator {}
+	public record Zero(OperatorId operatorId, Type resultType, Object value) implements Operator {}
 	
-	public record Unary(OperatorId id, Type resultType, Function<Object,Object> function) implements Operator {}
+	public record Unary(OperatorId operatorId, Type resultType, Function<Object,Object> function) implements Operator {}
 	
-	public record Binary(OperatorId id, Type resultType, BiFunction<Object,Object,Object> function) implements Operator {}
+	public record Binary(OperatorId operatorId, Type resultType, BiFunction<Object,Object,Object> function) implements Operator {}
 	
-	public record Ternary(OperatorId id, Type resultType, TriFunction<Object,Object,Object,Object> function) implements Operator {}
+	public record Ternary(OperatorId operatorId, Type resultType, TriFunction<Object,Object,Object,Object> function) implements Operator {}
 	
-	public record Nary(OperatorId id, Type resultType, Function<List<Object>,Object> function) implements Operator {}
+	public record Nary(OperatorId operatorId, Type resultType, Function<List<Object>,Object> function) implements Operator {}
 	
 }

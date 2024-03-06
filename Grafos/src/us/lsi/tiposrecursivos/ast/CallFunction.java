@@ -25,8 +25,8 @@ public record CallFunction(String name,List<Exp> parameters, FunDeclaration funD
 	
 	@Override
 	public String toString() {
-		String d = this.parameters.stream().map(x->x.toString()).collect(Collectors.joining(","));
-		return String.format("%s(%s)",this.name,d);
+		String d = this.parameters().stream().map(x->x.toString()).collect(Collectors.joining(","));
+		return String.format("%s(%s)",this.name(),d);
 	}
 
 	@Override
@@ -55,8 +55,8 @@ public record CallFunction(String name,List<Exp> parameters, FunDeclaration funD
 	@Override
 	public void toGraph(SimpleDirectedGraph<Vertex, DefaultEdge> graph) {
 		if(!graph.containsVertex(this)) graph.addVertex(this);
-		this.parameters().stream()
-			.forEach(v->{if(!graph.containsVertex(v)) graph.addVertex(v);});
+		this.parameters().stream().filter(v->!graph.containsVertex(v))
+			.forEach(v->graph.addVertex(v));
 		this.parameters().stream().forEach(v->graph.addEdge(this,v));
 		this.parameters().stream().forEach(v->v.toGraph(graph));
 	}

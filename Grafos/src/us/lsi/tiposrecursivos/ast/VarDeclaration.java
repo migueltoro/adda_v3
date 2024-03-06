@@ -3,10 +3,10 @@ package us.lsi.tiposrecursivos.ast;
 import org.jgrapht.graph.DefaultEdge;
 import org.jgrapht.graph.SimpleDirectedGraph;
 
-public record ParamDeclaration(Var var) implements Vertex {
+public record VarDeclaration(Var var) implements Vertex, Declaration {
 	
-	public static ParamDeclaration of(Var var) {
-		return new ParamDeclaration(var);
+	public static VarDeclaration of(Var var) {
+		return new VarDeclaration(var);
 	}
 	
 	@Override
@@ -24,6 +24,10 @@ public record ParamDeclaration(Var var) implements Vertex {
 	public String label() {
 		String type = ""+this.var().type().toString().charAt(0);
 		return String.format("%s:%s",this.var().name(),type);
+	}
+	
+	public String name() {
+		return this.var().name();
 	}
 
 }

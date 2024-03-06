@@ -5,20 +5,23 @@ import java.util.Set;
 import org.jgrapht.graph.DefaultEdge;
 import org.jgrapht.graph.SimpleDirectedGraph;
 
-import us.lsi.common.Preconditions;
 import us.lsi.common.Set2;
 
-public final class Var implements Exp, Declaration, Operator {
+public final class Var implements Exp, Operator {
 	
 	private String name;
 	private Object value;
 	private Type type;
 
-	private Var(String name, Type type, Object value) {
+	protected Var(String name, Type type, Object value) {
 		super();
 		this.name = name;
 		this.value = value;
 		this.type = type;
+	}
+	
+	public static Var of(String name,Type type, Object value) {
+		return new Var(name,type,value);
 	}
 	
 	public static Var of(String name,Type type) {
@@ -30,8 +33,6 @@ public final class Var implements Exp, Declaration, Operator {
 	}
 	
 	public Object value() {
-		if(this.value==null)
-			Ast.printError1("Valor nulo de %s",this.name());
 		return value;
 	}
 	
@@ -41,13 +42,10 @@ public final class Var implements Exp, Declaration, Operator {
 	public Type type() {
 		return type;
 	}
-	public static Var of(String id, Type type, Object value) {
-		return new Var(id,type,value);
-	}
 
 	@Override
 	public String toString() {
-		return String.format("%s",this.name());
+		return this.name();
 	}
 
 	@Override
@@ -61,7 +59,7 @@ public final class Var implements Exp, Declaration, Operator {
 	}
 
 	@Override
-	public OperatorId id() {
+	public OperatorId operatorId() {
 		return OperatorId.of0(name);
 	}
 
@@ -87,7 +85,12 @@ public final class Var implements Exp, Declaration, Operator {
 
 	@Override
 	public String label() {
-		return this.name();
+		String type = this.type()==null?"_":""+this.type().toString().charAt(0);
+		if(this.value() == null)
+			return String.format("%s:%s=_",this.name(),type);
+		else
+			return String.format("%s:%s=%s",this.name(),type,
+					this.value().toString());
 	}
 	
 }

@@ -51,38 +51,37 @@ public class Operators {
 		return op;
 	}
 	
-
 	public static void addOperators() {
 		Operator plusInt = Operator.of2("+",Type.Int,Type.Int,Type.Int,(e1,e2)->toInt(e1)+toInt(e2));
-		Operators.operators.put(plusInt.id(), plusInt);
+		Operators.operators.put(plusInt.operatorId(), plusInt);
 		Operator multInt = Operator.of2("*",Type.Int,Type.Int,Type.Int,(e1,e2)->toInt(e1)*toInt(e2));
-		Operators.operators.put(multInt.id(), multInt);
+		Operators.operators.put(multInt.operatorId(), multInt);
 		Operator plusDouble = Operator.of2("+",Type.Double,Type.Double,Type.Double,(e1,e2)->toDouble(e1)+toDouble(e2));
-		Operators.operators.put(plusDouble.id(), plusDouble);
+		Operators.operators.put(plusDouble.operatorId(), plusDouble);
 		Operator multDouble = Operator.of2("*",Type.Double,Type.Double,Type.Double,(e1,e2)->toDouble(e1)*toDouble(e2));
-		Operators.operators.put(multDouble.id(), multDouble);
+		Operators.operators.put(multDouble.operatorId(), multDouble);
 		Operator toDouble = Operator.of1("toDouble",Type.Int,Type.Double,e->toDouble(e));
-		Operators.operators.put(toDouble.id(),toDouble);
+		Operators.operators.put(toDouble.operatorId(),toDouble);
 		Operator toInt = Operator.of1("toInt",Type.Double,Type.Int,e->toInt(e));
-		Operators.operators.put(toInt.id(),toInt);
+		Operators.operators.put(toInt.operatorId(),toInt);
 		Operator sqrt = Operator.of1("sqrt",Type.Double,Type.Double,e->Math.sqrt(toDouble(e)));
-		Operators.operators.put(sqrt.id(),sqrt);
+		Operators.operators.put(sqrt.operatorId(),sqrt);
 		Operator sqrt2 = Operator.of1("sqrt",Type.Int,Type.Double,e->Math.sqrt(toInt(e)));
-		Operators.operators.put(sqrt2.id(),sqrt2);
+		Operators.operators.put(sqrt2.operatorId(),sqrt2);
 		Operator pot2 = Operator.of1("^2",Type.Double,Type.Double,e->toDouble(e)*toDouble(e));
-		Operators.operators.put(pot2.id(),pot2);
+		Operators.operators.put(pot2.operatorId(),pot2);
 		Operator pot22 = Operator.of1("^2",Type.Int,Type.Int,e->toInt(e)*toInt(e));
-		Operators.operators.put(pot22.id(),pot22);
+		Operators.operators.put(pot22.operatorId(),pot22);
 		Operator pot3 = Operator.of1("^3",Type.Double,Type.Double,e->toDouble(e)*toDouble(e)*toDouble(e));
-		Operators.operators.put(pot3.id(),pot3);
+		Operators.operators.put(pot3.operatorId(),pot3);
 		Operator pot32 = Operator.of1("^3",Type.Int,Type.Int,e->toInt(e)*toInt(e)*toInt(e));
-		Operators.operators.put(pot32.id(),pot32);
+		Operators.operators.put(pot32.operatorId(),pot32);
 		Operator plusN = Operator.ofN("+",Type.Double,Type.Double,(List<Object> ls)->ls.stream()
 				.mapToDouble(e->Operators.toDouble(e)).sum());
-		Operators.operators.put(plusN.id(),plusN);
+		Operators.operators.put(plusN.operatorId(),plusN);
 		Operator plusN2 = Operator.ofN("+",Type.Int,Type.Int,(List<Object> ls)->ls.stream()
 				.mapToDouble(e->Operators.toInt(e)).sum());
-		Operators.operators.put(plusN2.id(),plusN2);
+		Operators.operators.put(plusN2.operatorId(),plusN2);
 	}
 	
 	

@@ -33,7 +33,7 @@ public record Const(String name, Type type, Object value) implements Exp, Operat
 	}
 
 	@Override
-	public OperatorId id() {
+	public OperatorId operatorId() {
 		return OperatorId.of0(this.name());
 	}
 

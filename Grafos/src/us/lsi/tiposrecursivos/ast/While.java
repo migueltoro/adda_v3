@@ -11,7 +11,7 @@ public record While(Exp guard, Block block) implements Sentence {
 	
 	@Override
 	public String toString() {
-		return String.format("while (%s) {\n%s}\n", this.guard, this.block);
+		return String.format("while (%s) %s", this.guard, this.block);
 	}
 
 	@Override

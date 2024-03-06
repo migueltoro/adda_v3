@@ -19,7 +19,8 @@ public record Ternary(Exp guard, Exp left, Exp right, String name) implements Ex
 		Type t2 = right.type();
 		OperatorId id = OperatorId.of2(name,t1,t2);
 		Operator op = Operators.operators.get(id);
-		Preconditions.checkArgument(op != null,String.format("No existe el operador %s",id));
+		if(op == null) 
+			System.out.println(String.format("No existe el operador %s",id.longName()));
 		return op;
 	}
 	
@@ -34,7 +35,7 @@ public record Ternary(Exp guard, Exp left, Exp right, String name) implements Ex
 	
 	@Override
 	public String toString() {
-		return String.format("(%s %s %s)", this.left, this.name, this.right);
+		return String.format("%s ? %s : %s)", this.guard(),this.left, this.right);
 	}
 	
 	@Override
@@ -58,7 +59,6 @@ public record Ternary(Exp guard, Exp left, Exp right, String name) implements Ex
 	@Override
 	public void toGraph(SimpleDirectedGraph<Vertex, DefaultEdge> graph) {
 		if(!graph.containsVertex(this)) graph.addVertex(this);
-//		System.out.println(this.left());
 		if(!graph.containsVertex(this.guard())) graph.addVertex(this.guard());
 		if(!graph.containsVertex(this.left())) graph.addVertex(this.left());
 		if(!graph.containsVertex(this.right())) graph.addVertex(this.right());

@@ -52,7 +52,7 @@ public interface ExpressionData extends ChromosomeDoubleData<Exp,Exp>{
 	Operator.Nary nAryOperator();
 	
 	default Integer maxArity() {
-		return operators().stream().mapToInt(x ->x.id().arity()).max().getAsInt();
+		return operators().stream().mapToInt(x ->x.operatorId().arity()).max().getAsInt();
 	}
 	
 	default Integer tailLength() {

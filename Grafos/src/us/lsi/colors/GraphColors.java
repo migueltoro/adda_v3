@@ -143,7 +143,7 @@ public class GraphColors {
 		GraphColors.toDot(g2,file,
 			v->v.label(),
 			e->"",
-			v->v.color(),
+			v->v.styleAndShape(),
 			e->Map.of());
 	}
 	
@@ -206,6 +206,5 @@ public class GraphColors {
 		Writer f1 = Files2.getWriter(file);
 		de.exportGraph(graph, f1);
 	}
-	
 	
 }

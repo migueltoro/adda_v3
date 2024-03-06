@@ -159,7 +159,7 @@ footer {
   <div class="ebnf">
   <h4>Text notation:</h4>
   <div>
-    <span class="rule">program</span> :  <span class="literal">'Program'</span> <a href="#formal_parameters" class="rule">formal_parameters</a> <a href="#declaration" class="rule">declaration</a><span class="operator">*</span> <span class="literal">'Block'</span> <a href="#block" class="rule">block</a> ;
+    <span class="rule">program</span> :  <span class="literal">'Program'</span> <a href="#formal_parameters" class="rule">formal_parameters</a> <a href="#block" class="rule">block</a> ;
   </div>
   </div>
   <div class="railroad">
@@ -193,7 +193,7 @@ footer {
   <div class="ebnf">
   <h4>Text notation:</h4>
   <div>
-    <span class="rule">formal_parameters</span> :  <span class="literal">'('</span> <span class="literal">')'</span> <span class="operator">#</span><a href="#formal_parameter_empty" class="rule">formal_parameter_empty</a> <span class="operator">|</span> <span class="literal">'('</span> <a href="#formal_parameter" class="rule">formal_parameter</a> <span class="operator">(</span> <span class="literal">','</span> <a href="#formal_parameter" class="rule">formal_parameter</a><span class="operator">)</span> <span class="operator">*</span> <span class="literal">')'</span> <span class="operator">#</span><a href="#formal_parameter_not_empty" class="rule">formal_parameter_not_empty</a> ;
+    <span class="rule">formal_parameters</span> :  <span class="literal">'('</span> <span class="operator">(</span> <a href="#formal_parameter" class="rule">formal_parameter</a> <span class="operator">(</span> <span class="literal">','</span> <a href="#formal_parameter" class="rule">formal_parameter</a><span class="operator">)</span> <span class="operator">*</span> <span class="operator">)</span><span class="operator">?</span> <span class="literal">')'</span> ;
   </div>
   </div>
   <div class="railroad">

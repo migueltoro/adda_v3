@@ -65,7 +65,7 @@ public record Nary(List<Exp> operands, String name) implements Exp {
 
 	@Override
 	public String label() {
-		return this.operator().id().name();
+		return this.operator().operatorId().name();
 	}
 	
 }

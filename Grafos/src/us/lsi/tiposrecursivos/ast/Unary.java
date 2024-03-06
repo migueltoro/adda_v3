@@ -19,7 +19,8 @@ public record Unary(Exp operand, String name) implements Exp {
 		Type t1 = operand.type();
 		OperatorId id = OperatorId.of1(name,t1);
 		Operator op = Operators.operators.get(id);
-		Preconditions.checkArgument(op != null,String.format("No existe el operador %s",id));
+		if(op == null)
+			System.out.println(String.format("No existe el operador %s",id.longName()));
 		return op;
 	}
 	

@@ -32,19 +32,11 @@ public interface ProgramVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitFunDeclaration(ProgramParser.FunDeclarationContext ctx);
 	/**
-	 * Visit a parse tree produced by the {@code formal_parameter_empty}
-	 * labeled alternative in {@link ProgramParser#formal_parameters}.
+	 * Visit a parse tree produced by {@link ProgramParser#formal_parameters}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitFormal_parameter_empty(ProgramParser.Formal_parameter_emptyContext ctx);
-	/**
-	 * Visit a parse tree produced by the {@code formal_parameter_not_empty}
-	 * labeled alternative in {@link ProgramParser#formal_parameters}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitFormal_parameter_not_empty(ProgramParser.Formal_parameter_not_emptyContext ctx);
+	T visitFormal_parameters(ProgramParser.Formal_parametersContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link ProgramParser#formal_parameter}.
 	 * @param ctx the parse tree

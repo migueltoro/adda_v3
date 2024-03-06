@@ -17,7 +17,8 @@ public record Binary(Exp left, Exp right, String name) implements Exp {
 		Type t2 = right.type();
 		OperatorId id = OperatorId.of2(name,t1,t2);
 		Operator op = Operators.operators.get(id);
-		if(op == null) System.out.println(String.format("No existe el operador %s",id));
+		if(op == null) 
+			System.out.println(String.format("No existe el operador %s",id.longName()));
 		return op;
 	}
 	
@@ -57,7 +58,6 @@ public record Binary(Exp left, Exp right, String name) implements Exp {
 	@Override
 	public void toGraph(SimpleDirectedGraph<Vertex, DefaultEdge> graph) {
 		if(!graph.containsVertex(this)) graph.addVertex(this);
-//		System.out.println(this.left());
 		if(!graph.containsVertex(this.left())) graph.addVertex(this.left());
 		if(!graph.containsVertex(this.right())) graph.addVertex(this.right());
 		graph.addEdge(this,this.left());
