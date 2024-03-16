@@ -60,6 +60,7 @@ public class MonedasHeuristica {
 		}
 		return s;
 	}
+
 	
 	public static void main(String[] args) {
 		Locale.setDefault(Locale.of("en", "US"));
