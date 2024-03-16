@@ -8,7 +8,6 @@ import java.util.Locale;
 import us.lsi.alg.typ.DatosTyP;
 import us.lsi.alg.typ.SolucionTyP;
 import us.lsi.alg.typ.TyPVertex;
-import us.lsi.alg.typ.TyPVertexI;
 
 public class Heuristica {
 	
@@ -16,13 +15,13 @@ public class Heuristica {
 		return v1.maxCarga().intValue();
 	}
 	
-	public static Integer cota(TyPVertexI v1, Integer a) {
+	public static Integer cota(TyPVertex v1, Integer a) {
 		TyPVertex v2 = v1.neighbor(a);
 		return v2.maxCarga().intValue();
 	}
 
-	public static Integer valorVoraz(TyPVertexI v1) {
-		TyPVertexI v = v1;
+	public static Integer valorVoraz(TyPVertex v1) {
+		TyPVertex v = v1;
 		Integer r = 0;
 		while (v.index() < DatosTyP.n) {
 			Integer a = v.greedyAction();
@@ -46,7 +45,7 @@ public class Heuristica {
 	public static void main(String[] args) {
 		Locale.setDefault(Locale.of("en", "US"));
 		DatosTyP.datos("ficheros/tareas.txt",5);
-		TyPVertexI e1 = TyPVertexI.first();
+		TyPVertex e1 = TyPVertex.first();
 		System.out.println(DatosTyP.tareas);
 		Integer c = valorVoraz(e1);
 		System.out.println(c);

@@ -1,13 +1,11 @@
 package us.lsi.alg.typ.manual;
 
-
-
 import java.util.List;
 import java.util.Locale;
 
 import us.lsi.alg.typ.DatosTyP;
 import us.lsi.alg.typ.SolucionTyP;
-import us.lsi.alg.typ.TyPVertexI;
+import us.lsi.alg.typ.TyPVertex;
 
 public class TyPBT {
 	
@@ -29,7 +27,7 @@ public class TyPBT {
 		return time;
 	}
 	
-	public void bt(TyPVertexI start, Integer minValue, SolucionTyP s) {
+	public void bt(TyPVertex start, Integer minValue, SolucionTyP s) {
 		this.time = System.nanoTime();
 		this.estado = StateTyP.of(start);
 		this.minValue = minValue;
@@ -65,7 +63,7 @@ public class TyPBT {
 	public static void main(String[] args) {
 		Locale.setDefault(Locale.of("en", "US"));
 		DatosTyP.datos("ficheros/tareas.txt",5);
-		TyPVertexI v1 = TyPVertexI.first();
+		TyPVertex v1 = TyPVertex.first();
 		SolucionTyP s = Heuristica.solucionVoraz(v1);
 		System.out.println(s);
 		TyPBT a = TyPBT.of();

@@ -1,5 +1,5 @@
 module practicas_22_23 {
-	
+
 	exports us.lsi.p1;
 	exports us.lsi.p2;
 	exports us.lsi.p3;

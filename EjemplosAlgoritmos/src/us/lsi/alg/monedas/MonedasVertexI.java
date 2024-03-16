@@ -67,7 +67,7 @@ public record MonedasVertexI(Integer index,Integer valorRestante)
 	}
 
 	@Override
-	public MonedasVertexI neighbor(Integer a) {
+	public MonedasVertex neighbor(Integer a) {
 		MonedasVertexI r;
 		if(this.valorRestante() == 0) r = MonedasVertexI.last();
 		else r = MonedasVertexI.of(this.index()+1,this.valorRestante()-a*DatosMonedas.valor(this.index()));
