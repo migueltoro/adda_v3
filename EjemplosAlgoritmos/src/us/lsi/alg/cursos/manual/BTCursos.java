@@ -2,7 +2,7 @@ package us.lsi.alg.cursos.manual;
 
 import java.util.List;
 import java.util.Locale;
-import us.lsi.alg.cursos.CursosVertex;
+import us.lsi.alg.cursos.CursosVertexI;
 import us.lsi.alg.cursos.DatosCursos;
 import us.lsi.alg.cursos.SolucionCursos;
 
@@ -14,7 +14,7 @@ public class BTCursos {
 		return new BTCursos();
 	}
 	
-	private CursosVertex start;
+	private CursosVertexI start;
 	private StateCursos estado;
 	private SolucionCursos solucion;
 	public Double minValue;
@@ -28,7 +28,7 @@ public class BTCursos {
 		this.time = System.nanoTime();
 		this.solucion = s;
 		this.minValue = minValue;
-		this.start = CursosVertex.first();
+		this.start = CursosVertexI.first();
 		this.estado = StateCursos.of(this.start);
 		btm();
 		this.time = System.nanoTime() - this.time;
@@ -66,7 +66,7 @@ public class BTCursos {
 	public static void main(String[] args) {
 		Locale.setDefault(Locale.of("en", "US"));
 		DatosCursos.iniDatos("ficheros/cursos/cursos3.txt");
-		CursosVertex v1 = CursosVertex.first();
+		CursosVertexI v1 = CursosVertexI.first();
 		SolucionCursos sv = GreedyCursos.solucionVoraz(v1);
 		System.out.println(sv);
 		BTCursos a = BTCursos.of();

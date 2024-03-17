@@ -26,7 +26,7 @@ public class TestBT {
 
 			// V�rtices clave
 
-			VertexContenedores start = VertexContenedores.initial();
+			VertexContenedoresI start = VertexContenedoresI.initial();
 
 			// Grafo
 			

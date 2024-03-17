@@ -27,7 +27,7 @@ public class TestAStar {
 
 			// V�rtices clave
 
-			VertexContenedores start = VertexContenedores.initial();
+			VertexContenedores start = VertexContenedoresI.initial();
 
 			// Grafo
 

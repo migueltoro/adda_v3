@@ -22,7 +22,7 @@ public class TestPD {
 			DatosBufete.iniDatos("ficheros/bufete/bufete" + id_fichero + ".txt");
 
 			System.out.println("\n\n>\tResultados para el test " + id_fichero + "\n");
-			final BufeteVertex start = BufeteVertex.initialVertex();
+			final BufeteVertex start = BufeteVertexI.initialVertex();
 
 			/**
 			 * IMPORTANTE. En este tipo se usa el tipo "Last".
@@ -37,9 +37,7 @@ public class TestPD {
 
 			System.out.println("\n\n#### Algoritmo PD ####");
 			
-			GreedyOnGraph<BufeteVertex, BufeteEdge> rr = 
-					GreedyOnGraph.of(graph,
-							BufeteVertex::greadyEdge);
+			GreedyOnGraph<BufeteVertex, BufeteEdge> rr = GreedyOnGraph.of(graph);
 			
 			GraphPath<BufeteVertex, BufeteEdge> path = rr.path();
 			SolucionBufete sm = SolucionBufete.of(path);

@@ -26,7 +26,7 @@ public class TestBT {
 
 			// V�rtices clave
 
-			VertexCandidatos start = VertexCandidatos.initial();
+			VertexCandidatos start = VertexCandidatosI.initial();
 
 			// Grafo
 			

@@ -17,11 +17,11 @@ public class TestGreedy {
 		DatosCursos.iniDatos("ficheros/cursos/cursos3.txt");
 		
 		EGraph<CursosVertex, CursosEdge> graph = 
-				EGraph.virtual(CursosVertex.first(), PathType.Sum, Type.Min)
+				EGraph.virtual(CursosVertexI.first(), PathType.Sum, Type.Min)
 					.heuristic(CursosHeuristic::heuristic)
 					.build();
 		
-		System.out.println(CursosVertex.first());
+		System.out.println(CursosVertexI.first());
 		System.out.println("==================");
 		GreedyOnGraph<CursosVertex, CursosEdge> ms = GreedyOnGraph.of(graph);
 		GraphPath<CursosVertex, CursosEdge> path = ms.path();

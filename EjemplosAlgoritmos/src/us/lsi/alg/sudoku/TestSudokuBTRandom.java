@@ -15,7 +15,7 @@ public class TestSudokuBTRandom {
 
 	public static void main(String[] args) {
 		Locale.setDefault(Locale.of("en", "US"));
-		DatosSudoku.leeFichero("ficheros/sudoku/sudoku3.txt");
+		DatosSudoku.leeFichero("ficheros/sudoku/sudoku1.txt");
 		SudokuVertex e1 = SudokuVertex.first();
 		
 		EGraph<SudokuVertex,SimpleEdgeAction<SudokuVertex,Integer>> graph = 

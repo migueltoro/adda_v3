@@ -7,8 +7,6 @@ import java.util.stream.*;
 
 import org.jgrapht.GraphPath;
 
-
-import us.lsi.common.Preconditions;
 import us.lsi.mochila.datos.DatosMochila;
 
 public record MochilaVertexI(Integer index, Integer capacidadRestante)
@@ -58,18 +56,15 @@ public record MochilaVertexI(Integer index, Integer capacidadRestante)
 	
 	@Override
 	public Integer greedyAction() {
-		Preconditions.checkElementIndex(index, DatosMochila.numeroDeObjetos);
 		return Math.min(this.capacidadRestante/DatosMochila.getPeso(index),DatosMochila.getNumMaxDeUnidades(index));
 	}
 	
 	public Double heuristicAction() {
-		Preconditions.checkElementIndex(index, DatosMochila.numeroDeObjetos);
 		return Math.min(this.capacidadRestante.doubleValue()/DatosMochila.getPeso(index),DatosMochila.getNumMaxDeUnidades(index));
 	}
 
 	@Override
 	public List<Integer> actions() {
-		if(this.index == n) return new ArrayList<>();
 		Integer nu = greedyAction().intValue();
 		if(this.index == n-1) return new ArrayList<>(nu);
 		List<Integer> alternativas = IntStream.rangeClosed(0,nu)

@@ -164,6 +164,7 @@ public class ESimpleVirtualGraph<V extends VirtualVertex<V,E,?>, E extends Simpl
 	
 	@Override
 	public List<E> edgesListOf(V v) {
+		if(v.goal()) return List.of();
 		return v.edgesListOf();
 	}
 	

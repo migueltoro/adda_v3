@@ -184,7 +184,6 @@ public class SudokuVertexI implements SudokuVertex{
 
 	@Override
 	public List<Integer> actions() {
-		if(this.index == DatosSudoku.numeroDeCasillas) return List.of();
 		Casilla c = this.casilla();
 		return this.valoresLibresEnCasilla(c).stream().toList();
 	}

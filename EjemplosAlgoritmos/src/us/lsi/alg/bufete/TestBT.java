@@ -23,7 +23,7 @@ public class TestBT {
 
 			System.out.println("\n\n>\tResultados para el test " + id_fichero + "\n");
 
-			BufeteVertex start = BufeteVertex.initialVertex();
+			BufeteVertex start = BufeteVertexI.initialVertex();
 
 			/**
 			 * IMPORTANTE. En este tipo se usa el tipo "Last".

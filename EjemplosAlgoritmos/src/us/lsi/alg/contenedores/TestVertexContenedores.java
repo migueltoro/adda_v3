@@ -18,8 +18,8 @@ public class TestVertexContenedores {
 
 			// V�rtices clave
 
-			VertexContenedores start = VertexContenedores.initial();
-			Predicate<VertexContenedores> goal = v->v.goal();
+			VertexContenedoresI start = VertexContenedoresI.initial();
+			Predicate<VertexContenedoresI> goal = v->v.goal();
 
 			List<Integer> r = IntStream.range(0, DatosContenedores.getNumContenedores() + 1).boxed()
 					.filter(j -> !start.contenedoresCompletos().contains(j))
@@ -34,7 +34,7 @@ public class TestVertexContenedores {
 			for (int j = 0; j < DatosContenedores.getNumContenedores() + 1; j++) {
 				System.out.println(j + " = " + start.capRest().get(j));
 			}
-			VertexContenedores sc = start.neighbor(0);
+			VertexContenedoresI sc = start.neighbor(0);
 			System.out.println(sc);
 			System.out.println(sc.contenedoresCompletos());
 			System.out.println(r);

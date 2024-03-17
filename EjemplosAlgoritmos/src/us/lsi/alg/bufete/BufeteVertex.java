@@ -1,95 +1,21 @@
 package us.lsi.alg.bufete;
-import us.lsi.common.List2;
+
+import java.util.List;
+
 import us.lsi.graphs.virtual.VirtualVertex;
 
+public interface BufeteVertex extends VirtualVertex<BufeteVertex, BufeteEdge, Integer>{
+	
+	Integer index();
+	
+	List<Integer> cargas();
 
-import java.util.Comparator;
-import java.util.List;
-import java.util.stream.IntStream;
+	Integer npMax();
 
+	Integer npMin();
 
-public record BufeteVertex(Integer index,List<Integer> cargas) 
-      implements VirtualVertex<BufeteVertex, BufeteEdge, Integer> {
-	
-	public static BufeteVertex of(Integer i, List<Integer> cargas) {
-		return new BufeteVertex(i,cargas);
-	}
+	Integer maxCarga();
 
-	public static BufeteVertex initialVertex() {
-		return new BufeteVertex(0,List2.nCopies(0,DatosBufete.NUM_ABOGADOS));
-	}
-	
-	@Override
-	public Boolean goal() {
-		return this.index() == DatosBufete.NUM_CASOS;
-	}
-	
-	@Override
-	public Boolean goalHasSolution() {
-		return true;
-	}
-
-	public static BufeteVertex copy(BufeteVertex v) {
-		return BufeteVertex.of(v.index(), v.cargas());
-	}
-	
-	@Override
-	public Boolean isValid() {
-		return true;
-	}
-	
-	public Integer npMax() {
-		return IntStream.range(0,DatosBufete.NUM_ABOGADOS)
-		.boxed()
-		.max(Comparator.comparing(i->this.cargas.get(i)))
-		.get();
-	}
-	
-	public Integer npMin() {
-		return IntStream.range(0,DatosBufete.NUM_ABOGADOS)
-				.boxed()
-				.min(Comparator.comparing(i->this.cargas.get(i)))
-				.get();
-	}
-	
-	public Integer maxCarga() {
-		return this.cargas().get(this.npMax());
-	}
-	
-	public List<Integer> cargasDespues(Integer a){
-		Integer d = DatosBufete.horas(a,this.index) + this.cargas().get(a);
-        return List2.setElement(this.cargas(), a, d);
-	}
-	
-	@Override
-	public Integer greedyAction() {
-		return IntStream.range(0,DatosBufete.NUM_ABOGADOS)
-				.boxed()
-				.min(Comparator.comparing(a->cargasDespues(a).get(a)))
-				.get();
-	}
-	
-	public  BufeteEdge greadyEdge() {
-		return this.edge(this.greedyAction());
-	}
-
-	@Override
-	public List<Integer> actions() {
-		if(this.goal()) return List2.of();
-		else if(this.index() == DatosBufete.NUM_CASOS-1) return List.of(this.greedyAction());
-		return List2.rangeList(0,DatosBufete.NUM_ABOGADOS);
-	}
-
-	@Override
-	public BufeteVertex neighbor(Integer a) {
-		return BufeteVertex.of(index+1, cargasDespues(a));
-	}
-
-	@Override
-	public BufeteEdge edge(Integer a) {
-		BufeteVertex siguiente = this.neighbor(a);
-		return BufeteEdge.of(this, siguiente, a);
-	}
+	List<Integer> cargasDespues(Integer a);
 
 }
-

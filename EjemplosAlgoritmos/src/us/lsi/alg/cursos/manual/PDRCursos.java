@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
-import us.lsi.alg.cursos.CursosVertex;
+import us.lsi.alg.cursos.CursosVertexI;
 import us.lsi.alg.cursos.DatosCursos;
 import us.lsi.alg.cursos.SolucionCursos;
 
@@ -30,8 +30,8 @@ public static record Spm(Integer a,Integer weight) implements Comparable<Spm> {
 	}
 	
 	private Integer minValue;
-	private CursosVertex start;
-	private Map<CursosVertex,Spm> memory;
+	private CursosVertexI start;
+	private Map<CursosVertexI,Spm> memory;
 	private SolucionCursos solucion;
 	private Long time;
 	
@@ -46,7 +46,7 @@ public static record Spm(Integer a,Integer weight) implements Comparable<Spm> {
 	public SolucionCursos pd(Integer minValue, SolucionCursos s) {
 		this.time = System.nanoTime();
 		this.minValue = minValue;
-		this.start = CursosVertex.first();
+		this.start = CursosVertexI.first();
 		this.solucion = s;
 		this.memory = new HashMap<>();
 		pd(start,0,memory);
@@ -55,7 +55,7 @@ public static record Spm(Integer a,Integer weight) implements Comparable<Spm> {
 		return r;
 	}
 	
-	private Spm pd(CursosVertex vertex,Integer accumulateValue, Map<CursosVertex,Spm> memory) {
+	private Spm pd(CursosVertexI vertex,Integer accumulateValue, Map<CursosVertexI,Spm> memory) {
 		Spm r=null;
 		if(memory.containsKey(vertex)) {
 			r = memory.get(vertex);
@@ -86,7 +86,7 @@ public static record Spm(Integer a,Integer weight) implements Comparable<Spm> {
 	
 	public SolucionCursos solucion(){
 		List<Integer> acciones = new ArrayList<>();
-		CursosVertex v = CursosVertex.first();
+		CursosVertexI v = CursosVertexI.first();
 		Spm s = this.memory.get(v);
 		if(s == null) return this.solucion;
 		while(s.a() != null) {
@@ -100,7 +100,7 @@ public static record Spm(Integer a,Integer weight) implements Comparable<Spm> {
 	public static void main(String[] args) {
 		Locale.setDefault(Locale.of("en", "US"));
 		DatosCursos.iniDatos("ficheros/cursos/cursos3.txt");
-		CursosVertex v1 = CursosVertex.first();
+		CursosVertexI v1 = CursosVertexI.first();
 		SolucionCursos sv = GreedyCursos.solucionVoraz(v1);
 		System.out.println(sv);
 		PDRCursos a = PDRCursos.of();

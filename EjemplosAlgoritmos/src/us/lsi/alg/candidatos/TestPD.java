@@ -24,7 +24,7 @@ public class TestPD {
 //			DatosSubconjuntos.toConsole();
 			// V�rtices clave
 
-			VertexCandidatos start = VertexCandidatos.initial();
+			VertexCandidatos start = VertexCandidatosI.initial();
 
 			// Grafo
 			

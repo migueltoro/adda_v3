@@ -13,6 +13,7 @@ import org.jheaps.tree.FibonacciHeap;
 
 import us.lsi.alg.cursos.CursosHeuristic;
 import us.lsi.alg.cursos.CursosVertex;
+import us.lsi.alg.cursos.CursosVertexI;
 import us.lsi.alg.cursos.DatosCursos;
 import us.lsi.alg.cursos.SolucionCursos;
 
@@ -114,7 +115,7 @@ public class AStarCursos {
 	public static void main(String[] args) {
 		Locale.setDefault(Locale.of("en", "US"));
 		DatosCursos.iniDatos("ficheros/cursos/cursos3.txt");
-		CursosVertex v1 = CursosVertex.first();
+		CursosVertexI v1 = CursosVertexI.first();
 		SolucionCursos sv = GreedyCursos.solucionVoraz(v1);
 		System.out.println(sv);
 		AStarCursos a = AStarCursos.of();

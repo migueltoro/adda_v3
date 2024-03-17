@@ -9,7 +9,7 @@ import us.lsi.graphs.virtual.EGraph;
 
 public class ContenedoresHeuristic {
 
-	public static Double heuristic(VertexContenedores v1, Predicate<VertexContenedores > goal,
+	public static Double heuristic(VertexContenedores v1, Predicate<VertexContenedores> goal,
 			VertexContenedores  v2) {
 		//return (double)(DatosContenedores.getNumContenedores()-v1.index()+1);
 		//return (double)DatosContenedores.getNumContenedores()-v1.contenedoresCompletos().size();

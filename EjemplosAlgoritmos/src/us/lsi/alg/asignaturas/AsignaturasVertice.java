@@ -55,9 +55,7 @@ public record AsignaturasVertice(Integer index,List<Integer>diasAsignatura,Integ
 	@Override
 	public List<Integer> actions() {
 		List<Integer> actions = List2.empty();
-		if(this.index==DatosAsignaturas.ND) {
-			return actions;
-		} else if(this.index==DatosAsignaturas.ND-1) {
+		if(this.index==DatosAsignaturas.ND-1) {
 			Optional<Integer> mejor = this.mejor();
 			actions= mejor.isPresent()?List2.of(mejor.get()):actions;	
 		} else {

@@ -117,7 +117,7 @@ public class GreedyOnGraph<V,E> implements  Iterator<Gog<V,E>>, Iterable<Gog<V,E
 
 	@Override
 	public boolean hasNext() {
-		return state != null && !this.graph.edgesOf(state).isEmpty() && !this.graph.goal().test(state) ;
+		return state != null && !this.graph.edgesListOf(state).isEmpty() && !this.graph.goal().test(state) ;
 	}
 
 	@Override

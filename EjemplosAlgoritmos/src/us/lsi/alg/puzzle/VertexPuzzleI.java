@@ -125,12 +125,7 @@ public record VertexPuzzleI(IntPair blackPosition,Integer[][] datos)
 	
 	@Override
 	public VertexPuzzleI neighbor(ActionPuzzle a) {
-		Preconditions.checkArgument(
-				VertexPuzzleI.validPosition(this.blackPosition().add(ActionPuzzle.direction(a))), 
-				String.format("La acción %s no es aplicable",a.toString()));
-		VertexPuzzleI v = this.swap(this.blackPosition().add(ActionPuzzle.direction(a)));
-		Preconditions.checkState(!this.equals(v),String.format("No deben ser iguales %s \n %s \n %s",a.toString(),this.toString(),v.toString()));
-		return v;
+		return this.swap(this.blackPosition().add(ActionPuzzle.direction(a)));
 	}
 	
 	@Override

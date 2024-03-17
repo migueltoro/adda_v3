@@ -2,8 +2,6 @@ package us.lsi.alg.typ;
 
 import java.util.Comparator;
 import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 import us.lsi.common.List2;
@@ -65,12 +63,7 @@ public record TyPVertexI(Integer index, List<Double> cargas)
 
 	@Override
 	public List<Integer> actions() {
-		if (this.goal()) return List2.of();
-
-		Map<Double, List<Integer>> s = IntStream.range(0, DatosTyP.m).boxed()
-				.collect(Collectors.groupingBy(p -> this.cargas().get(p)));
-
-		return  s.values().stream().map(ls -> ls.get(0)).collect(Collectors.toList());
+		return IntStream.range(0, DatosTyP.m).boxed().toList();
 	}
 	
 	@Override
