@@ -125,5 +125,5 @@ public class AStarCursos {
 		System.out.println(a.time() + "  === "+s);
 	}
 
-	
+
 }
