@@ -34,15 +34,15 @@ public class DatosMochila {
 	public static Integer n;
 
 	/**
-	 * El método lee el fichero de entrada y actualiza la lista ObjetosDisponibles que queda ordenada 
-	 * según el orden natural de los objetos 
+	 * El mï¿½todo lee el fichero de entrada y actualiza la lista ObjetosDisponibles que queda ordenada 
+	 * segï¿½n el orden natural de los objetos 
 	 * 
-	 * @param fichero Fichero que contiene las propiedades de los objetos disponibles. Un objeto por línea
+	 * @param fichero Fichero que contiene las propiedades de los objetos disponibles. Un objeto por lï¿½nea
 	 */
 	public static void iniDatos(String fichero) {
 		ordenObjetos = Comparator.reverseOrder();
 		objetosDisponibles = Files2.streamFromFile(fichero)
-				.<ObjetoMochila> map((String s) -> ObjetoMochila.create(s))
+				.map(s -> ObjetoMochila.parse(s))
 				.sorted(ordenObjetos)
 				.collect(Collectors.<ObjetoMochila> toList());
 		numeroDeObjetos = objetosDisponibles.size();
@@ -62,15 +62,15 @@ public class DatosMochila {
 	}
 	
 	public static Integer getValor(int index){
-		return DatosMochila.getObjetos().get(index).getValor();
+		return DatosMochila.getObjetos().get(index).valor();
 	}
 	
 	public static Integer getPeso(int index){
-		return DatosMochila.getObjetos().get(index).getPeso();
+		return DatosMochila.getObjetos().get(index).peso();
 	}
 	
 	public static Integer getNumMaxDeUnidades(int index){
-		return DatosMochila.getObjetos().get(index).getNumMaxDeUnidades();
+		return DatosMochila.getObjetos().get(index).numMaxDeUnidades();
 	}
 	
 	public static Integer getNumUnidadesPosibles(int index, Integer capacidad){

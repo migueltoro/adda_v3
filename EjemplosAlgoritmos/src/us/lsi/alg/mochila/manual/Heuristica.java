@@ -4,38 +4,39 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
+import org.jgrapht.GraphPath;
+import org.jgrapht.graph.GraphWalk;
+
+import us.lsi.alg.mochila.MochilaEdge;
 import us.lsi.alg.mochila.MochilaVertex;
 import us.lsi.alg.mochila.SolucionMochila;
+import us.lsi.graphs.virtual.EGraph;
 import us.lsi.mochila.datos.DatosMochila;
 
 public class Heuristica {
 
-	private static record HMochila(Integer index, Double capacidadRestante) {		
-		
-		public static HMochila of(Integer index, Double capacidadRestante) {
-			return new HMochila(index, capacidadRestante);
-		}
-		
-		public Double heuristicAction() {
-			return Math.min(this.capacidadRestante()/DatosMochila.getPeso(this.index()),DatosMochila.getNumMaxDeUnidades(index));
-		}
-		
-		public HMochila vecino(Double a) {
-			return HMochila.of(this.index() + 1, this.capacidadRestante() - a * DatosMochila.getPeso(this.index()));
-		}
-		
-	}
-
-	
-	public static Integer voraz(MochilaVertex v1) {
+	public static Integer valorVoraz(MochilaVertex v1) {
 		MochilaVertex v = v1;
 		Integer r = 0;
-		while (v.capacidadRestante() > 0 && v.index() < DatosMochila.n) {
+		while (!v.goal()) {
 			Integer a = v.greedyAction();
 			r = r + a * DatosMochila.getValor(v.index());
 			v = v.neighbor(a);
 		}
 		return r;
+	}
+	
+	public static GraphPath<MochilaVertex,MochilaEdge> caminoVoraz(EGraph<MochilaVertex,MochilaEdge> g, MochilaVertex v1) {
+		MochilaVertex v = v1;
+		Integer r = 0;
+		List<MochilaVertex> vertices = new ArrayList<>(List.of(v));
+		while (!v.goal()) {
+			Integer a = v.greedyAction();
+			r = r + a * DatosMochila.getValor(v.index());
+			v = v.neighbor(a);
+			vertices.add(v);
+		}
+		return new GraphWalk<>(g,vertices,r);
 	}
 	
 	public static SolucionMochila solucionVoraz(MochilaVertex v1) {
@@ -51,12 +52,14 @@ public class Heuristica {
 	
 	
 	public static Double heuristica(MochilaVertex v1) {
-		HMochila v = HMochila.of(v1.index(),v1.capacidadRestante().doubleValue());
+		Integer index = v1.index();
+		Double cr = v1.capacidadRestante().doubleValue();
 		Double r = 0.;
-		while (v.capacidadRestante() > 0 && v.index() < DatosMochila.n) {
-			Double a = v.heuristicAction();
-			r = r + a * DatosMochila.getValor(v.index());
-			v = v.vecino(a);
+		while (cr > 0 && index < DatosMochila.n) {
+			Double a = MochilaVertex.heuristicAction(index, cr);
+			r = r + a * DatosMochila.getValor(index);
+			index = index + 1;
+			cr = cr - a * DatosMochila.getPeso(index);
 		}
 		return r;
 	}
@@ -64,7 +67,7 @@ public class Heuristica {
 	public static Integer heuristica2(MochilaVertex v1) {
 		MochilaVertex v = v1;
 		Integer r = 0;
-		while (v.capacidadRestante() > 0 && v.index() < DatosMochila.n) {
+		while (!v.goal()) {
 			Integer a = v.greedyAction()+1;
 			r = r + a * DatosMochila.getValor(v.index());
 			Integer cr = v.capacidadRestante() - a * DatosMochila.getPeso(v.index());
@@ -87,10 +90,10 @@ public class Heuristica {
 	
 	public static void main(String[] args) {
 		Locale.setDefault(Locale.of("en", "US"));
-		DatosMochila.iniDatos("ficheros/objetosMochila.txt");
+		DatosMochila.iniDatos("ficheros/mochila/objetosMochila.txt");
 		DatosMochila.capacidadInicial = 78;
 		MochilaVertex v1 = MochilaVertex.of(0, DatosMochila.capacidadInicial);
-		Integer r = Heuristica.voraz(v1);
+		Integer r = Heuristica.valorVoraz(v1);
 		Double s1 = Heuristica.heuristica(v1);
 		Integer s2 = Heuristica.heuristica2(v1);
 		SolucionMochila s = Heuristica.solucionVoraz(v1);

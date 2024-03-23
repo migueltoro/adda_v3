@@ -43,7 +43,7 @@ public class DatosMochilaAGRange implements RangeIntegerData<SolucionMochila> {
 
 	@Override
 	public Integer max(Integer i) {
-		return DatosMochila.getObjetos().get(i).getNumMaxDeUnidades()+1;
+		return DatosMochila.getObjetos().get(i).numMaxDeUnidades()+1;
 	}
 
 	@Override

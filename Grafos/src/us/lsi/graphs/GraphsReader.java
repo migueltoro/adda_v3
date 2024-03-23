@@ -14,24 +14,24 @@ import org.jgrapht.Graph;
 
 /**
  * <p>
- * Clase adecuada para construir un grafo a partir de la información en un fichero
+ * Clase adecuada para construir un grafo a partir de la informaciï¿½n en un fichero
  * 
  * El fichero debe tener una estructura como la siguiente. 
  * 
- * Cada línea en la sección de vértices representa un vértice. 
- * El primer campo debe ser un identificador único para el mismo
+ * Cada lï¿½nea en la secciï¿½n de vï¿½rtices representa un vï¿½rtice. 
+ * El primer campo debe ser un identificador ï¿½nico para el mismo
  * Los otros campos propiedades
  * 
- * Cada línea de la sección de aristas representa una arista
- * Los dos primeros campos son los identificadores de los vértices extremos
+ * Cada lï¿½nea de la secciï¿½n de aristas representa una arista
+ * Los dos primeros campos son los identificadores de los vï¿½rtices extremos
  * Los otros campos propiedades
  * </p>
  * 
  * #VERTEX# <br>
  * s1,Sevilla <br>
- * s2,Córdoba <br>
- * s3,Cádiz <br>
- * s4,Málaga <br>
+ * s2,Cï¿½rdoba <br>
+ * s3,Cï¿½diz <br>
+ * s4,Mï¿½laga <br>
  * #EDGE# <br>
  * s1,s2,180. <br>
  * s1,s3,120. <br>
@@ -53,12 +53,12 @@ public class GraphsReader {
 		return r;
 	}
 	/**
-	 * @param file Fichero con la información de entrada
-	 * @param vf Factoría para construir los vértices a partir de las líneas del fichero previamente tokenizada
-	 * @param ef Factoría para construir las aristas a partir de las líneas del fichero previamente tokenizada
+	 * @param file Fichero con la informaciï¿½n de entrada
+	 * @param vf Factorï¿½a para construir los vï¿½rtices a partir de las lï¿½neas del fichero previamente tokenizada
+	 * @param ef Factorï¿½a para construir las aristas a partir de las lï¿½neas del fichero previamente tokenizada
 	 * @param creator Creador del grafo  
-	 * @return Grafo sin peso con la información del fichero
-	 * @param <V> El tipo de los vértices
+	 * @return Grafo sin peso con la informaciï¿½n del fichero
+	 * @param <V> El tipo de los vï¿½rtices
 	 * @param <E> El tipo de las aristas
 	 * @param <G> El tipo del Grafo
 	 * @throws IllegalArgumentException Si no encuentra el fichero o si el fichero tiene una estructura no adecuada
@@ -72,16 +72,16 @@ public class GraphsReader {
 	}
 	
 	/**
-	 * @pre El grafo pasado con parámetro debe ser con peso y ew 
+	 * @pre El grafo pasado con parï¿½metro debe ser con peso y ew 
 	 * debe ser distinto de null
-	 * @param file Fichero con la información de entrada
-	 * @param vf Factoría para construir los vértices a partir de las líneas del fichero previamente tokenizada
-	 * @param ef Factoría para construir las aristas a partir de las líneas del fichero previamente tokenizada
+	 * @param file Fichero con la informaciï¿½n de entrada
+	 * @param vf Factorï¿½a para construir los vï¿½rtices a partir de las lï¿½neas del fichero previamente tokenizada
+	 * @param ef Factorï¿½a para construir las aristas a partir de las lï¿½neas del fichero previamente tokenizada
 	 * @param creator Grafo de entrada 
-	 * @param ew Función que proporciona el peso de la arista. Debe ser distinto de null si el grafo es 
+	 * @param ew Funciï¿½n que proporciona el peso de la arista. Debe ser distinto de null si el grafo es 
 	 * de tipo WeightedGraph&lt;V,E&gt;. Si es null no se usa. 
-	 * @return Grafo con la información del fichero
-	 * @param <V> El tipo de los vértices
+	 * @return Grafo con la informaciï¿½n del fichero
+	 * @param <V> El tipo de los vï¿½rtices
 	 * @param <E> El tipo de las aristas
 	 * @param <G> El tipo del grafo
 	 * @throws IllegalArgumentException Si no encuentra el fichero o si el fichero tiene una estructura no adecuada
@@ -131,7 +131,7 @@ public class GraphsReader {
 				String[] arista = eliminaBlancos(aristaStr.split(","));
 				
 				if (arista.length < 2)
-					throw new IllegalArgumentException("El número de vértices de la arista no es correcto");
+					throw new IllegalArgumentException("El nï¿½mero de vï¿½rtices de la arista no es correcto");
 
 				if (arista.length >= 2) {
 					E edge = ef.apply(arista);
@@ -144,9 +144,10 @@ public class GraphsReader {
 
 			return ret;
 
-		} catch (IndexOutOfBoundsException e) {
+		} catch (Exception e) {
 			throw new IllegalArgumentException(
-					"La composición del fichero no es correcta");
+					"La composiciï¿½n del fichero no es correcta");
 		}
 	}
+	
 }

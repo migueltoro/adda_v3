@@ -40,7 +40,7 @@ public class DatosMochilaSubList implements PermutationData<SolucionMochila> {
 	
 	@Override
 	public Integer maxMultiplicity(int index) {
-		return DatosMochila.getObjetos().get(index).getNumMaxDeUnidades();
+		return DatosMochila.getObjetos().get(index).numMaxDeUnidades();
 	}
 
 	@Override

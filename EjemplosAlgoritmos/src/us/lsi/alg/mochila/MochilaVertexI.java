@@ -59,8 +59,8 @@ public record MochilaVertexI(Integer index, Integer capacidadRestante)
 		return Math.min(this.capacidadRestante/DatosMochila.getPeso(index),DatosMochila.getNumMaxDeUnidades(index));
 	}
 	
-	public Double heuristicAction() {
-		return Math.min(this.capacidadRestante.doubleValue()/DatosMochila.getPeso(index),DatosMochila.getNumMaxDeUnidades(index));
+	public static Double heuristicAction(Integer index, Double cr) {
+		return Math.min(cr/DatosMochila.getPeso(index),DatosMochila.getNumMaxDeUnidades(index));
 	}
 
 	@Override

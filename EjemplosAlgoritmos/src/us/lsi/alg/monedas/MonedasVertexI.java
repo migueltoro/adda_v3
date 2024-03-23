@@ -78,7 +78,5 @@ public record MonedasVertexI(Integer index,Integer valorRestante)
 	public MonedasEdge edge(Integer a) {
 		return MonedasEdge.of(this,this.neighbor(a),a);
 	}
-
-	
 	
 }

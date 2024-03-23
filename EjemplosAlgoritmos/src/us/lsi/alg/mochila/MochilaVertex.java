@@ -19,4 +19,8 @@ public interface MochilaVertex extends VirtualVertex<MochilaVertex, MochilaEdge,
 	public static MochilaVertex of(Integer i, Integer capacidadInicial) {
 		return MochilaVertexI.of(i, capacidadInicial);
 	}
+	
+	public static Double heuristicAction(Integer index, Double cr) {
+		return MochilaVertexI.heuristicAction(index, cr);
+	}
 }

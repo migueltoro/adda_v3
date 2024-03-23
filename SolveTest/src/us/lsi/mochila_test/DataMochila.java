@@ -18,13 +18,13 @@ public class DataMochila {
 		return n;
 	}
 	public static Integer getValor(Integer i) {
-		return objetos.get(i).getValor();
+		return objetos.get(i).valor();
 	}
 	public static Integer getPeso(Integer i) {
-		return objetos.get(i).getPeso();
+		return objetos.get(i).peso();
 	}
 	public static Integer getNMU(Integer i) {
-		return objetos.get(i).getNumMaxDeUnidades();
+		return objetos.get(i).numMaxDeUnidades();
 	}	
 	public static Integer s(Integer a, Integer b, Integer c) {
 		return a+b+c;
