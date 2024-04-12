@@ -1,6 +1,6 @@
 package us.lsi.alg.pack;
 
-import java.util.ArrayList;
+
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
@@ -66,7 +66,7 @@ public record PackVertexI(Integer index, Map<Integer, Integer> carga)
 	@Override
 	public List<Integer> actions() {
 		if (this.index.equals(n))
-			return new ArrayList<>();
+			return List.of();
 		List<Integer> r = IntStream.range(0, this.nc() + 1).boxed()
 				.filter(c -> this.carga().getOrDefault(c, 0) + volumen(this.index()) <= volumenContenedor())
 				.collect(Collectors.toList());

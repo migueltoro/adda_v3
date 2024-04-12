@@ -53,11 +53,11 @@ public record MonedasVertexI(Integer index,Integer valorRestante)
 	@Override
 	public List<Integer> actions() {
 		List<Integer> r;
-		if(this.index() == DatosMonedas.n) r = new ArrayList<>();
+		if(this.index() == DatosMonedas.n) r = List.of();
 		else if(this.index() == DatosMonedas.n-1 && this.valorRestante%DatosMonedas.valor(this.index) == 0) {
 			r = List.of(this.greedyAction());
 		} else if(this.index() == DatosMonedas.n-1 && this.valorRestante%DatosMonedas.valor(this.index) != 0) {
-		    r = new ArrayList<>();
+		    r = List.of();
 		} else {
 			Integer nue = this.valorRestante()/DatosMonedas.valor(this.index);
 			r = IntStream.range(0,nue+1).boxed().collect(Collectors.toList());

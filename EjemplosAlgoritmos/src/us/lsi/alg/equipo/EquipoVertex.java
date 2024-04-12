@@ -10,7 +10,6 @@ import java.util.stream.Collectors;
 import org.jgrapht.GraphPath;
 
 import us.lsi.common.IntegerSet;
-import us.lsi.common.List2;
 import us.lsi.graphs.virtual.VirtualVertex;
 
 public record EquipoVertex(Integer index,IntegerSet players) implements VirtualVertex<EquipoVertex, EquipoEdge, Integer> {
@@ -101,7 +100,7 @@ public record EquipoVertex(Integer index,IntegerSet players) implements VirtualV
 	@Override
 	public List<Integer> actions() {
 		if (index == DatosEquipo.M) {
-			return List2.empty();
+			return List.of();
 		} else if (index == DatosEquipo.M - 1) {
 			Optional<Integer> mejor = mejorEnPosicion(index);
 			return mejor.isPresent() ? List.of(mejor.get()) : List.of();

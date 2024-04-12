@@ -1,6 +1,6 @@
 package us.lsi.alg.mochila;
 
-import java.util.ArrayList;
+
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.*;
@@ -66,7 +66,7 @@ public record MochilaVertexI(Integer index, Integer capacidadRestante)
 	@Override
 	public List<Integer> actions() {
 		Integer nu = greedyAction().intValue();
-		if(this.index == n-1) return new ArrayList<>(nu);
+		if(this.index == n-1) return List.of(nu);
 		List<Integer> alternativas = IntStream.rangeClosed(0,nu)
 				.boxed()
 				.collect(Collectors.toList());

@@ -1,6 +1,7 @@
 package us.lsi.alg.cursos;
 
 
+import java.util.ArrayList;
 import java.util.List;
 
 import us.lsi.common.IntegerSet;
@@ -31,7 +32,7 @@ public record CursosVertexI(Integer index, IntegerSet remaining, IntegerSet cent
 	public List<Integer> actions() {
 		if (this.index() == DatosCursos.n)
 			return List2.empty();
-		List<Integer> alternatives = List2.of();
+		List<Integer> alternatives = new ArrayList<>();
 		Integer c = DatosCursos.cursos.get(this.index()).centro();
 		Boolean r1 = this.centers().addF(c).size() <= DatosCursos.maxCentros;
 		if (r1)
