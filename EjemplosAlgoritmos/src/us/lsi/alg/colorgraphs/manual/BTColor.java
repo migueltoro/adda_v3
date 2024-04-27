@@ -67,7 +67,7 @@ public class BTColor {
 		
 		BTColor bt = BTColor.of();
 		
-		Integer vr = GreedyColor.valoVoraz(ColorVertexI.first());
+		Integer vr = GreedyColor.valorVoraz(ColorVertexI.first());
 		SolucionColor sv = GreedyColor.solucionVoraz(ColorVertexI.first());
 		bt.btm(null,null);
 		System.out.println("1 = "+bt.time());

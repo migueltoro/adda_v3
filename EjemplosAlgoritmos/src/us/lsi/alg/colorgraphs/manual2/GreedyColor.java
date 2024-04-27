@@ -1,4 +1,4 @@
-package us.lsi.alg.colorgraphs.manual;
+package us.lsi.alg.colorgraphs.manual2;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,6 +19,15 @@ public class GreedyColor {
 		return v.nc();
 	}
 	
+	public static ColorVertex verticeVoraz(ColorVertex v1) {
+		ColorVertex v = v1;
+		while (v.index() < DatosColor.n) {
+			Integer a = v.greedyAction();
+			v = v.neighbor(a);
+		}
+		return v;
+	}
+	
 	public static SolucionColor solucionVoraz(ColorVertex v1) {
 		List<Integer> acciones = new ArrayList<>();
 		ColorVertex v = v1;
@@ -33,9 +42,9 @@ public class GreedyColor {
 	public static void main(String[] args) {
 		Locale.setDefault(Locale.of("en", "US"));
 		
-		DatosColor.data(9,"ficheros/andalucia.txt");
+		DatosColor.data(9,"ficheros/andalucia/andalucia.txt");
 		
-		System.out.println("Voraz = "+valorVoraz(ColorVertex.first()));
+		System.out.println("Voraz = "+verticeVoraz(ColorVertex.first()));
 		
 		System.out.println(solucionVoraz(ColorVertex.first()));
 
