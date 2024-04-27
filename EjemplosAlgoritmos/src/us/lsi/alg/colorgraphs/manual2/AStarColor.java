@@ -16,6 +16,7 @@ import us.lsi.alg.colorgraphs.DatosColor;
 import us.lsi.alg.colorgraphs.SolucionColor;
 
 
+
 public class AStarColor {
 	
 	public static Comparator<ColorVertex> order() {
