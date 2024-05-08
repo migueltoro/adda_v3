@@ -81,7 +81,8 @@ public class MochilaAStar {
 			Handle<Double, AStarMochila> ha = heap.deleteMin();
 			AStarMochila dataActual = ha.getValue();
 			vertexActual = dataActual.vertex();
-			if(this.maxValue != null &&  Heuristica.heuristica(vertexActual) <= this.maxValue) continue;
+			if(this.maxValue != null &&  
+					(dataActual.distanceToOrigin()+Heuristica.heuristica(vertexActual)) <= this.maxValue) continue;
 			for (Integer a : vertexActual.actions()) {
 				MochilaVertex v = vertexActual.neighbor(a);
 				Double newDistance = dataActual.distanceToOrigin()+a*DatosMochila.getValor(vertexActual.index());

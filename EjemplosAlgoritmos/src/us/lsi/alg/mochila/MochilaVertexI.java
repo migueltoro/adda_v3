@@ -65,6 +65,7 @@ public record MochilaVertexI(Integer index, Integer capacidadRestante)
 
 	@Override
 	public List<Integer> actions() {
+		if(this.index == n) return List.of();
 		Integer nu = greedyAction().intValue();
 		if(this.index == n-1) return List.of(nu);
 		List<Integer> alternativas = IntStream.rangeClosed(0,nu)

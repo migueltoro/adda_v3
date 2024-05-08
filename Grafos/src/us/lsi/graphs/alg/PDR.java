@@ -128,6 +128,13 @@ public class PDR<V, E, S> {
 		}
 	}
 	
+	protected void updateMem(V actual,Double accumulateValue, Double toEnd, E edgeOut, E edgeIn) {
+		Double weight = this.graph.initialPath().add(actual, accumulateValue, toEnd, edgeOut, edgeIn);
+		if (this.bestValue == null || this.comparator.compare(weight, this.bestValue) < 0) {
+			this.bestValue = accumulateValue;
+		}
+	}
+	
 	public Set<S> getSolutions(){
 		return this.solutions;
 	}
@@ -162,6 +169,8 @@ public class PDR<V, E, S> {
 		Sp<E> r = null;
 		if(this.solutionsTree.containsKey(actual)) {
 			r = this.solutionsTree.get(actual);
+			Double toEnd = r.weight();
+			updateMem(actual,accumulateValue, toEnd, r.edge(), edgeToOrigin);
 		} else if (graph.goal().test(actual)) {
 			if (graph.goalHasSolution().test(actual)) {
 				r = Sp.of(graph.goalSolutionValue(actual), null);

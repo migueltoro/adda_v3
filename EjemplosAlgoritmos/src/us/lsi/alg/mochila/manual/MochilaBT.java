@@ -52,8 +52,8 @@ public class MochilaBT {
 		} else {
 			List<Integer> alternativas = this.estado.vertice().actions();
 			for(Integer a:alternativas) {	
-				Double cota = this.estado.valorAcumulado()+Heuristica.cota(this.estado.vertice(),a);
-				if(this.maxValue != null && cota <= this.maxValue) continue;
+				Double weight = this.estado.valorAcumulado()+Heuristica.cota(this.estado.vertice(),a);
+				if(this.maxValue != null && weight <= this.maxValue) continue;
 				this.estado.forward(a);
 				btm();  
 				this.estado.back(a);

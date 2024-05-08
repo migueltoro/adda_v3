@@ -21,7 +21,7 @@ public class TestMonedasPDR {
 	public static void main(String[] args) {
 		Locale.setDefault(Locale.of("en", "US"));
 		DatosMonedas.datosIniciales("ficheros/monedas/monedas2.txt");
-		Integer valorInicial = 401;
+		Integer valorInicial = 400;
 
 		MonedasVertex e1 = MonedasVertex.first(valorInicial);
 		

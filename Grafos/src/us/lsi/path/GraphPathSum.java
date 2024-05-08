@@ -108,6 +108,14 @@ public class GraphPathSum<V, E> extends GraphPath2<V,E> implements EGraphPath<V,
 		return weight;
 	}
 	
+	@Override
+	public Double add(V vertexActual, Double acumulateValue, Double toEnd,E edgeOut, E edgeIn) {
+		Preconditions.checkNotNull(edgeOut, "La arista no puede ser null");
+		Double weight = acumulateValue+toEnd;
+		if (edgeIn != null) weight += graph.getVertexPassWeight(vertexActual, edgeIn, edgeOut);
+		return weight;
+	}
+	
 	public GraphPathSum<V,E> copy() {
 		return new GraphPathSum<V, E>(this.graph, 
 				new ArrayList<>(this.vertexList), 

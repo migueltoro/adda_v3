@@ -89,6 +89,11 @@ public class GraphPathLast<V, E> extends GraphPath2<V,E> implements EGraphPath<V
 		return graph.getVertexWeight(target);
 	}
 	
+	@Override
+	public Double add(V vertexActual, Double acumulateValue, Double toEnd,E edgeOut, E edgeIn) {
+		return toEnd;
+	}
+	
 	public GraphPathLast<V,E> copy() {
 		return new GraphPathLast<V, E>(this.graph, 
 				new ArrayList<>(this.vertexList), 
