@@ -8,6 +8,7 @@ import java.util.Locale;
 import java.util.Map;
 
 import us.lsi.alg.matrices.DatosMatrices;
+import us.lsi.alg.matrices.MatrixEdge;
 import us.lsi.alg.matrices.MatrixVertex;
 import us.lsi.hypergraphsD.Data;
 
@@ -56,6 +57,7 @@ public class MatricesPD {
 			List<Sp> sps = new ArrayList<>();
 			for (Integer a : actual.actions()) {
 				List<Sp> spsa = new ArrayList<>();
+				MatrixEdge e = actual.edge(a);
 				for (MatrixVertex v : actual.neighbors(a)) {
 					Sp nba = search(v, memory);
 					if (nba == null) {
@@ -66,8 +68,8 @@ public class MatricesPD {
 				}
 				Sp sp = null;
 				if (spsa != null && !spsa.isEmpty()) {
-					Integer weight = (int) (spsa.get(0).weight() + spsa.get(1).weight());
-					weight += DatosMatrices.nf(actual.i()) * DatosMatrices.nf(a) * DatosMatrices.nc(actual.j() - 1);
+					List<Double> lw = spsa.stream().map(s->s.weight().doubleValue()).toList();
+					Integer weight = e.weight(lw).intValue();
 					sp = Sp.of(a, weight);
 				}
 				sps.add(sp);

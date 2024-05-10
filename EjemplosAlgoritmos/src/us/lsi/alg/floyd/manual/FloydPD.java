@@ -11,6 +11,7 @@ import org.jgrapht.Graph;
 import org.jgrapht.graph.GraphWalk;
 
 import us.lsi.alg.floyd.DatosFloyd;
+import us.lsi.alg.floyd.FloydEdge;
 import us.lsi.alg.floyd.FloydVertex;
 import us.lsi.grafos.datos.Carretera;
 import us.lsi.grafos.datos.Ciudad;
@@ -56,9 +57,10 @@ public class FloydPD {
 				r = Sp.of(null, w);
 			memory.put(actual, r);
 		} else {
-			List<Sp> sps = new ArrayList<>();
+			List<Sp> sps = new ArrayList<>();			
 			for (Boolean a : actual.actions()) {
 				List<Sp> spsa = new ArrayList<>();
+				FloydEdge e = actual.edge(a);
 				for (FloydVertex v : actual.neighbors(a)) {
 					Sp spa = search(v, memory);
 					if (spa == null) {
@@ -69,8 +71,7 @@ public class FloydPD {
 				}
 				Sp sp = null;
 				if (spsa!=null && !spsa.isEmpty()) {
-					if(spsa.size() == 1) sp = Sp.of(false,spsa.get(0).weight());
-					else sp = Sp.of(true,spsa.get(0).weight()+spsa.get(1).weight());
+					sp = Sp.of(a, e.weight(spsa.stream().map(s->s.weight()).toList()));
 				}
 				sps.add(sp);
 			}
