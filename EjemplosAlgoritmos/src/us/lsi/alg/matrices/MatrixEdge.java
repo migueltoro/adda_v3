@@ -4,13 +4,16 @@ package us.lsi.alg.matrices;
 import java.util.List;
 import us.lsi.hypergraphs.SimpleHyperEdge;
 
-public record MatrixEdge(MatrixVertex source,List<MatrixVertex> targets,Integer action) 
+public record MatrixEdge(MatrixVertex source,Integer action) 
            implements SimpleHyperEdge<MatrixVertex,MatrixEdge,Integer> {
 	
-	public static MatrixEdge of(MatrixVertex source, List<MatrixVertex> targets, Integer action) {
-		return new MatrixEdge(source, targets, action);
+	public static MatrixEdge of(MatrixVertex source, Integer action) {
+		return new MatrixEdge(source, action);
 	}
 
+	public List<MatrixVertex> targets() {
+		return this.source.neighbors(action);
+	}
 
 	@Override
 	public Double weight(List<Double> solutions) {		

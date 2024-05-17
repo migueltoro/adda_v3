@@ -52,7 +52,7 @@ public record MatrixVertex(Integer i,Integer j)
 
 	@Override
 	public MatrixEdge edge(Integer a) {
-		return MatrixEdge.of(this, this.neighbors(a),a);
+		return MatrixEdge.of(this, a);
 	}
 
 	@Override
