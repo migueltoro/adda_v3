@@ -7,8 +7,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-import java.util.function.BiFunction;
-import java.util.function.Function;
 import java.util.stream.Collectors;
 
 import us.lsi.alg.matrices.DatosMatrices;
@@ -47,7 +45,18 @@ public class MatricesPD2 {
 		return memory;
 	}
 	
+	private Sp edgeSp(MatrixVertex actual, Integer a, Integer nbn, List<Double> nbWeights) {
+		return nbWeights.size() == nbn ? Sp.of(a,actual.edge(a).weight(nbWeights).intValue()): null;
+	}
 	
+	private Sp edgeSp(MatrixVertex actual, Integer a, List<MatrixVertex> neighbors) {
+		return neighbors.stream()
+				.map(v -> search(v, memory))
+				.takeWhile(s -> s != null)
+				.map(s -> s.weight().doubleValue())
+				.collect(Collectors.collectingAndThen(Collectors.toList(),
+						ls->edgeSp(actual,a,neighbors.size(),ls)));
+	}
 
 	private Sp search(MatrixVertex actual, Map<MatrixVertex, Sp> memory) {
 		Sp r = null;
@@ -58,20 +67,10 @@ public class MatricesPD2 {
 			if (w != null) r = Sp.of(null, w);
 			memory.put(actual, r);
 		} else {
-			List<Integer> actions = actual.actions();			
-			Function<Integer,Integer> nbn = a->actual.neighbors(a).size();
-			BiFunction<List<Double>,Integer,Sp> f0 = 
-					(ls,a)->ls.size() == nbn.apply(a) ? Sp.of(a,actual.edge(a).weight(ls).intValue()): null;
-			Function<Integer, Sp> f = a -> actual.neighbors(a).stream()
-					.map(v -> search(v, memory))
-					.takeWhile(s -> s != null)
-					.map(s -> s.weight().doubleValue())
-					.collect(Collectors.collectingAndThen(Collectors.toList(),ls->f0.apply(ls, a)));
-			r = actions.stream()
-					.map(a -> f.apply(a))
+			r = actual.actions().stream()
+					.map(a -> this.edgeSp(actual, a, actual.neighbors(a)))
 					.filter(sp -> sp != null)
-					.min(Comparator.naturalOrder())
-					.orElse(null);
+					.min(Comparator.naturalOrder()).orElse(null);
 			memory.put(actual, r);
 		}
 		return r;

@@ -27,10 +27,10 @@ public class MochilaPD2 {
 		}
 	}
 	
-	public static record Pr(Integer a, Spm sp)  {
+	public static record ActionSp(Integer a, Spm sp)  {
 		
-		public static Pr of(Integer a, Spm sp) {
-			return new Pr(a, sp);
+		public static ActionSp of(Integer a, Spm sp) {
+			return new ActionSp(a, sp);
 		}
 		
 	}
@@ -77,7 +77,7 @@ public class MochilaPD2 {
 		} else {
 			List<Spm> soluciones = vertex.actions().stream()
 					.filter(a->accumulateValue + Heuristica.cota(vertex,a) > this.maxValue)
-					.map(a->Pr.of(a,pd(vertex.neighbor(a),accumulateValue+vertex.edge(a).weight().intValue(),memory)))
+					.map(a->ActionSp.of(a,pd(vertex.neighbor(a),accumulateValue+vertex.edge(a).weight().intValue(),memory)))
 					.filter(p->p.sp() !=null)
 					.map(p->Spm.of(p.a(),p.sp().weight()+vertex.edge(p.a()).weight()))
 					.toList();			
