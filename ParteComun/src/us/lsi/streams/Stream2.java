@@ -8,15 +8,19 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Comparator;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
+import java.util.SortedMap;
 import java.util.Spliterator;
 import java.util.Spliterators;
+import java.util.TreeMap;
 import java.util.function.BiFunction;
+import java.util.function.BinaryOperator;
 import java.util.function.Function;
 import java.util.stream.Collector;
 import java.util.stream.Collectors;
@@ -389,6 +393,26 @@ public class Stream2 {
 			}while(r);
 		}
 		return b;
+	}
+	
+	public static <E,K> Map<K,E> groupingReduce(Stream<E> st, Function<E,K> key, BinaryOperator<E> op){
+		return st.collect(Collectors.groupingBy(key,
+				Collectors.collectingAndThen(Collectors.reducing(op),e->e.get())));
+	}
+	
+	public static <E,K,T> Map<K,T> groupingReduce(Stream<E> st, Function<E,K> key,  
+			BinaryOperator<T> op, Function<E,T> value){
+		return st.collect(Collectors.groupingBy(key,
+				Collectors.mapping(value,
+						Collectors.collectingAndThen(Collectors.reducing(op),e->e.get()))));
+	}
+	
+	public static <E,K,T> SortedMap<K,T> groupingReduce(Stream<E> st, Function<E,K> key,  
+			BinaryOperator<T> op, Function<E,T> value, Comparator<K> order){
+		return st.collect(Collectors.groupingBy(key, 
+				()->new TreeMap<K,T>(order),
+				Collectors.mapping(value,
+						Collectors.collectingAndThen(Collectors.reducing(op),e->e.get()))));
 	}
 
 }

@@ -20,4 +20,5 @@ module partecomun {
 	requires transitive org.jgrapht.io;
 	requires transitive java.desktop;
 	requires transitive org.antlr.antlr4.runtime;
+	requires transitive org.apache.commons.csv;
 }
