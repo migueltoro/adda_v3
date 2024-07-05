@@ -29,7 +29,9 @@ public class BinaryTreesTest {
 		case BTree<E>  t -> 1 + size(t.left()) + size(t.right());
 		};
 	}
-		
+
+	
+	
 	public static <E> BinaryTree<E> copy(BinaryTree<E> tree) {
 		return switch(tree) {
 		case BEmpty<E> t -> BinaryTree.empty(); 
