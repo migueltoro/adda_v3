@@ -9,6 +9,5 @@ module datos_compartidos {
 	exports us.lsi.grafos.datos;
 	exports us.lsi.bufete.datos;
 
-	
 	requires transitive partecomun;
 }
