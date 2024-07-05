@@ -2,9 +2,9 @@ package us.lsi.p2;
 
 import java.util.List;
 import us.lsi.tiposrecursivos.BinaryTree;
-import us.lsi.tiposrecursivos.BinaryTree.BEmpty;
-import us.lsi.tiposrecursivos.BinaryTree.BLeaf;
-import us.lsi.tiposrecursivos.BinaryTree.BTree;
+import us.lsi.tiposrecursivos.BEmpty;
+import us.lsi.tiposrecursivos.BLeaf;
+import us.lsi.tiposrecursivos.BTree;
 
 public class Ejemplo4 {
 

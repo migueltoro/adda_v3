@@ -12,9 +12,6 @@ import us.lsi.common.Files2;
 import us.lsi.common.List2;
 
 import us.lsi.streams.Stream2;
-import us.lsi.tiposrecursivos.Tree.TEmpty;
-import us.lsi.tiposrecursivos.Tree.TLeaf;
-import us.lsi.tiposrecursivos.Tree.TNary;
 
 public class Trees {
 	

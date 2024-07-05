@@ -15,13 +15,9 @@ import us.lsi.common.Files2;
 import us.lsi.common.List2;
 import us.lsi.common.MutableType;
 import us.lsi.streams.Stream2;
-import us.lsi.tiposrecursivos.BinaryTree.BEmpty;
-import us.lsi.tiposrecursivos.BinaryTree.BLeaf;
-import us.lsi.tiposrecursivos.BinaryTree.BTree;
 
 
 public class BinaryTrees {
-
 
 	public static <E> Stream<BinaryTree<E>> byDeph(BinaryTree<E> tree) {
 		return Stream2.ofIterator(DepthPathBinaryTree.of(tree));

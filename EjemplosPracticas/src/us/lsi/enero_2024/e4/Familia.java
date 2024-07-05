@@ -2,9 +2,9 @@ package us.lsi.enero_2024.e4;
 
 import us.lsi.common.Multiset;
 import us.lsi.tiposrecursivos.Tree;
-import us.lsi.tiposrecursivos.Tree.TEmpty;
-import us.lsi.tiposrecursivos.Tree.TLeaf;
-import us.lsi.tiposrecursivos.Tree.TNary;
+import us.lsi.tiposrecursivos.TEmpty;
+import us.lsi.tiposrecursivos.TLeaf;
+import us.lsi.tiposrecursivos.TNary;
 
 public class Familia {
 

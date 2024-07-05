@@ -5,9 +5,9 @@ import java.util.List;
 import java.util.function.Predicate;
 
 import us.lsi.tiposrecursivos.Tree;
-import us.lsi.tiposrecursivos.Tree.TEmpty;
-import us.lsi.tiposrecursivos.Tree.TLeaf;
-import us.lsi.tiposrecursivos.Tree.TNary;
+import us.lsi.tiposrecursivos.TEmpty;
+import us.lsi.tiposrecursivos.TLeaf;
+import us.lsi.tiposrecursivos.TNary;
 
 public class Ejemplo5 {
 	/*

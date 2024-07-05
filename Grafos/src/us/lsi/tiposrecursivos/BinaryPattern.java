@@ -3,16 +3,7 @@ package us.lsi.tiposrecursivos;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Function;
-
-import us.lsi.tiposrecursivos.BinaryTree.BEmpty;
-import us.lsi.tiposrecursivos.BinaryTree.BLeaf;
-import us.lsi.tiposrecursivos.BinaryTree.BTree;
 import us.lsi.common.MutableType;
-import us.lsi.tiposrecursivos.BinaryPattern.PEmpty;
-import us.lsi.tiposrecursivos.BinaryPattern.PLeaf;
-import us.lsi.tiposrecursivos.BinaryPattern.PTree;
-import us.lsi.tiposrecursivos.BinaryPattern.PVarLabel;
-import us.lsi.tiposrecursivos.BinaryPattern.PVarTree;
 
 
 public sealed interface  BinaryPattern<E> permits PTree, PEmpty, PLeaf, PVarLabel, PVarTree {
@@ -109,34 +100,6 @@ public sealed interface  BinaryPattern<E> permits PTree, PEmpty, PLeaf, PVarLabe
 		if(m.match) r = result.sustitute(m);
 		rs.setValue(m.match);
 		return r;
-	}
-	
-	public static record PEmpty<E>() implements BinaryPattern<E> {
-		public PatternType type() { return PatternType.Empty;}
-		public String toString() { return "_"; }
-	}
-	
-	public static record PLeaf<E>(E label) implements BinaryPattern<E> {
-		public PatternType type() { return PatternType.Leaf;}
-		public String toString() { return this.label().toString(); }
-	}
-	
-	public static record PTree<E>(E label, BinaryPattern<E> left, BinaryPattern<E> right) 
-			implements BinaryPattern<E> {
-		public PatternType type() { return PatternType.Binary;}
-		public String toString() { return String.format("%s(%s,%s)",
-				this.label().toString(),this.left().toString(),this.right().toString());}
-	}
-	
-	public static record PVarTree<E> (String varName, BinaryPattern<E> left, BinaryPattern<E> right) implements BinaryPattern<E> {
-		public PatternType type() { return PatternType.VarTree; }
-		public String toString() { return String.format("%s(%s,%s)",
-				this.varName().toString(),this.left().toString(),this.right().toString());}
-	}
-	
-	public static record PVarLabel<E> (String varName) implements BinaryPattern<E> {
-		public PatternType type() { return PatternType.VarLabel; }
-		public String toString() { return this.varName().toString() ; }
 	}
 	
 	public static class Matches<E> {

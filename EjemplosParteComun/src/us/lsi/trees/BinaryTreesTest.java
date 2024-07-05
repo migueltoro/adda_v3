@@ -13,10 +13,10 @@ import us.lsi.colors.GraphColors;
 import us.lsi.common.List2;
 import us.lsi.common.String2;
 import us.lsi.tiposrecursivos.AVLTree;
+import us.lsi.tiposrecursivos.BEmpty;
 import us.lsi.tiposrecursivos.BinaryTree;
-import us.lsi.tiposrecursivos.BinaryTree.BEmpty;
-import us.lsi.tiposrecursivos.BinaryTree.BLeaf;
-import us.lsi.tiposrecursivos.BinaryTree.BTree;
+import us.lsi.tiposrecursivos.BLeaf;
+import us.lsi.tiposrecursivos.BTree;
 import us.lsi.tiposrecursivos.BinaryTrees; 
 
 
