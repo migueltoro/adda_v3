@@ -27,9 +27,9 @@ public class TreesTest {
 	
 	public static <E> Integer size(Tree<E> tree) {
 		return switch(tree) {
-		case TEmpty<E> t -> 0 ; 
-		case TLeaf<E> t -> 1; 
-		case TNary<E> t -> 1 + t.children().stream().mapToInt(x->size(x)).sum(); 
+		case TEmpty() -> 0 ; 
+		case TLeaf(var lb) -> 1; 
+		case TNary(var lb, var chd) -> 1 + chd.stream().mapToInt(x->size(x)).sum(); 
 		};	
 	}
 	
@@ -39,9 +39,9 @@ public class TreesTest {
 	
 	public static <E> Integer height(Tree<E> tree) {
 		return switch(tree) {
-		case TEmpty<E> t -> -1; 
-		case TLeaf<E> t -> 0; 
-		case TNary<E> t -> 1+ tree.children().stream().mapToInt(x->x.height()).max().getAsInt(); 
+		case TEmpty() -> -1; 
+		case TLeaf(var lb) -> 0; 
+		case TNary(var lb, var chd) -> 1+ chd.stream().mapToInt(x->x.height()).max().getAsInt(); 
 		};	
 	}
 	
@@ -56,10 +56,10 @@ public class TreesTest {
 	
 	public static <E> Boolean containsLabel(Tree<E> tree, E label) {
 		return switch (tree) {
-		case TEmpty<E> t -> false;
-		case TLeaf<E> t -> t.label().equals(label);
-		case TNary<E> t -> t.label().equals(label)
-				|| t.children().stream().anyMatch(x -> containsLabel(x, label));
+		case TEmpty() -> false;
+		case TLeaf(var lb) -> lb.equals(label);
+		case TNary(var lb, var chd) -> lb.equals(label)
+				|| chd.stream().anyMatch(x -> containsLabel(x, label));
 		};
 	}
 	
@@ -70,39 +70,39 @@ public class TreesTest {
 	
 	public static <E> Boolean equals(Tree<E> t1, Tree<E> t2) {
 		return switch(t1) {
-		case TEmpty<E> t when t2 instanceof TEmpty<E> s -> true;
-		case TLeaf<E> t when t2 instanceof TLeaf<E> s-> t.label().equals(s.label());
-		case TNary<E> t when t2 instanceof TNary<E> s -> 
-					t.label().equals(s.label()) 
-					&& t.childrenNumber() == s.childrenNumber()
-					&& IntStream.range(0, t.childrenNumber())
-					.allMatch(i -> t.child(i).equals(s.child(i)));
+		case TEmpty() when t2 instanceof TEmpty<E> s -> true;
+		case TLeaf(var lb) when t2 instanceof TLeaf<E> s -> s.label().equals(lb);
+		case TNary(var lb, var chd) when t2 instanceof TNary<E> s -> 
+					lb.equals(s.label()) 
+					&& chd.size() == s.childrenNumber()
+					&& IntStream.range(0, chd.size())
+					.allMatch(i -> chd.get(i).equals(s.child(i)));
 		default -> false;
 		};
 	}
 	
 	public static <E> Tree<E> copy(Tree<E> tree) {
 		return switch (tree) {
-		case TEmpty<E> t -> Tree.empty();
-		case TLeaf<E> t -> Tree.leaf(t.label());
-		case TNary<E> t -> {
-			List<Tree<E>> ch = t.children().stream().map(x -> copy(x)).collect(Collectors.toList());
-			yield Tree.nary(t.label(), ch);
+		case TEmpty() -> Tree.empty();
+		case TLeaf(var lb) -> Tree.leaf(lb);
+		case TNary(var lb, var chd) -> {
+			List<Tree<E>> ch = chd.stream().map(x -> copy(x)).collect(Collectors.toList());
+			yield Tree.nary(lb, ch);
 		}
 		};
 	}
 	
 	public static <E> List<E> toListPostOrden(Tree<E> tree) {
 		return switch(tree) {
-		case TEmpty<E> t  -> new ArrayList<>(); 
-		case TLeaf<E> t -> {
+		case TEmpty()  -> new ArrayList<>(); 
+		case TLeaf(var lb) -> {
 			List<E> r = new ArrayList<>();
-			r.add(t.label());
+			r.add(lb);
 			yield r;
 		}
-		case TNary<E> t  -> { 
-			List<E> r = t.children().stream().flatMap(x->toListPostOrden(x).stream()).collect(Collectors.toList());
-			r.add(t.label());	
+		case TNary(var lb, var chd)  -> { 
+			List<E> r = chd.stream().flatMap(x->toListPostOrden(x).stream()).collect(Collectors.toList());
+			r.add(lb);	
 			yield r;
 		}
 		};
@@ -110,9 +110,9 @@ public class TreesTest {
 	
 	public static Integer sumIfPredicate(Tree<Integer> tree, Predicate<Integer> predicate) {
 		return switch (tree) {
-		case TEmpty<Integer> t -> 0;
-		case TLeaf<Integer> t -> predicate.test(t.label()) ? t.label() : 0;
-		case TNary<Integer> t -> predicate.test(t.label()) ? t.label()
+		case TEmpty() -> 0;
+		case TLeaf(var lb) -> predicate.test(lb) ? lb : 0;
+		case TNary(var lb, var chd) -> predicate.test(lb) ? lb
 				: 0 + tree.children().stream().mapToInt(x -> sumIfPredicate(x, predicate)).sum();
 		};
 	}
@@ -139,40 +139,38 @@ public class TreesTest {
 	}
 	
 	public static void palindromas(Tree<Character> tree, String camino, Set<String> st) {
-		switch(tree) {	
-		case TEmpty<Character> t: break;
-		case TLeaf<Character> t: 
-			Character label = t.label();
-			camino = camino+label;
-			if(IterativosyRecursivosSimples.esPalindromo1(camino)) st.add(camino);
-			break;
-		case TNary<Character> t: 
-			label = t.label();
-			camino = camino+label;
-			for(Tree<Character> tt: t.children()) 
-				palindromas(tt,camino,st);
-			break;
+		switch (tree) {
+		case TEmpty() -> {;}
+		case TLeaf(var lb) -> {
+			Character label = lb;
+			camino = camino + label;
+			if (IterativosyRecursivosSimples.esPalindromo1(camino))
+				st.add(camino);
+		}
+		case TNary(var lb, var chd) -> {
+			camino = camino + lb;
+			for (Tree<Character> tt : chd)
+				palindromas(tt, camino, st);
+		}
 		}
 	}
-	
+
 	public static Set<String> palindromas2(Tree<Character> tree) {
 		return palindromas2(tree, "");
 	}
 	
 	public static Set<String> palindromas2(Tree<Character> tree, String camino) {
 		return switch(tree) {	
-		case TEmpty<Character> t -> Set2.of();
-		case TLeaf<Character> t -> {
-			Character label = t.label();
-			camino = camino+label;
+		case TEmpty() -> Set2.of();
+		case TLeaf(var lb) -> {
+			camino = camino+lb;
 			if(IterativosyRecursivosSimples.esPalindromo1(camino)) yield Set2.of(camino);
 			else yield Set2.of();
 		}
-		case TNary<Character> t -> {
-			Character label = t.label();
-			camino = camino+label;
+		case TNary(var lb, var chd) -> {
+			camino = camino+lb;
 			Set<String> st = Set2.of();
-			for(Tree<Character> tt: t.children()) {
+			for(Tree<Character> tt: chd) {
 				Set<String> st1 = palindromas2(tt,camino);
 				st.addAll(st1);
 			}

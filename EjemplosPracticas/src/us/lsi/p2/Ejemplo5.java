@@ -22,28 +22,27 @@ public class Ejemplo5 {
 	
 
 	public static <E> List<Boolean> solucion_recursiva (Tree<E> t, Predicate<E> p){
-		return recursivo (t,p,0,new ArrayList<>());
+		List<Boolean> res = new ArrayList<>();
+		recursivo (t,p,0,res);
+		return res;
 	}
 	
 	
-	private static <E> List<Boolean> recursivo(Tree<E> tree, Predicate<E> pred, int nivel, List<Boolean> res) {
+	private static <E> void recursivo(Tree<E> tree, Predicate<E> pred, int nivel, List<Boolean> res) {
 		if(res.size() <= nivel) res.add(true);
-		return switch (tree) {
-		case TEmpty<E> t -> res;
-		case TLeaf<E> t -> {
-			Boolean r = pred.test(t.label()) && res.get(nivel);
+		switch (tree) {
+		case TEmpty() -> {;}
+		case TLeaf(var lb) -> {
+			Boolean r = pred.test(lb) && res.get(nivel);
 			res.set(nivel, r); 
-			yield res;
 		}
-		case TNary<E> t -> {
-			Boolean r = pred.test(t.label()) && res.get(nivel);
+		case TNary(var lb, var chd) -> {
+			Boolean r = pred.test(lb) && res.get(nivel);
 			res.set(nivel, r);
-			t.children().forEach(tc -> recursivo(tc, pred, nivel + 1, res));
-			yield res;
+			chd.forEach(tc -> recursivo(tc, pred, nivel + 1, res));
 		}
-		default -> res;
-		};
 	}
 	
+	}	
 }
 

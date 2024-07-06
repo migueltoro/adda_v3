@@ -24,9 +24,9 @@ public class BinaryTreesTest {
 	
 	public static <E> Integer size(BinaryTree<E> tree) {
 		return switch (tree) {
-		case BEmpty<E>  t-> 0;
-		case BLeaf<E>  t -> 1;
-		case BTree<E>  t -> 1 + size(t.left()) + size(t.right());
+		case BEmpty()  -> 0;
+		case BLeaf(var lb)  -> 1;
+		case BTree(var lb,var lt, var rt)  -> 1 + size(lt) + size(rt);
 		};
 	}
 
@@ -34,32 +34,32 @@ public class BinaryTreesTest {
 	
 	public static <E> BinaryTree<E> copy(BinaryTree<E> tree) {
 		return switch(tree) {
-		case BEmpty<E> t -> BinaryTree.empty(); 
-		case BLeaf<E> t -> BinaryTree.leaf(t.label()); 
-		case BTree<E> t -> BinaryTree.binary(t.label(), copy(t.left()), copy(t.right()));	
+		case BEmpty() -> BinaryTree.empty(); 
+		case BLeaf(var lb) -> BinaryTree.leaf(lb); 
+		case BTree(var lb,var lt, var rt) -> BinaryTree.binary(lb, copy(lt), copy(rt));	
 		};	
 	}
 		
 	public static <E> BinaryTree<E> reverseCopy(BinaryTree<E> tree) {
 		return switch(tree) {
-		case BEmpty<E> t -> BinaryTree.empty(); 
-		case BLeaf<E> t -> BinaryTree.leaf(t.label()); 
-		case BTree<E> t -> BinaryTree.binary(t.label(), reverseCopy(t.right()), reverseCopy(t.left()));
+		case BEmpty() -> BinaryTree.empty(); 
+		case BLeaf(var lb) -> BinaryTree.leaf(lb); 
+		case BTree(var lb,var lt, var rt)  -> BinaryTree.binary(lb, reverseCopy(rt), reverseCopy(lt));
 		};	
 	}
 	
 	public static <E> List<E> toListPostOrden(BinaryTree<E> tree) {
 		return switch(tree) {
-		case BEmpty<E> t -> new ArrayList<>(); 
-		case BLeaf<E> t -> {
+		case BEmpty() -> new ArrayList<>(); 
+		case BLeaf(var lb) -> {
 			List<E> r = new ArrayList<>();
-			r.add(t.label());
+			r.add(lb);
 			yield r;
 		}
-		case BTree<E> t -> { 
-			List<E> r = toListPostOrden(t.left());
-			r.addAll(toListPostOrden(t.right()));
-			r.add(t.label());	
+		case BTree(var lb,var lt, var rt) -> { 
+			List<E> r = toListPostOrden(lt);
+			r.addAll(toListPostOrden(rt));
+			r.add(lb);	
 			yield r;
 		}
 		};
@@ -67,10 +67,10 @@ public class BinaryTreesTest {
 
 	public static Integer sumIfPredicate(BinaryTree<Integer> tree, Predicate<Integer> predicate) {
 		return switch (tree) {
-		case BEmpty<Integer> t -> 0;
-		case BLeaf<Integer> t -> predicate.test(t.label()) ? t.label() : 0;
-		case BTree<Integer> t -> predicate.test(t.label()) ? t.label()
-				: 0 + sumIfPredicate(t.left(), predicate) + sumIfPredicate(t.right(), predicate);
+		case BEmpty() -> 0;
+		case BLeaf(var lb) -> predicate.test(lb) ? lb : 0;
+		case BTree(var lb,var lt, var rt) -> predicate.test(lb) ? lb
+				: 0 + sumIfPredicate(lt, predicate) + sumIfPredicate(rt, predicate);
 		};
 	}
 	
@@ -91,10 +91,10 @@ public class BinaryTreesTest {
 	public static Boolean existeLista(BinaryTree<Character> tree, List<Character> ls) {
 		Integer n = ls.size();
 		return switch (tree) {
-		case BEmpty<Character> t when ls.isEmpty() -> true;
-		case BLeaf<Character> t when !ls.isEmpty() -> ls.get(0).equals(t.label());
-		case BTree<Character> t when !ls.isEmpty() -> ls.get(0).equals(t.label())
-				&& (existeLista(t.left(), ls.subList(1, n)) || existeLista(t.right(), ls.subList(1, n)));
+		case BEmpty() when ls.isEmpty() -> true;
+		case BLeaf(var lb) when !ls.isEmpty() -> ls.get(0).equals(lb);
+		case BTree(var lb,BinaryTree<Character> lt, BinaryTree<Character> rt) when !ls.isEmpty() -> ls.get(0).equals(lb)
+				&& (existeLista(lt, ls.subList(1, n)) || existeLista(rt, ls.subList(1, n)));
 		};
 	}
 	
@@ -111,12 +111,12 @@ public class BinaryTreesTest {
 	
 	public static TT maxCamino(BinaryTree<Integer> tree, List<Integer> camino) {
 		return switch(tree) {	
-		case BEmpty<Integer> t -> null;
-		case BLeaf<Integer> t -> TT.of(List2.addLast(camino,t.label()));
-		case BTree<Integer> t -> {
-			camino = List2.addLast(camino,t.label());
-			TT left = maxCamino(t.left(),camino);
-			TT right = maxCamino(t.right(),camino);
+		case BEmpty() -> null;
+		case BLeaf(var lb) -> TT.of(List2.addLast(camino,lb));
+		case BTree(var lb,var lt, var rt) -> {
+			camino = List2.addLast(camino,lb);
+			TT left = maxCamino(lt,camino);
+			TT right = maxCamino(rt,camino);
 			yield Stream.of(left,right).filter(x->x!=null).max(Comparator.comparing(x->x.p())).orElse(null);
 		}
 		};

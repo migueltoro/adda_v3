@@ -26,10 +26,10 @@ public class Ejemplo4 {
 	public static Boolean recursivo(BinaryTree<Character> tree, List<Character> ls, int i) {
 		Integer n = ls.size();
 		return switch (tree) {
-		case BEmpty<Character> t -> false;
-		case BLeaf<Character> t -> n - i == 1 && ls.get(i).equals(t.label());
-		case BTree<Character> t -> n - i > 0 && ls.get(i).equals(t.label())
-				&& (recursivo(t.left(), ls, i+1) || recursivo(t.right(), ls, i+1));
+		case BEmpty() -> false;
+		case BLeaf(var lb) -> n - i == 1 && ls.get(i).equals(lb);
+		case BTree(var lb, var lt, var rt) -> n - i > 0 && ls.get(i).equals(lb)
+				&& (recursivo(lt, ls, i+1) || recursivo(rt, ls, i+1));
 		};
 	}
 
