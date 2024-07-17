@@ -30,8 +30,6 @@ import us.lsi.common.View1;
 
 public class Iterables {
 	
-	
-	
 	/**
 	 * @param iterable Un iterable 
 	 * @return Un iterador con todos los pares que formar el producto cartesiano de los elementos recorridos por el iterable 
@@ -68,7 +66,7 @@ public class Iterables {
 	
 	/**
 	 * @param iterator Un iterador
-	 * @return Un iterador con todos los pares los elementos del iterador de entrada y su ppsición empezando por cero
+	 * @return Un iterador con todos los pares los elementos del iterador de entrada y su ppsiciï¿½n empezando por cero
 	 */
 	public static <E> Iterable<Enumerate<E>> enumerate(Iterable<E> iterator) {
 		return IteratorEnumerate.of(iterator);
@@ -90,7 +88,7 @@ public class Iterables {
 	
 	/**
 	 * @param file Un fichero
-	 * @return Un iterable que recorre las líneas del fichero
+	 * @return Un iterable que recorre las lï¿½neas del fichero
 	 */
 	public static Iterable<String> file(String file) {
 		return new IteratorFile(file);	
@@ -98,7 +96,7 @@ public class Iterables {
 	
 	/**
 	 * @param e Una cadena de entrada
-	 * @param delim Un delimimitador o una expresión regular expresando un conjunto de delimitadores
+	 * @param delim Un delimimitador o una expresiï¿½n regular expresando un conjunto de delimitadores
 	 * @return Un iterador que recorre las partes de e delimitadas por elementos en delim
 	 */
 	public static Iterable<String> split(String e, String delim){
@@ -120,8 +118,12 @@ public class Iterables {
 		return new IteratorFilter<>(iterator.iterator(),p);
 	}
 	
-	public static <E,T> Iterable<E> explicit(T t0, Predicate<T> hn, Function<T, E> nx1, UnaryOperator<T> nx2){
-		return new IteratorExplicit<>(t0,hn,nx1,nx2);
+	public static <T> Iterable<T> explicit(T t0, Predicate<T> hn, UnaryOperator<T> nx){
+		return new IteratorExplicit<>(t0,hn,nx,x->x);
+	}
+	
+	public static <E,T> Iterable<E> explicit(T t0, Predicate<T> hn, UnaryOperator<T> nx, Function<T, E> nx1){
+		return new IteratorExplicit<>(t0,hn,nx,nx1);
 	}
 	
 	public static <E> Iterable<E> ofIterator(Iterator<E> it) { 
@@ -133,15 +135,15 @@ public class Iterables {
 	}
 	
 	/**
-	 * @return Un iterador vacío
+	 * @return Un iterador vacï¿½o
 	 */
 	public static <E> Iterable<E> empty() {
 		return IteratorEmpty.of();
 	}
 	
 	
-	public static <E> Optional<E> reduce(Iterable<E> iterator, BinaryOperator<E> op) {
-		Iterator<E> it = iterator.iterator();
+	public static <E> Optional<E> reduce(Iterable<E> iterable, BinaryOperator<E> op) {
+		Iterator<E> it = iterable.iterator();
 		E b = null;
 		while(it.hasNext()) {
 			E e = it.next();
@@ -151,21 +153,29 @@ public class Iterables {
 		return Optional.ofNullable(b);
 	}
 	
-	public static <E,T> Optional<E> reduce(T t0, Predicate<T> hn, Function<T,E> nx1, UnaryOperator<T> nx2, 
-			BinaryOperator<E> op) {
-		T t = t0;
-		E b = null;
-		while(hn.test(t)) {
-			E e = nx1.apply(t);
-			t = nx2.apply(t);
-			if (b == null) b = e;	
-			else b = op.apply(b, e);
+	public static <E,B> B reduce(Iterable<E> iterable, BiFunction<B,E,B> op, B b0) {
+		Iterator<E> it = iterable.iterator();
+		B b = b0;
+		while(it.hasNext()) {
+			E e = it.next();
+			b = op.apply(b, e);
 		}
-		return Optional.ofNullable(b);
+		return b;
 	}
+		
+	public static <E,B> B reduce(Iterable<E> iterable, BiFunction<B,E,B> op, B b0, Predicate<B> p) {
+		Iterator<E> it = iterable.iterator();
+		B b = b0;
+		while(it.hasNext() && !p.test(b)) {
+			E e = it.next();
+			b = op.apply(b, e);
+		}
+		return b;
+	}
+
 	
-	public static <E> Optional<E> reduceRight(Iterable<E> iterator, BinaryOperator<E> op) {
-		Iterator<E> it = iterator.iterator();
+	public static <E> Optional<E> reduceRight(Iterable<E> iterable, BinaryOperator<E> op) {
+		Iterator<E> it = iterable.iterator();
 		E b = null;
 		b = reduceRight(it, b , op);
 		return Optional.ofNullable(b);
@@ -183,60 +193,8 @@ public class Iterables {
 		return b;
 	}
 		
-	public static <E,T> Optional<E> reduceRight(T t0, Predicate<T> hn, Function<T,E> nx1, UnaryOperator<T> nx2, 
-			BinaryOperator<E> op) {
-		T t = t0;
-		E b = null;
-		b = reduceRight(t,b,hn,nx1,nx2,op);
-		return Optional.ofNullable(b);
-	}
-	
-	private static <E,T> E reduceRight(T t, E b, Predicate<T> hn, Function<T,E> nx1, UnaryOperator<T> nx2, 
-			BinaryOperator<E> op){
-		if(hn.test(t)) {
-			E e = nx1.apply(t);
-			t = nx2.apply(t);
-			b = reduceRight(t,b,hn,nx1,nx2,op);
-			if (b == null) b = e;	
-			else b = op.apply(b, e);
-		} else {
-			b = null;
-		}
-		return b;
-	}
-	
-	public static <E,B> B reduce(Iterable<E> iterator, BiFunction<B,E,B> op, B b0) {
-		Iterator<E> it = iterator.iterator();
-		B b = b0;
-		while(it.hasNext()) {
-			E e = it.next();
-			b = op.apply(b, e);
-		}
-		return b;
-	}
 	
 	
-	public static <E,B> B reduce(Iterable<E> iterator, BiFunction<B,E,B> op, B b0, Predicate<B> p) {
-		Iterator<E> it = iterator.iterator();
-		B b = b0;
-		while(it.hasNext() && !p.test(b)) {
-			E e = it.next();
-			b = op.apply(b, e);
-		}
-		return b;
-	}
-	
-	public static <E,B,T> B reduce(T t0, Predicate<T> hn, Function<T,E> nx1, UnaryOperator<T> nx2, 
-			BiFunction<B,E,B> op, B b0) {
-		T t = t0;
-		B b = b0;
-		while(hn.test(t)) {
-			E e = nx1.apply(t);
-			t = nx2.apply(t);
-			b = op.apply(b, e);
-		}
-		return b;
-	}
 	
 	public static <E,B> B reduceRight(Iterable<E> iterator,BiFunction<B,E,B> op, B b0) {
 		Iterator<E> it = iterator.iterator();
@@ -256,29 +214,8 @@ public class Iterables {
 		return b;
 	}
 	
-	public static <E,B,T> B reduceRight(T t0, Predicate<T> hn, Function<T,E> nx1, UnaryOperator<T> nx2, 
-			BiFunction<B,E,B> op, B b0) {
-		T t = t0;
-		B b = reduceRight_p(t,hn,nx1,nx2,op,b0);
-		return b;
-	}
 	
-	private static <E,B,T> B reduceRight_p(T t, Predicate<T> hn, Function<T,E> nx1, UnaryOperator<T> nx2, 
-			BiFunction<B,E,B> op, B b0){
-		B b;
-		if(hn.test(t)) {
-			E e = nx1.apply(t);
-			t = nx2.apply(t);
-			b = reduceRight_p(t,hn,nx1,nx2,op,b0);
-			b = op.apply(b, e);
-		} else {
-			b = b0;
-		}
-		return b;
-	}
-	
-	
-	public static <E,B> B reduce(Iterable<E> iterator, BiConsumer<B,E> op, Supplier<B> b0) {
+	public static <E,B> B reduceM(Iterable<E> iterator, BiConsumer<B,E> op, Supplier<B> b0) {
 		Iterator<E> it = iterator.iterator();
 		B b = b0.get();
 		while(it.hasNext()) {
@@ -288,17 +225,17 @@ public class Iterables {
 		return b;
 	}
 	
-	public static <E,B> B reduceRight(Iterable<E> iterator,BiConsumer<B,E> op, Supplier<B> b0) {
+	public static <E,B> B reduceRightM(Iterable<E> iterator,BiConsumer<B,E> op, Supplier<B> b0) {
 		Iterator<E> it = iterator.iterator();
-		B b = reduceRight(it,op,b0);
+		B b = reduceRightM(it,op,b0);
 		return b;
 	}
 	
-	private static <E,B> B reduceRight(Iterator<E> it,BiConsumer<B,E> op,Supplier<B> b0){
+	private static <E,B> B reduceRightM(Iterator<E> it,BiConsumer<B,E> op,Supplier<B> b0){
 		B b;
 		if(it.hasNext()) {
 			E e = it.next();
-			b = reduceRight(it,op,b0);
+			b = reduceRightM(it,op,b0);
 			op.accept(b, e);
 		} else {
 			b = b0.get();
@@ -306,28 +243,28 @@ public class Iterables {
 		return b;
 	}
 	
-	public static <E> List<E> toList(Iterable<E> iterator) {
-		return Iterables.reduce(iterator,(ls,e) -> ls.add(e),()->new ArrayList<>());
+	public static <E> List<E> toList(Iterable<E> iterable) {
+		return Iterables.reduceM(iterable,(ls,e) -> ls.add(e),()->new ArrayList<>());
 	}
 	
-	public static <E> List<E> toListRight(Iterable<E> iterator) {
-		return Iterables.reduceRight(iterator,(ls,e) -> ls.add(e),()->new ArrayList<>());
+	public static <E> List<E> toListRight(Iterable<E> iterable) {
+		return Iterables.reduceRightM(iterable,(ls,e) -> ls.add(e),()->new ArrayList<>());
 	}
 	
-	public static <E> Set<E> toSet(Iterable<E> iterator) {
-		return Iterables.reduce(iterator,(st,e) -> st.add(e),()->new HashSet<>());
+	public static <E> Set<E> toSet(Iterable<E> iterable) {
+		return Iterables.reduceM(iterable,(st,e) -> st.add(e),()->new HashSet<>());
 	}
 	
-	public static <E> SortedSet<E> toSortedSet(Iterable<E> iterator, Comparator<E> cmp) {
-		return Iterables.reduce(iterator,(st,e) -> st.add(e),()->new TreeSet<>(cmp));
+	public static <E> SortedSet<E> toSortedSet(Iterable<E> iterable, Comparator<E> cmp) {
+		return Iterables.reduceM(iterable,(st,e) -> st.add(e),()->new TreeSet<>(cmp));
 	}
 	
-	public static <E> Optional<E> min(Iterable<E> iterator, Comparator<E> cmp){
-		return Iterables.reduce(iterator,BinaryOperator.minBy(cmp));
+	public static <E> Optional<E> min(Iterable<E> iterable, Comparator<E> cmp){
+		return Iterables.reduce(iterable,BinaryOperator.minBy(cmp));
 	}
 	
-	public static <E> Optional<E> max(Iterable<E> iterator, Comparator<E> cmp){
-		return Iterables.reduce(iterator,BinaryOperator.maxBy(cmp));
+	public static <E> Optional<E> max(Iterable<E> iterable, Comparator<E> cmp){
+		return Iterables.reduce(iterable,BinaryOperator.maxBy(cmp));
 	}
 	
 	private static class CombineGroupingList<E,K> implements BiConsumer<Map<K,List<E>>,E>{
@@ -352,11 +289,11 @@ public class Iterables {
 	}
 	
 	public static <E,K> Map<K,List<E>> groupingList(Iterable<E> iterator, Function<E,K> key){
-		return Iterables.reduce(iterator,CombineGroupingList.of(key),()->new HashMap<>());
+		return Iterables.reduceM(iterator,CombineGroupingList.of(key),()->new HashMap<>());
 	}
 	
 	public static <E,K> Map<K,List<E>> groupingListRight(Iterable<E> iterator, Function<E,K> key){
-		return Iterables.reduceRight(iterator,CombineGroupingList.of(key),()->new HashMap<>());
+		return Iterables.reduceRightM(iterator,CombineGroupingList.of(key),()->new HashMap<>());
 	}
 	
 	private static class CombineGroupingSet<E,K> implements BiConsumer<Map<K,Set<E>>,E>{
@@ -381,7 +318,7 @@ public class Iterables {
 	}
 	
 	public static <E,K> Map<K,Set<E>> groupingSet(Iterable<E> iterator, Function<E,K> key){
-		return Iterables.reduce(iterator,CombineGroupingSet.of(key),()->new HashMap<>());
+		return Iterables.reduceM(iterator,CombineGroupingSet.of(key),()->new HashMap<>());
 	}
 	
 	
@@ -405,7 +342,7 @@ public class Iterables {
 	}
 	
 	public static <E,K> Map<K,Integer> counting(Iterable<E> iterator, Function<E,K> key){
-		return Iterables.reduce(iterator,CombineCounting.of(key),()->new HashMap<>());
+		return Iterables.reduceM(iterator,CombineCounting.of(key),()->new HashMap<>());
 	}
 	
 	
@@ -431,7 +368,7 @@ public class Iterables {
 	}
 	
 	public static <E,K,R> Map<K,R> counting(Iterable<E> iterator, Function<E,K> key, BiFunction<R,E,R> f, R r0){
-		return Iterables.reduce(iterator,CombineAcum.of(key,f,r0),()->new HashMap<>());
+		return Iterables.reduceM(iterator,CombineAcum.of(key,f,r0),()->new HashMap<>());
 	}
 	
 	private static class CombineReduce<E,K> implements BiConsumer<Map<K,E>,E>{
@@ -455,7 +392,7 @@ public class Iterables {
 	}
 	
 	public static <E,K> Map<K,E> groupingReduce(Iterable<E> iterator, Function<E,K> key, BinaryOperator<E> f){
-		return Iterables.reduce(iterator,CombineReduce.of(key,f),()->new HashMap<>());
+		return Iterables.reduceM(iterator,CombineReduce.of(key,f),()->new HashMap<>());
 	}
 	
 	public static <E> Optional<E> findFirst(Iterable<E> iterator){
@@ -548,7 +485,7 @@ public class Iterables {
 	 * @return Una vista del mismo de tipo 1
 	 */
 	public static <T> View1<Iterator<T>,T> view(Iterator<T> iterator) {
-		Preconditions.checkArgument(iterator.hasNext(),"El iterador está vacío");
+		Preconditions.checkArgument(iterator.hasNext(),"El iterador estï¿½ vacï¿½o");
 		T e = iterator.next();
 		return View1.of(e,iterator);
 	}

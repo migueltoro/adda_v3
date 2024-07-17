@@ -56,8 +56,10 @@ public class Test4 {
 		System.out.println(Iterables.none(ls,e->e<1));
 		System.out.println(Iterables.sequentialAlg(new Itm(123456,24566),t->t.b()>0,t->t.a()).get());
 		System.out.println(Iterables.sequentialAlg(Tm.of(123456,24566),t->t.hn(),t->t.nx(),t->t.rt()).get());
-		System.out.println(Iterables.reduce(0,e->e<234,e->e,e->e+1,(e1,e2)->e1+e2));
-		System.out.println(Iterables.reduceRight(0,e->e<234,e->e,e->e+1,(e1,e2)->e1+e2));
+		Iterable<Integer> it = Iterables.explicit(0,e->e<234,e->e+1);
+		System.out.println(Iterables.reduce(it,(e1,e2)->e1+e2));
+		it = Iterables.explicit(0,e->e<234,e->e+1);
+		System.out.println(Iterables.reduceRight(it,(e1,e2)->e1+e2));
 	}
 
 }
