@@ -8,21 +8,55 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
-import org.jheaps.AddressableHeap.Handle;
-import org.jheaps.tree.FibonacciHeap;
-
 import us.lsi.alg.mochila.MochilaVertex;
 import us.lsi.alg.mochila.SolucionMochila;
+import us.lsi.common.heaps.FibonacciHeap;
 import us.lsi.mochila.datos.DatosMochila;
 
 public class MochilaAStar {
 	
-	public static record AStarMochila(MochilaVertex vertex, Integer a, MochilaVertex lastVertex,
-			Double distanceToOrigin) {
+	public static class AStarMochila {
+			
+			private MochilaVertex vertex;
+			private Integer a;
+			private MochilaVertex lastVertex;
+			private Double distanceToOrigin;
+			
+			private AStarMochila(MochilaVertex vertex, Integer a, MochilaVertex lastVertex,
+					Double distanceToOrigin) {
+				super();
+				this.vertex = vertex;
+				this.a = a;
+				this.lastVertex = lastVertex;
+				this.distanceToOrigin = distanceToOrigin;
+			}
+		
 		public static AStarMochila of(MochilaVertex vertex, Integer a, MochilaVertex lastVertex,
 			Double distanceToOrigin) {
 			return new AStarMochila(vertex, a, lastVertex,distanceToOrigin);
-		}	
+		}
+		
+		public void set(Integer a, MochilaVertex lastVertex, Double distanceToOrigin) {
+			this.a = a;
+			this.lastVertex = lastVertex;
+			this.distanceToOrigin = distanceToOrigin;
+		}
+
+		public MochilaVertex vertex() {
+			return vertex;
+		}
+
+		public Integer a() {
+			return a;
+		}
+
+		public MochilaVertex lastVertex() {
+			return lastVertex;
+		}
+
+		public Double distanceToOrigin() {
+			return distanceToOrigin;
+		}
 	}
 	
 	public static MochilaAStar of() {
@@ -35,8 +69,8 @@ public class MochilaAStar {
 	
 	private Integer maxValue;
 	private SolucionMochila solucion;
-	private Map<MochilaVertex,Handle<Double,AStarMochila>> tree;
-	private FibonacciHeap<Double,AStarMochila> heap; 
+	private Map<MochilaVertex,AStarMochila> tree;
+	private FibonacciHeap<MochilaVertex,Double> heap; 
 	private Boolean goal;
 	private Comparator<Double> cmp;
 	private Long time;
@@ -47,11 +81,11 @@ public class MochilaAStar {
 	
 	private List<Integer> acciones(MochilaVertex v) {
 		List<Integer> ls = new ArrayList<>();
-		Integer a = this.tree.get(v).getValue().a();
+		Integer a = this.tree.get(v).a();
 		while (a != null) {
 			ls.add(a);
-			v = this.tree.get(v).getValue().lastVertex();
-			a = this.tree.get(v).getValue().a();
+			v = this.tree.get(v).lastVertex();
+			a = this.tree.get(v).a();
 		}
 		Collections.reverse(ls);
 		return ls;
@@ -64,10 +98,10 @@ public class MochilaAStar {
 		Double distanceToEnd = Heuristica.heuristica(start);
 		AStarMochila a = AStarMochila.of(start, null,null,0.);
 		this.cmp = Comparator.reverseOrder();
-		this.heap = new FibonacciHeap<>(cmp);
-		Handle<Double, AStarMochila> h = this.heap.insert(distanceToEnd,a);
+		this.heap = FibonacciHeap.of(cmp);
+		this.heap.add(start,distanceToEnd);
 		this.tree = new HashMap<>();
-		this.tree.put(start,h);
+		this.tree.put(start,a);
 		this.goal = false;
 		List<Integer> r = search();
 		if(r==null) return this.solucion;
@@ -75,12 +109,11 @@ public class MochilaAStar {
 		return SolucionMochila.of(r);
 	}
 
-	public List<Integer> search() {		
+	public List<Integer> search() {	
 		MochilaVertex vertexActual = null;
 		while (!heap.isEmpty() && !goal) {
-			Handle<Double, AStarMochila> ha = heap.deleteMin();
-			AStarMochila dataActual = ha.getValue();
-			vertexActual = dataActual.vertex();
+			vertexActual = heap.remove();
+			AStarMochila dataActual = tree.get(vertexActual);
 			if(this.maxValue != null &&  
 					(dataActual.distanceToOrigin()+Heuristica.heuristica(vertexActual)) <= this.maxValue) continue;
 			for (Integer a : vertexActual.actions()) {
@@ -89,13 +122,12 @@ public class MochilaAStar {
 				Double newDistanceToEnd = newDistance + Heuristica.heuristica(v);				
 				if (!tree.containsKey(v)) {	
 					AStarMochila ac = AStarMochila.of(v, a, vertexActual, newDistance);
-					Handle<Double, AStarMochila> nh = heap.insert(newDistanceToEnd,ac);
-					tree.put(v,nh);	
-				}else if (cmp.compare(newDistance, tree.get(v).getValue().distanceToOrigin()) <0 ) {
-					AStarMochila ac = AStarMochila.of(v, a, vertexActual, newDistance);
-					Handle<Double, AStarMochila> hv = tree.get(v);
-					hv.setValue(ac);
-					hv.decreaseKey(newDistanceToEnd);
+					heap.add(v,newDistanceToEnd);
+					tree.put(v,ac);	
+				}else if (cmp.compare(newDistance, tree.get(v).distanceToOrigin()) <0 ) {
+					AStarMochila ac = tree.get(v);
+					ac.set(a, vertexActual, newDistanceToEnd);
+					heap.decrease(v,newDistanceToEnd);
 				}
 			}
 			this.goal = vertexActual.index() == DatosMochila.n;

@@ -7,12 +7,10 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
-import org.jheaps.AddressableHeap.Handle;
-import org.jheaps.tree.FibonacciHeap;
-
 import us.lsi.alg.typ.DatosTyP;
 import us.lsi.alg.typ.SolucionTyP;
 import us.lsi.alg.typ.TyPVertex;
+import us.lsi.common.heaps.FibonacciHeap;
 
 public class TyPAStar {
 	
@@ -28,8 +26,8 @@ public class TyPAStar {
 		return new TyPAStar();
 	}
 	
-	private Map<TyPVertex,Handle<Double,AStarTyP>> tree;
-	private FibonacciHeap<Double,AStarTyP> heap; 
+	private Map<TyPVertex,AStarTyP> tree;
+	private FibonacciHeap<TyPVertex,Double> heap; 
 	private Boolean goal;
 	private Integer minValue;
 	private SolucionTyP solucion;
@@ -41,11 +39,11 @@ public class TyPAStar {
 	
 	private List<Integer> acciones(TyPVertex v) {
 		List<Integer> ls = new ArrayList<>();
-		Integer a = this.tree.get(v).getValue().a();
+		Integer a = this.tree.get(v).a();
 		while (a != null) {
 			ls.add(a);
-			v = this.tree.get(v).getValue().lastVertex();
-			a = this.tree.get(v).getValue().a();
+			v = this.tree.get(v).lastVertex();
+			a = this.tree.get(v).a();
 		}
 		Collections.reverse(ls);
 		return ls;
@@ -63,10 +61,10 @@ public class TyPAStar {
 		this.time = System.nanoTime();
 		Double distanceToEnd = (double)Heuristica.heuristica(start);
 		AStarTyP a = AStarTyP.of(start, null,null,0);
-		this.heap = new FibonacciHeap<>();
-		Handle<Double, AStarTyP> h = this.heap.insert(distanceToEnd,a);
+		this.heap = FibonacciHeap.of();
+		this.heap.add(start,distanceToEnd);
 		this.tree = new HashMap<>();
-		this.tree.put(start,h);
+		this.tree.put(start,a);
 		this.goal = false;
 		this.minValue = minValue;
 		this.solucion = s;
@@ -86,9 +84,7 @@ public class TyPAStar {
 	private List<Integer> search() {
 		TyPVertex vertexActual = null;
 		while (!heap.isEmpty() && !goal) {
-			Handle<Double, AStarTyP> ha = heap.deleteMin();
-			AStarTyP dataActual = ha.getValue();
-			vertexActual = dataActual.vertex();
+			vertexActual = heap.remove();
 			if(forget(vertexActual)) continue;
 			for (Integer a : vertexActual.actions()) {
 				TyPVertex v = vertexActual.neighbor(a);
@@ -96,13 +92,12 @@ public class TyPAStar {
 				Integer newDistanceToEnd = Heuristica.heuristica(v);				
 				if (!tree.containsKey(v)) {	
 					AStarTyP ac = AStarTyP.of(v, a, vertexActual, newDistance);
-					Handle<Double, AStarTyP> nh = heap.insert((double)newDistanceToEnd,ac);
-					tree.put(v,nh);		
-				}else if (newDistance < tree.get(v).getValue().distanceToOrigin()) {
+					heap.add(v,(double)newDistanceToEnd);
+					tree.put(v,ac);		
+				}else if (newDistance < tree.get(v).distanceToOrigin()) {
 					AStarTyP ac = AStarTyP.of(v, a, vertexActual, newDistance);
-					Handle<Double, AStarTyP> hv = tree.get(v);
-					hv.setValue(ac);
-					hv.decreaseKey((double)newDistanceToEnd);
+					tree.put(v,ac);
+					heap.decrease(v,(double)newDistanceToEnd);
 				}
 			}
 			this.goal = vertexActual.index() == DatosTyP.n;

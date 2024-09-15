@@ -7,13 +7,11 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
-import org.jheaps.AddressableHeap.Handle;
-import org.jheaps.tree.FibonacciHeap;
-
 import us.lsi.alg.puzzle.ActionPuzzle;
 import us.lsi.alg.puzzle.HeuristicaPuzzle;
 import us.lsi.alg.puzzle.VertexPuzzle;
 import us.lsi.common.String2;
+import us.lsi.common.heaps.FibonacciHeap;
 
 public class PuzzleAStar {
 	
@@ -32,8 +30,8 @@ public class PuzzleAStar {
 	public VertexPuzzle start;
 	public VertexPuzzle end;
 	
-	private Map<VertexPuzzle,Handle<Double,AStarPuzzle>> tree;
-	private FibonacciHeap<Double,AStarPuzzle> heap; 
+	private Map<VertexPuzzle,AStarPuzzle> tree;
+	private FibonacciHeap<VertexPuzzle,Double> heap; 
 	private Boolean goal;
 	private Integer minValue;
 	private Long time;
@@ -44,11 +42,11 @@ public class PuzzleAStar {
 	
 	private List<ActionPuzzle> acciones(VertexPuzzle v) {
 		List<ActionPuzzle> ls = new ArrayList<>();
-		ActionPuzzle a = this.tree.get(v).getValue().a();
+		ActionPuzzle a = this.tree.get(v).a();
 		while (a != null) {
 			ls.add(a);
-			v = this.tree.get(v).getValue().lastVertex();
-			a = this.tree.get(v).getValue().a();
+			v = this.tree.get(v).lastVertex();
+			a = this.tree.get(v).a();
 		}
 		Collections.reverse(ls);
 		return ls;
@@ -61,10 +59,10 @@ public class PuzzleAStar {
 		this.minValue = minValue;
 		Double distanceToEnd = HeuristicaPuzzle.heuristicaManhattan(start,v->v.equals(end),end);
 		AStarPuzzle a = AStarPuzzle.of(start,null,null,0.);
-		this.heap = new FibonacciHeap<>();
-		Handle<Double, AStarPuzzle> h = this.heap.insert(distanceToEnd,a);
+		this.heap = FibonacciHeap.of();
+		this.heap.add(start,distanceToEnd);
 		this.tree = new HashMap<>();
-		this.tree.put(start,h);
+		this.tree.put(start,a);
 		this.goal = false;
 		List<ActionPuzzle> r = search();
 		this.time = System.nanoTime() - this.time;
@@ -81,9 +79,8 @@ public class PuzzleAStar {
 	public List<ActionPuzzle> search() {
 		VertexPuzzle vertexActual = null;
 		while (!heap.isEmpty() && !goal) {
-			Handle<Double, AStarPuzzle> h = heap.deleteMin();
-			AStarPuzzle dataActual = h.getValue();
-			vertexActual = dataActual.vertex();
+			vertexActual = heap.remove();
+			AStarPuzzle dataActual = tree.get(vertexActual);
 			if(forget(vertexActual)) continue;
 			for (ActionPuzzle a : vertexActual.actions()) {
 				VertexPuzzle v = vertexActual.neighbor(a);
@@ -92,13 +89,12 @@ public class PuzzleAStar {
 						HeuristicaPuzzle.heuristicaManhattan(start,va->va.equals(end),end);				
 				if (!tree.containsKey(v)) {	
 					AStarPuzzle ac = AStarPuzzle.of(v, a, vertexActual, newDistance);
-					Handle<Double, AStarPuzzle> nh = heap.insert(newDistanceToEnd,ac);
-					tree.put(v,nh);	
-				}else if (newDistance < tree.get(v).getValue().distanceToOrigin()) {
+					heap.add(v,newDistanceToEnd);
+					tree.put(v,ac);	
+				}else if (newDistance < tree.get(v).distanceToOrigin()) {
 					AStarPuzzle dv = AStarPuzzle.of(v, a, vertexActual, newDistance);
-					Handle<Double, AStarPuzzle> hv = tree.get(v);
-					hv.setValue(dv);
-					hv.decreaseKey(newDistanceToEnd);
+					tree.put(v,dv);
+					heap.decrease(v,newDistanceToEnd);
 				}
 			}
 			this.goal = vertexActual.equals(end);

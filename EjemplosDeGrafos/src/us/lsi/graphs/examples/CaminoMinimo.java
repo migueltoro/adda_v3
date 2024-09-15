@@ -16,7 +16,7 @@ import us.lsi.graphs.Graphs2;
 import us.lsi.graphs.GraphsReader;
 
 /**
- * Resuelve un problema de camino mínimo
+ * Resuelve un problema de camino mï¿½nimo
  * 
  * @author Miguel Toro
  *
@@ -30,7 +30,7 @@ public class CaminoMinimo {
 
 	public static void main(String[] args) {
 		SimpleWeightedGraph<Ciudad,Carretera> graph =  
-				GraphsReader.newGraph("ficheros/PI3Ej10DatosEntrada_andalucia.txt",
+				GraphsReader.newGraph("ficheros/andalucia.txt",
 						Ciudad::ofFormat, 
 						Carretera::ofFormat,
 						Graphs2::simpleWeightedGraph,

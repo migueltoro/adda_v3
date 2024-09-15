@@ -16,7 +16,7 @@ import us.lsi.path.EGraphPath.PathType;
 
 public class TestAStarMochila {
 
-	
+
 	public static void main(String[] args) {
 		Locale.setDefault(Locale.of("en", "US"));
 		DatosMochila.iniDatos("ficheros/mochila/objetosMochila.txt");

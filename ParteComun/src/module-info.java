@@ -8,6 +8,7 @@ module partecomun {
 	
 	exports us.lsi.math;
 	exports us.lsi.common;
+	exports us.lsi.common.heaps;
 	exports us.lsi.streams;
 	exports us.lsi.filetools;
 	exports us.lsi.graphics;
