@@ -11,7 +11,7 @@ import us.lsi.alg.puzzle.ActionPuzzle;
 import us.lsi.alg.puzzle.HeuristicaPuzzle;
 import us.lsi.alg.puzzle.VertexPuzzle;
 import us.lsi.common.String2;
-import us.lsi.common.heaps.FibonacciHeap;
+import us.lsi.common.heaps.Heap;
 
 public class PuzzleAStar {
 	
@@ -31,7 +31,7 @@ public class PuzzleAStar {
 	public VertexPuzzle end;
 	
 	private Map<VertexPuzzle,AStarPuzzle> tree;
-	private FibonacciHeap<VertexPuzzle,Double> heap; 
+	private Heap<VertexPuzzle,Double> heap; 
 	private Boolean goal;
 	private Integer minValue;
 	private Long time;
@@ -59,7 +59,7 @@ public class PuzzleAStar {
 		this.minValue = minValue;
 		Double distanceToEnd = HeuristicaPuzzle.heuristicaManhattan(start,v->v.equals(end),end);
 		AStarPuzzle a = AStarPuzzle.of(start,null,null,0.);
-		this.heap = FibonacciHeap.of();
+		this.heap = Heap.of();
 		this.heap.add(start,distanceToEnd);
 		this.tree = new HashMap<>();
 		this.tree.put(start,a);

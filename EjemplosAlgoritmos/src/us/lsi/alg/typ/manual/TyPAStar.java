@@ -10,7 +10,7 @@ import java.util.Map;
 import us.lsi.alg.typ.DatosTyP;
 import us.lsi.alg.typ.SolucionTyP;
 import us.lsi.alg.typ.TyPVertex;
-import us.lsi.common.heaps.FibonacciHeap;
+import us.lsi.common.heaps.Heap;
 
 public class TyPAStar {
 	
@@ -27,7 +27,7 @@ public class TyPAStar {
 	}
 	
 	private Map<TyPVertex,AStarTyP> tree;
-	private FibonacciHeap<TyPVertex,Double> heap; 
+	private Heap<TyPVertex,Double> heap; 
 	private Boolean goal;
 	private Integer minValue;
 	private SolucionTyP solucion;
@@ -61,7 +61,7 @@ public class TyPAStar {
 		this.time = System.nanoTime();
 		Double distanceToEnd = (double)Heuristica.heuristica(start);
 		AStarTyP a = AStarTyP.of(start, null,null,0);
-		this.heap = FibonacciHeap.of();
+		this.heap = Heap.of();
 		this.heap.add(start,distanceToEnd);
 		this.tree = new HashMap<>();
 		this.tree.put(start,a);

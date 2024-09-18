@@ -10,7 +10,7 @@ import java.util.Map;
 
 import us.lsi.alg.mochila.MochilaVertex;
 import us.lsi.alg.mochila.SolucionMochila;
-import us.lsi.common.heaps.FibonacciHeap;
+import us.lsi.common.heaps.Heap;
 import us.lsi.mochila.datos.DatosMochila;
 
 public class MochilaAStar {
@@ -70,7 +70,7 @@ public class MochilaAStar {
 	private Integer maxValue;
 	private SolucionMochila solucion;
 	private Map<MochilaVertex,AStarMochila> tree;
-	private FibonacciHeap<MochilaVertex,Double> heap; 
+	private Heap<MochilaVertex,Double> heap; 
 	private Boolean goal;
 	private Comparator<Double> cmp;
 	private Long time;
@@ -98,7 +98,7 @@ public class MochilaAStar {
 		Double distanceToEnd = Heuristica.heuristica(start);
 		AStarMochila a = AStarMochila.of(start, null,null,0.);
 		this.cmp = Comparator.reverseOrder();
-		this.heap = FibonacciHeap.of(cmp);
+		this.heap = Heap.of(cmp);
 		this.heap.add(start,distanceToEnd);
 		this.tree = new HashMap<>();
 		this.tree.put(start,a);
