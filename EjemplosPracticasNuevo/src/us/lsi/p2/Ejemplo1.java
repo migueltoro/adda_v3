@@ -22,6 +22,7 @@ public class Ejemplo1 {
 	public static Boolean solucion_recursiva (BinaryTree<Character> tree,List<Character> list) {
 		return recursivo(tree,list,0);	
 	}
+
 	
 	public static Boolean recursivo(BinaryTree<Character> tree, List<Character> ls, int i) {
 		Integer n = ls.size();
