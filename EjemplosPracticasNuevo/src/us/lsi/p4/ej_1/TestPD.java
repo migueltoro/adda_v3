@@ -76,7 +76,7 @@ public class TestPD {
 			System.out.println(s_pdr);
 			
 			
-			GraphColors.toDot(pdr.outGraph, "ficheros/multiconjuntosPDRGraph.gv", 
+			GraphColors.toDot(pdr.outGraph, "ficheros_generados/p4/ejemplo1/multiconjuntosPDRGraph.gv", 
 					v -> String.format("(%d,%d)", v.indice(), v.sumaRestante()),
 					e -> e.action().toString(), 
 					v -> GraphColors.colorIf(Color.red, v.goal()),

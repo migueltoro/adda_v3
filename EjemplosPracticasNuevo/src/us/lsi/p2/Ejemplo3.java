@@ -18,12 +18,12 @@ public class Ejemplo3 {
 		
 		Graph<Ciudad, Carretera> vista = SubGraphView.of(g, pv, pa);
 
-		GraphColors.toDot(vista,"ficheros_generados/ejemplo3/" + file + nombreVista + ".gv",
+		GraphColors.toDot(vista,"ficheros_generados/p2/ejemplo3/" + file + nombreVista + ".gv",
 				x->x.nombre(), x->x.nombre(),
 				v->GraphColors.colorIf(Color.red, vista.edgesOf(v).size() > 1),
 				e->GraphColors.color(Color.black));
 		
-		System.out.println(file + nombreVista + ".gv generado en " + "ficheros_generados/ejemplo3");
+		System.out.println(file + nombreVista + ".gv generado en " + "ficheros_generados/p2/ejemplo3");
 	}
 	
 

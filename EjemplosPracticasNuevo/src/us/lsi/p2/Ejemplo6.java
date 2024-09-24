@@ -41,7 +41,7 @@ public class Ejemplo6 {
 		System.out.println(String.format("Metros de cable necesarios: %.1f", tree.getWeight()));
 		
 		// Apartado c)
-		GraphColors.toDot(gf, "ficheros_generados/ejemplo4/" + file + ".gv", c->"", v->"", 
+		GraphColors.toDot(gf, "ficheros_generados/p2/ejemplo6/" + file + ".gv", c->"", v->"", 
 				v -> GraphColors.colorIf(Color.red, Color.blank, camaras.contains(v)),
 				e -> GraphColors.colorIf(Color.green, Color.blank, tree.getEdges().contains(e)));
 	}

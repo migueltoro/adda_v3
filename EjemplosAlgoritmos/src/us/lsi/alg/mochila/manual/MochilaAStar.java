@@ -10,7 +10,7 @@ import java.util.Map;
 
 import us.lsi.alg.mochila.MochilaVertex;
 import us.lsi.alg.mochila.SolucionMochila;
-import us.lsi.common.heaps.Heap;
+import us.lsi.graphs.manual.heaps.Heap;
 import us.lsi.mochila.datos.DatosMochila;
 
 public class MochilaAStar {

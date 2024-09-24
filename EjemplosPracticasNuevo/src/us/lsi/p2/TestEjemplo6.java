@@ -36,7 +36,7 @@ public class TestEjemplo6 {
 		Ejemplo6.apartadoB(grafo, file);
 		
 		System.out.println("Apartado C):");
-		System.out.println(file + "C.gv generado en " + "ficheros_generados/ejemplo6");
+		System.out.println(file + "C.gv generado en " + "ficheros_generados/p2/ejemplo6");
 		
 		System.out.println(grafo.edgesOf("C07"));
 	}

@@ -75,7 +75,7 @@ public class DatosSubconjunto {
 	
 	// Test de la lectura del fichero
 	public static void main(String[] args) {
-		iniDatos("ficheros/Ejemplo2DatosEntrada1.txt");
+		iniDatos("ficheros/p3/ejemplo2_1.txt");
 	}
 }
 

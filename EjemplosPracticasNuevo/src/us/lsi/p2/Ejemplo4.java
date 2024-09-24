@@ -31,12 +31,12 @@ public class Ejemplo4 {
 		Ciudad destino = ciudad(gf,c2);
 		GraphPath<Ciudad, Carretera> gp = alg.getPath(origen, destino);
 		
-		GraphColors.toDot(gf,"ficheros_generados/ejemplo4/" + file + "A.gv",
+		GraphColors.toDot(gf,"ficheros_generados/p2/ejemplo4/" + file + "A.gv",
 				x->x.nombre(), x->x.nombre(),
 				v->GraphColors.styleIf(Style.bold, gp.getVertexList().contains(v)),
 				e->GraphColors.styleIf(Style.bold, gp.getEdgeList().contains(e)));
 		
-		System.out.println(file + "A.gv generado en " + "ficheros_generados/ejemplo4");
+		System.out.println(file + "A.gv generado en " + "ficheros_generados/p2/ejemplo4");
 		
 	}
 	
@@ -50,7 +50,7 @@ public class Ejemplo4 {
 		List<Set<Ciudad>> ls = alg.connectedSets();
 		System.out.println("Hay " + ls.size() + " componentes conexas." );
 		
-		GraphColors.toDot(gf,"ficheros_generados/ejemplo4/" + file + "B.gv",
+		GraphColors.toDot(gf,"ficheros_generados/p2/ejemplo4/" + file + "B.gv",
 				x->x.nombre(), x->x.nombre(),
 				v->GraphColors.color(asignaColor(v,ls,alg)),
 				e->GraphColors.color(asignaColor(gf.getEdgeSource(e), ls, alg)));

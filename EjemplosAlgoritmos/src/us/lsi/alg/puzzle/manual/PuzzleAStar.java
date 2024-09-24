@@ -11,7 +11,7 @@ import us.lsi.alg.puzzle.ActionPuzzle;
 import us.lsi.alg.puzzle.HeuristicaPuzzle;
 import us.lsi.alg.puzzle.VertexPuzzle;
 import us.lsi.common.String2;
-import us.lsi.common.heaps.Heap;
+import us.lsi.graphs.manual.heaps.Heap;
 
 public class PuzzleAStar {
 	

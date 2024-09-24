@@ -8,12 +8,10 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
-import org.jheaps.AddressableHeap.Handle;
-import org.jheaps.tree.FibonacciHeap;
-
 import us.lsi.alg.colorgraphs.ColorVertex;
 import us.lsi.alg.colorgraphs.DatosColor;
 import us.lsi.alg.colorgraphs.SolucionColor;
+import us.lsi.graphs.manual.heaps.Heap;
 
 
 
@@ -28,7 +26,7 @@ public class AStarColor {
 			Integer distanceToOrigin) {
 		public static AStarDataColor of(ColorVertex vertex, Integer a,ColorVertex lastVertex,
 			Integer distanceToOrigin) {
-			return new AStarDataColor(vertex, a, lastVertex,distanceToOrigin);
+			return new AStarDataColor(vertex, a,lastVertex,distanceToOrigin);
 		}	
 	}
 	
@@ -36,11 +34,11 @@ public class AStarColor {
 		return new AStarColor();
 	}
 	
-	private Map<ColorVertex,Handle<ColorVertex,AStarDataColor>> tree;
-	private FibonacciHeap<ColorVertex,AStarDataColor> heap; 
+	private Map<ColorVertex,AStarDataColor> tree;
+	private Heap<ColorVertex,Integer> heap; 
 	private Boolean goal;
-	private Comparator<ColorVertex> cmp;
-	private ColorVertex minValue = null;
+	private Comparator<Integer> cmp;
+	private Integer minValue = null;
 	private SolucionColor solucion;
 	private Long time;
 	
@@ -50,11 +48,11 @@ public class AStarColor {
 	
 	private List<Integer> acciones(ColorVertex v) {
 		List<Integer> ls = new ArrayList<>();
-		Integer a = this.tree.get(v).getValue().a();
+		Integer a = this.tree.get(v).a();
 		while (a != null) {
 			ls.add(a);
-			v = this.tree.get(v).getValue().lastVertex();
-			a = this.tree.get(v).getValue().a();
+			v = this.tree.get(v).lastVertex();
+			a = this.tree.get(v).a();
 		}
 		Collections.reverse(ls);
 		return ls;
@@ -68,15 +66,15 @@ public class AStarColor {
 		return solucion;
 	}
 
-	public SolucionColor search(ColorVertex start,ColorVertex minValue, SolucionColor s) {
+	public SolucionColor search(ColorVertex start,Integer minValue, SolucionColor s) {
 		this.time = System.nanoTime();
-//		Integer distanceToEnd = start.nc();
+		Integer distanceToEnd = start.nc();
 		AStarDataColor a = AStarDataColor.of(start,null,null,0);
-		this.cmp = AStarColor.order();
-		this.heap = new FibonacciHeap<>(cmp);
-		Handle<ColorVertex, AStarDataColor> h = this.heap.insert(start,a);
+		this.cmp = Comparator.naturalOrder();
+		this.heap = Heap.of(cmp);
+		this.heap.add(start,distanceToEnd);
 		this.tree = new HashMap<>();
-		this.tree.put(start,h);
+		this.tree.put(start,a);
 		this.goal = false;
 		this.minValue = minValue; //
 		this.solucion = s;
@@ -87,8 +85,8 @@ public class AStarColor {
 	}
 
 	private Boolean forget(ColorVertex v) {
-//		Integer w = v.nc();
-		Boolean r = this.minValue!=null && this.cmp.compare(v,this.minValue) >= 0;
+		Integer w = v.nc();
+		Boolean r = this.minValue!=null && this.cmp.compare(w,this.minValue) >= 0;
 		if(r) this.tree.remove(v);
 		return r;
 	}
@@ -96,23 +94,20 @@ public class AStarColor {
 	private List<Integer> search() {
 		ColorVertex vertexActual = null;
 		while (!heap.isEmpty() && !goal) {
-			Handle<ColorVertex, AStarDataColor> ha = heap.deleteMin();
-			AStarDataColor dataActual = ha.getValue();
-			vertexActual = dataActual.vertex();	
+			vertexActual = heap.remove();
 			if(forget(vertexActual)) continue;
 			for (Integer a : vertexActual.actions()) {
 				ColorVertex v = vertexActual.neighbor(a);
 				Integer newDistance = v.nc();
-//				Integer newDistanceToEnd = v.nc();				
+				Integer newDistanceToEnd = v.nc();				
 				if (!tree.containsKey(v)) {	
 					AStarDataColor ac = AStarDataColor.of(v, a, vertexActual, newDistance);
-					Handle<ColorVertex, AStarDataColor> nh = heap.insert(v,ac);
-					tree.put(v,nh);	
-				}else if (cmp.compare(v, tree.get(v).getValue().vertex) <0 ) {
+					heap.add(v,newDistanceToEnd);
+					tree.put(v,ac);	
+				}else if (cmp.compare(newDistance, tree.get(v).distanceToOrigin()) <0) {
 					AStarDataColor ac = AStarDataColor.of(v, a, vertexActual, newDistance);
-					Handle<ColorVertex, AStarDataColor> hv = tree.get(v);
-					hv.setValue(ac);
-					hv.decreaseKey(v);
+					tree.put(v,ac);
+					heap.decrease(v,newDistanceToEnd);
 				}
 			}
 			this.goal = vertexActual.index() == DatosColor.n;
@@ -135,7 +130,7 @@ public class AStarColor {
 		SolucionColor so = as.search(ColorVertex.first(),null,null);
 		System.out.println(as.time());
 		System.out.println(so);
-		so = as.search(ColorVertex.first(),sv,so);
+		so = as.search(ColorVertex.first(),sv.nc(),so);
 		System.out.println(as.time());
 		
 		System.out.println(so);

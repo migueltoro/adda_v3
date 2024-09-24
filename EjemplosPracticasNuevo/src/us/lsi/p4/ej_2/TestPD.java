@@ -78,7 +78,7 @@ public class TestPD {
 
 				System.out.println(s_pdr);
 				
-				GraphColors.toDot(pdr.outGraph,"ficheros/subconjuntosPDGraph.gv",
+				GraphColors.toDot(pdr.outGraph,"ficheros_generados/p4/ejemplo2/subconjuntosPDGraph.gv",
 						v->v.toGraph(),
 						e->e.action().toString(),
 						v->GraphColors.colorIf(Color.red,v.goal()),

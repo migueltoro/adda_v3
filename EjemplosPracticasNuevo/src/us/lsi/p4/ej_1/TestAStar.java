@@ -52,7 +52,7 @@ public class TestAStar {
 			System.out.println(s_as);
 			System.out.println(gp_as);
 
-//			GraphColors.toDot(aStar.outGraph, "ficheros/multiconjuntosAStarGraph.gv", 
+//			GraphColors.toDot(aStar.outGraph, "ficheros_generados/p4/ejemplo1/multiconjuntosAStarGraph.gv", 
 //					v -> v.toGraph(),
 //					e -> e.action().toString(), 
 //					v -> GraphColors.colorIf(Color.red, MulticonjuntoVertex.goal().test(v)),

@@ -8,12 +8,10 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
-import org.jheaps.AddressableHeap.Handle;
-import org.jheaps.tree.FibonacciHeap;
-
 import us.lsi.alg.colorgraphs.ColorVertex;
 import us.lsi.alg.colorgraphs.DatosColor;
 import us.lsi.alg.colorgraphs.SolucionColor;
+import us.lsi.graphs.manual.heaps.Heap;
 
 
 public class AStarColor {
@@ -30,8 +28,8 @@ public class AStarColor {
 		return new AStarColor();
 	}
 	
-	private Map<ColorVertex,Handle<Integer,AStarDataColor>> tree;
-	private FibonacciHeap<Integer,AStarDataColor> heap; 
+	private Map<ColorVertex,AStarDataColor> tree;
+	private Heap<ColorVertex,Integer> heap; 
 	private Boolean goal;
 	private Comparator<Integer> cmp;
 	private Integer minValue;
@@ -44,11 +42,11 @@ public class AStarColor {
 	
 	private List<Integer> acciones(ColorVertex v) {
 		List<Integer> ls = new ArrayList<>();
-		Integer a = this.tree.get(v).getValue().a();
+		Integer a = this.tree.get(v).a();
 		while (a != null) {
 			ls.add(a);
-			v = this.tree.get(v).getValue().lastVertex();
-			a = this.tree.get(v).getValue().a();
+			v = this.tree.get(v).lastVertex();
+			a = this.tree.get(v).a();
 		}
 		Collections.reverse(ls);
 		return ls;
@@ -67,10 +65,10 @@ public class AStarColor {
 		Integer distanceToEnd = start.nc();
 		AStarDataColor a = AStarDataColor.of(start,null,null,0);
 		this.cmp = Comparator.naturalOrder();
-		this.heap = new FibonacciHeap<>(cmp);
-		Handle<Integer, AStarDataColor> h = this.heap.insert(distanceToEnd,a);
+		this.heap = Heap.of(this.cmp);
+		this.heap.add(start,distanceToEnd);
 		this.tree = new HashMap<>();
-		this.tree.put(start,h);
+		this.tree.put(start,a);
 		this.goal = false;
 		this.minValue = minValue;
 		this.solucion = s;
@@ -90,9 +88,7 @@ public class AStarColor {
 	private List<Integer> search() {
 		ColorVertex vertexActual = null;
 		while (!heap.isEmpty() && !goal) {
-			Handle<Integer, AStarDataColor> ha = heap.deleteMin();
-			AStarDataColor dataActual = ha.getValue();
-			vertexActual = dataActual.vertex();	
+			vertexActual = heap.remove();
 			if(forget(vertexActual)) continue;
 			for (Integer a : vertexActual.actions()) {
 				ColorVertex v = vertexActual.neighbor(a);
@@ -100,13 +96,12 @@ public class AStarColor {
 				Integer newDistanceToEnd = v.nc();				
 				if (!tree.containsKey(v)) {	
 					AStarDataColor ac = AStarDataColor.of(v, a, vertexActual, newDistance);
-					Handle<Integer, AStarDataColor> nh = heap.insert(newDistanceToEnd,ac);
-					tree.put(v,nh);	
-				}else if (cmp.compare(newDistance, tree.get(v).getValue().distanceToOrigin()) <0 ) {
+					heap.add(v,newDistanceToEnd);
+					tree.put(v,ac);	
+				}else if (cmp.compare(newDistance, tree.get(v).distanceToOrigin()) <0 ) {
 					AStarDataColor ac = AStarDataColor.of(v, a, vertexActual, newDistance);
-					Handle<Integer, AStarDataColor> hv = tree.get(v);
-					hv.setValue(ac);
-					hv.decreaseKey(newDistanceToEnd);
+					tree.put(v,ac);
+					heap.decrease(v,newDistanceToEnd);
 				}
 			}
 			this.goal = vertexActual.index() == DatosColor.n;

@@ -10,7 +10,7 @@ import java.util.Map;
 import us.lsi.alg.typ.DatosTyP;
 import us.lsi.alg.typ.SolucionTyP;
 import us.lsi.alg.typ.TyPVertex;
-import us.lsi.common.heaps.Heap;
+import us.lsi.graphs.manual.heaps.Heap;
 
 public class TyPAStar {
 	

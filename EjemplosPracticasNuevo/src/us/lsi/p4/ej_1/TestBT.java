@@ -64,7 +64,7 @@ public class TestBT {
 //					.collect(Collectors.toList()));
 			
 			
-//			GraphColors.toDot(bta.graph(), "ficheros/multiconjuntosBTGraph.gv", 
+//			GraphColors.toDot(bta.graph(), "ficheros_generados/p4/ejemplo1/multiconjuntosBTGraph.gv", 
 //					v -> v.toGraph(),
 //					e -> e.action().toString(), 
 //					v -> GraphColors.colorIf(Color.red, MulticonjuntoVertex.goal().test(v)),

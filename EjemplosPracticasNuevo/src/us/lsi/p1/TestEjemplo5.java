@@ -50,8 +50,8 @@ public class TestEjemplo5 {
 	
 	public static void showCombined() {
 		MatPlotLib.showCombined("Tiempos",
-				List.of("ficheros_generados/fib_r.txt","ficheros_generados/fib_rm.txt","ficheros_generados/fib_pm.txt","ficheros_generados/fib_pm.txt",
-						"ficheros_generados/fib_r_d.txt","ficheros_generados/fib_rm_d.txt","ficheros_generados/fib_pm_d.txt","ficheros_generados/fib_pm_d.txt"), 
+				List.of("ficheros_generados/p1/fib_r.txt","ficheros_generados/p1/fib_rm.txt","ficheros_generados/p1/fib_pm.txt","ficheros_generados/p1/fib_pm.txt",
+						"ficheros_generados/p1/fib_r_d.txt","ficheros_generados/p1/fib_rm_d.txt","ficheros_generados/p1/fib_pm_d.txt","ficheros_generados/p1/fib_pm_d.txt"), 
 				List.of("Recursivo_BI","RecursivoMemoria_BI","PotenciaMatriz_BI","Iterativa_BI",
 						"Recursivo_Double","RecursivoMemoria_Double","PotenciaMatriz_Double","Iterativa_Double"));
 	}
@@ -62,29 +62,29 @@ public class TestEjemplo5 {
 		
 
 		// BIG INTEGER: REC SIN MEMORIA, REC CON MEMORIA, ITERATIVO, CON POTENCIA DE MATRICES
-		genDataAritmetico(Ejemplo5::fibR,"ficheros_generados/fib_r.txt", nMinExp, nMaxExp, razonExp, nIterExp, nIterWarmupExp);
-		genDataGeometrico(Ejemplo5::fibRM,"ficheros_generados/fib_rm.txt",nMin, nMax, razon, nIter, nIterWarmup);
-		genDataGeometrico(Ejemplo5::fibIter,"ficheros_generados/fib_iter.txt",nMin, nMax, razon, nIter, nIterWarmup);
-		genDataGeometrico(Ejemplo5::fibonacciPotMat,"ficheros_generados/fib_pm.txt",nMin, nMax, razon, nIter, nIterWarmup);
+		genDataAritmetico(Ejemplo5::fibR,"ficheros_generados/p1/fib_r.txt", nMinExp, nMaxExp, razonExp, nIterExp, nIterWarmupExp);
+		genDataGeometrico(Ejemplo5::fibRM,"ficheros_generados/p1/fib_rm.txt",nMin, nMax, razon, nIter, nIterWarmup);
+		genDataGeometrico(Ejemplo5::fibIter,"ficheros_generados/p1/fib_iter.txt",nMin, nMax, razon, nIter, nIterWarmup);
+		genDataGeometrico(Ejemplo5::fibonacciPotMat,"ficheros_generados/p1/fib_pm.txt",nMin, nMax, razon, nIter, nIterWarmup);
 		
 		//DOUBLE: REC SIN MEMORIA, REC CON MEMORIA, ITERATIVO, CON POTENCIA DE MATRICES
-		genDataAritmetico(Ejemplo5::fibR_Double,"ficheros_generados/fib_r_d.txt",nMinExp,nMaxExp,razonExp,nIterExp,nIterWarmupExp);
-		genDataGeometrico(Ejemplo5::fibRM_Double,"ficheros_generados/fib_rm_d.txt",nMin, nMax, razon, nIter, nIterWarmup);
-		genDataGeometrico(Ejemplo5::fibIter_Double,"ficheros_generados/fib_iter_d.txt",nMin, nMax, razon, nIter, nIterWarmup);
-		genDataGeometrico(Ejemplo5::fibonacciPotMat_Double,"ficheros_generados/fib_pm_d.txt",nMin, nMax, razon, nIter, nIterWarmup);
+		genDataAritmetico(Ejemplo5::fibR_Double,"ficheros_generados/p1/fib_r_d.txt",nMinExp,nMaxExp,razonExp,nIterExp,nIterWarmupExp);
+		genDataGeometrico(Ejemplo5::fibRM_Double,"ficheros_generados/p1/fib_rm_d.txt",nMin, nMax, razon, nIter, nIterWarmup);
+		genDataGeometrico(Ejemplo5::fibIter_Double,"ficheros_generados/p1/fib_iter_d.txt",nMin, nMax, razon, nIter, nIterWarmup);
+		genDataGeometrico(Ejemplo5::fibonacciPotMat_Double,"ficheros_generados/p1/fib_pm_d.txt",nMin, nMax, razon, nIter, nIterWarmup);
 	
 		
 		// BIG INTEGER: REC SIN MEMORIA, REC CON MEMORIA, ITERATIVO, CON POTENCIA DE MATRICES
-		show(Exponential.of(), "ficheros_generados/fib_r.txt","rec");
-		show(PowerLog.of(List.of(Pair.of(2, 0.),Pair.of(3, 0.))), "ficheros_generados/fib_rm.txt","rec_mem");
-		show(PowerLog.of(List.of(Pair.of(2, 0.),Pair.of(3, 0.))), "ficheros_generados/fib_iter.txt","iter");
-		show(PowerLog.of(List.of(Pair.of(2, 0.),Pair.of(3, 0.))), "ficheros_generados/fib_pm.txt","pm");
+		show(Exponential.of(), "ficheros_generados/p1/fib_r.txt","rec");
+		show(PowerLog.of(List.of(Pair.of(2, 0.),Pair.of(3, 0.))), "ficheros_generados/p1/fib_rm.txt","rec_mem");
+		show(PowerLog.of(List.of(Pair.of(2, 0.),Pair.of(3, 0.))), "ficheros_generados/p1/fib_iter.txt","iter");
+		show(PowerLog.of(List.of(Pair.of(2, 0.),Pair.of(3, 0.))), "ficheros_generados/p1/fib_pm.txt","pm");
 				
 		//DOUBLE: REC SIN MEMORIA, REC CON MEMORIA, ITERATIVO, CON POTENCIA DE MATRICES
-		show(Exponential.of(),"ficheros_generados/fib_r_d.txt","rec_d");
-		show(PowerLog.of(List.of(Pair.of(2, 0.),Pair.of(3, 0.))), "ficheros_generados/fib_rm_d.txt","rec_mem_d");
-		show(PowerLog.of(List.of(Pair.of(2, 0.),Pair.of(3, 0.))), "ficheros_generados/fib_iter_d.txt","iter_d");
-		show(PowerLog.of(List.of(Pair.of(1, 0.), Pair.of(2, 1.),Pair.of(3, 0.))), "ficheros_generados/fib_pm_d.txt","pm_d");
+		show(Exponential.of(),"ficheros_generados/p1/fib_r_d.txt","rec_d");
+		show(PowerLog.of(List.of(Pair.of(2, 0.),Pair.of(3, 0.))), "ficheros_generados/p1/fib_rm_d.txt","rec_mem_d");
+		show(PowerLog.of(List.of(Pair.of(2, 0.),Pair.of(3, 0.))), "ficheros_generados/p1/fib_iter_d.txt","iter_d");
+		show(PowerLog.of(List.of(Pair.of(1, 0.), Pair.of(2, 1.),Pair.of(3, 0.))), "ficheros_generados/p1/fib_pm_d.txt","pm_d");
 	
 
 

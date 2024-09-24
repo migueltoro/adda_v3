@@ -42,20 +42,20 @@ public class TestEjemplo4 {
 	         
 	public static void showCombined() {
 		MatPlotLib.showCombined("Tiempos",
-				List.of("ficheros_generados/potRecursiva.txt","ficheros_generados/potIterativa.txt","ficheros_generados/potLog.txt"), 
+				List.of("ficheros_generados/p1/potRecursiva.txt","ficheros_generados/p1/potIterativa.txt","ficheros_generados/p1/potLog.txt"), 
 				List.of("Recursiva","Iterativa","Log"));
 	}
 	
 
 	public static void main(String[] args) {
-		genData(t -> Ejemplo4.potenciaR(a,t),"ficheros_generados/potRecursiva.txt");
-		genData(t -> Ejemplo4.potenciaIter(a,t),"ficheros_generados/potIterativa.txt");
-		genData(t -> IterativosyRecursivosSimples.pot(a.longValue(),t),"ficheros_generados/potLog.txt");
+		genData(t -> Ejemplo4.potenciaR(a,t),"ficheros_generados/p1/potRecursiva.txt");
+		genData(t -> Ejemplo4.potenciaIter(a,t),"ficheros_generados/p1/potIterativa.txt");
+		genData(t -> IterativosyRecursivosSimples.pot(a.longValue(),t),"ficheros_generados/p1/potLog.txt");
 		
 		
-		show(PowerLog.of(List.of(Pair.of(2, 0.),Pair.of(3, 0.))), "ficheros_generados/potRecursiva.txt","Recursiva");
-		show(PowerLog.of(List.of(Pair.of(2, 0.),Pair.of(3, 0.))),"ficheros_generados/potIterativa.txt","Iterativa");
-		show(PowerLog.of(List.of(Pair.of(1, 0.),Pair.of(2, 1.),Pair.of(3, 0.))),"ficheros_generados/potLog.txt","Log");
+		show(PowerLog.of(List.of(Pair.of(2, 0.),Pair.of(3, 0.))), "ficheros_generados/p1/potRecursiva.txt","Recursiva");
+		show(PowerLog.of(List.of(Pair.of(2, 0.),Pair.of(3, 0.))),"ficheros_generados/p1/potIterativa.txt","Iterativa");
+		show(PowerLog.of(List.of(Pair.of(1, 0.),Pair.of(2, 1.),Pair.of(3, 0.))),"ficheros_generados/p1/potLog.txt","Log");
 		
 		showCombined();
 	}

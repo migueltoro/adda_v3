@@ -65,7 +65,7 @@ public class TestBT {
 
 			var outGraph = bta.outGraph();
 			if(outGraph!=null)
-				GraphColors.toDot(bta.outGraph(),"ficheros/subconjuntosBTGraph.gv",
+				GraphColors.toDot(bta.outGraph(),"ficheros_generados/p4/ejemplo2/subconjuntosBTGraph.gv",
 					v->v.toGraph(),
 					e->e.action().toString(),
 					v->GraphColors.colorIf(Color.red,v.goal()),
