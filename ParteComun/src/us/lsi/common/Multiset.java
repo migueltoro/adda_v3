@@ -220,7 +220,7 @@ public class Multiset<E>  {
 	}
 	
 	public int size() {
-		return this.size();
+		return this.size;
 	}
 
 	public String toString() {
