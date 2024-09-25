@@ -53,10 +53,11 @@ public class Mapa extends EGrafo<Ciudad,Carretera>{
 	}
 	
 	public static void main(String[] args) {
-		Mapa m = Mapa.parse("ficheros/ciudades.txt", 
-				"ficheros/carreteras.txt", 
+		Mapa m = Mapa.parse("ficheros/ciudades_2.txt", 
+				"ficheros/carreteras_2.txt", 
 				GraphType.UNDIRECTED,
 				TraverseType.FORWARD);
 		System.out.println(m);
+		System.out.println(m.successors(m.ciudad("VNFLN")));
 	}
 }

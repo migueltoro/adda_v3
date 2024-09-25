@@ -10,12 +10,10 @@ import java.util.Map;
 import java.util.function.Predicate;
 import java.util.stream.IntStream;
 
-import org.jheaps.AddressableHeap.Handle;
-import org.jheaps.tree.FibonacciHeap;
-
 import us.lsi.alg.investigadores.DatosInv;
 import us.lsi.alg.investigadores.InvVertex;
 import us.lsi.alg.investigadores.SolucionInv;
+import us.lsi.graphs.manual.heaps.Heap;
 
 
 public class  AStarInv {
@@ -32,8 +30,8 @@ public class  AStarInv {
 		return new AStarInv();
 	}
 	
-	private Map<InvVertex,Handle<Integer,AStarDataInv>> tree;
-	private FibonacciHeap<Integer,AStarDataInv> heap; 
+	private Map<InvVertex,AStarDataInv> tree;
+	private Heap<InvVertex,Integer> heap; 
 	private Boolean goal;
 	private Comparator<Integer> cmp;
 	private Integer maxValue;
@@ -46,11 +44,11 @@ public class  AStarInv {
 	
 	private List<Integer> acciones(InvVertex v) {
 		List<Integer> ls = new ArrayList<>();
-		Integer a = this.tree.get(v).getValue().a();
+		Integer a = this.tree.get(v).a();
 		while (a != null) {
 			ls.add(a);
-			v = this.tree.get(v).getValue().lastVertex();
-			a = this.tree.get(v).getValue().a();
+			v = this.tree.get(v).lastVertex();
+			a = this.tree.get(v).a();
 		}
 		Collections.reverse(ls);
 		return ls;
@@ -69,10 +67,10 @@ public class  AStarInv {
 		Integer distanceToEnd = start.fo();
 		AStarDataInv a = AStarDataInv.of(start,null,null,0);
 		this.cmp = Comparator.reverseOrder();
-		this.heap = new FibonacciHeap<>(cmp);
-		Handle<Integer, AStarDataInv> h = this.heap.insert(distanceToEnd,a);
+		this.heap = Heap.of(cmp);
+		this.heap.add(start,distanceToEnd);
 		this.tree = new HashMap<>();
-		this.tree.put(start,h);
+		this.tree.put(start,a);
 		this.goal = false;
 		this.maxValue = maxValue;
 		this.solucion = s;
@@ -97,9 +95,7 @@ public class  AStarInv {
 	private List<Integer> search() {
 		InvVertex vertexActual = null;
 		while (!heap.isEmpty() && !goal) {
-			Handle<Integer, AStarDataInv> ha = heap.deleteMin();
-			AStarDataInv dataActual = ha.getValue();
-			vertexActual = dataActual.vertex();	
+			vertexActual = heap.remove();
 			if(forget(vertexActual)) continue;
 			for (Integer a : vertexActual.actions()) {
 				InvVertex v = vertexActual.neighbor(a);
@@ -107,13 +103,12 @@ public class  AStarInv {
 				Integer newDistanceToEnd = v.fo();				
 				if (!tree.containsKey(v)) {	
 					AStarDataInv ac = AStarDataInv.of(v, a, vertexActual, newDistance);
-					Handle<Integer, AStarDataInv> nh = heap.insert(newDistanceToEnd,ac);
-					tree.put(v,nh);	
-				}else if (cmp.compare(newDistance, tree.get(v).getValue().distanceToOrigin()) <0 ) {
+					heap.add(v,newDistanceToEnd);
+					tree.put(v,ac);	
+				}else if (cmp.compare(newDistance, tree.get(v).distanceToOrigin()) < 0 ) {
 					AStarDataInv ac = AStarDataInv.of(v, a, vertexActual, newDistance);
-					Handle<Integer, AStarDataInv> hv = tree.get(v);
-					hv.setValue(ac);
-					hv.decreaseKey(newDistanceToEnd);
+					tree.put(v,ac);	
+					heap.decrease(v,newDistanceToEnd);
 				}
 			}
 			this.goal = goalHasSolution().test(vertexActual);
@@ -131,14 +126,14 @@ public class  AStarInv {
 		AStarInv as = AStarInv.of();
 		
 		SolucionInv sv = GreedyInv.solucionVoraz(InvVertex.first());
-		System.out.println(sv);
+		System.out.println("1 = "+ sv);
 
 		SolucionInv so = as.search(InvVertex.first(),null,null);
-		System.out.println(as.time());
-		System.out.println(so);
+		System.out.println("2 = "+ as.time());
+		System.out.println("3 = "+ so);
 		so = as.search(InvVertex.first(),sv.fo(),sv);
-		System.out.println(as.time());
-		System.out.println(so);
+		System.out.println("4 = "+ as.time());
+		System.out.println("5 = "+  so);
 //		so = as.search(InvVertex.first(),null,null);
 //		System.out.println(as.time());
 //		

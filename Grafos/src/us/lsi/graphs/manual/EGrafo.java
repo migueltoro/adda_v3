@@ -104,11 +104,18 @@ public class EGrafo<V, E> implements Grafo<V, E>{
 	}
 
 	public Set<V> predecessors(V vertex) {
-		return this.predecessors.get(vertex);
+		return this.predecessors.getOrDefault(vertex,Set.of());
+	}
+	
+	public Set<V> neighbors(V vertex) {
+		return this.neighbors.getOrDefault(vertex,Set.of());
 	}
 
 	public Set<V> successors(V vertex) {
-		return this.neighbors.get(vertex);
+		if(this.traverseType.equals(TraverseType.FORWARD)) 
+            return this.neighbors(vertex);
+        else 
+            return this.predecessors(vertex);		    
 	}
 
 	public Double edgeWeight(V source, V target) {

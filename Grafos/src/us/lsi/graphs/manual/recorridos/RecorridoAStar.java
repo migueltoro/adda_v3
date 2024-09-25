@@ -37,7 +37,7 @@ public class RecorridoAStar<V,E> extends Recorrido<V,E> {
         V v = source;
         Heap<V,Double> q = Heap.of();
         q.add(v,0.);
-        this.tree.put(v, Data.of(null,0.));
+        this.tree.put(v, Data.of(Optional.empty(),0.));
         while (!q.isEmpty()) {
             v = q.remove();
             this.path.add(v);

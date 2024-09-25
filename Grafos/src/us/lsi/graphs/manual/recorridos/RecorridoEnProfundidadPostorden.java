@@ -20,11 +20,10 @@ public class RecorridoEnProfundidadPostorden<V,E> extends Recorrido<V,E> {
         Pila<V> q = Pila.of();
         q.add(v);
         Pila<V> q2 = Pila.of();
-        this.tree.put(v, Data.of(null,0.));
+        this.tree.put(v, Data.of(Optional.empty(),0.));
         while (!q.isEmpty()) {
             v = q.remove();
             q2.add(v);
-            this.path.add(v);
             for (V neighbor : this.graph.successors(v)) {
                 if (!this.tree.containsKey(neighbor)) {
                     q.add(neighbor);                   
