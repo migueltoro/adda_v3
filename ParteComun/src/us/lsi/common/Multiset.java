@@ -219,7 +219,7 @@ public class Multiset<E>  {
 		return r;
 	}
 	
-	public int size() {
+	public Integer size() {
 		return this.size;
 	}
 
