@@ -16,7 +16,7 @@ import org.jgrapht.graph.SimpleDirectedGraph;
 import us.lsi.colors.GraphColors;
 import us.lsi.common.Set2;
 import us.lsi.common.String2;
-import us.lsi.iterativorecursivos.IterativosyRecursivosSimples;
+import us.lsi.clase.palindromo.Palindromo;
 import us.lsi.tiposrecursivos.Tree;
 import us.lsi.tiposrecursivos.TEmpty;
 import us.lsi.tiposrecursivos.TLeaf;
@@ -144,7 +144,7 @@ public class TreesTest {
 		case TLeaf(var lb) -> {
 			Character label = lb;
 			camino = camino + label;
-			if (IterativosyRecursivosSimples.esPalindromo1(camino))
+			if (Palindromo.esPalindromo1(camino))
 				st.add(camino);
 		}
 		case TNary(var lb, var chd) -> {
@@ -164,7 +164,7 @@ public class TreesTest {
 		case TEmpty() -> Set2.of();
 		case TLeaf(var lb) -> {
 			camino = camino+lb;
-			if(IterativosyRecursivosSimples.esPalindromo1(camino)) yield Set2.of(camino);
+			if(Palindromo.esPalindromo1(camino)) yield Set2.of(camino);
 			else yield Set2.of();
 		}
 		case TNary(var lb, var chd) -> {

@@ -7,6 +7,7 @@ import java.util.function.Function;
 
 import org.apache.commons.math3.fitting.WeightedObservedPoint;
 
+import us.lsi.clase.potencia.Potencia;
 import us.lsi.common.Pair;
 import us.lsi.curvefitting.DataFile;
 import us.lsi.curvefitting.Fit;
@@ -14,7 +15,6 @@ import us.lsi.curvefitting.GenData;
 import us.lsi.curvefitting.PowerLog;
 import us.lsi.graphics.MatPlotLib;
 
-import us.lsi.iterativorecursivos.IterativosyRecursivosSimples;
 
 public class TestEjemplo4 {
 	
@@ -50,7 +50,7 @@ public class TestEjemplo4 {
 	public static void main(String[] args) {
 		genData(t -> Ejemplo4.potenciaR(a,t),"ficheros_generados/p1/potRecursiva.txt");
 		genData(t -> Ejemplo4.potenciaIter(a,t),"ficheros_generados/p1/potIterativa.txt");
-		genData(t -> IterativosyRecursivosSimples.pot(a.longValue(),t),"ficheros_generados/p1/potLog.txt");
+		genData(t -> Potencia.pot(a.longValue(),t),"ficheros_generados/p1/potLog.txt");
 		
 		
 		show(PowerLog.of(List.of(Pair.of(2, 0.),Pair.of(3, 0.))), "ficheros_generados/p1/potRecursiva.txt","Recursiva");

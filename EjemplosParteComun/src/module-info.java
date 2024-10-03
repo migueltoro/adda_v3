@@ -8,7 +8,6 @@
 
 module ejemplos_parte_comun {
 
-	exports us.lsi.iterativorecursivos;
 	exports us.lsi.recursivos.problemasdelistas;
 	exports us.lsi.trees;
 	exports us.lsi.java8ejemplos;
@@ -21,4 +20,5 @@ module ejemplos_parte_comun {
 	requires transitive commons.math3;
 	requires transitive org.jgrapht.core;
 	requires transitive grafos;
+	requires transitive ejemplositerativosrecursivos;
 }

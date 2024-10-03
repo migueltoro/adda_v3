@@ -1,19 +1,18 @@
-package us.lsi.iterativorecursivos;
+package us.lsi.clase.vistas;
 
 import java.util.Iterator;
 import java.util.List;
 
-import us.lsi.common.Ranges.IntRange;
-import us.lsi.common.Ranges.LongRange;
-import us.lsi.common.String2;
-import us.lsi.iterables.Iterables;
 import us.lsi.common.Matrix;
+import us.lsi.common.String2;
 import us.lsi.common.View1;
 import us.lsi.common.View2E;
-
+import us.lsi.common.Ranges.IntRange;
+import us.lsi.common.Ranges.LongRange;
+import us.lsi.iterables.Iterables;
 
 public class Vistas {
-	
+
 	public static Integer sum(List<Integer>ls) {
 		if(ls.isEmpty()) return 0;
 		IntRange r = IntRange.of(0, ls.size());		
@@ -54,8 +53,6 @@ public class Vistas {
 		}
 		return e*e == a? e : r.a();
 	}
-	
-	
 	
 	public static <E extends Comparable<? super E>> int indexOf(List<E>ls, Integer elem) {
 		IntRange r = IntRange.of(0, ls.size());		
@@ -141,18 +138,14 @@ public class Vistas {
 				m8.get(m8.nf()-1,m8.nc()-1)));
 	}
 	
-	
-	
-	
-	
 	public static void main(String[] args) {
-//		System.out.println(sum(List.of(1,3,7,9,31,54,91,102)));
-//		System.out.println(sqrtLong(101L));
-//		System.out.println(indexOf(List.of(1,3,7,9,31,54,91,102),92));
-//		System.out.println(masCercano(List.of(1,3,7,9,31,54,91,102),103));
-//		System.out.println(masCercano2(List.of(1,3,7,9,31,54,91,102),90));
-//		System.out.println(sumIntegerOFile("ficheros/numeros.txt"));
-//		matrix();
+		System.out.println(sum(List.of(1,3,7,9,31,54,91,102)));
+		System.out.println(sqrtLong(101L));
+		System.out.println(indexOf(List.of(1,3,7,9,31,54,91,102),92));
+		System.out.println(masCercano(List.of(1,3,7,9,31,54,91,102),103));
+		System.out.println(masCercano2(List.of(1,3,7,9,31,54,91,102),90));
+		System.out.println(sumIntegerOFile("ficheros/numeros.txt"));
+		matrix();
 		Integer[] m =   {1, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0, 0, 0, 1, 0, 1, 0, 1, 0, 1,1, 0, 1, 0, 1};
 		Matrix<Integer> mt = Matrix.of(5,5,m);
 		String2.toConsole("%s",mt);
@@ -165,3 +158,4 @@ public class Vistas {
 	}
 
 }
+

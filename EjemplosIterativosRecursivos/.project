@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <projectDescription>
-	<name>EjemplosParteComun</name>
+	<name>EjemplosIterativosRecursivos</name>
 	<comment></comment>
 	<projects>
-		<project>EjemplosIterativosRecursivos</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>

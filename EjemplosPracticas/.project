@@ -3,6 +3,7 @@
 	<name>EjemplosPracticas</name>
 	<comment></comment>
 	<projects>
+		<project>EjemplosIterativosRecursivos</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>

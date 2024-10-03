@@ -4,7 +4,7 @@
 /**
  * 
  */
-module EjemplosPracticasNuevo {
+module ejemplospracticas {
 	exports us.lsi.p1;
 	exports us.lsi.p2;
 	exports us.lsi.p4.ej_1.manual;
@@ -13,7 +13,6 @@ module EjemplosPracticasNuevo {
 	exports us.lsi.p3.ej_3;
 	exports us.lsi.p4.ej_2.manual;
 
-	requires transitive commons.math3;
 	requires transitive datos_compartidos;
 	requires transitive ejemplos_algoritmos;
 	requires transitive ejemplos_parte_comun;
@@ -24,5 +23,5 @@ module EjemplosPracticasNuevo {
 	requires transitive org.jheaps;
 	requires transitive partecomun;
 	requires transitive solve;
-
+	requires transitive ejemplositerativosrecursivos;
 }
