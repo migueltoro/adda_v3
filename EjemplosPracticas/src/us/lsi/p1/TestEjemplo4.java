@@ -16,6 +16,7 @@ import us.lsi.curvefitting.PowerLog;
 import us.lsi.graphics.MatPlotLib;
 
 
+
 public class TestEjemplo4 {
 	
 	private static Integer nMin = 100; // n mínimo para el cálculo de potencia
