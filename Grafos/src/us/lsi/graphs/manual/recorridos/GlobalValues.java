@@ -28,7 +28,6 @@ public class GlobalValues<V,E> {
 	public Comparator<Double> cmp = (x,y)->x.compareTo(y);
 	public Predicate<V> end;
 	public VirtualGraph<V, E> graph;
-	
 	public BiFunction<GlobalValues<V, E>,V, Double> heuristica;
 	public V endVertex = null;
 	
