@@ -3,15 +3,15 @@ package us.lsi.graphs.manual.recorridos;
 import java.util.Optional;
 
 import us.lsi.graphs.manual.Cola;
-import us.lsi.graphs.manual.Grafo;
+import us.lsi.graphs.manual.VirtualGraph;
 
 public class RecorridoEnAnchura<V,E> extends Recorrido<V,E> {
 	
-	public static <V, E> RecorridoEnAnchura<V, E> of(Grafo<V, E> grafo) {
+	public static <V, E> RecorridoEnAnchura<V, E> of(VirtualGraph<V, E> grafo) {
 		return new RecorridoEnAnchura<>(grafo);
 	}
 	
-	protected RecorridoEnAnchura(Grafo<V, E> grafo) {
+	protected RecorridoEnAnchura(VirtualGraph<V, E> grafo) {
 		super(grafo);
 	}
 
@@ -23,7 +23,7 @@ public class RecorridoEnAnchura<V,E> extends Recorrido<V,E> {
         while (!q.isEmpty()) {
             v = q.remove();
             this.path.add(v);
-            for (V neighbor : this.graph.successors(v)) {
+            for (V neighbor : this.graph.neighbors(v)) {
                 if (!this.tree.containsKey(neighbor)) {
                     q.add(neighbor);                   
                     this.tree.put(neighbor, Data.of(Optional.of(v), this.tree.get(v).weight() + 1));

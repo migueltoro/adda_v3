@@ -2,15 +2,15 @@ package us.lsi.graphs.manual.recorridos;
 
 import java.util.Collections;
 
-import us.lsi.graphs.manual.Grafo;
+import us.lsi.graphs.manual.VirtualGraph;
 
 public class RecorridoTopologico<V,E> extends RecorridoEnProfundidadPostorden<V,E> {
 	
-	public static <V, E> RecorridoTopologico<V, E> of(Grafo<V, E> grafo) {
+	public static <V, E> RecorridoTopologico<V, E> of(VirtualGraph<V, E> grafo) {
 		return new RecorridoTopologico<>(grafo);
 	}
 
-	protected RecorridoTopologico(Grafo<V, E> grafo) {
+	protected RecorridoTopologico(VirtualGraph<V, E> grafo) {
 		super(grafo);
 	}
 

@@ -17,7 +17,9 @@ public class TestPDR {
 		ReinasVertex v1 = ReinasVertex.first();
 		
 		EGraph<ReinasVertex,SimpleEdgeAction<ReinasVertex,Integer>> graph = 
-				EGraph.virtual(v1, PathType.Last, Type.All)
+				EGraph.virtual(v1)
+				.pathType(PathType.Last)
+				.type(Type.All)
 				.vertexWeight(v->v.errores().doubleValue())
 				.solutionNumber(1000)
 				.build();			

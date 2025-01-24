@@ -30,7 +30,9 @@ public class TestMainPuzzle {
 		System.out.println(start.isSolvable(VertexPuzzleI.end));
 		
 		EGraph<VertexPuzzle, EdgePuzzle> graph = 
-				EGraph.virtual(start,PathType.Sum, Type.Min)
+				EGraph.virtual(start)
+				.pathType(PathType.Sum)
+				.type(Type.Min)
 				.edgeWeight(x->x.weight())
 				.endVertex(VertexPuzzleI.end)
 				.heuristic(HeuristicaPuzzle::heuristica)

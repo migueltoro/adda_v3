@@ -2,16 +2,16 @@ package us.lsi.graphs.manual.recorridos;
 
 import java.util.Optional;
 
-import us.lsi.graphs.manual.Grafo;
+import us.lsi.graphs.manual.VirtualGraph;
 import us.lsi.graphs.manual.heaps.Heap;
 
 public class RecorridoOrdenado<V, E> extends Recorrido<V, E> {
 
-	public static <V, E> RecorridoOrdenado<V, E> of(Grafo<V, E> grafo) {
+	public static <V, E> RecorridoOrdenado<V, E> of(VirtualGraph<V, E> grafo) {
 		return new RecorridoOrdenado<>(grafo);
 	}
 
-	protected RecorridoOrdenado(Grafo<V, E> grafo) {
+	protected RecorridoOrdenado(VirtualGraph<V, E> grafo) {
 		super(grafo);
 	}
 
@@ -24,7 +24,7 @@ public class RecorridoOrdenado<V, E> extends Recorrido<V, E> {
             v = q.remove();
             this.path.add(v);
             Double w = this.tree.get(v).weight();
-            for (V neighbor : this.graph.successors(v)) {
+            for (V neighbor : this.graph.neighbors(v)) {
                 Double nbw = w + this.graph.edgeWeight(v, neighbor); 
                 if (!this.tree.containsKey(neighbor)) {
                     this.tree.put(neighbor, Data.of(Optional.of(v), nbw));

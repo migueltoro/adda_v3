@@ -18,7 +18,9 @@ public class TestPDR {
 		PackVertex e1 = PackVertex.first();
 		
 		EGraph<PackVertex,PackEdge> graph = 
-				EGraph.virtual(e1,PathType.Last,Type.Min)
+				EGraph.virtual(e1)
+				.pathType(PathType.Last)
+				.type(Type.Min)
 				.vertexWeight(v->(double)v.nc())
 				.edgeWeight(e->e.weight())
 				.heuristic(Heuristica::heuristic)

@@ -31,7 +31,9 @@ public class TestGreedy {
 //			System.out.println(DatosMonedas.valorInicial + "--------");
 			MonedasVertexI e1 = MonedasVertexI.first(400+i);
 			//		MonedaVertex e2 = MonedaVertex.last();
-			EGraph<MonedasVertex, MonedasEdge> graph = EGraph.virtual(e1,PathType.Sum,Type.Max)
+			EGraph<MonedasVertex, MonedasEdge> graph = EGraph.virtual(e1)
+					.pathType(PathType.Sum)
+					.type(Type.Max)
 					.heuristic(MonedasHeuristica::heuristic)
 					.build();
 		
@@ -45,7 +47,9 @@ public class TestGreedy {
 			Collections.sort(DatosMonedas.monedas, Comparator.comparing(m -> m.pesoUnitario()));
 			//		System.out.println(Moneda.monedas);
 			e1 = MonedasVertexI.first(400+i);
-			graph = EGraph.virtual(e1,PathType.Sum,Type.Min)
+			graph = EGraph.virtual(e1)
+					.pathType(PathType.Sum)
+					.type(Type.Min)
 					.heuristic(MonedasHeuristica::heuristic)
 					.build();	
 			rr = GreedyOnGraph.of(graph, MonedasVertex::greedyEdge);

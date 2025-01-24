@@ -33,7 +33,9 @@ public class TestAStar {
 
 		// Algoritmo A*
 		EGraph<AlumnosVertex, AlumnosEdge> graph =
-					EGraph.virtual(start,PathType.Sum, Type.Max)
+					EGraph.virtual(start)
+					.pathType(PathType.Sum)
+					.type(Type.Max)
 					.edgeWeight(x -> x.weight())
 					.heuristic(AlumnosHeuristic::heuristic)
 					.build();

@@ -20,7 +20,9 @@ public class TestState {
 //		MochilaVertex v2 = MochilaVertex.lastVertex();
 		
 		EGraph<MochilaVertex, MochilaEdge> graph = 
-				EGraph.virtual(v1,PathType.Sum, Type.Max)
+				EGraph.virtual(v1)
+				.pathType(PathType.Sum)
+				.type(Type.Max)
 				.heuristic(MochilaHeuristic::heuristic1)
 				.build();
 		

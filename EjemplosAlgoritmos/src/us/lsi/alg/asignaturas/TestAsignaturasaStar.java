@@ -25,7 +25,9 @@ public class TestAsignaturasaStar {
 		
 	
 		EGraph<AsignaturasVertice,AsignaturasEdge> grafo = 
-				EGraph.<AsignaturasVertice,AsignaturasEdge>virtual(v0,PathType.Last,Type.Max)
+				EGraph.<AsignaturasVertice,AsignaturasEdge>virtual(v0)
+				.pathType(PathType.Last)
+				.type(Type.Max)
 				.vertexWeight(v->(double)v.getPeso())
 				.heuristic(Heuristica::heuristic)
 				.build();

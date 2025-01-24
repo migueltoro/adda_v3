@@ -38,7 +38,9 @@ public class TestAStart {
 			System.out.println("#### Algoritmo A* ####");
 
 			// Algoritmo A*
-			EGraph<VertexCandidatos, EdgeCandidatos> graph = EGraph.virtual(start,PathType.Sum,Type.Max)
+			EGraph<VertexCandidatos, EdgeCandidatos> graph = EGraph.virtual(start)
+					.pathType(PathType.Sum)
+					.type(Type.Max)
 					.edgeWeight(x -> x.weight())
 					.heuristic(CandidatosHeuristic::heuristic)
 					.build();

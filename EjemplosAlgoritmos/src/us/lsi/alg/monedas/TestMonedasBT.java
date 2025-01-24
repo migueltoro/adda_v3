@@ -27,7 +27,9 @@ public class TestMonedasBT {
 		MonedasVertex e1 = MonedasVertexI.first(valorInicial);
 		
 		EGraph<MonedasVertex, MonedasEdge> graph = 
-				EGraph.virtual(e1,PathType.Sum,Type.Max)
+				EGraph.virtual(e1)
+				.pathType(PathType.Sum)
+				.type(Type.Max)
 				.heuristic(MonedasHeuristica::heuristic)
 				.build();
 
@@ -63,7 +65,9 @@ public class TestMonedasBT {
 
 		MonedasVertex e3 = MonedasVertexI.first(valorInicial);
 
-		graph = EGraph.virtual(e3,PathType.Sum,Type.Min)
+		graph = EGraph.virtual(e3)
+				.pathType(PathType.Sum)
+				.type(Type.Min)
 				.heuristic(MonedasHeuristica::heuristic)
 				.build();
 

@@ -25,7 +25,9 @@ public class TestVoraz {
 			// Grafo
 			
 			EGraph<VertexContenedores, EdgeContenedores> graph = 
-					EGraph.virtual(start,PathType.Last,Type.Max)
+					EGraph.virtual(start)
+					.pathType(PathType.Last)
+					.type(Type.Max)
 					.vertexWeight(x -> (double)x.contenedoresCompletos().size())
 					.heuristic(ContenedoresHeuristic::heuristic)
 					.build();
@@ -37,7 +39,9 @@ public class TestVoraz {
 			Double hu = ContenedoresHeuristic.heuristic(start,v->v.goal(), null);
 			System.out.println(String.format("%.2f,%.2f,%.2f", max.getWeight(),max2.getWeight(),hu));
 			
-			graph = EGraph.virtual(start.neighbor(start.greedyAction()),PathType.Last,Type.Max)
+			graph = EGraph.virtual(start.neighbor(start.greedyAction()))
+					.pathType(PathType.Last)
+					.type(Type.Max)
 					.vertexWeight(x -> (double)x.contenedoresCompletos().size())
 					.heuristic(ContenedoresHeuristic::heuristic)
 					.build();

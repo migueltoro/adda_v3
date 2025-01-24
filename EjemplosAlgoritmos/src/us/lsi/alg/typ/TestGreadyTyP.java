@@ -21,7 +21,9 @@ public class TestGreadyTyP {
 //		TyPVertex e2 = TyPVertex.last();
 		
 		EGraph<TyPVertex,SimpleEdgeAction<TyPVertex,Integer>> graph = 
-				EGraph.virtual(e1, PathType.Last, Type.Min)
+				EGraph.virtual(e1)
+				.pathType(PathType.Last)
+				.type(Type.Min)
 				.vertexWeight(v->v.maxCarga())
 				.heuristic(Heuristica::heuristic)
 				.build();	

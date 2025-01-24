@@ -19,7 +19,9 @@ public class TestSudokuBTRandom {
 		SudokuVertex e1 = SudokuVertex.first();
 		
 		EGraph<SudokuVertex,SimpleEdgeAction<SudokuVertex,Integer>> graph = 
-				EGraph.virtual(e1,PathType.Last, Type.One)
+				EGraph.virtual(e1)
+				.pathType(PathType.Last)
+				.type(Type.One)
 				.vertexWeight(v->(double)v.errores())
 				.build();
 		

@@ -36,7 +36,9 @@ public class TestAStar {
 			// Algoritmo A*
 			
 			EGraph<VertexContenedores, EdgeContenedores> graph = 
-					EGraph.virtual(start,PathType.Last,Type.Max)
+					EGraph.virtual(start)
+					.pathType(PathType.Last)
+					.type(Type.Max)
 					.vertexWeight(x -> (double)x.contenedoresCompletos().size())
 					.heuristic(ContenedoresHeuristic::heuristic)
 					.build();

@@ -20,7 +20,9 @@ public class TestBTRandom {
 			ReinasVertex e1 = ReinasVertex.first();
 			
 			EGraph<ReinasVertex,SimpleEdgeAction<ReinasVertex,Integer>> graph = 
-					EGraph.virtual(e1, PathType.Last, Type.All)
+					EGraph.virtual(e1)
+					.pathType(PathType.Last)
+					.type(Type.All)
 					.solutionNumber(2)
 					.vertexWeight(v->v.errores().doubleValue())
 					.build();		

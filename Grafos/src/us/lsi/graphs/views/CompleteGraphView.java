@@ -3,85 +3,83 @@ package us.lsi.graphs.views;
 import java.util.Collection;
 import java.util.Set;
 import java.util.function.Supplier;
-import java.util.stream.Collectors;
 
 import org.jgrapht.Graph;
 import org.jgrapht.GraphType;
 
-public class CompleteGraphView<V, E, G extends Graph<V,E>> implements Graph<V,E> {
+public class CompleteGraphView<V, E> implements Graph<V, E> {
 
+	private Graph<V, E> graph;
+	private Supplier<E> edgeWeightFactory;
+	public Double weight = 2000.;
 	
-	public static <V, E, G extends Graph<V,E>> CompleteGraphView<V, E, G> of(
-			G graph, 
-			Supplier<E> edgeWeightFactory) {
-		return new CompleteGraphView<V, E, G>(graph, edgeWeightFactory);
+	public static <V, E> CompleteGraphView<V, E> of(Graph<V, E> graph, Supplier<E> edgeWeightFactory) {
+		return new CompleteGraphView<V, E>(graph, 
+				edgeWeightFactory);
 	}
 	
-	public static Double weight = 1000.;
-
-	private CompleteGraphView(G graph, 
-			Supplier<E> edgeWeightFactory) {
+	private CompleteGraphView(Graph<V, E> graph, Supplier<E> edgeWeightFactory) {
 		super();
 		this.graph = graph;
 		this.edgeWeightFactory = edgeWeightFactory;
-		this.n= graph.vertexSet().size();
 	}
-
-	private G graph;
-	private Supplier<E> edgeWeightFactory;
-	private final Integer n;
-
-	public Graph<V, E> getGraph() {
-		return graph;
-	}
-
-	public Supplier<E> getEdgeWeightFactory() {
-		return this.edgeWeightFactory;
+	
+	public void addEdges() {
+		Set<V> vertices = graph.vertexSet();
+		for (V v0 : vertices) {
+			for (V v1 : vertices) {
+				if (!v0.equals(v1)) {
+					if (graph.containsEdge(v0, v1)) continue;
+					E edge = this.edgeWeightFactory.get();
+					graph.addEdge(v0, v1, edge);
+					graph.setEdgeWeight(edge, weight);
+				}
+			}
+		}
 	}
 
 	public boolean addEdge(V arg0, V arg1, E arg2) {
-		throw new IllegalArgumentException("Metodo no permitido");
+		return graph.addEdge(arg0, arg1, arg2);
 	}
 
 	public E addEdge(V arg0, V arg1) {
-		throw new IllegalArgumentException("Metodo no permitido");
+		return graph.addEdge(arg0, arg1);
 	}
 
 	public V addVertex() {
-		throw new IllegalArgumentException("Metodo no permitido");
+		return graph.addVertex();
 	}
 
 	public boolean addVertex(V arg0) {
-		throw new IllegalArgumentException("Metodo no permitido");
+		return graph.addVertex(arg0);
 	}
 
-	public boolean containsEdge(E e) {
-		return graph.containsVertex(this.getEdgeSource(e)) && graph.containsVertex(this.getEdgeSource(e));
+	public boolean containsEdge(E arg0) {
+		return graph.containsEdge(arg0);
 	}
 
-	public boolean containsEdge(V v0, V v1) {
-		if(v0.equals(v1)) return false;
-		return graph.containsVertex(v0) && graph.containsVertex(v1);
+	public boolean containsEdge(V arg0, V arg1) {
+		return graph.containsEdge(arg0, arg1);
 	}
 
-	public boolean containsVertex(V v) {
-		return graph.containsVertex(v);
+	public boolean containsVertex(V arg0) {
+		return graph.containsVertex(arg0);
 	}
 
-	public int degreeOf(V v) {
-		return n-1;
+	public int degreeOf(V arg0) {
+		return graph.degreeOf(arg0);
 	}
 
 	public Set<E> edgeSet() {
-		return graph.vertexSet().stream().<E>flatMap(x->edgesOf(x).stream()).collect(Collectors.toSet());
+		return graph.edgeSet();
 	}
 
-	public Set<E> edgesOf(V v) {
-		return graph.vertexSet().stream().filter(x->!x.equals(v)).map(x->getEdge(v,x)).collect(Collectors.toSet());
+	public Set<E> edgesOf(V arg0) {
+		return graph.edgesOf(arg0);
 	}
 
-	public Set<E> getAllEdges(V v0, V v1) {
-		throw new IllegalArgumentException("Metodo no permitido");
+	public Set<E> getAllEdges(V arg0, V arg1) {
+		return graph.getAllEdges(arg0, arg1);
 	}
 
 	public E getEdge(V v0, V v1) {
@@ -91,25 +89,26 @@ public class CompleteGraphView<V, E, G extends Graph<V,E>> implements Graph<V,E>
 			edge = graph.getEdge(v0, v1);
 		else {
 			edge = this.edgeWeightFactory.get();
-			this.graph.addEdge(v0, v1, edge);
+			graph.addEdge(v0, v1, edge);
+			graph.setEdgeWeight(edge, weight);
 		}
 		return edge;
 	}
 
-	public V getEdgeSource(E e) {
-		return this.graph.getEdgeSource(e);
+	public V getEdgeSource(E arg0) {
+		return graph.getEdgeSource(arg0);
 	}
 
 	public Supplier<E> getEdgeSupplier() {
-		return this.graph.getEdgeSupplier();
+		return graph.getEdgeSupplier();
 	}
 
-	public V getEdgeTarget(E e) {
-		return this.graph.getEdgeTarget(e);
+	public V getEdgeTarget(E arg0) {
+		return graph.getEdgeTarget(arg0);
 	}
 
-	public double getEdgeWeight(E e) {
-		return graph.getEdgeWeight(e);
+	public double getEdgeWeight(E edge) {
+		return graph.getEdgeWeight(edge);
 	}
 
 	public GraphType getType() {
@@ -117,60 +116,60 @@ public class CompleteGraphView<V, E, G extends Graph<V,E>> implements Graph<V,E>
 	}
 
 	public Supplier<V> getVertexSupplier() {
-		throw new IllegalArgumentException("Metodo no permitido");
+		return graph.getVertexSupplier();
 	}
 
 	public int inDegreeOf(V arg0) {
-		throw new IllegalArgumentException("Metodo no permitido");
+		return graph.inDegreeOf(arg0);
 	}
 
 	public Set<E> incomingEdgesOf(V arg0) {
-		throw new IllegalArgumentException("Metodo no permitido");
+		return graph.incomingEdgesOf(arg0);
 	}
 
 	public int outDegreeOf(V arg0) {
-		throw new IllegalArgumentException("Metodo no permitido");
+		return graph.outDegreeOf(arg0);
 	}
 
 	public Set<E> outgoingEdgesOf(V arg0) {
-		throw new IllegalArgumentException("Metodo no permitido");
+		return graph.outgoingEdgesOf(arg0);
 	}
 
 	public boolean removeAllEdges(Collection<? extends E> arg0) {
-		throw new IllegalArgumentException("Metodo no permitido");
+		return graph.removeAllEdges(arg0);
 	}
 
 	public Set<E> removeAllEdges(V arg0, V arg1) {
-		throw new IllegalArgumentException("Metodo no permitido");
+		return graph.removeAllEdges(arg0, arg1);
 	}
 
 	public boolean removeAllVertices(Collection<? extends V> arg0) {
-		throw new IllegalArgumentException("Metodo no permitido");
+		return graph.removeAllVertices(arg0);
 	}
 
 	public boolean removeEdge(E arg0) {
-		throw new IllegalArgumentException("Metodo no permitido");
+		return graph.removeEdge(arg0);
 	}
 
 	public E removeEdge(V arg0, V arg1) {
-		throw new IllegalArgumentException("Metodo no permitido");
+		return graph.removeEdge(arg0, arg1);
 	}
 
 	public boolean removeVertex(V arg0) {
-		throw new IllegalArgumentException("Metodo no permitido");
+		return graph.removeVertex(arg0);
 	}
 
 	public void setEdgeWeight(E arg0, double arg1) {
-		throw new IllegalArgumentException("Metodo no permitido");
+		graph.setEdgeWeight(arg0, arg1);
+	}
+
+	public void setEdgeWeight(V sourceVertex, V targetVertex, double weight) {
+		graph.setEdgeWeight(sourceVertex, targetVertex, weight);
 	}
 
 	public Set<V> vertexSet() {
 		return graph.vertexSet();
-	}	
-	
-	@Override
-	public String toString() {
-		return String.format("%s === %s",this.vertexSet(),this.edgeSet());
 	}
 
+	
 }

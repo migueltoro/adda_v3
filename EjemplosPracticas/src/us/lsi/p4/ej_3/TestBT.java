@@ -23,9 +23,11 @@ public class TestBT {
 		AlumnosVertex vInicial = AlumnosVertex.initial();
 		
 		EGraph<AlumnosVertex, AlumnosEdge> graph = //(AlumnosVertex v_inicial, Predicate<AlumnosVertex> es_terminal) { 
-			EGraph.virtual(vInicial, PathType.Sum, Type.Max)
-					.heuristic(AlumnosHeuristic::heuristic)
-					.build();
+			EGraph.virtual(vInicial)
+				.pathType(PathType.Sum)
+				.type(Type.Max)
+				.heuristic(AlumnosHeuristic::heuristic)
+				.build();
 
 		GreedyOnGraph<AlumnosVertex, AlumnosEdge> alg_voraz = GreedyOnGraph.of(graph);		
 		GraphPath<AlumnosVertex, AlumnosEdge> path = alg_voraz.path();

@@ -36,7 +36,9 @@ public class TestAStart {
 			// Algoritmo A*
 			
 			EGraph<VertexProductos, EdgeProductos> graph = 
-					EGraph.virtual(start,PathType.Sum,Type.Max)
+					EGraph.virtual(start)
+					.pathType(PathType.Sum)
+					.type(Type.Max)
 					.edgeWeight(x -> x.weight())
 					.heuristic(ProductosHeuristic::heuristic)
 					.build();

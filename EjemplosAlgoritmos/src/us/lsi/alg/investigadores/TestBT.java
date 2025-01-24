@@ -14,7 +14,9 @@ public class TestBT {
 		DatosInv.iniDatos("ficheros/investigadores/inv3.txt");
 		DatosInv.toConsole();
 		
-		EGraph<InvVertex, InvEdge> graph = EGraph.virtual(InvVertex.first(), PathType.Last, Type.Max)
+		EGraph<InvVertex, InvEdge> graph = EGraph.virtual(InvVertex.first())
+				.pathType(PathType.Last)
+				.type(Type.Max)
 				.vertexWeight(v->v.fo().doubleValue())
 				.heuristic(InvHeuristic::heuristic).build();
 		

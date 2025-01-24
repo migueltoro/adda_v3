@@ -65,7 +65,9 @@ public class MulticonjuntoHeuristic {
 			// Grafo
 			
 			EGraph<MulticonjuntoVertex, MulticonjuntoEdge> graph =
-					EGraph.virtual(start,PathType.Sum, Type.Min)
+					EGraph.virtual(start)
+					.pathType(PathType.Sum)
+					.type(Type.Min)
 					.edgeWeight(x -> x.weight())
 					.heuristic(MulticonjuntoHeuristic::heuristic)
 					.build();

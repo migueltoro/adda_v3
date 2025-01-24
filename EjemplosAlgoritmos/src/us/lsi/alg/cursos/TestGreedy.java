@@ -17,9 +17,11 @@ public class TestGreedy {
 		DatosCursos.iniDatos("ficheros/cursos/cursos3.txt");
 		
 		EGraph<CursosVertex, CursosEdge> graph = 
-				EGraph.virtual(CursosVertexI.first(), PathType.Sum, Type.Min)
-					.heuristic(CursosHeuristic::heuristic)
-					.build();
+				EGraph.virtual(CursosVertexI.first())
+				.pathType(PathType.Sum)
+				.type(Type.Min)
+				.heuristic(CursosHeuristic::heuristic)
+				.build();
 		
 		System.out.println(CursosVertexI.first());
 		System.out.println("==================");

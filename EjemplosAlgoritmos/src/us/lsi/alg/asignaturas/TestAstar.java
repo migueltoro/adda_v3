@@ -22,7 +22,9 @@ public class TestAstar {
 
 		
 		EGraph<AsignaturasVertice,AsignaturasEdge> grafo = 
-				EGraph.virtual(v0,PathType.Last,Type.Max)
+				EGraph.virtual(v0)
+				.pathType(PathType.Last)
+				.type(Type.Max)
 				.vertexWeight(v->(double)v.getPeso())
 				.heuristic(Heuristica::heuristic)
 				.build();

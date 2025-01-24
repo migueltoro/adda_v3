@@ -8,7 +8,7 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 
-import us.lsi.graphs.manual.Grafo;
+import us.lsi.graphs.manual.VirtualGraph;
 
 public abstract class Recorrido<V, E> {
 	
@@ -18,17 +18,17 @@ public abstract class Recorrido<V, E> {
 		}
     }
 	
-	protected Grafo<V,E> graph;
+	protected VirtualGraph<V,E> graph;
 	protected Map<V,Data<V,E>> tree;
 	protected List<V> path;
 	
-	protected Recorrido(Grafo<V, E> grafo) {
+	protected Recorrido(VirtualGraph<V, E> grafo) {
 		this.graph = grafo;
 		this.tree = new HashMap<>();
 		this.path = new ArrayList<>();
 	}
 
-	public Grafo<V, E> graph() {
+	public VirtualGraph<V, E> graph() {
 		return graph;
 	}
 

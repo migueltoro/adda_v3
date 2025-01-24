@@ -13,7 +13,9 @@ public class TestGreedy {
 		DatosInv.iniDatos("ficheros/investigadores/inv1.txt");
 		DatosInv.toConsole();
 		
-		EGraph<InvVertex, InvEdge> graph = EGraph.virtual(InvVertexI.first(), PathType.Last, Type.Max)
+		EGraph<InvVertex, InvEdge> graph = EGraph.virtual(InvVertexI.first())
+				.pathType(PathType.Last)
+				.type(Type.Max)
 				.vertexWeight(v->v.fo().doubleValue())
 				.heuristic(InvHeuristic::heuristic).build();
 	

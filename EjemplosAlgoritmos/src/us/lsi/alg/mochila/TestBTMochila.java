@@ -26,7 +26,9 @@ public class TestBTMochila {
 		MochilaVertex e1 = MochilaVertexI.initialVertex();
 		
 		EGraph<MochilaVertex, MochilaEdge> graph = 
-				EGraph.virtual(e1,PathType.Sum, Type.Max)
+				EGraph.virtual(e1)
+				.pathType(PathType.Sum)
+				.type(Type.Max)
 				.heuristic(MochilaHeuristic::heuristic1)
 				.build();	
 		

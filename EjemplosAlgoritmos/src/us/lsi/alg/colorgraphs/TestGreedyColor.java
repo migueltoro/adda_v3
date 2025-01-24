@@ -20,7 +20,9 @@ public class TestGreedyColor {
 		ColorVertex e1 = ColorVertex.first();
 		
 		EGraph<ColorVertex, ColorEdge> graph = 
-				EGraph.virtual(e1,PathType.Last,Type.Min)
+				EGraph.virtual(e1)
+				.pathType(PathType.Last)
+				.type(Type.Min)
 				.vertexWeight(v->v.nc().doubleValue())
 				.build();
 		

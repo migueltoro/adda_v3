@@ -147,7 +147,7 @@ public class AuxiliaryTsp {
 	}
 		
 	public static void main(String[] args) {
-		Graph<Ciudad,Carretera> graph1 = leeGraph("ficheros/andalucia.txt");
+		Graph<Ciudad,Carretera> graph1 = leeGraph("ficheros/andalucia/andalucia.txt");
 		Graph<Ciudad,Carretera> graph2 = completeGraph(graph1);
 		SpanningTree<Carretera> tree = spanningTree(graph2);
 		Graph<Ciudad,Carretera> graph3 = SubGraphView.of(graph2,

@@ -16,7 +16,9 @@ public class TestMinimoPuzzle {
 		VertexPuzzle start = VertexPuzzleI.of(1, 2, 3, 4, 5, 0, 6, 7, 8);
 		VertexPuzzle end = VertexPuzzleI.of(1,2,3,4,6,5,8,7,0);
 		EGraph<VertexPuzzle, EdgePuzzle> graph = 
-				EGraph.virtual(start,PathType.Sum, Type.Min)
+				EGraph.virtual(start)
+				.pathType(PathType.Sum)
+				.type(Type.Min)
 				.edgeWeight(x->x.weight())
 				.endVertex(end)
 				.heuristic((v1,p,v2)->0.)

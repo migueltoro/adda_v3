@@ -20,7 +20,9 @@ public class TestSudoku {
 		
 		
 		EGraph<SudokuVertex,SimpleEdgeAction<SudokuVertex,Integer>> graph = 
-				EGraph.virtual(e1,PathType.Last, Type.Min)
+				EGraph.virtual(e1)
+				.pathType(PathType.Last)
+				.type(Type.Min)
 				.vertexWeight(v->-(double)v.errores())
 				.build();
 		

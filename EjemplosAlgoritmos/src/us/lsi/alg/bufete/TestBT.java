@@ -31,7 +31,9 @@ public class TestBT {
 			 * 
 			 */
 			
-			EGraph<BufeteVertex, BufeteEdge> graph = EGraph.virtual(start,PathType.Last,Type.Min)
+			EGraph<BufeteVertex, BufeteEdge> graph = EGraph.virtual(start)
+					.pathType(PathType.Last)
+					.type(Type.Min)
 					.vertexWeight(v -> (double) v.maxCarga())
 					.heuristic(Heuristica::heuristic)
 					.build();

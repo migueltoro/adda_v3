@@ -15,40 +15,43 @@ import us.lsi.path.EGraphPath.PathType;
 
 public interface EGraph<V, E> extends Graph<V, E> {
 	
-	public static <G extends Graph<V,E>, V,E> EGraphBuilder<V, E> ofGraph(G graph){
+	public static <G extends Graph<V,E>, V,E> EGraphBuilder<V, E> 
+		ofGraph(G graph){
 		return new EGraphBuilderGraph<G,V,E>(graph);
 	}
 	
-	public static <G extends Graph<V, E>, V, E> EGraphBuilder<V, E> ofGraph(G graph, V startVertex, Predicate<V> goal) {
+	public static <G extends Graph<V, E>, V, E> EGraphBuilder<V, E> 
+		ofGraph(G graph, V startVertex, Predicate<V> goal) {
 		return new EGraphBuilderGraph<G, V, E>(graph, startVertex, goal);
 	}
 	
-	public static <G extends Graph<V,E>, V,E> 
-		EGraphBuilder<V, E> ofGraph(G graph,V startVertex,Predicate<V> goal,PathType pathType,Type type){
+	public static <G extends Graph<V,E>, V,E> EGraphBuilder<V, E>
+		ofGraph(G graph,V startVertex,Predicate<V> goal,PathType pathType,Type type){
 		return new EGraphBuilderGraph<G,V,E>(graph,startVertex,goal,pathType,type);
 	}
 	
-	public static <V extends VirtualVertex<V,E,?>, E extends SimpleEdgeAction<V,?>> EGraphBuilder<V, E> virtual(){
+	public static <V extends VirtualVertex<V,E,?>, E extends SimpleEdgeAction<V,?>> EGraphBuilder<V, E> 
+		virtual(){
 		return new EGraphBuilderVirtual<V,E>();
 	}
 	
-	public static <V extends VirtualVertex<V, E, ?>, E extends SimpleEdgeAction<V, ?>> EGraphBuilder<V, E> virtual(
-			V startVertex) {
+	public static <V extends VirtualVertex<V, E, ?>, E extends SimpleEdgeAction<V, ?>> EGraphBuilder<V, E>
+		virtual(V startVertex) {
 		return new EGraphBuilderVirtual<V, E>(startVertex);
 	}
 	
-	public static <V extends VirtualVertex<V,E,?>, E extends SimpleEdgeAction<V,?>> 
-		EGraphBuilder<V, E> virtual(V startVertex,PathType pathType,Type type){
-		return new EGraphBuilderVirtual<V,E>(startVertex,pathType,type);
-	}
+//	public static <V extends VirtualVertex<V,E,?>, E extends SimpleEdgeAction<V,?>> EGraphBuilder<V, E>
+//		virtual(V startVertex,PathType pathType,Type type){
+//		return new EGraphBuilderVirtual<V,E>(startVertex,pathType,type);
+//	}
 	
-	public static <V, E> EGraphBuilderVirtualG<V, E> virtualG(Graph<V, E> graph, V startVertex,
-			PathType pathType, Type type) {
+	public static <V, E> EGraphBuilderVirtualG<V, E> 
+		virtualG(Graph<V, E> graph, V startVertex,PathType pathType, Type type) {
 		return new EGraphBuilderVirtualG<V, E>(graph, startVertex,pathType, type);
 	}
 	
-	public static <V, E> EGraphBuilderVirtualMG<V, E> virtualMG(DirectedMultigraph<V, E> graph, V startVertex, Predicate<V> goal,
-			PathType pathType, Type type) {
+	public static <V, E> EGraphBuilderVirtualMG<V, E> 
+			virtualMG(DirectedMultigraph<V, E> graph, V startVertex, Predicate<V> goal,PathType pathType, Type type) {
 		return new EGraphBuilderVirtualMG<V, E>(graph, startVertex, goal, pathType, type);
 	}
 

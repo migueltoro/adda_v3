@@ -1,7 +1,8 @@
 package us.lsi.graphs.manual.tests;
 
 
-import us.lsi.graphs.manual.EGrafo;
+import us.lsi.graphs.manual.SimpleGraph;
+import us.lsi.graphs.manual.VirtualGraph;
 import us.lsi.grafos.datos.Ciudad;
 
 import java.util.HashMap;
@@ -12,20 +13,20 @@ import us.lsi.common.Files2;
 
 import us.lsi.grafos.datos.Carretera;
 
-public class Mapa extends EGrafo<Ciudad,Carretera>{
+public class Mapa extends SimpleGraph<Ciudad,Carretera>{
 	
-	public static Mapa of(GraphType graphType,TraverseType traverseType) {
+	public static Mapa of(VirtualGraph.GraphType graphType,VirtualGraph.TraverseType traverseType) {
         return new Mapa(graphType,traverseType);
     }
 
 	private Map<String,Ciudad> ciudadesId;
 	
-	private Mapa(GraphType graphType,TraverseType traverseType) {
+	private Mapa(VirtualGraph.GraphType graphType,VirtualGraph.TraverseType traverseType) {
 		super(graphType,x->x.km(),traverseType);
         this.ciudadesId = new HashMap<>();
 	}
 	
-	public static Mapa parse(String f1,String f2,GraphType graphType,TraverseType traverseType) {
+	public static Mapa parse(String f1,String f2,VirtualGraph.GraphType graphType,VirtualGraph.TraverseType traverseType) {
         Mapa m = Mapa.of(graphType,traverseType);
         Set<Ciudad> ciudades = new HashSet<>();
         for(String linea:Files2.linesFromFile(f1)) {
@@ -55,8 +56,8 @@ public class Mapa extends EGrafo<Ciudad,Carretera>{
 	public static void main(String[] args) {
 		Mapa m = Mapa.parse("ficheros/ciudades_2.txt", 
 				"ficheros/carreteras_2.txt", 
-				GraphType.UNDIRECTED,
-				TraverseType.FORWARD);
+				VirtualGraph.GraphType.UNDIRECTED,
+				VirtualGraph.TraverseType.FORWARD);
 		System.out.println(m);
 		System.out.println(m.successors(m.ciudad("VNFLN")));
 	}

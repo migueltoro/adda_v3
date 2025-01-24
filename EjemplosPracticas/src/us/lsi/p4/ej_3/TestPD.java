@@ -20,7 +20,9 @@ public class TestPD {
 		AlumnosVertex vInicial = AlumnosVertex.initial();
 		
 		EGraph<AlumnosVertex, AlumnosEdge> graph = //(AlumnosVertex v_inicial, Predicate<AlumnosVertex> es_terminal) { 
-			EGraph.virtual(vInicial, PathType.Sum, Type.Max)
+			EGraph.virtual(vInicial)
+					.pathType(PathType.Sum)
+					.type(Type.Max)
 					.heuristic(AlumnosHeuristic::heuristic)
 					.build();
 
