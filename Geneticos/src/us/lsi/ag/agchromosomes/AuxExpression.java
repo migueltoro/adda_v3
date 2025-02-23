@@ -197,6 +197,7 @@ public class AuxExpression {
 		return (int) (AuxExpression.maxRanges.get(i)*e);
 	}
 	
+	
 	public static Exp decode(List<Double> ls) {
 		List<Integer> items = IntStream.range(0,ls.size()).boxed().map(i->scale(ls.get(i),i)).toList();
 		AuxExpression.constants = IntStream.range(0,AuxExpression.data.numConstants()).boxed()
