@@ -3,20 +3,16 @@ package us.lsi.ag.reinas;
 import java.util.List;
 import java.util.Set;
 
-import org.apache.commons.math3.genetics.Chromosome;
-
 import us.lsi.ag.PermutationData;
+import us.lsi.ag.agchromosomes.AChromosome;
 import us.lsi.ag.agchromosomes.AlgoritmoAG;
+import us.lsi.ag.agchromosomes.Chromosomes;
 import us.lsi.ag.agstopping.StoppingConditionFactory;
 import us.lsi.ag.agstopping.StoppingConditionFactory.StoppingConditionType;
 import us.lsi.common.Set2;
 import us.lsi.reinas.datos.Reina;
 
-
-
 public class TestReinasAG {
-
-	
 
 	public static void main(String[] args){
 		
@@ -32,14 +28,15 @@ public class TestReinasAG {
 		
 		
 		DatosReinasAG.numeroDeReinas = 10;
-		PermutationData<List<Reina>> p = DatosReinasAG.create();
-		AlgoritmoAG<List<Integer>,List<Reina>> ap = AlgoritmoAG.of(p);
+		PermutationData<List<Reina>> d = DatosReinasAG.create();
+		AChromosome<List<Integer>,List<Double>, List<Reina>> cv = Chromosomes.ofPermutation(d);
+		AlgoritmoAG<List<Integer>,List<Double>,List<Reina>> ap = AlgoritmoAG.of(cv);
 		ap.ejecuta();
 		System.out.println("================================");
 		
 		System.out.println("================================");
 
-		Chromosome cr = ap.getBestChromosome();
+		AChromosome<List<Integer>, List<Double>, List<Reina>> cr = ap.getBestAChromosome();
 		System.out.println(cr.fitness());
 		System.out.println(ap.bestSolution());
 		Set<Integer> dp = Set2.empty();

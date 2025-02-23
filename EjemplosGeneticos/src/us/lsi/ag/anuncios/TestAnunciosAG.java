@@ -6,10 +6,13 @@ import java.util.List;
 import java.util.Locale;
 
 import us.lsi.ag.PermutationData;
+import us.lsi.ag.agchromosomes.AChromosome;
 import us.lsi.ag.agchromosomes.AlgoritmoAG;
+import us.lsi.ag.agchromosomes.Chromosomes;
 import us.lsi.ag.agstopping.StoppingConditionFactory;
 import us.lsi.ag.agstopping.StoppingConditionFactory.StoppingConditionType;
 import us.lsi.anuncios.datos.DatosAnuncios;
+
 
 
 public class TestAnunciosAG {
@@ -27,8 +30,9 @@ public class TestAnunciosAG {
 		
 		DatosAnuncios.tiempoTotal = 30;
 		System.out.println("ficheros/anuncios.txt");
-		PermutationData<SolucionAnuncios> p = new DatosAnunciosAG("ficheros/anuncios.txt");		
-		AlgoritmoAG<List<Integer>,SolucionAnuncios> ap = AlgoritmoAG.of(p);
+		PermutationData<SolucionAnuncios> p = new DatosAnunciosAG("ficheros/anuncios.txt");	
+		AChromosome<List<Integer>,List<Double>, SolucionAnuncios> cv = Chromosomes.ofPermutation(p);
+		AlgoritmoAG<List<Integer>,List<Double>,SolucionAnuncios> ap = AlgoritmoAG.of(cv);
 		ap.ejecuta();
 		
 		Locale.setDefault(Locale.of("en", "US"));

@@ -26,7 +26,7 @@ import us.lsi.common.Preconditions;
  * @author Miguel Toro
  *
  */
-public class AlgoritmoAG<E,S> {
+public class AlgoritmoAG<E,G,S> {
 	
 	/**
 	 * @param <C> Tipo del cromosoma
@@ -34,8 +34,8 @@ public class AlgoritmoAG<E,S> {
 	 * @return AlgoritmoAG
 	 */
 	
-	public static <E,S> AlgoritmoAG<E,S> of(ChromosomeData<E,S> data) {
-		return new AlgoritmoAG<E,S>(data);
+	public static <E,G,S> AlgoritmoAG<E,G,S> of(AChromosome<E,G,S> aChromosome) {
+		return new AlgoritmoAG<E,G,S>(aChromosome);
 	}
 	
 	/**
@@ -80,7 +80,8 @@ public class AlgoritmoAG<E,S> {
 	public static long FINAL_TIME;
 	
 	
-	public ChromosomeData<E,S>  data;
+	public AChromosome<E,G,S>  aChromosome;
+	public ChromosomeData<E,S> data;
 	public CrossoverPolicy crossOverPolicy;
 	public MutationPolicy mutationPolicy;
 	public SelectionPolicy selectionPolicy;
@@ -107,17 +108,18 @@ public class AlgoritmoAG<E,S> {
 	 * @param problema Problema a resolver
 	 */
 
-	public AlgoritmoAG(ChromosomeData<E,S> data) {
+	public AlgoritmoAG(AChromosome<E,G,S> aChromosome) {
 		super();
 		AlgoritmoAG.random = new JDKRandomGenerator();		
 		AlgoritmoAG.random.setSeed((int)System.currentTimeMillis());
 		GeneticAlgorithm.setRandomGenerator(random);
-		this.data = data;			
-		this.selectionPolicy =  this.data.selectionPolicy();
-		this.mutationPolicy = this.data.mutationPolicy();
-		this.crossOverPolicy = this.data.crossOverPolicy();
+		this.aChromosome = aChromosome;
+		this.data = this.aChromosome.data();
+		this.selectionPolicy =  this.aChromosome.selectionPolicy();
+		this.mutationPolicy = this.aChromosome.mutationPolicy();
+		this.crossOverPolicy = this.aChromosome.crossOverPolicy();
 		this.stopCond = StoppingConditionFactory.getStoppingCondition();
-		this.data.iniValues(this.data);
+//		this.data.iniValues(this.data);
 	}
 
 	/**
@@ -126,7 +128,7 @@ public class AlgoritmoAG<E,S> {
 	public ElitisticListPopulation randomPopulation() {
 		List<Chromosome> popList = new LinkedList<>();
 		for (int i = 0; i < POPULATION_SIZE; i++) {
-			Chromosome randChrom = this.data.initialChromosome();
+			Chromosome randChrom = this.aChromosome.initialChromosome();
 			popList.add(randChrom);
 		}
 		return new ElitisticListPopulation(popList, popList.size(), ELITISM_RATE);
@@ -165,16 +167,28 @@ public class AlgoritmoAG<E,S> {
 	 * @return El mejor cromosoma en la poblaci�n final
 	 */
 	
-	public Chromosome getBestChromosome() {
+	protected Chromosome getBestChromosome() {
 		return bestFinal;
+	}
+	
+	@SuppressWarnings("unchecked")
+	public AChromosome<E, G, S> getBestAChromosome() {
+		return (AChromosome<E,G,S>)bestFinal;
 	}
 	
 	public Double getBestFitness() {
 		return bestFinal.fitness();
 	}
 
-	public List<Chromosome> getBestChromosomes(){
+	protected List<Chromosome> getBestChromosomes(){
 		return bestChromosomes.stream()
+				.collect(Collectors.toList());
+	}
+	
+	@SuppressWarnings("unchecked")
+	public List<AChromosome<E, G, S>> getBestAChromosomes(){
+		return bestChromosomes.stream()
+				.map(c->(AChromosome<E,G,S>)c)
 				.collect(Collectors.toList());
 	}
 
@@ -186,13 +200,14 @@ public class AlgoritmoAG<E,S> {
 	}	
 	
 	public S bestSolution() {
-		E d = this.data.decode(this.getBestChromosome());
-		return this.data.solucion(d);
+		E d = this.getBestAChromosome().decode();
+		return this.data.solution(d);
 	}
 	
+	@SuppressWarnings("unchecked")
 	public Set<S> bestSolutions() {
 		return this.getBestChromosomes().stream()
-				.<S>map(c->this.data.solucion(this.data.decode(c)))
+				.<S>map(c->this.data.solution(((AChromosome<E,G,S>)c).decode(c)))
 				.collect(Collectors.toSet());
 	} 
 	
@@ -204,5 +219,4 @@ public class AlgoritmoAG<E,S> {
 		return (AlgoritmoAG.FINAL_TIME - AlgoritmoAG.INITIAL_TIME);
 	}
 
-	
 }

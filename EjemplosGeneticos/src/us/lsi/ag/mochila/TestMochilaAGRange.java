@@ -4,11 +4,11 @@ package us.lsi.ag.mochila;
 import java.util.List;
 import java.util.Locale;
 
+import us.lsi.ag.agchromosomes.AChromosome;
 import us.lsi.ag.agchromosomes.AlgoritmoAG;
+import us.lsi.ag.agchromosomes.Chromosomes;
 import us.lsi.ag.agstopping.StoppingConditionFactory;
 import us.lsi.mochila.datos.DatosMochila;
-import us.lsi.alg.mochila.SolucionMochila;
-
 
 public class TestMochilaAGRange {
 
@@ -27,18 +27,15 @@ public class TestMochilaAGRange {
 				StoppingConditionFactory.StoppingConditionType.SolutionsNumber;
 		
 		DatosMochila.capacidadInicial = 78;
-		DatosMochilaAGRange p = new DatosMochilaAGRange("ficheros/objetosmochila.txt");
-		
-		AlgoritmoAG<List<Integer>,SolucionMochila> ap = AlgoritmoAG.of(p);
-		ap.ejecuta();
-		
+		DatosMochilaAGRange d = new DatosMochilaAGRange("ficheros/objetosmochila.txt");
+		AChromosome<List<Integer>,List<Double>, SolucionMochila> cv = Chromosomes.ofRangeInteger(d);
+		AlgoritmoAG<List<Integer>,List<Double>,SolucionMochila> ap = AlgoritmoAG.of(cv);
 		System.out.println(DatosMochila.getObjetos());
-		System.out.println("================================");
-		List<Integer> dc = p.decode(ap.getBestChromosome());
-		System.out.println(dc);
+		ap.ejecuta();
+		System.out.println(DatosMochila.getObjetos());
 		System.out.println(ap.bestSolution());
-		System.out.println("================================");
 		System.out.println(ap.stoppingCondition());
+		System.out.println(ap.getBestFitness());
 	}
 
 }

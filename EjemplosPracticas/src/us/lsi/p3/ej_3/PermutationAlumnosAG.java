@@ -26,7 +26,7 @@ public class PermutationAlumnosAG implements PermutationData<SolucionAlumnos> {
 	}
 
 	@Override
-	public SolucionAlumnos solucion(List<Integer> ls) {
+	public SolucionAlumnos solution(List<Integer> ls) {
 		SolucionAlumnos res = SolucionAlumnos.empty();
 		for(int i=0; i<ls.size(); i++) {
 			res.add(ls.get(i), i/DatosAlumnos.getTamGrupo());
@@ -35,7 +35,7 @@ public class PermutationAlumnosAG implements PermutationData<SolucionAlumnos> {
 	}
 
 	@Override
-	public Integer itemsNumber() {
+	public Integer size() {
 		return DatosAlumnos.getNumAlumnos();
 	}
 

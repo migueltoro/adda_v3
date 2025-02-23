@@ -59,7 +59,7 @@ public class DatosBufeteAG implements RangeIntegerData<SolucionBufete> {
 	}
 
 	@Override
-	public SolucionBufete solucion(List<Integer> cr) {
+	public SolucionBufete solution(List<Integer> cr) {
 		return SolucionBufete.create(cr);
 	}
 	

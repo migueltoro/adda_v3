@@ -45,7 +45,7 @@ public class InRangeAlumnosAG implements RangeIntegerData<SolucionAlumnos> {
 	}
 
 	@Override
-	public SolucionAlumnos solucion(List<Integer> ls) {
+	public SolucionAlumnos solution(List<Integer> ls) {
 		SolucionAlumnos res = SolucionAlumnos.empty();
 		for(int i=0; i<ls.size(); i++) {
 			res.add(i, ls.get(i));

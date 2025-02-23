@@ -3,13 +3,11 @@ package us.lsi.ag;
 
 import java.util.List;
 
-import us.lsi.ag.agchromosomes.ARandomKey;
-import us.lsi.ag.agchromosomes.AuxExpression;
 import us.lsi.tiposrecursivos.ast.Exp;
 import us.lsi.tiposrecursivos.ast.Operator;
 import us.lsi.tiposrecursivos.ast.Type;
 
-public interface ExpressionData extends ChromosomeDoubleData<Exp,Exp>{
+public interface ExpressionData extends ChromosomeData<Exp,Exp>{
 	
 	/**
 	 * @return La longitud de la cabeza de un gen
@@ -64,17 +62,7 @@ public interface ExpressionData extends ChromosomeDoubleData<Exp,Exp>{
 	}
 	
 	default Integer size() {
-		return numItemsPorGen()*numGenes() + numConstants();
+		return this.numItemsPorGen()*this.numGenes() + this.numConstants();
 	}
 	
-	@Override
-	default Exp decode(List<Double> ls) {
-		return AuxExpression.decode(ls);
-	}
-	
-	@Override
-	default void iniValues(ChromosomeData<Exp,Exp> data) {
-		ARandomKey.iniValues(data);
-		AuxExpression.iniValues(data);
-	}
 }

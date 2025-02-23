@@ -2,7 +2,7 @@ package us.lsi.ag;
 
 import java.util.List;
 
-public interface RangeData<E,S> extends ChromosomeDoubleData<List<E>,S> {
+public interface RangeData<E,S> extends ChromosomeData<List<E>,S> {
 
 	/**
 	 * @pre 0 &le; i &lt; getVariableNumber()

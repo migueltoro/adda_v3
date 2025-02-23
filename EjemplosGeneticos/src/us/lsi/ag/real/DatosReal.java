@@ -5,12 +5,11 @@ import us.lsi.ag.RangeDoubleData;
 
 public class DatosReal implements RangeDoubleData<List<Double>> {
 
-	public DatosReal(){
-		
+	public DatosReal(){	
 	}
 
 	@Override
-	public List<Double> solucion(List<Double> dc) {
+	public List<Double> solution(List<Double> dc) {
 		return dc;
 	}
 	
@@ -44,6 +43,5 @@ public class DatosReal implements RangeDoubleData<List<Double>> {
 	public Integer size() {
 		return 4;
 	}
-	
-	
+
 }

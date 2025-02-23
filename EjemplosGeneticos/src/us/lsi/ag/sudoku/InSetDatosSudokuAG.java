@@ -49,12 +49,12 @@ public class InSetDatosSudokuAG implements InSetData<SolucionSudoku> {
 	@Override
 	public Double fitnessFunction(List<Integer> dc) {
 		this.decode = dc;
-		SolucionSudoku s = solucion(dc);
+		SolucionSudoku s = solution(dc);
 		return -(double)s.errores();
 	}
 	
 	@Override
-	public SolucionSudoku solucion(List<Integer> dc) {
+	public SolucionSudoku solution(List<Integer> dc) {
 		Preconditions.checkArgument(dc.size()==this.size(),String.format("%d,%d",dc.size(),this.size()));
 		IntStream.range(0,this.size()).forEach(i->sv.casilla(this.sv.index()+i).setValue(dc.get(i)));	
 		SolucionSudoku s = SolucionSudoku.of(sv);

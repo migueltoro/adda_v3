@@ -23,8 +23,8 @@ public class CaminoData implements PermutationData<List<Ciudad>>{
 	}
 	
 	@Override
-	public Integer itemsNumber() {
-		return null;
+	public Integer size() {
+		return normalSequence().size();
 	}
 	
 	public List<Integer> normalSequence() {
@@ -64,7 +64,7 @@ public class CaminoData implements PermutationData<List<Ciudad>>{
 	
 
 	@Override
-	public List<Ciudad> solucion(List<Integer> value) {
+	public List<Ciudad> solution(List<Integer> value) {
 		
 		value = List2.addFirst(value,CaminoDatos.or);
 		value = List2.addLast(value,CaminoDatos.de);

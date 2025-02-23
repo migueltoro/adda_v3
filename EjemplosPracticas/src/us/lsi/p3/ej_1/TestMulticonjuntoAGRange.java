@@ -3,7 +3,9 @@ package us.lsi.p3.ej_1;
 import java.util.List;
 import java.util.Locale;
 
+import us.lsi.ag.agchromosomes.AChromosome;
 import us.lsi.ag.agchromosomes.AlgoritmoAG;
+import us.lsi.ag.agchromosomes.Chromosomes;
 import us.lsi.ag.agstopping.StoppingConditionFactory;
 
 
@@ -21,9 +23,8 @@ public class TestMulticonjuntoAGRange {
 		StoppingConditionFactory.stoppingConditionType = StoppingConditionFactory.StoppingConditionType.GenerationCount;
 		
 		InRangeMulticonjuntoAG p = new InRangeMulticonjuntoAG("ficheros/p3/ejemplo1_1.txt");
-		
-		
-		AlgoritmoAG<List<Integer>,SolucionMulticonjunto> ap = AlgoritmoAG.of(p);
+		AChromosome<List<Integer>,List<Double>, SolucionMulticonjunto> cv = Chromosomes.ofRangeInteger(p);
+		AlgoritmoAG<List<Integer>,List<Double>,SolucionMulticonjunto> ap = AlgoritmoAG.of(cv);
 		ap.ejecuta();
 		
 

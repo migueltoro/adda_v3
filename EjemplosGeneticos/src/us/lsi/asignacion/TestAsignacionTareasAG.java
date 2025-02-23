@@ -1,19 +1,14 @@
 package us.lsi.asignacion;
 
 import java.util.List;
-
-import org.apache.commons.math3.genetics.Chromosome;
-
 import us.lsi.ag.PermutationData;
+import us.lsi.ag.agchromosomes.AChromosome;
 import us.lsi.ag.agchromosomes.AlgoritmoAG;
+import us.lsi.ag.agchromosomes.Chromosomes;
 import us.lsi.ag.agstopping.StoppingConditionFactory;
 import us.lsi.ag.agstopping.StoppingConditionFactory.StoppingConditionType;
 
-
-
 public class TestAsignacionTareasAG {
-
-	
 
 	public static void main(String[] args){
 		
@@ -28,19 +23,20 @@ public class TestAsignacionTareasAG {
 		StoppingConditionFactory.stoppingConditionType = StoppingConditionType.GenerationCount;
 		
 
-		PermutationData<List<Integer>> p = DatosAsignacionTareasAG.create("ficheros/asignacionDeTareas.txt");
-		AlgoritmoAG<List<Integer>,List<Integer>> ap = AlgoritmoAG.of(p);
+		PermutationData<List<Integer>> d = DatosAsignacionTareasAG.create("ficheros/asignacionDeTareas.txt");
+		AChromosome<List<Integer>,List<Double>, List<Integer>> cv = Chromosomes.ofPermutation(d);
+		AlgoritmoAG<List<Integer>,List<Double>,List<Integer>> ap = AlgoritmoAG.of(cv);
 		ap.ejecuta();
 		System.out.println("================================");
 		
 		System.out.println("================================");
 
-		Chromosome cr = ap.getBestChromosome();
+		AChromosome<List<Integer>, List<Double>, List<Integer>> cr = ap.getBestAChromosome();
 		System.out.println(cr.fitness());
-		System.out.println(p.solucion(p.decode(cr)));
+		System.out.println(cr.solution());
 		System.out.println("Asignacion de tareas: " );
 
-		List<Integer> ls = p.decode(cr);
+		List<Integer> ls = cr.decode();
 		Double sumCoste = 0.;
 		for (int i = 0; i < ls.size(); i++) {
 			Double coste = DatosAsignacionTareasAG.a.getCoste(i,ls.get(i));

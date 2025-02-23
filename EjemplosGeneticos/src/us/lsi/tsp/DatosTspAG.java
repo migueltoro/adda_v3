@@ -36,7 +36,7 @@ public class DatosTspAG implements PermutationData<List<Ciudad>>{
 	}
 
 	@Override
-	public Integer itemsNumber() {
+	public Integer size() {
 		return DatosTspAG.n;
 	}
 	
@@ -57,7 +57,7 @@ public class DatosTspAG implements PermutationData<List<Ciudad>>{
 	
 
 	@Override
-	public List<Ciudad> solucion(List<Integer> cr) {
+	public List<Ciudad> solution(List<Integer> cr) {
 		return cr.stream().map(i->graph.vertex(i)).collect(Collectors.toList());
 	}
 

@@ -3,9 +3,12 @@ package us.lsi.tsp;
 import java.io.IOException;
 import java.util.List;
 
+import us.lsi.ag.agchromosomes.AChromosome;
 import us.lsi.ag.agchromosomes.AlgoritmoAG;
+import us.lsi.ag.agchromosomes.Chromosomes;
 import us.lsi.ag.agstopping.StoppingConditionFactory;
 import us.lsi.grafos.datos.Ciudad;
+
 
 public class TestTspAG {
 
@@ -21,14 +24,14 @@ public class TestTspAG {
 		
 		
 		DatosTspAG p = new DatosTspAG("ficheros/andalucia.txt");
-		
-		AlgoritmoAG<List<Integer>, List<Ciudad>> ap = AlgoritmoAG.of(p);
+		AChromosome<List<Integer>,List<Double>, List<Ciudad>> cv = Chromosomes.ofPermutation(p);
+		AlgoritmoAG<List<Integer>, List<Double>,List<Ciudad>> ap = AlgoritmoAG.of(cv);
 		ap.ejecuta();
 		
 		System.out.println("================================");
-		List<Integer> dc = p.decode(ap.getBestChromosome());
+		List<Integer> dc = ap.getBestAChromosome().decode();
 		System.out.println(dc);
-		System.out.println(ap.getBestChromosome().fitness());
+		System.out.println(ap.getBestAChromosome().fitness());
 		System.out.println(ap.bestSolution());
 		System.out.println("================================");
 		System.out.println(ap.stoppingCondition());

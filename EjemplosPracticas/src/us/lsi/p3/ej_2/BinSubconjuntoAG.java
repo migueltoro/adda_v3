@@ -18,7 +18,7 @@ public class BinSubconjuntoAG implements BinaryData<SolucionSubconjunto> {
 	}
 	
 	@Override
-	public SolucionSubconjunto solucion(List<Integer> ls) {
+	public SolucionSubconjunto solution(List<Integer> ls) {
 		return SolucionSubconjunto.create(ls);
 	}
 			

@@ -23,7 +23,7 @@ import us.lsi.math.Math2;
 	 * @author Miguel Toro
 	 *
 	 */
-public class AlgoritmoSA<E,S> {
+public class AlgoritmoSA<V,G,S> {
 
 	/**
 	 *
@@ -31,18 +31,18 @@ public class AlgoritmoSA<E,S> {
 	 * @return AlgoritmoSA
 	 */
 
-	public static <E,S> AlgoritmoSA<E,S> of(StateSa<E,S> estado) {
+	public static <V,G,S> AlgoritmoSA<V,G,S> of(StateSa<V,G,S> estado) {
 			return new AlgoritmoSA<>(estado);
 	}
 
 	/**
 	 * Conjunto de soluciones encontradas
 	 */
-	public Set<StateSa<E,S>> soluciones;
+	public Set<StateSa<V,G,S>> soluciones;
 	/**
 	 * Mejor soluci�n encontrada
 	 */
-	public StateSa<E,S> mejorSolucionEncontrada = null;
+	public StateSa<V,G,S> mejorSolucionEncontrada = null;
 	/**
 	 * N�mero de intentos. En cada intento se parte del estado incial y se llevan a
 	 * cabo un n�mero de iteraciones por intento. En cada iteraci�n se llevan a cabo
@@ -65,12 +65,11 @@ public class AlgoritmoSA<E,S> {
 	public static double alfa = 0.99;
 
 	private double temperatura;
-	private StateSa<E,S> estado;
-	private StateSa<E,S> nextEstado;
+	private StateSa<V,G,S> estado;
+	private StateSa<V,G,S> nextEstado;
 
 	
-	private AlgoritmoSA(StateSa<E,S> estado) {
-		estado.data().iniValues(estado.data());
+	private AlgoritmoSA(StateSa<V,G,S> estado) {
 		this.estado = estado;
 		this.mejorSolucionEncontrada = estado;
 		this.soluciones = new HashSet<>();
@@ -84,7 +83,7 @@ public class AlgoritmoSA<E,S> {
 		Integer r = 0;
 		Double f = this.estado.fitness();
 		for(int i=0; i<n;i++) {
-			StateSa<E,S> e = this.estado.random();
+			StateSa<V,G,S> e = this.estado.random();
 			if(e.fitness() > f) {
 				r++;
 				s = e.fitness()-f;

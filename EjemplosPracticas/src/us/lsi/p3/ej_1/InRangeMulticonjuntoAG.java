@@ -27,7 +27,7 @@ public class InRangeMulticonjuntoAG implements RangeIntegerData<SolucionMulticon
 	}
 
 	@Override
-	public SolucionMulticonjunto solucion(List<Integer> ls) {
+	public SolucionMulticonjunto solution(List<Integer> ls) {
 		return SolucionMulticonjunto.of_Range(ls);
 	}	
 	

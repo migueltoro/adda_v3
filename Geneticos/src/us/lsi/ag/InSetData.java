@@ -9,7 +9,7 @@ import java.util.stream.IntStream;
  *
  * @param <S> El tipo de soluci�n del problema
  */
-public interface InSetData<S> extends ChromosomeDoubleData<List<Integer>,S> {
+public interface InSetData<S> extends ChromosomeData<List<Integer>,S> {
 	
 	/**
 	 * @pre 0 &le; i &lt; getVariableNumber()

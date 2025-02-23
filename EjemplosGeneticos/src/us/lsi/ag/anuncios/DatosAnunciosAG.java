@@ -16,7 +16,7 @@ public class DatosAnunciosAG extends DatosAnuncios implements PermutationData<So
 	}	
 	
 	@Override
-	public SolucionAnuncios solucion(List<Integer> dc) {		
+	public SolucionAnuncios solution(List<Integer> dc) {		
 		return  SolucionAnuncios.of(dc);
 	}
 	
@@ -36,7 +36,7 @@ public class DatosAnunciosAG extends DatosAnuncios implements PermutationData<So
 	}
 
 	@Override
-	public Integer itemsNumber() {
+	public Integer size() {
 		return DatosAnuncios.todosLosAnunciosDisponibles.size();
 	}
 	

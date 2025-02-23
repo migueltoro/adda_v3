@@ -23,9 +23,7 @@ import us.lsi.common.List2;
  * es un multiconjunto o una lista, posiblemente con repetici�n, de los objetos dados. </p>
  */
 
-public interface PermutationData<S> extends ChromosomeDoubleData<List<Integer>,S> {	
-		
-		Integer itemsNumber();
+public interface PermutationData<S> extends ChromosomeData<List<Integer>,S> {	
 	
 		/**
 		 * @pre <code> 0 &le; index &lt; getObjetos().size() </code>
@@ -36,26 +34,17 @@ public interface PermutationData<S> extends ChromosomeDoubleData<List<Integer>,S
 		
 		default Integer maxMultiplicity(int index){ return 1; }
 		
-		
 	    /**
 	     * @return La secuencia normal asociada al problema. Siendo <code> n </code> el n�mero de objetos la secuencia normal est� formado por la concatenaci�n de  
 	     * <code> n </code> sublistas <code> L(i) </code>. Cada <code> L(i) </code> est� formada por <code> getMax(i) </code> copias del entero <code> i </code>.
 	     * con <code> i </code> en el rango <code> 0..n-1 </code>.
 	     */
 	    default List<Integer> normalSequence() {
-			List<Integer> r = IntStream.range(0,itemsNumber())
+			List<Integer> r = IntStream.range(0,size())
 					.boxed()
 					.flatMap(x->List2.nCopies(x,maxMultiplicity(x)).stream())
 					.collect(Collectors.toList());
 			return r;
-		}
-	    
-	    default Integer size() {
-	    	return normalSequence().size();
-	    }
-	    
-	    default List<Integer> decode(List<Double> ls){
-			return AuxiliaryAg.convert(ls,this.normalSequence());
 		}
 	    
 	    

@@ -4,10 +4,7 @@ import java.util.List;
 
 import us.lsi.ag.AuxiliaryAg;
 import us.lsi.ag.RangeIntegerData;
-import us.lsi.alg.mochila.SolucionMochila;
 import us.lsi.mochila.datos.DatosMochila;
-
-
 
 public class DatosMochilaAGRange implements RangeIntegerData<SolucionMochila> {
 
@@ -52,7 +49,7 @@ public class DatosMochilaAGRange implements RangeIntegerData<SolucionMochila> {
 	}
 
 	@Override
-	public SolucionMochila solucion(List<Integer> acciones) {
+	public SolucionMochila solution(List<Integer> acciones) {
 		return SolucionMochila.of(acciones);
 	}
 	

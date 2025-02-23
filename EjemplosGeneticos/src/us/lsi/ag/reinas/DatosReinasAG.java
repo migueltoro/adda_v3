@@ -22,7 +22,7 @@ public class DatosReinasAG implements PermutationData<List<Reina>> {
 	}
 
 	@Override
-	public List<Reina> solucion(List<Integer> ls) {
+	public List<Reina> solution(List<Integer> ls) {
 		List<Reina> r = List2.empty();
 		for (int i = 0; i < ls.size(); i++) {
 			r.add(Reina.create(i, ls.get(i)));
@@ -42,7 +42,7 @@ public class DatosReinasAG implements PermutationData<List<Reina>> {
 	}
 
 	@Override
-	public Integer itemsNumber() {
+	public Integer size() {
 		return  numeroDeReinas;
 	}
 

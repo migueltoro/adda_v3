@@ -46,12 +46,12 @@ public class BlocksDatosSudokuFilasAG implements BlocksData<SolucionSudoku>{
 
 	@Override
 	public Double fitnessFunction(List<Integer> cr) {
-		SolucionSudoku s = solucion(cr);
+		SolucionSudoku s = solution(cr);
 		return -(double)s.errores();
 	}
 	
 	@Override
-	public SolucionSudoku solucion(List<Integer> dc) {
+	public SolucionSudoku solution(List<Integer> dc) {
 		this.decode = dc;
 		IntStream.range(0,this.size()).forEach(i->sv.casilla(this.sv.index()+i).setValue(dc.get(i)));	
 		SolucionSudoku s = SolucionSudoku.of(sv);

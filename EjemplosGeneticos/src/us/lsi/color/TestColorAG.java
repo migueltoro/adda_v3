@@ -2,11 +2,11 @@ package us.lsi.color;
 
 import java.util.Map;
 
-import org.apache.commons.math3.genetics.Chromosome;
-
 import java.util.List;
 import us.lsi.ag.RangeIntegerData;
+import us.lsi.ag.agchromosomes.AChromosome;
 import us.lsi.ag.agchromosomes.AlgoritmoAG;
+import us.lsi.ag.agchromosomes.Chromosomes;
 import us.lsi.ag.agstopping.StoppingConditionFactory;
 import us.lsi.ag.agstopping.StoppingConditionFactory.StoppingConditionType;
 import us.lsi.common.String2;
@@ -20,12 +20,13 @@ public class TestColorAG {
 		
 		RangeIntegerData<Map<Ciudad,Integer>> problem = new DatosColorAG("./ficheros/Andalucia.txt");		
 		DatosColorAG.maxNumColors = 5;
-		AlgoritmoAG<List<Integer>, Map<Ciudad, Integer>> alg = AlgoritmoAG.of(problem);
+		AChromosome<List<Integer>,List<Double>, Map<Ciudad,Integer>> cv = Chromosomes.ofRangeInteger(problem);
+		AlgoritmoAG<List<Integer>, List<Double>, Map<Ciudad, Integer>> alg = AlgoritmoAG.of(cv);
 		alg.ejecuta();
 		
-	    Chromosome mejorSolucion = alg.getBestChromosome();
+	    AChromosome<List<Integer>, List<Double>, Map<Ciudad, Integer>> mejorSolucion = alg.getBestAChromosome();
 		System.out.println("================================");
-		System.out.println("Numero de colores: "+-problem.fitnessFunction(problem.decode(mejorSolucion)));
+		System.out.println("Numero de colores: "+mejorSolucion.fitness());
 		String2.toConsole(alg.bestSolution().entrySet(),"Coloreado obtenido");
 		System.out.println("================================");
 	}

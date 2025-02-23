@@ -17,7 +17,7 @@ public class DatosAsignacionTareasAG implements PermutationData<List<Integer>> {
 	}
 
 	@Override
-	public List<Integer> solucion(List<Integer> dc) {
+	public List<Integer> solution(List<Integer> dc) {
 		return dc;
 	}
 
@@ -32,7 +32,7 @@ public class DatosAsignacionTareasAG implements PermutationData<List<Integer>> {
 
 
 	@Override
-	public Integer itemsNumber() {
+	public Integer size() {
 		return a.getN();
 	}
 

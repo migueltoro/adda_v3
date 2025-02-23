@@ -2,7 +2,9 @@ package us.lsi.ag.sudoku;
 
 import java.util.List;
 
+import us.lsi.ag.agchromosomes.AChromosome;
 import us.lsi.ag.agchromosomes.AlgoritmoAG;
+import us.lsi.ag.agchromosomes.Chromosomes;
 import us.lsi.ag.agstopping.StoppingConditionFactory;
 import us.lsi.ag.agstopping.StoppingConditionFactory.StoppingConditionType;
 import us.lsi.alg.sudoku.DatosSudoku;
@@ -30,11 +32,11 @@ public class TestSubTablasSudokuAG {
 		
 		System.out.println(sv);
 		System.out.println(p.size());
-		
-		AlgoritmoAG<List<Integer>,SolucionSudoku> a;
+		AChromosome<List<Integer>,List<Double>, SolucionSudoku> cv = Chromosomes.ofBlocks(p);
+		AlgoritmoAG<List<Integer>,List<Double>,SolucionSudoku> a;
 		
 		for (int i = 0; i < 10; i++) {
-			a = AlgoritmoAG.of(p);	
+			a = AlgoritmoAG.of(cv);	
 			a.ejecuta();
 			System.out.println(SolucionSudoku.of(sv));
 		}

@@ -1,9 +1,12 @@
 package us.lsi.expression;
 
 
+import java.util.List;
 import java.util.Locale;
 
+import us.lsi.ag.agchromosomes.AChromosome;
 import us.lsi.ag.agchromosomes.AlgoritmoAG;
+import us.lsi.ag.agchromosomes.Chromosomes;
 import us.lsi.ag.agstopping.StoppingConditionFactory;
 import us.lsi.ag.agstopping.StoppingConditionFactory.StoppingConditionType;
 import us.lsi.common.String2;
@@ -27,12 +30,13 @@ public class TestExpression {
 		StoppingConditionFactory.SOLUTIONS_NUMBER_MIN = 1;
 		
 		DatosExpression d = new DatosExpression();
-		AlgoritmoAG<Exp,Exp> ap = AlgoritmoAG.of(d);
+		AChromosome<Exp, List<Double>, Exp> cv = Chromosomes.ofExp(d);
+		AlgoritmoAG<Exp,List<Double>,Exp> ap = AlgoritmoAG.of(cv);
 		ap.ejecuta();
 
 		String2.toConsole("================================");
-		String2.toConsole("%.2f",ap.getBestChromosome().fitness());
-		String2.toConsole("%s",d.solucion(d.decode(ap.getBestChromosome())));
+		String2.toConsole("%.2f",ap.getBestAChromosome().fitness());
+		String2.toConsole("%s",ap.getBestAChromosome().solution());
 		String2.toConsole("================================");
 //		for(int i=0;i<d.numConstants();i++){
 //			System.out.println(String.format("%s = %f",d.getConstant(i).getName(),d.getConstant(i).getValue()));
