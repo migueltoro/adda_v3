@@ -34,6 +34,7 @@ public class TestExpression {
 		AlgoritmoAG<Exp,List<Double>,Exp> ap = AlgoritmoAG.of(cv);
 		ap.ejecuta();
 
+		
 		String2.toConsole("================================");
 		String2.toConsole("%.2f",ap.getBestAChromosome().fitness());
 		String2.toConsole("%s",ap.getBestAChromosome().solution());
