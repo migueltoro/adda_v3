@@ -30,5 +30,4 @@ public class BinaryValues<S> implements ChromosomeValues<List<Integer>, List<Int
 		return data.size();
 	}
 	
-
 }

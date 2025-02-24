@@ -65,7 +65,7 @@ public class Chromosomes {
 	}
 	
 	public static AChromosome<Exp, List<Double>, Exp> ofExp(ExpressionData cd) {
-		AuxExpression.iniValues(cd);
+//		AuxExpression.iniValues(cd);
 		ExpressionValues rv = ExpressionValues.of(cd);
 		ARandomKey.iniValues(rv);
 		return ARandomKey.getInitialChromosome();

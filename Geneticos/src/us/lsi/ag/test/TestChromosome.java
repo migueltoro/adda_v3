@@ -149,8 +149,7 @@ public class TestChromosome {
     	AChromosome<Exp, List<Double>, Exp> cr0 = Chromosomes.ofExp(d);
 		System.out.println(cr0.dimension());
 		System.out.println(cr0.decode());
-    }
-	
+    }	
 	
 	public static void main(String[] args) {
 		test2();

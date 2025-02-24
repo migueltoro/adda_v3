@@ -86,7 +86,7 @@ public class DatosExpression implements ExpressionData {
 
 	@Override
 	public Type constType() {
-		return Type.Int;
+		return Type.Double;
 	}
 
 }
