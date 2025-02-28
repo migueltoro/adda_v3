@@ -4,7 +4,6 @@ import java.util.List;
 import us.lsi.ag.PermutationData;
 import us.lsi.ag.agchromosomes.AChromosome;
 import us.lsi.ag.agchromosomes.AlgoritmoAG;
-import us.lsi.ag.agchromosomes.Chromosomes;
 import us.lsi.ag.agstopping.StoppingConditionFactory;
 import us.lsi.ag.agstopping.StoppingConditionFactory.StoppingConditionType;
 
@@ -24,14 +23,13 @@ public class TestAsignacionTareasAG {
 		
 
 		PermutationData<List<Integer>> d = DatosAsignacionTareasAG.create("ficheros/asignacionDeTareas.txt");
-		AChromosome<List<Integer>,List<Double>, List<Integer>> cv = Chromosomes.ofPermutation(d);
-		AlgoritmoAG<List<Integer>,List<Double>,List<Integer>> ap = AlgoritmoAG.of(cv);
+		AlgoritmoAG<List<Integer>,List<Integer>> ap = AlgoritmoAG.of(d);
 		ap.ejecuta();
 		System.out.println("================================");
 		
 		System.out.println("================================");
 
-		AChromosome<List<Integer>, List<Double>, List<Integer>> cr = ap.getBestAChromosome();
+		AChromosome<List<Integer>, ?, List<Integer>> cr = ap.getBestAChromosome();
 		System.out.println(cr.fitness());
 		System.out.println(cr.solution());
 		System.out.println("Asignacion de tareas: " );

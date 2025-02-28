@@ -4,6 +4,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import us.lsi.ag.ExpressionData;
+import us.lsi.ag.agchromosomes.Chromosomes.ChromosomeType;
 import us.lsi.common.Preconditions;
 import us.lsi.tiposrecursivos.ast.Exp;
 import us.lsi.tiposrecursivos.ast.Operator;
@@ -89,4 +90,8 @@ public class DatosExpression implements ExpressionData {
 		return Type.Double;
 	}
 
+	@Override
+	public ChromosomeType type() {
+		return ChromosomeType.Expression;
+	}
 }

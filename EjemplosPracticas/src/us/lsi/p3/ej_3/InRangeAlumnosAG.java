@@ -3,6 +3,7 @@ package us.lsi.p3.ej_3;
 
 import java.util.List;
 import us.lsi.ag.RangeIntegerData;
+import us.lsi.ag.agchromosomes.Chromosomes.ChromosomeType;
 
 public class InRangeAlumnosAG implements RangeIntegerData<SolucionAlumnos> {
 
@@ -53,5 +54,8 @@ public class InRangeAlumnosAG implements RangeIntegerData<SolucionAlumnos> {
 		return res;
 	}
 
-
+	@Override
+	public ChromosomeType type() {
+		return ChromosomeType.RangeInteger;
+	}
 }

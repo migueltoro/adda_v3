@@ -8,6 +8,7 @@ import java.util.stream.IntStream;
 import org.jgrapht.graph.SimpleWeightedGraph;
 
 import us.lsi.ag.PermutationData;
+import us.lsi.ag.agchromosomes.Chromosomes.ChromosomeType;
 import us.lsi.grafos.datos.Carretera;
 import us.lsi.grafos.datos.Ciudad;
 import us.lsi.graphs.Graphs2;
@@ -61,4 +62,8 @@ public class DatosTspAG implements PermutationData<List<Ciudad>>{
 		return cr.stream().map(i->graph.vertex(i)).collect(Collectors.toList());
 	}
 
+	@Override
+	public ChromosomeType type() {
+		return ChromosomeType.Permutation;
+	}
 }

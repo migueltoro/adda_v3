@@ -26,7 +26,7 @@ import us.lsi.common.Preconditions;
  * @author Miguel Toro
  *
  */
-public class AlgoritmoAG<E,G,S> {
+public class AlgoritmoAG<V,S> {
 	
 	/**
 	 * @param <C> Tipo del cromosoma
@@ -34,8 +34,8 @@ public class AlgoritmoAG<E,G,S> {
 	 * @return AlgoritmoAG
 	 */
 	
-	public static <E,G,S> AlgoritmoAG<E,G,S> of(AChromosome<E,G,S> aChromosome) {
-		return new AlgoritmoAG<E,G,S>(aChromosome);
+	public static <V,S> AlgoritmoAG<V,S> of(ChromosomeData<V,S> chromosomeData) {
+		return new AlgoritmoAG<V,S>(chromosomeData);
 	}
 	
 	/**
@@ -80,8 +80,8 @@ public class AlgoritmoAG<E,G,S> {
 	public static long FINAL_TIME;
 	
 	
-	public AChromosome<E,G,S>  aChromosome;
-	public ChromosomeData<E,S> data;
+	public AChromosome<V,?,S>  aChromosome;
+	public ChromosomeData<V,S> data;
 	public CrossoverPolicy crossOverPolicy;
 	public MutationPolicy mutationPolicy;
 	public SelectionPolicy selectionPolicy;
@@ -108,13 +108,13 @@ public class AlgoritmoAG<E,G,S> {
 	 * @param problema Problema a resolver
 	 */
 
-	public AlgoritmoAG(AChromosome<E,G,S> aChromosome) {
+	public AlgoritmoAG(ChromosomeData<V,S> chromosomeData) {
 		super();
 		AlgoritmoAG.random = new JDKRandomGenerator();		
 		AlgoritmoAG.random.setSeed((int)System.currentTimeMillis());
 		GeneticAlgorithm.setRandomGenerator(random);
-		this.aChromosome = aChromosome;
-		this.data = this.aChromosome.data();
+		this.aChromosome = Chromosomes.of(chromosomeData);
+		this.data = chromosomeData;
 		this.selectionPolicy =  this.aChromosome.selectionPolicy();
 		this.mutationPolicy = this.aChromosome.mutationPolicy();
 		this.crossOverPolicy = this.aChromosome.crossOverPolicy();
@@ -172,8 +172,8 @@ public class AlgoritmoAG<E,G,S> {
 	}
 	
 	@SuppressWarnings("unchecked")
-	public AChromosome<E, G, S> getBestAChromosome() {
-		return (AChromosome<E,G,S>)bestFinal;
+	public AChromosome<V,?,S> getBestAChromosome() {
+		return (AChromosome<V,?,S>)bestFinal;
 	}
 	
 	public Double getBestFitness() {
@@ -186,9 +186,9 @@ public class AlgoritmoAG<E,G,S> {
 	}
 	
 	@SuppressWarnings("unchecked")
-	public List<AChromosome<E, G, S>> getBestAChromosomes(){
+	public List<AChromosome<V, ?, S>> getBestAChromosomes(){
 		return bestChromosomes.stream()
-				.map(c->(AChromosome<E,G,S>)c)
+				.map(c->(AChromosome<V,?,S>)c)
 				.collect(Collectors.toList());
 	}
 
@@ -200,14 +200,14 @@ public class AlgoritmoAG<E,G,S> {
 	}	
 	
 	public S bestSolution() {
-		E d = this.getBestAChromosome().decode();
+		V d = this.getBestAChromosome().decode();
 		return this.data.solution(d);
 	}
 	
 	@SuppressWarnings("unchecked")
 	public Set<S> bestSolutions() {
 		return this.getBestChromosomes().stream()
-				.<S>map(c->this.data.solution(((AChromosome<E,G,S>)c).decode(c)))
+				.<S>map(c->this.data.solution(((AChromosome<V,?,S>)c).decode(c)))
 				.collect(Collectors.toSet());
 	} 
 	

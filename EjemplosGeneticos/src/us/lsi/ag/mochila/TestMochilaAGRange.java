@@ -4,9 +4,7 @@ package us.lsi.ag.mochila;
 import java.util.List;
 import java.util.Locale;
 
-import us.lsi.ag.agchromosomes.AChromosome;
 import us.lsi.ag.agchromosomes.AlgoritmoAG;
-import us.lsi.ag.agchromosomes.Chromosomes;
 import us.lsi.ag.agstopping.StoppingConditionFactory;
 import us.lsi.mochila.datos.DatosMochila;
 
@@ -28,8 +26,7 @@ public class TestMochilaAGRange {
 		
 		DatosMochila.capacidadInicial = 78;
 		DatosMochilaAGRange d = new DatosMochilaAGRange("ficheros/objetosmochila.txt");
-		AChromosome<List<Integer>,List<Double>, SolucionMochila> cv = Chromosomes.ofRangeInteger(d);
-		AlgoritmoAG<List<Integer>,List<Double>,SolucionMochila> ap = AlgoritmoAG.of(cv);
+		AlgoritmoAG<List<Integer>,SolucionMochila> ap = AlgoritmoAG.of(d);
 		System.out.println(DatosMochila.getObjetos());
 		ap.ejecuta();
 		System.out.println(DatosMochila.getObjetos());

@@ -6,7 +6,6 @@ import java.util.Set;
 import us.lsi.ag.PermutationData;
 import us.lsi.ag.agchromosomes.AChromosome;
 import us.lsi.ag.agchromosomes.AlgoritmoAG;
-import us.lsi.ag.agchromosomes.Chromosomes;
 import us.lsi.ag.agstopping.StoppingConditionFactory;
 import us.lsi.ag.agstopping.StoppingConditionFactory.StoppingConditionType;
 import us.lsi.common.Set2;
@@ -29,14 +28,13 @@ public class TestReinasAG {
 		
 		DatosReinasAG.numeroDeReinas = 10;
 		PermutationData<List<Reina>> d = DatosReinasAG.create();
-		AChromosome<List<Integer>,List<Double>, List<Reina>> cv = Chromosomes.ofPermutation(d);
-		AlgoritmoAG<List<Integer>,List<Double>,List<Reina>> ap = AlgoritmoAG.of(cv);
+		AlgoritmoAG<List<Integer>,List<Reina>> ap = AlgoritmoAG.of(d);
 		ap.ejecuta();
 		System.out.println("================================");
 		
 		System.out.println("================================");
 
-		AChromosome<List<Integer>, List<Double>, List<Reina>> cr = ap.getBestAChromosome();
+		AChromosome<List<Integer>, ?, List<Reina>> cr = ap.getBestAChromosome();
 		System.out.println(cr.fitness());
 		System.out.println(ap.bestSolution());
 		Set<Integer> dp = Set2.empty();

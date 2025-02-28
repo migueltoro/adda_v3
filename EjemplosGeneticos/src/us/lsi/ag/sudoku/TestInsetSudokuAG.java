@@ -2,9 +2,8 @@ package us.lsi.ag.sudoku;
 
 import java.util.List;
 
-import us.lsi.ag.agchromosomes.AChromosome;
+
 import us.lsi.ag.agchromosomes.AlgoritmoAG;
-import us.lsi.ag.agchromosomes.Chromosomes;
 import us.lsi.ag.agstopping.StoppingConditionFactory;
 import us.lsi.ag.agstopping.StoppingConditionFactory.StoppingConditionType;
 import us.lsi.alg.sudoku.DatosSudoku;
@@ -35,11 +34,10 @@ public class TestInsetSudokuAG {
 		
 		System.out.println(sv);
 		System.out.println(p.size());
-		AChromosome<List<Integer>,List<Double>, SolucionSudoku> cv = Chromosomes.ofInset(p);
-		AlgoritmoAG<List<Integer>,List<Double>, SolucionSudoku> a = null;
+		AlgoritmoAG<List<Integer>, SolucionSudoku> a = null;
 		
 		for (int i = 0; i < 10; i++) {
-			a = AlgoritmoAG.of(cv);	
+			a = AlgoritmoAG.of(p);	
 			a.ejecuta();
 			System.out.println(SolucionSudoku.of(sv));
 		}

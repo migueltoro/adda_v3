@@ -3,6 +3,7 @@ package us.lsi.p3.ej_2;
 import java.util.List;
 import java.util.Set;
 import us.lsi.ag.BinaryData;
+import us.lsi.ag.agchromosomes.Chromosomes.ChromosomeType;
 import us.lsi.common.Set2;
 
 
@@ -37,6 +38,9 @@ public class BinSubconjuntoAG implements BinaryData<SolucionSubconjunto> {
 		return -goal -10000*error*error; 
 	}
 
-	
+	@Override
+	public ChromosomeType type() {
+		return ChromosomeType.Binary;
+	}
 	
 }

@@ -6,7 +6,6 @@ import java.util.List;
 import us.lsi.ag.RangeIntegerData;
 import us.lsi.ag.agchromosomes.AChromosome;
 import us.lsi.ag.agchromosomes.AlgoritmoAG;
-import us.lsi.ag.agchromosomes.Chromosomes;
 import us.lsi.ag.agstopping.StoppingConditionFactory;
 import us.lsi.ag.agstopping.StoppingConditionFactory.StoppingConditionType;
 import us.lsi.common.String2;
@@ -20,11 +19,10 @@ public class TestColorAG {
 		
 		RangeIntegerData<Map<Ciudad,Integer>> problem = new DatosColorAG("./ficheros/Andalucia.txt");		
 		DatosColorAG.maxNumColors = 5;
-		AChromosome<List<Integer>,List<Double>, Map<Ciudad,Integer>> cv = Chromosomes.ofRangeInteger(problem);
-		AlgoritmoAG<List<Integer>, List<Double>, Map<Ciudad, Integer>> alg = AlgoritmoAG.of(cv);
+		AlgoritmoAG<List<Integer>,  Map<Ciudad, Integer>> alg = AlgoritmoAG.of(problem);
 		alg.ejecuta();
 		
-	    AChromosome<List<Integer>, List<Double>, Map<Ciudad, Integer>> mejorSolucion = alg.getBestAChromosome();
+	    AChromosome<List<Integer>, ?, Map<Ciudad, Integer>> mejorSolucion = alg.getBestAChromosome();
 		System.out.println("================================");
 		System.out.println("Numero de colores: "+mejorSolucion.fitness());
 		String2.toConsole(alg.bestSolution().entrySet(),"Coloreado obtenido");

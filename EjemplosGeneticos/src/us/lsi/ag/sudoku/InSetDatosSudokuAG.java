@@ -6,6 +6,7 @@ import java.util.Map;
 import java.util.stream.IntStream;
 
 import us.lsi.ag.InSetData;
+import us.lsi.ag.agchromosomes.Chromosomes.ChromosomeType;
 import us.lsi.alg.sudoku.Casilla;
 import us.lsi.alg.sudoku.DatosSudoku;
 import us.lsi.alg.sudoku.SolucionSudoku;
@@ -59,6 +60,11 @@ public class InSetDatosSudokuAG implements InSetData<SolucionSudoku> {
 		IntStream.range(0,this.size()).forEach(i->sv.casilla(this.sv.index()+i).setValue(dc.get(i)));	
 		SolucionSudoku s = SolucionSudoku.of(sv);
 		return s;
+	}
+	
+	@Override
+	public ChromosomeType type() {
+		return ChromosomeType.InSet;
 	}
 
 }

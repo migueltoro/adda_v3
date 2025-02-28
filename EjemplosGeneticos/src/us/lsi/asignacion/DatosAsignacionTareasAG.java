@@ -3,6 +3,7 @@ package us.lsi.asignacion;
 import java.util.List;
 
 import us.lsi.ag.PermutationData;
+import us.lsi.ag.agchromosomes.Chromosomes.ChromosomeType;
 
 public class DatosAsignacionTareasAG implements PermutationData<List<Integer>> {
 
@@ -36,5 +37,9 @@ public class DatosAsignacionTareasAG implements PermutationData<List<Integer>> {
 		return a.getN();
 	}
 
+	@Override
+	public ChromosomeType type() {
+		return ChromosomeType.Permutation;
+	}
 
 }

@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import us.lsi.ag.RangeIntegerData;
+import us.lsi.ag.agchromosomes.Chromosomes.ChromosomeType;
 import us.lsi.bufete.datos.Abogado;
 import us.lsi.bufete.datos.DatosBufete;
 import us.lsi.bufete.datos.SolucionBufete;
@@ -63,6 +64,10 @@ public class DatosBufeteAG implements RangeIntegerData<SolucionBufete> {
 		return SolucionBufete.create(cr);
 	}
 	
+	@Override
+	public ChromosomeType type() {
+		return ChromosomeType.RangeInteger;
+	}
 	
 }
 

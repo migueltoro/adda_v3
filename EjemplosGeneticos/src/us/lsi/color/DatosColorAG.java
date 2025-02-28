@@ -10,6 +10,7 @@ import java.util.stream.IntStream;
 import org.jgrapht.graph.SimpleWeightedGraph;
 
 import us.lsi.ag.RangeIntegerData;
+import us.lsi.ag.agchromosomes.Chromosomes.ChromosomeType;
 import us.lsi.grafos.datos.Carretera;
 import us.lsi.grafos.datos.Ciudad;
 import us.lsi.graphs.GraphsReader;
@@ -80,5 +81,10 @@ public class DatosColorAG implements RangeIntegerData<Map<Ciudad,Integer>> {
 				   .collect(Collectors.groupingBy(e -> e.getValue(),Collectors.mapping(e->e.getKey(),Collectors.toSet())))
 				   .values().stream()
 				   .collect(Collectors.toSet());
+	}
+	
+	@Override
+	public ChromosomeType type() {
+		return ChromosomeType.RangeInteger;
 	}
 }

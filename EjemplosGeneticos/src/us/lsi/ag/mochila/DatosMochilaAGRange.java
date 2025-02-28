@@ -4,6 +4,7 @@ import java.util.List;
 
 import us.lsi.ag.AuxiliaryAg;
 import us.lsi.ag.RangeIntegerData;
+import us.lsi.ag.agchromosomes.Chromosomes.ChromosomeType;
 import us.lsi.mochila.datos.DatosMochila;
 
 public class DatosMochilaAGRange implements RangeIntegerData<SolucionMochila> {
@@ -51,6 +52,11 @@ public class DatosMochilaAGRange implements RangeIntegerData<SolucionMochila> {
 	@Override
 	public SolucionMochila solution(List<Integer> acciones) {
 		return SolucionMochila.of(acciones);
+	}
+	
+	@Override
+	public ChromosomeType type() {
+		return ChromosomeType.RangeInteger;
 	}
 	
 }

@@ -4,9 +4,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.function.Predicate;
 
-import us.lsi.ag.agchromosomes.AChromosome;
 import us.lsi.ag.agchromosomes.AlgoritmoAG;
-import us.lsi.ag.agchromosomes.Chromosomes;
 import us.lsi.ag.agstopping.StoppingConditionFactory;
 import us.lsi.grafos.datos.Ciudad;
 
@@ -30,8 +28,7 @@ public class TestCamino {
 			
 			CaminoDatos.sh = false;	
 			CaminoData d = new CaminoData();
-			AChromosome<List<Integer>,List<Double>, List<Ciudad>> cv = Chromosomes.ofPermutation(d);
-			AlgoritmoAG<List<Integer>, List<Double>, List<Ciudad>> alg = AlgoritmoAG.of(cv);
+			AlgoritmoAG<List<Integer>,  List<Ciudad>> alg = AlgoritmoAG.of(d);
 			alg.ejecuta();
 			System.out.println("Genetico "+i+" ####################");
 			System.out.println(alg.bestSolution());

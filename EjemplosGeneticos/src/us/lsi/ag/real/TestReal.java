@@ -2,9 +2,7 @@ package us.lsi.ag.real;
 
 
 import us.lsi.ag.RangeDoubleData;
-import us.lsi.ag.agchromosomes.AChromosome;
 import us.lsi.ag.agchromosomes.AlgoritmoAG;
-import us.lsi.ag.agchromosomes.Chromosomes;
 import us.lsi.ag.agstopping.StoppingConditionFactory;
 import us.lsi.ag.agstopping.StoppingConditionFactory.StoppingConditionType;
 
@@ -24,8 +22,7 @@ public class TestReal {
 		StoppingConditionFactory.NUM_GENERATIONS = 100;
 		
 		RangeDoubleData<List<Double>> d = new DatosReal();
-		AChromosome<List<Double>,List<Double>,List<Double>> cv = Chromosomes.ofRangeDouble(d);
-		AlgoritmoAG<List<Double>, List<Double>, List<Double>> ap = AlgoritmoAG.of(cv);
+		AlgoritmoAG<List<Double>, List<Double>> ap = AlgoritmoAG.of(d);
 		ap.ejecuta();
 		
 		

@@ -3,9 +3,7 @@ package us.lsi.p3.ej_3;
 import java.util.List;
 import java.util.Locale;
 
-import us.lsi.ag.agchromosomes.AChromosome;
 import us.lsi.ag.agchromosomes.AlgoritmoAG;
-import us.lsi.ag.agchromosomes.Chromosomes;
 import us.lsi.ag.agstopping.StoppingConditionFactory;
 
 public class TestAlumnosAGRange {
@@ -22,8 +20,7 @@ public class TestAlumnosAGRange {
 		StoppingConditionFactory.stoppingConditionType = StoppingConditionFactory.StoppingConditionType.GenerationCount;
 		
 		InRangeAlumnosAG p = new InRangeAlumnosAG("ficheros/p3/ejemplo3_3.txt");
-		AChromosome<List<Integer>,List<Double>, SolucionAlumnos> cv = Chromosomes.ofRangeInteger(p);
-		AlgoritmoAG<List<Integer>,List<Double>,SolucionAlumnos> ap = AlgoritmoAG.of(cv);
+		AlgoritmoAG<List<Integer>,SolucionAlumnos> ap = AlgoritmoAG.of(p);
 		ap.ejecuta();
 		
 		System.out.println("================================");

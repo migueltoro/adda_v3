@@ -8,6 +8,7 @@ import us.lsi.ag.RangeDoubleData;
 import us.lsi.ag.RangeIntegerData;
 import us.lsi.ag.agchromosomes.AChromosome;
 import us.lsi.ag.agchromosomes.Chromosomes;
+import us.lsi.ag.agchromosomes.Chromosomes.ChromosomeType;
 import us.lsi.tiposrecursivos.ast.Exp;
 
 public class TestChromosome {
@@ -26,6 +27,10 @@ public class TestChromosome {
 		}
 		public PD() {
 			
+		}
+		@Override
+		public ChromosomeType type() {
+			return ChromosomeType.Permutation;
 		}
     }
     
@@ -58,6 +63,10 @@ public class TestChromosome {
 		public RI() {
 
 		}
+		@Override
+		public ChromosomeType type() {
+			return ChromosomeType.RangeInteger;
+		}
 	}
     
     public static class RD implements RangeDoubleData<List<Double>> {
@@ -89,6 +98,10 @@ public class TestChromosome {
 		public RD() {
 
 		}
+		@Override
+		public ChromosomeType type() {
+			return ChromosomeType.RangeDouble;
+		}
 	}
 
     public static class BIN implements BinaryData<List<Integer>> {
@@ -110,6 +123,12 @@ public class TestChromosome {
 		public BIN() {
 
 		}
+
+		@Override
+		public ChromosomeType type() {
+			return ChromosomeType.Binary;
+		}
+		
 	}
     
     public static void test0() {

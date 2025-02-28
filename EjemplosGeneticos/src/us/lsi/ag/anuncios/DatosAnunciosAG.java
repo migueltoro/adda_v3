@@ -5,6 +5,7 @@ import java.util.List;
 
 import us.lsi.ag.AuxiliaryAg;
 import us.lsi.ag.PermutationData;
+import us.lsi.ag.agchromosomes.Chromosomes.ChromosomeType;
 import us.lsi.anuncios.datos.Anuncio;
 import us.lsi.anuncios.datos.DatosAnuncios;
 
@@ -38,6 +39,11 @@ public class DatosAnunciosAG extends DatosAnuncios implements PermutationData<So
 	@Override
 	public Integer size() {
 		return DatosAnuncios.todosLosAnunciosDisponibles.size();
+	}
+	
+	@Override
+	public ChromosomeType type() {
+		return ChromosomeType.Permutation;
 	}
 	
 }

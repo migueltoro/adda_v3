@@ -1,12 +1,9 @@
 package us.lsi.expression;
 
 
-import java.util.List;
 import java.util.Locale;
 
-import us.lsi.ag.agchromosomes.AChromosome;
 import us.lsi.ag.agchromosomes.AlgoritmoAG;
-import us.lsi.ag.agchromosomes.Chromosomes;
 import us.lsi.ag.agstopping.StoppingConditionFactory;
 import us.lsi.ag.agstopping.StoppingConditionFactory.StoppingConditionType;
 import us.lsi.common.String2;
@@ -30,8 +27,7 @@ public class TestExpression {
 		StoppingConditionFactory.SOLUTIONS_NUMBER_MIN = 1;
 		
 		DatosExpression d = new DatosExpression();
-		AChromosome<Exp, List<Double>, Exp> cv = Chromosomes.ofExp(d);
-		AlgoritmoAG<Exp,List<Double>,Exp> ap = AlgoritmoAG.of(cv);
+		AlgoritmoAG<Exp,Exp> ap = AlgoritmoAG.of(d);
 		ap.ejecuta();
 
 		

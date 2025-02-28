@@ -6,6 +6,7 @@ import java.util.stream.IntStream;
 
 
 import us.lsi.ag.PermutationData;
+import us.lsi.ag.agchromosomes.Chromosomes.ChromosomeType;
 import us.lsi.common.List2;
 import us.lsi.grafos.datos.Ciudad;
 
@@ -86,6 +87,9 @@ public class CaminoData implements PermutationData<List<Ciudad>>{
 		return res;
 	}
 
-	
+	@Override
+	public ChromosomeType type() {
+		return ChromosomeType.Permutation;
+	}
 
 }

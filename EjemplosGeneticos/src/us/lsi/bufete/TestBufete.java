@@ -3,9 +3,8 @@ package us.lsi.bufete;
 import java.util.List;
 import java.util.Locale;
 
-import us.lsi.ag.agchromosomes.AChromosome;
+
 import us.lsi.ag.agchromosomes.AlgoritmoAG;
-import us.lsi.ag.agchromosomes.Chromosomes;
 import us.lsi.ag.agstopping.StoppingConditionFactory;
 import us.lsi.ag.agstopping.StoppingConditionFactory.StoppingConditionType;
 import us.lsi.bufete.datos.SolucionBufete;
@@ -14,8 +13,7 @@ public class TestBufete {
 	
 	private static void test(String fichero) {		
 		DatosBufeteAG prob = DatosBufeteAG.create("ficheros/"+fichero);
-		AChromosome<List<Integer>,List<Double>, SolucionBufete> cv = Chromosomes.ofRangeInteger(prob);
-		AlgoritmoAG<List<Integer>, List<Double>, SolucionBufete> alg = AlgoritmoAG.of(cv);
+		AlgoritmoAG<List<Integer>, SolucionBufete> alg = AlgoritmoAG.of(prob);
 		alg.ejecuta();
 		System.out.println(alg.bestSolution());		
 	}	

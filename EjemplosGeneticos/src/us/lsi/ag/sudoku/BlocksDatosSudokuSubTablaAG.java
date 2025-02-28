@@ -7,6 +7,7 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 import us.lsi.ag.BlocksData;
+import us.lsi.ag.agchromosomes.Chromosomes.ChromosomeType;
 import us.lsi.alg.sudoku.Casilla;
 import us.lsi.alg.sudoku.DatosSudoku;
 import us.lsi.alg.sudoku.SolucionSudoku;
@@ -72,5 +73,9 @@ public class BlocksDatosSudokuSubTablaAG implements BlocksData<SolucionSudoku> {
 		return initialValues;
 	}
 
+	@Override
+	public ChromosomeType type() {
+		return ChromosomeType.Blocks;
+	}
 
 }

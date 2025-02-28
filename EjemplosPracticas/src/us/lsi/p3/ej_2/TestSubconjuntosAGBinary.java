@@ -4,9 +4,7 @@ package us.lsi.p3.ej_2;
 import java.util.List;
 import java.util.Locale;
 
-import us.lsi.ag.agchromosomes.AChromosome;
 import us.lsi.ag.agchromosomes.AlgoritmoAG;
-import us.lsi.ag.agchromosomes.Chromosomes;
 import us.lsi.ag.agstopping.StoppingConditionFactory;
 
 
@@ -24,8 +22,7 @@ public class TestSubconjuntosAGBinary {
 		StoppingConditionFactory.stoppingConditionType = StoppingConditionFactory.StoppingConditionType.GenerationCount;
 		
 		BinSubconjuntoAG p = new BinSubconjuntoAG("ficheros/p3/ejemplo2_2.txt");
-		AChromosome<List<Integer>,List<Integer>, SolucionSubconjunto> cv = Chromosomes.ofBinary(p);
-		AlgoritmoAG<List<Integer>,List<Integer>,SolucionSubconjunto> ap = AlgoritmoAG.of(cv);
+		AlgoritmoAG<List<Integer>,SolucionSubconjunto> ap = AlgoritmoAG.of(p);
 		ap.ejecuta();
 		
 		System.out.println("================================");

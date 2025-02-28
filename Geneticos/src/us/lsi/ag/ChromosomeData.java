@@ -1,5 +1,7 @@
 package us.lsi.ag;
 
+import us.lsi.ag.agchromosomes.Chromosomes.ChromosomeType;
+
 public interface ChromosomeData<V,S> {
 	
 	/**
@@ -18,4 +20,9 @@ public interface ChromosomeData<V,S> {
 	 * @return La solución definida por el cromosoma
 	 */
 	S solution(V value);
+	
+	/**
+	 * @return El tipo de comosoma
+	 */
+	ChromosomeType type();
 }

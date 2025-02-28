@@ -5,6 +5,7 @@ import java.util.Set;
 
 import us.lsi.ag.AuxiliaryAg;
 import us.lsi.ag.PermutationData;
+import us.lsi.ag.agchromosomes.Chromosomes.ChromosomeType;
 import us.lsi.common.List2;
 import us.lsi.common.Set2;
 import us.lsi.reinas.datos.Reina;
@@ -44,6 +45,11 @@ public class DatosReinasAG implements PermutationData<List<Reina>> {
 	@Override
 	public Integer size() {
 		return  numeroDeReinas;
+	}
+	
+	@Override
+	public ChromosomeType type() {
+		return ChromosomeType.Permutation;
 	}
 
 }

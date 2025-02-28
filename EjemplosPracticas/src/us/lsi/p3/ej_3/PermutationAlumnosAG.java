@@ -4,6 +4,7 @@ import java.util.List;
 
 import us.lsi.ag.AuxiliaryAg;
 import us.lsi.ag.PermutationData;
+import us.lsi.ag.agchromosomes.Chromosomes.ChromosomeType;
 
 public class PermutationAlumnosAG implements PermutationData<SolucionAlumnos> {
 
@@ -39,5 +40,9 @@ public class PermutationAlumnosAG implements PermutationData<SolucionAlumnos> {
 		return DatosAlumnos.getNumAlumnos();
 	}
 
+	@Override
+	public ChromosomeType type() {
+		return ChromosomeType.Permutation;
+	}
 }
 
