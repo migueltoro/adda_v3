@@ -6,22 +6,21 @@ import java.util.Map;
 
 import us.lsi.common.IntegerSet;
 import us.lsi.common.List2;
-import us.lsi.streams.Collectors2;
 
 
-public record ColorVertexI(Integer index, Map<Integer,Integer> cav) 
-           implements  ColorVertex{
+public record ColorVertexI(Integer index, Map<Integer,Integer> cav,IntegerSet ca,
+		Integer nc,IntegerSet cv) implements  ColorVertex {
 
-	public static ColorVertexI of(Integer index, Map<Integer, Integer> cav) {
+	public static ColorVertex of(Integer index, Map<Integer, Integer> cav) {
 		return new ColorVertexI(index, cav);
 	}
-	
-	public static ColorVertexI first() {
-		return new ColorVertexI(0,new HashMap<>());
-	}
-	
-	public static ColorVertex last() {
-		return new ColorVertexI(DatosColor.n,new HashMap<>());
+	/**
+	 * Constructor personalizado tomando sólo las propiedades básicas y 
+	 * calculando las derivadas. Alternativamente se podría haber hecho en el método
+	 * de factoría.
+	 */	
+	private ColorVertexI(Integer index, Map<Integer, Integer> cav) {		
+		this(index,cav,AuxiliaryColor.ca(cav),AuxiliaryColor.nc(cav),AuxiliaryColor.cv(index,cav));
 	}
 	
 	@Override
@@ -33,33 +32,11 @@ public record ColorVertexI(Integer index, Map<Integer,Integer> cav)
 	public Boolean goalHasSolution() {
 		return true;
 	}
-	
-	@Override
-	public IntegerSet ca(){
-		return this.cav().values().stream().distinct().collect(Collectors2.toIntegerSet());
-	}
-	
-	@Override
-	public Integer nc() {
-		return this.ca().size();
-	}
-	
-	@Override
-	public IntegerSet cv(){
-		IntegerSet r;
-		if (index < DatosColor.n) {
-			r = AuxiliaryColor.coloresDeVecinos(index(), DatosColor.graph, cav());
-		} else {
-			r = IntegerSet.empty();
-		}
-		return r;
-	}
 
 	@Override
 	public Boolean isValid() {
 		return this.index()>=0 && this.index() <= DatosColor.n;
 	}
-
 
 	@Override
 	public List<Integer> actions() {		
@@ -77,19 +54,16 @@ public record ColorVertexI(Integer index, Map<Integer,Integer> cav)
 		return this.edge(this.greedyAction());
 	}
 
-
 	@Override
-	public ColorVertexI neighbor(Integer a) {
+	public ColorVertex neighbor(Integer a) {
 		Map<Integer,Integer> m = new HashMap<>(this.cav());
 		m.put(this.index(),a);
 		return ColorVertexI.of(this.index()+1,m);
 	}
 
-
 	@Override
 	public ColorEdge edge(Integer a) {
 		return ColorEdge.of(this,this.neighbor(a), a);
 	}
-
 	
 }

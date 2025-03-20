@@ -6,7 +6,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import us.lsi.alg.colorgraphs.ColorVertexI;
+import us.lsi.alg.colorgraphs.ColorVertex;
 import us.lsi.alg.colorgraphs.DatosColor;
 import us.lsi.alg.colorgraphs.SolucionColor;
 
@@ -30,8 +30,8 @@ public class PDRColor {
 	
 	private Integer minValue;
 	private SolucionColor solucion;
-	private ColorVertexI start;
-	private Map<ColorVertexI,Spm> memory;
+	private ColorVertex start;
+	private Map<ColorVertex,Spm> memory;
 	private Long time;
 	
 	private PDRColor() {
@@ -42,7 +42,7 @@ public class PDRColor {
 		return time;
 	}
 	
-	public void  pdr(ColorVertexI vertex,Integer minValue, SolucionColor s) {
+	public void  pdr(ColorVertex vertex,Integer minValue, SolucionColor s) {
 		this.time = System.nanoTime();
 		this.minValue = minValue;
 		this.solucion = s;
@@ -52,7 +52,7 @@ public class PDRColor {
 		this.time = System.nanoTime() - this.time;
 	}
 	
-	public Spm pdr(ColorVertexI vertex, Map<ColorVertexI,Spm> memory) {
+	public Spm pdr(ColorVertex vertex, Map<ColorVertex,Spm> memory) {
 		Spm r= null;
 		if(memory.containsKey(vertex)) {
 			r = memory.get(vertex);
@@ -82,7 +82,7 @@ public class PDRColor {
 	
 	public SolucionColor solucion(){
 		List<Integer> acciones = new ArrayList<>();
-		ColorVertexI v = this.start;
+		ColorVertex v = this.start;
 		Spm s = this.memory.get(v);
 		if(s==null) return this.solucion;
 		while(s.a() != null) {
@@ -99,11 +99,11 @@ public class PDRColor {
 		
 		PDRColor a = PDRColor.of();
 		
-		SolucionColor sv = GreedyColor.solucionVoraz(ColorVertexI.first());
+		SolucionColor sv = GreedyColor.solucionVoraz(ColorVertex.first());
 		
-		a.pdr(ColorVertexI.first(),sv.nc(),sv);
+		a.pdr(ColorVertex.first(),sv.nc(),sv);
 		System.out.println(a.time());
-		a.pdr(ColorVertexI.first(),null,null);
+		a.pdr(ColorVertex.first(),null,null);
 		System.out.println(a.time());
 		System.out.println("PDR = "+ a.solucion());
 	}

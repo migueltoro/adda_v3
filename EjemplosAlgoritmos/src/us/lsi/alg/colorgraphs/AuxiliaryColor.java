@@ -12,6 +12,21 @@ import us.lsi.graphs.SimpleEdge;
 import us.lsi.streams.Collectors2;
 public class AuxiliaryColor {
 	
+	public static IntegerSet ca(Map<Integer,Integer> cav) {
+		return cav.values().stream().distinct().collect(Collectors2.toIntegerSet());
+	}
+	
+	public static Integer nc(Map<Integer,Integer> cav) {
+		return AuxiliaryColor.ca(cav).size();
+	}
+
+	public static  IntegerSet cv(Integer index, Map<Integer, Integer> cav) {
+		if (index < DatosColor.n)
+			return AuxiliaryColor.coloresDeVecinos(index, DatosColor.graph, cav);
+		else
+			return IntegerSet.empty();
+	}
+	
 	public static IntegerSet vecinos(Integer vertex, Graph<Integer,SimpleEdge<Integer>> g){
 		return g.edgesOf(vertex).stream().map(e->Graphs.getOppositeVertex(g,e,vertex))
 				.collect(Collectors2.toIntegerSet());
@@ -55,6 +70,7 @@ public class AuxiliaryColor {
 		}
 		System.out.println(String.format("Result = %s",r));		
 	}
+
 	
 
 }
