@@ -95,7 +95,7 @@ public class MochilaAStar {
 		this.time = System.nanoTime();
 		this.maxValue = maxValue;
 		this.solucion = s;
-		Double distanceToEnd = Heuristica.heuristica(start);
+		Double distanceToEnd = Heuristica.heuristica1(start);
 		AStarMochila a = AStarMochila.of(start, null,null,0.);
 		this.cmp = Comparator.reverseOrder();
 		this.heap = Heap.of(cmp);
@@ -115,11 +115,11 @@ public class MochilaAStar {
 			vertexActual = heap.remove();
 			AStarMochila dataActual = tree.get(vertexActual);
 			if(this.maxValue != null &&  
-					(dataActual.distanceToOrigin()+Heuristica.heuristica(vertexActual)) <= this.maxValue) continue;
+					(dataActual.distanceToOrigin()+Heuristica.heuristica1(vertexActual)) <= this.maxValue) continue;
 			for (Integer a : vertexActual.actions()) {
 				MochilaVertex v = vertexActual.neighbor(a);
 				Double newDistance = dataActual.distanceToOrigin()+a*DatosMochila.getValor(vertexActual.index());
-				Double newDistanceToEnd = newDistance + Heuristica.heuristica(v);				
+				Double newDistanceToEnd = newDistance + Heuristica.heuristica1(v);				
 				if (!tree.containsKey(v)) {	
 					AStarMochila ac = AStarMochila.of(v, a, vertexActual, newDistance);
 					heap.add(v,newDistanceToEnd);

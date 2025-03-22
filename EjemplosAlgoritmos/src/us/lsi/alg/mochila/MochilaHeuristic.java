@@ -14,16 +14,6 @@ import us.lsi.graphs.virtual.EGraph;
 import us.lsi.mochila.datos.DatosMochila;
 
 public class MochilaHeuristic {
-	
-	public static Double heuristic2(MochilaVertex v1, Predicate<MochilaVertex> goal, MochilaVertex v2) {
-		Double weight = 0.;
-		Integer index = v1.index();
-		Double cr = (double) v1.capacidadRestante();
-		Double a = Math.min(cr / DatosMochila.getPeso(index), DatosMochila.getNumMaxDeUnidades(index));
-		cr = cr - a * DatosMochila.getPeso(index);
-		weight += a * DatosMochila.getValor(index);
-		return weight;
-	}
 
 	public static Double heuristic1(MochilaVertex v1, Predicate<MochilaVertex> goal, MochilaVertex v2) { 
 		Double weight = 0.;
@@ -33,6 +23,7 @@ public class MochilaHeuristic {
 			Double a = Math.min(cr/DatosMochila.getPeso(index),DatosMochila.getNumMaxDeUnidades(index));
 			cr = cr - a * DatosMochila.getPeso(index);
 			weight += a * DatosMochila.getValor(index);
+			index = index + 1;
 		} 
 		return weight;
 	}

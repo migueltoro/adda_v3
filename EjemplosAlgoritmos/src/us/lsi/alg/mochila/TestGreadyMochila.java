@@ -27,8 +27,6 @@ public class TestGreadyMochila {
 //		System.out.println(e1);
 //		System.out.println(e2);			
 		Double r2 = MochilaHeuristic.heuristic1(v1,v->v.goal(),null);
-		System.out.println("H1 "+r2);
-		r2 = MochilaHeuristic.heuristic2(v1,v->v.goal(),null);
 		System.out.println("H2 "+r2);
 		
 		EGraph<MochilaVertex, MochilaEdge> graph = 

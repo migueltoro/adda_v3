@@ -1,10 +1,13 @@
-package us.lsi.alg.mochila;
+package us.lsi.alg.mochila.manual;
 
 import java.util.Locale;
 
 import org.jgrapht.GraphPath;
 import org.jgrapht.graph.SimpleDirectedGraph;
 
+import us.lsi.alg.mochila.MochilaEdge;
+import us.lsi.alg.mochila.MochilaVertex;
+import us.lsi.alg.mochila.MochilaVertexI;
 import us.lsi.colors.GraphColors;
 import us.lsi.graphs.Graphs2;
 import us.lsi.graphs.alg.GreedyOnGraph;
@@ -24,16 +27,14 @@ public class TestGreedyMochilaManual {
 				EGraph.virtual(v1)
 				.pathType(PathType.Sum)
 				.type(Type.Max)
-				.heuristic(MochilaHeuristic::heuristic1)
+				.heuristic(Heuristica::heuristica)
 				.build();
 		
-		GraphPath<MochilaVertex, MochilaEdge> gpm = MochilaHeuristic.greedy(v1,graph);
+		GraphPath<MochilaVertex, MochilaEdge> gpm = Heuristica.caminoVoraz(v1,graph);
 		System.out.println("M "+gpm.getWeight());
 	
-		Double r2 = MochilaHeuristic.heuristic1(v1,v->v.goal(),null);
+		Double r2 = Heuristica.heuristica1(v1);
 		System.out.println("H1 "+r2);
-		r2 = MochilaHeuristic.heuristic2(v1,v->v.goal(),null);
-		System.out.println("H2 "+r2);
 		
 		GreedyOnGraph<MochilaVertex, MochilaEdge> gs = GreedyOnGraph.of(graph);
 		GraphPath<MochilaVertex, MochilaEdge> gp = gs.path();
