@@ -15,8 +15,7 @@ public record SolucionAsignaturas(Integer mejora, Map<Integer,List<Integer>> asi
 	public  static SolucionAsignaturas of(GraphPath<AsignaturasVertice, AsignaturasEdge> s){
 		return SolucionAsignaturas.of(s.getEdgeList().stream().map(e ->e.action()).toList());
 	}
-	
-	
+		
 	public  static SolucionAsignaturas of(List<Integer>ls){
 		Map<Integer,List<Integer>>asignacion = IntStream.range(0,ls.size()).boxed()
 				.map(d->IntPair.of(d,ls.get(d)))
