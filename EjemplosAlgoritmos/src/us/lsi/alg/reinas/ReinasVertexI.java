@@ -29,6 +29,10 @@ public record ReinasVertexI(Integer index, List<Integer> fo, IntegerSet dpo, Int
 		return new ReinasVertexI(n,List2.empty(),IntegerSet.empty(-n,10),IntegerSet.empty());
 	}
 	
+	public List<Integer> fo() {
+		return List.copyOf(this.fo);
+	}
+	
 	@Override
 	public Boolean goal() {
 		return this.index == ReinasVertexI.n;

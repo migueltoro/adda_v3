@@ -19,6 +19,10 @@ public record AlumnosVertex(Integer index, List<Integer> remaining)
 		return new AlumnosVertex(i, rest);
 	}
 	
+	public List<Integer> remaining(){
+		return List.copyOf(this.remaining);
+	}
+	
 	public Boolean goal() {
 		return this.index() == DatosAlumnos.getNumAlumnos();
 	}
@@ -40,7 +44,7 @@ public record AlumnosVertex(Integer index, List<Integer> remaining)
 
 	@Override
 	public AlumnosVertex neighbor(Integer a) {
-		return of(index+1, List2.setElement(remaining, a, remaining.get(a)-1));
+		return of(index+1, List2.set(remaining, a, remaining.get(a)-1));
 	}
 
 	@Override

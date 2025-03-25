@@ -23,6 +23,10 @@ public record ColorVertexI(Integer index, Map<Integer,Integer> cav,IntegerSet ca
 		this(index,cav,AuxiliaryColor.ca(cav),AuxiliaryColor.nc(cav),AuxiliaryColor.cv(index,cav));
 	}
 	
+	public Map<Integer, Integer> cav() {
+		return Map.copyOf(this.cav);
+	}
+	
 	@Override
 	public Boolean goal() {
 		return this.index() == DatosColor.n;

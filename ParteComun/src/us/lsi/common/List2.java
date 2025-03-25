@@ -101,15 +101,13 @@ public class List2 {
 	 * @param index Un �ndice
 	 * @return Una copia de la lista con el elemento cambiado en la posicion index
 	 */
-	public static <E> List<E> setElement(List<E> ls, int index, E e){
+	public static <E> List<E> set(List<E> ls, int index, E e){
 		Preconditions.checkNotNull(ls);
 		Preconditions.checkNotNull(e);
 		List<E> cp = new ArrayList<>(ls);
 		cp.set(index,e);
 		return cp;
 	}
-	
-	
 	
 	/**
 	 * @param <E> Tipo de los elementos

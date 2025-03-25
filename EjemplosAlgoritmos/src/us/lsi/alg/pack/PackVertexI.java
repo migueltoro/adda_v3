@@ -17,6 +17,10 @@ public record PackVertexI(Integer index, Map<Integer, Integer> carga)
 		return new PackVertexI(index, carga);
 	}
 	
+	public Map<Integer, Integer> carga(){
+		return Map.copyOf(this.carga);
+	}
+	
 	@Override
 	public Boolean goal() { 
 		return  this.index == n; 

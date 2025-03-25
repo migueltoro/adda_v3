@@ -25,6 +25,10 @@ public record VertexPuzzleI(IntPair blackPosition,Integer[][] datos)
 		VertexPuzzleI m2 = (VertexPuzzleI) m;
 		return new VertexPuzzleI(m2.blackPosition, m2.datos);
 	}
+	
+	public Integer[][] datos(){
+		return Arrays2.copyArray(datos);
+	}
 
 	/**
 	 * @param d Lista de valores del puzzle dados por filas de arriba abajo

@@ -17,6 +17,10 @@ public record BufeteVertexI(Integer index,List<Integer> cargas) implements Bufet
 		return new BufeteVertexI(0,List2.nCopies(0,DatosBufete.NUM_ABOGADOS));
 	}
 	
+	public List<Integer> cargas() {
+		return List.copyOf(this.cargas);
+	}
+	
 	@Override
 	public Boolean goal() {
 		return this.index() == DatosBufete.NUM_CASOS;
@@ -60,7 +64,7 @@ public record BufeteVertexI(Integer index,List<Integer> cargas) implements Bufet
 	@Override
 	public List<Integer> cargasDespues(Integer a){
 		Integer d = DatosBufete.horas(a,this.index) + this.cargas().get(a);
-        return List2.setElement(this.cargas(), a, d);
+        return List2.set(this.cargas(), a, d);
 	}
 	
 	@Override

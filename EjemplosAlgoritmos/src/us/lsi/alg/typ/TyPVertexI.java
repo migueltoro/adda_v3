@@ -25,6 +25,10 @@ public record TyPVertexI(Integer index, List<Double> cargas)
 		return new TyPVertexI(index,cargasC);
 	}
 	
+	public List<Double> cargas(){
+		return List.copyOf(this.cargas);
+	}
+	
 	@Override
 	public Boolean goal() {
 		return this.index()==DatosTyP.n;
@@ -69,7 +73,7 @@ public record TyPVertexI(Integer index, List<Double> cargas)
 	@Override
 	public List<Double> cargasDespues(Integer a){
 		Double d = DatosTyP.duracion(this.index) + this.cargas().get(a);
-        return List2.setElement(this.cargas(), a, d);
+        return List2.set(this.cargas(), a, d);
 	}
 	
 	@Override

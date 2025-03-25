@@ -22,6 +22,10 @@ public record VertexContenedoresI(Integer index, List<Integer> capRest)
 			.map(j->DatosContenedores.getTamContenedor(j)).toList();
 		return VertexContenedoresI.of(0,capRest);
 	}
+	
+	public List<Integer> capRest() {
+		return List.copyOf(this.capRest);
+	}
 
 	@Override
 	public Boolean goalHasSolution() {

@@ -21,6 +21,10 @@ public record AsignaturasVertice(Integer index,List<Integer>diasAsignatura,Integ
 	public static AsignaturasVertice copy(AsignaturasVertice v) {
 		return new AsignaturasVertice(v.index(),v.diasAsignatura(),v.lastAsignatura());
 	}
+	
+	public List<Integer> diasAsignatura(){
+		return List.copyOf(this.diasAsignatura);
+	}
 
 	@Override
 	public Boolean isValid() {
@@ -73,7 +77,7 @@ public record AsignaturasVertice(Integer index,List<Integer>diasAsignatura,Integ
 
 	@Override
 	public AsignaturasVertice neighbor(Integer a) {
-		return of(this.index+1,List2.setElement(this.diasAsignatura,a,this.diasAsignatura.get(a)+1),a);
+		return of(this.index+1,List2.set(this.diasAsignatura,a,this.diasAsignatura.get(a)+1),a);
 	}
 
 	@Override

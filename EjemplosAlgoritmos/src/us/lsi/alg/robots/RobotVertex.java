@@ -27,8 +27,16 @@ public record RobotVertex(List<Integer> r, List<Integer> x, Integer t)
 	public static Integer n = 4;
 	public static Integer N = 24;
 
+	public List<Integer> r(){
+		return List.copyOf(this.r);
+	}
+	
 	public Integer mt(Integer i, Integer j) {
 		return mt1[i][j];
+	}
+	
+	public List<Integer> x() {
+		return List.copyOf(this.x);
 	}
 	
 	public Integer greedyAction() {

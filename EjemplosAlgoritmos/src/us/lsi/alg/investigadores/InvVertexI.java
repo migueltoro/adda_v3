@@ -30,6 +30,14 @@ public record InvVertexI(Integer index, List<Integer> ldIr, List<List<Integer>> 
 	public static InvVertex of(Integer index, List<Integer> ldIr, List<List<Integer>> ldEr) {
 	   return new InvVertexI(index, ldIr, ldEr);
 	}
+	
+	public List<Integer> ldIr() {
+		return List.copyOf(this.ldIr);
+	}
+	
+	public List<List<Integer>> ldEr() {
+		return List.copyOf(this.ldEr);
+	}
 
 	@Override
 	public Boolean goal() {
@@ -153,7 +161,7 @@ public record InvVertexI(Integer index, List<Integer> ldIr, List<List<Integer>> 
 
 	@Override
 	public InvVertex neighbor(Integer a) {
-		List<Integer> diasInvestigadorRestantes = List2.setElement(this.ldIr(), this.i(), this.ldIr().get(this.i()) - a);
+		List<Integer> diasInvestigadorRestantes = List2.set(this.ldIr(), this.i(), this.ldIr().get(this.i()) - a);
 		Integer der = this.ldEr().get(this.j()).get(this.k())-a;
 		
 		List<List<Integer>> diasEspecialidadRestantes = List2.copy2(this.ldEr);

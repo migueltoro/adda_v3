@@ -22,6 +22,10 @@ public record TravelVertex(List<Ciudad> camino)
 
 	public static Graph<Ciudad,Carretera> graph;
 
+	public List<Ciudad> camino(){
+		return List.copyOf(this.camino);
+	}
+	
 	@Override
 	public Boolean isValid() {
 		return true;

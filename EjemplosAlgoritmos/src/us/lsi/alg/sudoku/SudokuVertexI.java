@@ -37,6 +37,10 @@ public class SudokuVertexI implements SudokuVertex{
 				.orElse(DatosSudoku.n);
 	}
 	
+	public List<Casilla> casillas(List<Casilla> casillas) {
+		return List.copyOf(casillas);
+	}
+	
 	@Override
 	public Boolean goal() {
 		return this.index == DatosSudoku.n;
