@@ -129,9 +129,12 @@ public class PDR<V, E, S> {
 	}
 	
 	protected void updateMem(V actual,Double accumulateValue, Double toEnd, E edgeOut, E edgeIn) {
-		Double weight = this.graph.initialPath().add(actual, accumulateValue, toEnd, edgeOut, edgeIn);
+//		Double weight = this.graph.initialPath().add(actual, accumulateValue, toEnd, edgeOut, edgeIn);	
+		Double weight = graph.goal().test(actual) ? accumulateValue : 
+			this.graph.initialPath().add(actual, accumulateValue, toEnd, edgeOut, edgeIn);
 		if (this.bestValue == null || this.comparator.compare(weight, this.bestValue) < 0) {
-			this.bestValue = accumulateValue;
+//			this.bestValue = accumulateValue;
+			this.bestValue = weight;
 		}
 	}
 	
@@ -169,17 +172,20 @@ public class PDR<V, E, S> {
 		Sp<E> r = null;
 		if(this.solutionsTree.containsKey(actual)) {
 			r = this.solutionsTree.get(actual);
-			Double toEnd = r.weight();
-			updateMem(actual,accumulateValue, toEnd, r.edge(), edgeToOrigin);
+			if (r != null) {
+				Double toEnd = r.weight();
+				updateMem(actual, accumulateValue, toEnd, r.edge(), edgeToOrigin);
+			}
 		} else if (graph.goal().test(actual)) {
 			if (graph.goalHasSolution().test(actual)) {
 				r = Sp.of(graph.goalSolutionValue(actual), null);
 				this.solutionsTree.put(actual, r);
 				update(actual,accumulateValue);			
-			} else {
-				r = null;
-				this.solutionsTree.put(actual, r);
-			}			
+			} 
+//			else {
+//				r = null;
+//				this.solutionsTree.put(actual, r);
+//			}		
 		} else {
 			List<Sp<E>> rs = new ArrayList<>();	
 			for (E edge : graph.edgesListOf(actual)) {					
@@ -196,7 +202,8 @@ public class PDR<V, E, S> {
 			}
 			if (!rs.isEmpty()) {
 				r = rs.stream().filter(s -> s != null).min(this.comparatorEdges).orElse(null);
-				this.solutionsTree.put(actual, r);
+				if(r != null)
+					this.solutionsTree.put(actual, r);
 			}
 		}
 		this.actualPath.remove(actual);
