@@ -181,11 +181,10 @@ public class PDR<V, E, S> {
 				r = Sp.of(graph.goalSolutionValue(actual), null);
 				this.solutionsTree.put(actual, r);
 				update(actual,accumulateValue);			
-			} 
-//			else {
-//				r = null;
-//				this.solutionsTree.put(actual, r);
-//			}		
+			} else {
+				r = null;
+				this.solutionsTree.put(actual, r);
+			}		
 		} else {
 			List<Sp<E>> rs = new ArrayList<>();	
 			for (E edge : graph.edgesListOf(actual)) {					
