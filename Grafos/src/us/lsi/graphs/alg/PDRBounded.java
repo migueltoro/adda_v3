@@ -7,6 +7,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
+import java.util.function.Predicate;
 
 import us.lsi.common.Preconditions;
 import us.lsi.graphs.Graphs2;
@@ -22,29 +23,29 @@ import org.jgrapht.Graphs;
 import org.jgrapht.graph.GraphWalk;
 import org.jgrapht.graph.SimpleDirectedGraph;
 
-public class PDR<V, E, S> {
+public class PDRBounded<V, E, S> {
 	
-	public static <V, E, S> PDR<V, E, S> ofGreedy(EGraph<V, E> graph) {
+	public static <V, E, S> PDRBounded<V, E, S> ofGreedy(EGraph<V, E> graph) {
 		GreedyOnGraph<V, E> ga = GreedyOnGraph.of(graph);
 		Optional<GraphPath<V, E>> gp = ga.search();
-		if(gp.isPresent()) return PDR.of(graph,null,gp.get().getWeight(),gp.get(),false);
-		else return PDR.of(graph,null,null,null,false);
+		if(gp.isPresent()) return PDRBounded.of(graph,null,gp.get().getWeight(),gp.get(),false);
+		else return PDRBounded.of(graph,null,null,null,false);
 	}
 	
-	public static <V, E, S> PDR<V, E, S> of(EGraph<V, E> graph) {
-		return PDR.of(graph,null,null,null,false);
+	public static <V, E, S> PDRBounded<V, E, S> of(EGraph<V, E> graph) {
+		return PDRBounded.of(graph,null,null,null,false);
 	}
 	
-	public static <V, E, S> PDR<V, E, S> of(EGraph<V, E> graph, 
+	public static <V, E, S> PDRBounded<V, E, S> of(EGraph<V, E> graph, 
 			Double bestValue, GraphPath<V, E> optimalPath) {
-		return new PDR<V, E, S>(graph,null,bestValue,optimalPath,false);
+		return new PDRBounded<V, E, S>(graph,null,bestValue,optimalPath,false);
 	}
 	
-	public static <V, E, S> PDR<V, E, S> of(EGraph<V, E> graph, 
+	public static <V, E, S> PDRBounded<V, E, S> of(EGraph<V, E> graph, 
 			Function<GraphPath<V, E>, S> fsolution, 
 			Double bestValue, GraphPath<V, E> optimalPath, 
 			Boolean withGraph) {
-		return new PDR<V, E, S>(graph,fsolution,bestValue,optimalPath,withGraph);
+		return new PDRBounded<V, E, S>(graph,fsolution,bestValue,optimalPath,withGraph);
 	}
 
 	private EGraph<V, E> graph;
@@ -52,6 +53,9 @@ public class PDR<V, E, S> {
 	private Comparator<Sp<E>> comparatorEdges;
 	private Comparator<Double> comparator;
 	public Map<V, Sp<E>> solutionsTree;
+	
+	private Map<V, Double> estimatedVertices;
+	
 	private List<V> actualPath;
 	public GraphPath<V, E> optimalPath;
 	public Set<S> solutions;
@@ -59,9 +63,9 @@ public class PDR<V, E, S> {
 	public SimpleDirectedGraph<V, E> outGraph;
 	private Boolean withGraph = false;
 	private Type type;
-	public Boolean stop = false;
+	private Boolean stop = false;
 
-	PDR(EGraph<V, E> g, Function<GraphPath<V, E>, S> fsolution, Double bestValue, GraphPath<V, E> optimalPath, Boolean withGraph) {
+	PDRBounded(EGraph<V, E> g, Function<GraphPath<V, E>, S> fsolution, Double bestValue, GraphPath<V, E> optimalPath, Boolean withGraph) {
 		this.graph = g;
 		this.comparatorEdges = this.graph.type() == EGraph.Type.Min?Comparator.naturalOrder():Comparator.reverseOrder();
 		this.type = g.type();
@@ -75,6 +79,9 @@ public class PDR<V, E, S> {
 		case One -> null;
 		};	
 		this.solutionsTree = new HashMap<>();
+		
+		this.estimatedVertices = new HashMap<>();
+		
 		this.actualPath = new ArrayList<>();
 		this.bestValue = bestValue;
 		this.optimalPath = optimalPath;
@@ -87,22 +94,38 @@ public class PDR<V, E, S> {
 		return Optional.ofNullable(this.optimalPath);
 	}
 
-//	private Boolean forget(E edge, V actual,Double accumulateValue,Predicate<V> goal,V end) {
-//		Boolean r = false;
-//		if(graph.type().equals(Type.All) || graph.type().equals(Type.One))  return false;
-//		Double w = this.graph.boundedValue(actual, accumulateValue,edge,(v1,p,v2)->this.newHeuristic(v1,p,v2));
-//		if(this.bestValue != null) r = comparator.compare(w, this.bestValue) >= 0;
-//		return r;
-//	}
+	private Boolean forgetOld(E edge, V actual,Double accumulateValue,Predicate<V> goal,V end) {
+		Boolean r = false;
+		if(graph.type().equals(Type.All) || graph.type().equals(Type.One))  return false;
+		Double w = this.graph.boundedValue(actual, accumulateValue,edge,(v1,p,v2)->this.newHeuristic(v1,p,v2));
+		if(this.bestValue != null) r = comparator.compare(w, this.bestValue) >= 0;
+		return r;
+	}
 	
-//	private Double newHeuristic(V v1, Predicate<V> p, V v2) {
-//		Double r;
-//		if (this.solutionsTree.containsKey(v1) && this.solutionsTree.get(v1) != null)
-//			r = this.solutionsTree.get(v1).weight();
-//		else
-//			r = graph.heuristic().apply(v1, p, v2);
-//		return r;
-//	}
+	private Boolean forget(E edge, V actual,Double accumulateValue,Predicate<V> goal,V end) {
+		Boolean r = false;
+		if(graph.type().equals(Type.All) || graph.type().equals(Type.One))  return false;
+
+		V v = Graphs.getOppositeVertex(graph,edge,actual);
+		Double h = newHeuristic(v, goal, end);
+		if (!this.solutionsTree.containsKey(v))
+			this.estimatedVertices.put(v,h);
+
+		Double w = this.graph.boundedValue(actual, accumulateValue,edge,(v1,p,v2)->this.newHeuristic(v1,p,v2));
+		if(this.bestValue != null) r = comparator.compare(w, this.bestValue) >= 0;
+		return r;
+	}
+
+	private Double newHeuristic(V v1, Predicate<V> p, V v2) {
+		Double r;
+		if (this.solutionsTree.containsKey(v1) && this.solutionsTree.get(v1) != null)
+			r = this.solutionsTree.get(v1).weight();
+		else if (this.estimatedVertices.containsKey(v1)) {
+			r = this.estimatedVertices.get(v1);
+		} else
+			r = graph.heuristic().apply(v1, p, v2);
+		return r;
+	}
 
 	protected void update(V actual, Double accumulateValue) {
 		if (graph.goalHasSolution().test(actual)) {
@@ -127,15 +150,13 @@ public class PDR<V, E, S> {
 		}
 	}
 	
-//	protected void updateMem(V actual,Double accumulateValue, Double toEnd, E edgeOut, E edgeIn) {
-//		Double weight = this.graph.initialPath().add(actual, accumulateValue, toEnd, edgeOut, edgeIn);	
-//		Double weight = graph.goal().test(actual) ? accumulateValue : 
-//			this.graph.initialPath().add(actual, accumulateValue, toEnd, edgeOut, edgeIn);
-//		if (this.bestValue == null || this.comparator.compare(weight, this.bestValue) < 0) {
-//			this.bestValue = accumulateValue;
-//			this.bestValue = weight;
-//		}
-//	}
+	protected void updateMem(V actual,Double accumulateValue, Double toEnd, E edgeOut, E edgeIn) {
+		Double weight = graph.goal().test(actual) ? accumulateValue : 
+			this.graph.initialPath().add(actual, accumulateValue, toEnd, edgeOut, edgeIn);
+		if (this.bestValue == null || this.comparator.compare(weight, this.bestValue) < 0) {
+			this.bestValue = weight;;
+		}
+	}
 	
 	public Set<S> getSolutions(){
 		return this.solutions;
@@ -161,6 +182,9 @@ public class PDR<V, E, S> {
 	public Optional<GraphPath<V, E>> search() {
 		iniciaGraph();
 		this.solutionsTree = new HashMap<>();
+		
+		this.estimatedVertices = new HashMap<>();
+		
 		Sp<E> r = search(graph.startVertex(),0., null);	
 		if(r == null && this.optimalPath !=null) return Optional.of(this.optimalPath);
 		return pathFrom(graph.startVertex());
@@ -171,10 +195,10 @@ public class PDR<V, E, S> {
 		Sp<E> r = null;
 		if(this.solutionsTree.containsKey(actual)) {
 			r = this.solutionsTree.get(actual);
-//			if (r != null) {
-//				Double toEnd = r.weight();
-//				updateMem(actual, accumulateValue, toEnd, r.edge(), edgeToOrigin);
-//			}
+			if (r != null) {
+				Double toEnd = r.weight();
+				updateMem(actual,accumulateValue, toEnd, r.edge(), edgeToOrigin);
+			}
 		} else if (graph.goal().test(actual)) {
 			if (graph.goalHasSolution().test(actual)) {
 				r = Sp.of(graph.goalSolutionValue(actual), null);
@@ -183,25 +207,39 @@ public class PDR<V, E, S> {
 			} else {
 				r = null;
 				this.solutionsTree.put(actual, r);
-			}		
+			}			
 		} else {
 			List<Sp<E>> rs = new ArrayList<>();	
 			for (E edge : graph.edgesListOf(actual)) {					
-//				if (this.forget(edge,actual,accumulateValue,graph.goal(),graph.endVertex()) || this.stop) continue;
+				if (this.forget(edge,actual,accumulateValue,graph.goal(),graph.endVertex()) || this.stop) continue;
 				V v = Graphs.getOppositeVertex(graph,edge,actual);
 				Double ac = this.graph.add(actual,accumulateValue,edge,edgeToOrigin); 
 				Sp<E> s = search(v,ac,edge);
 				if (s!=null) {
-					Double spv = this.graph.fromNeighbordSolutionValue(actual,s.weight,edge,edgeToOrigin);	
-					Sp<E> sp = Sp.of(spv,edge);
-					rs.add(sp);
+					if (s.edge() != null || graph.goal().test(v)) { // valid solution found
+						Double spv = this.graph.fromNeighbordSolutionValue(actual,s.weight,edge,edgeToOrigin);	
+						Sp<E> sp = Sp.of(spv,edge);
+						rs.add(sp);
+					} else { //  no valid solution found due to filtering
+						Sp<E> sp_v = Sp.of(this.bestValue-ac,null); // h is improved for v
+						this.estimatedVertices.put(v, sp_v.weight());
+						Sp<E> sp = Sp.of(this.bestValue-accumulateValue,null); // h is improved for actual from edge  
+						rs.add(sp);
+					}
+				} else { // No valid solution exists
+					r = null;
+					this.solutionsTree.put(actual, r);					
 				}
 				addGraph(actual, edge);
 			}
 			if (!rs.isEmpty()) {
-				r = rs.stream().filter(s -> s != null).min(this.comparatorEdges).orElse(null);
-				if(r != null)
-					this.solutionsTree.put(actual, r);
+				r = rs.stream().filter(s -> (s.edge() != null || graph.goal().test(Graphs.getOppositeVertex(graph,s.edge(),actual))))
+						.min(this.comparatorEdges).orElse(null);
+				if (r != null) 
+					this.solutionsTree.put(actual, r); // valid solution
+				else {
+					r = rs.stream().min(this.comparatorEdges).orElse(null); // heuristic for actual
+				}
 			}
 		}
 		this.actualPath.remove(actual);
@@ -238,3 +276,4 @@ public class PDR<V, E, S> {
 
 	}
 }
+
