@@ -189,6 +189,7 @@ public class PDRBounded<V, E, S> {
 		if(r == null && this.optimalPath !=null) return Optional.of(this.optimalPath);
 		return pathFrom(graph.startVertex());
 	}
+
 	
 	private Sp<E> search(V actual, Double accumulateValue, E edgeToOrigin) {
 		this.actualPath.add(actual);
