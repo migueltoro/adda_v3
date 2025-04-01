@@ -87,23 +87,6 @@ public class PDR<V, E, S> {
 		return Optional.ofNullable(this.optimalPath);
 	}
 
-//	private Boolean forget(E edge, V actual,Double accumulateValue,Predicate<V> goal,V end) {
-//		Boolean r = false;
-//		if(graph.type().equals(Type.All) || graph.type().equals(Type.One))  return false;
-//		Double w = this.graph.boundedValue(actual, accumulateValue,edge,(v1,p,v2)->this.newHeuristic(v1,p,v2));
-//		if(this.bestValue != null) r = comparator.compare(w, this.bestValue) >= 0;
-//		return r;
-//	}
-	
-//	private Double newHeuristic(V v1, Predicate<V> p, V v2) {
-//		Double r;
-//		if (this.solutionsTree.containsKey(v1) && this.solutionsTree.get(v1) != null)
-//			r = this.solutionsTree.get(v1).weight();
-//		else
-//			r = graph.heuristic().apply(v1, p, v2);
-//		return r;
-//	}
-
 	protected void update(V actual, Double accumulateValue) {
 		if (graph.goalHasSolution().test(actual)) {
 			switch(this.type) {
@@ -126,16 +109,6 @@ public class PDR<V, E, S> {
 			}
 		}
 	}
-	
-//	protected void updateMem(V actual,Double accumulateValue, Double toEnd, E edgeOut, E edgeIn) {
-//		Double weight = this.graph.initialPath().add(actual, accumulateValue, toEnd, edgeOut, edgeIn);	
-//		Double weight = graph.goal().test(actual) ? accumulateValue : 
-//			this.graph.initialPath().add(actual, accumulateValue, toEnd, edgeOut, edgeIn);
-//		if (this.bestValue == null || this.comparator.compare(weight, this.bestValue) < 0) {
-//			this.bestValue = accumulateValue;
-//			this.bestValue = weight;
-//		}
-//	}
 	
 	public Set<S> getSolutions(){
 		return this.solutions;
@@ -171,10 +144,6 @@ public class PDR<V, E, S> {
 		Sp<E> r = null;
 		if(this.solutionsTree.containsKey(actual)) {
 			r = this.solutionsTree.get(actual);
-//			if (r != null) {
-//				Double toEnd = r.weight();
-//				updateMem(actual, accumulateValue, toEnd, r.edge(), edgeToOrigin);
-//			}
 		} else if (graph.goal().test(actual)) {
 			if (graph.goalHasSolution().test(actual)) {
 				r = Sp.of(graph.goalSolutionValue(actual), null);
@@ -187,7 +156,6 @@ public class PDR<V, E, S> {
 		} else {
 			List<Sp<E>> rs = new ArrayList<>();	
 			for (E edge : graph.edgesListOf(actual)) {					
-//				if (this.forget(edge,actual,accumulateValue,graph.goal(),graph.endVertex()) || this.stop) continue;
 				V v = Graphs.getOppositeVertex(graph,edge,actual);
 				Double ac = this.graph.add(actual,accumulateValue,edge,edgeToOrigin); 
 				Sp<E> s = search(v,ac,edge);

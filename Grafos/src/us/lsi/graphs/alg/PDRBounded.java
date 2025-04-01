@@ -94,13 +94,13 @@ public class PDRBounded<V, E, S> {
 		return Optional.ofNullable(this.optimalPath);
 	}
 
-	private Boolean forgetOld(E edge, V actual,Double accumulateValue,Predicate<V> goal,V end) {
-		Boolean r = false;
-		if(graph.type().equals(Type.All) || graph.type().equals(Type.One))  return false;
-		Double w = this.graph.boundedValue(actual, accumulateValue,edge,(v1,p,v2)->this.newHeuristic(v1,p,v2));
-		if(this.bestValue != null) r = comparator.compare(w, this.bestValue) >= 0;
-		return r;
-	}
+//	private Boolean forgetOld(E edge, V actual,Double accumulateValue,Predicate<V> goal,V end) {
+//		Boolean r = false;
+//		if(graph.type().equals(Type.All) || graph.type().equals(Type.One))  return false;
+//		Double w = this.graph.boundedValue(actual, accumulateValue,edge,(v1,p,v2)->this.newHeuristic(v1,p,v2));
+//		if(this.bestValue != null) r = comparator.compare(w, this.bestValue) >= 0;
+//		return r;
+//	}
 	
 	private Boolean forget(E edge, V actual,Double accumulateValue,Predicate<V> goal,V end) {
 		Boolean r = false;
