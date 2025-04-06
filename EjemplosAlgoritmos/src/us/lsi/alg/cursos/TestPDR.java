@@ -32,7 +32,7 @@ Locale.setDefault(Locale.of("en", "US"));
 		
 		System.out.println("_________________________________");
 		
-		PDR<CursosVertex, CursosEdge, SolucionCursos> pdr = PDR.of(graph,path.getWeight(),path);
+		PDR<CursosVertex, CursosEdge, SolucionCursos> pdr = PDR.of(graph);
 		
 		GraphPath<CursosVertex,CursosEdge> gp = pdr.search().get();
 		SolucionCursos s = SolucionCursos.of(gp);

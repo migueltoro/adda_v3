@@ -25,7 +25,7 @@ public class TestPDR {
 				.build();			
 		
 		PDR<ReinasVertex, SimpleEdgeAction<ReinasVertex, Integer>, SolucionReinas> ms = 
-				PDR.of(graph,SolucionReinas::of,null,null,false);
+				PDR.of(graph,SolucionReinas::of,false);
 		
 		Optional<GraphPath<ReinasVertex, SimpleEdgeAction<ReinasVertex, Integer>>> path = ms.search();
 		System.out.println(SolucionReinas.of(path.get()));

@@ -3,12 +3,10 @@ package us.lsi.graphs.alg;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
 
-import us.lsi.common.Preconditions;
 import us.lsi.graphs.Graphs2;
 import us.lsi.graphs.virtual.EGraph;
 import us.lsi.graphs.virtual.EGraph.Type;
@@ -24,36 +22,20 @@ import org.jgrapht.graph.SimpleDirectedGraph;
 
 public class PDR<V, E, S> {
 	
-	public static <V, E, S> PDR<V, E, S> ofGreedy(EGraph<V, E> graph) {
-		GreedyOnGraph<V, E> ga = GreedyOnGraph.of(graph);
-		Optional<GraphPath<V, E>> gp = ga.search();
-		if(gp.isPresent()) return PDR.of(graph,null,gp.get().getWeight(),gp.get(),false);
-		else return PDR.of(graph,null,null,null,false);
-	}
-	
 	public static <V, E, S> PDR<V, E, S> of(EGraph<V, E> graph) {
-		return PDR.of(graph,null,null,null,false);
-	}
-	
-	public static <V, E, S> PDR<V, E, S> of(EGraph<V, E> graph, 
-			Double bestValue, GraphPath<V, E> optimalPath) {
-		return new PDR<V, E, S>(graph,null,bestValue,optimalPath,false);
+		return new PDR<V, E, S>(graph,null,false);
 	}
 	
 	public static <V, E, S> PDR<V, E, S> of(EGraph<V, E> graph, 
 			Function<GraphPath<V, E>, S> fsolution, 
-			Double bestValue, GraphPath<V, E> optimalPath, 
 			Boolean withGraph) {
-		return new PDR<V, E, S>(graph,fsolution,bestValue,optimalPath,withGraph);
+		return new PDR<V, E, S>(graph,fsolution,withGraph);
 	}
 
 	private EGraph<V, E> graph;
-	private Double bestValue = null;
-	private Comparator<Sp<E>> comparatorEdges;
-	private Comparator<Double> comparator;
+	private Comparator<Sp<E>> comparatorSp;
 	public Map<V, Sp<E>> solutionsTree;
 	private List<V> actualPath;
-	public GraphPath<V, E> optimalPath;
 	public Set<S> solutions;
 	protected Function<GraphPath<V,E>,S> fsolution;
 	public SimpleDirectedGraph<V, E> outGraph;
@@ -61,51 +43,32 @@ public class PDR<V, E, S> {
 	private Type type;
 	public Boolean stop = false;
 
-	PDR(EGraph<V, E> g, Function<GraphPath<V, E>, S> fsolution, Double bestValue, GraphPath<V, E> optimalPath, Boolean withGraph) {
+	PDR(EGraph<V, E> g, Function<GraphPath<V, E>, S> fsolution, Boolean withGraph) {
 		this.graph = g;
-		this.comparatorEdges = this.graph.type() == EGraph.Type.Min?Comparator.naturalOrder():Comparator.reverseOrder();
+		this.comparatorSp = this.graph.type() == EGraph.Type.Min?Comparator.naturalOrder():Comparator.reverseOrder();
 		this.type = g.type();
-		this.comparator = switch(this.type) {
-		case All -> {
-			Preconditions.checkNotNull(fsolution,"Para el caso All fsolution no puede ser null"); 
-			this.solutions = new HashSet<>();
-			yield null;}
-		case Max -> Comparator.reverseOrder();
-		case Min -> Comparator.naturalOrder();
-		case One -> null;
-		};	
 		this.solutionsTree = new HashMap<>();
 		this.actualPath = new ArrayList<>();
-		this.bestValue = bestValue;
-		this.optimalPath = optimalPath;
 		this.withGraph = withGraph;
-		this.fsolution = fsolution;
-		
+		this.fsolution = fsolution;		
 	}
 	
-	public Optional<GraphPath<V,E>> optimalPath(){
-		return Optional.ofNullable(this.optimalPath);
-	}
 
 	protected void update(V actual, Double accumulateValue) {
 		if (graph.goalHasSolution().test(actual)) {
 			switch(this.type) {
 			case All:
-				this.optimalPath = pathToOrigin(actual,accumulateValue);
-				S s = fsolution.apply(this.optimalPath);
+				S s = fsolution.apply(pathToOrigin(actual,accumulateValue));
 				this.solutions.add(s);
 				if (this.solutions.size() >= this.graph.solutionNumber()) this.stop = true;
 				break;
 			case One:
-				this.bestValue = accumulateValue;
-				this.optimalPath = pathToOrigin(actual,accumulateValue);
+				s = fsolution.apply(pathToOrigin(actual,accumulateValue));
+				this.solutions.add(s);
 				this.stop = true;
 				break;
 			case Min:
 			case Max:
-				if (this.bestValue == null || this.comparator.compare(accumulateValue, this.bestValue) < 0) {
-					this.bestValue = accumulateValue;
-				}
 			}
 		}
 	}
@@ -135,7 +98,7 @@ public class PDR<V, E, S> {
 		iniciaGraph();
 		this.solutionsTree = new HashMap<>();
 		Sp<E> r = search(graph.startVertex(),0., null);	
-		if(r == null && this.optimalPath !=null) return Optional.of(this.optimalPath);
+		if(r == null) return Optional.empty();
 		return pathFrom(graph.startVertex());
 	}
 	
@@ -167,7 +130,7 @@ public class PDR<V, E, S> {
 				addGraph(actual, edge);
 			}
 			if (!rs.isEmpty()) {
-				r = rs.stream().filter(s -> s != null).min(this.comparatorEdges).orElse(null);
+				r = rs.stream().filter(s -> s != null).min(this.comparatorSp).orElse(null);
 				if(r != null)
 					this.solutionsTree.put(actual, r);
 			}
@@ -189,7 +152,6 @@ public class PDR<V, E, S> {
 			vertex = Graphs.getOppositeVertex(graph,edge,vertex);
 			edge = this.solutionsTree.get(vertex).edge;	
 		}
-		this.optimalPath = ePath;
 		return Optional.of(ePath);
 	}
 	

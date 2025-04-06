@@ -116,15 +116,15 @@ public class TestVuelos {
 		System.out.printf("Tiempo de Recorrido = %.2f\n",btp.getWeight());
 		System.out.println("__________________");
 		System.out.println("PDR");
-		PDR<Pair<String,Integer>,Vuelo,GraphPath<String,Vuelo>> pd = PDR.of(gv,null,null,null,true);
+		PDR<Pair<String,Integer>,Vuelo,GraphPath<String,Vuelo>> pd = PDR.of(gv,null,true);
 		
 		GraphPath<Pair<String,Integer>,Vuelo> pdp = pd.search().orElse(null);
 		System.out.printf("Aeropuertos = %s\n",pdp.getVertexList());
 		System.out.printf("Recorrido = %s\n",vuelos(pdp.getEdgeList()));
 		System.out.printf("Tiempo de Recorrido = %.2f\n",pdp.getWeight());
 		
-		Predicate<Pair<String,Integer>> pv = v->pd.optimalPath().get().getVertexList().contains(v);
-		Predicate<Vuelo> pe= e->pd.optimalPath().get().getEdgeList().contains(e);
+		Predicate<Pair<String,Integer>> pv = v->pdp.getVertexList().contains(v);
+		Predicate<Vuelo> pe= e->pdp.getEdgeList().contains(e);
 		
 		GraphColors.toDot(pd.outGraph,"ficheros/vuelosPDRGraph.gv",
 				v->String.format("%s",v),

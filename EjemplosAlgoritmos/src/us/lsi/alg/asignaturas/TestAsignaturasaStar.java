@@ -41,7 +41,7 @@ public class TestAsignaturasaStar {
 		System.out.println("___________________");
 
 		PDR<AsignaturasVertice,AsignaturasEdge,SolucionAsignaturas> pd = 
-				PDR.ofGreedy(grafo);
+				PDR.of(grafo);
 
 		
 		GraphPath<AsignaturasVertice, AsignaturasEdge> s2 = pd.search().get();

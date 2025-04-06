@@ -40,7 +40,7 @@ public class TestMonedasPDR {
 
 		if (rr.isSolution(path1)) {
 			System.out.println("1 = " + SolucionMonedas.of(path1));
-			ms1 = PDR.ofGreedy(graph);
+			ms1 = PDR.of(graph);
 		} else {
 			ms1 = PDR.of(graph);
 		}
@@ -68,7 +68,7 @@ public class TestMonedasPDR {
 
 		if (rr.isSolution(path2)) {
 			System.out.println("3 = " + SolucionMonedas.of(path2));
-			ms2 = PDR.ofGreedy(graph);
+			ms2 = PDR.of(graph);
 		}else {
 			ms2 = PDR.of(graph);
 		}

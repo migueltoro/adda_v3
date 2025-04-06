@@ -11,7 +11,6 @@ import org.jgrapht.GraphPath;
 import us.lsi.colors.GraphColors;
 import us.lsi.colors.GraphColors.Color;
 import us.lsi.graphs.alg.PDR;
-import us.lsi.graphs.alg.GreedyOnGraph;
 import us.lsi.graphs.virtual.EGraph;
 import us.lsi.graphs.virtual.EGraph.Type;
 import us.lsi.path.EGraphPath.PathType;
@@ -42,15 +41,15 @@ public class TestPD {
 					.heuristic(ProductosHeuristic::heuristic)
 					.build();
 			
-			GraphPath<VertexProductos, EdgeProductos> path = GreedyOnGraph.of(graph,v->v.greedyEdge()).path();
+//			GraphPath<VertexProductos, EdgeProductos> path = GreedyOnGraph.of(graph,v->v.greedyEdge()).path();
 
 			System.out.println("\n\n#### PI-7 Ej3 Algoritmo PD ####");
 
 			// Algoritmo PD
 			PDR<VertexProductos, EdgeProductos,?> pdr = 
-					PDR.of(graph, null,path.getWeight(), path, true);
+					PDR.of(graph, null, true);
 			
-			pdr.optimalPath = path;
+
 			Optional<GraphPath<VertexProductos, EdgeProductos>> gp = pdr.search();
 			SolucionProductos s_pdr;
 			if (gp.isPresent()) {

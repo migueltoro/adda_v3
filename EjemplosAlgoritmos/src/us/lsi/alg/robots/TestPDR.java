@@ -28,7 +28,7 @@ public class TestPDR {
 				.build();
 		
 		
-		PDR<RobotVertex,RobotEdge,RobotSolution> ms = PDR.of(graph,RobotSolution::of, null, null,true);
+		PDR<RobotVertex,RobotEdge,RobotSolution> ms = PDR.of(graph,RobotSolution::of, true);
 		
 		Long t0 = System.nanoTime();
 		Optional<GraphPath<RobotVertex,RobotEdge>> path = ms.search();

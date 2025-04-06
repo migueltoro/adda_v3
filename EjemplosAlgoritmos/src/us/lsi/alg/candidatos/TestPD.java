@@ -39,7 +39,7 @@ public class TestPD {
 
 			// Algoritmo PD
 			PDR<VertexCandidatos, EdgeCandidatos, SolucionCandidatos> pdr = 
-					PDR.ofGreedy(graph);
+					PDR.of(graph);
 			/*
 			pdr.bestValue = SubconjuntoHeuristic.voraz(start,DatosSubconjunto.getNumSubconjuntos());
 			System.out.println("Best = "+pdr.bestValue);

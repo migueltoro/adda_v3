@@ -25,7 +25,7 @@ public class TestPDR {
 		GraphPath<InvVertex, InvEdge> pgd = gd.path();
 		System.out.println(pgd.getEndVertex().fo());
 	
-		PDR<InvVertex, InvEdge, Object> ms = PDR.of(graph,pgd.getWeight(),pgd);
+		PDR<InvVertex, InvEdge, Object> ms = PDR.of(graph);
 		
 		GraphPath<InvVertex,InvEdge> path = ms.search().get();
 		SolucionInv s = SolucionInv.of(path);

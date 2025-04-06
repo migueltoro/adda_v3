@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.Locale;
 import java.util.stream.Collectors;
 
+import org.jgrapht.GraphPath;
+
 import us.lsi.colors.GraphColors;
 import us.lsi.colors.GraphColors.Color;
 import us.lsi.graphs.alg.PDR;
@@ -33,17 +35,19 @@ public class TestPD {
 			// Algoritmo PD
 			
 			PDR<ProductosVertex, ProductosEdge,?> pdr = 
-					PDR.of(graph,null,null,null,true);
+					PDR.of(graph,null,true);
 //			pdr.bestValue = ProductosHeuristic.entero(start,DatosProductos.NUM_PRODUCTOS);
-			List<Integer> gp_pdr = pdr.search().get().getEdgeList().stream().map(x -> x.action())
+			GraphPath<ProductosVertex, ProductosEdge> r = pdr.search().get();
+			List<Integer> gp_pdr = r.getEdgeList().stream().map(x -> x.action())
 					.collect(Collectors.toList()); // getEdgeList();
+			
 			SolucionProductos s_pdr = SolucionProductos.of(gp_pdr);
 			System.out.println(s_pdr);
 			GraphColors.toDot(pdr.outGraph,"ficheros/productosPDRGraph.gv",
 					v->v.toGraph(),
 					e->e.action().toString(),
 					v->GraphColors.colorIf(Color.red,v.goal()),
-					e->GraphColors.colorIf(Color.red,pdr.optimalPath().get().getEdgeList().contains(e))
+					e->GraphColors.colorIf(Color.red,r.getEdgeList().contains(e))
 					);
 		}
 	}

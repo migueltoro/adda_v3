@@ -59,9 +59,9 @@ public class TestPD {
 					System.out.println("Sv = "+sv);
 				}
 				if(gpv.isPresent()) 
-					pdr = PDR.of(graph,SolucionSubconjuntos::of,gpv.get().getWeight(),gpv.get(),true);
+					pdr = PDR.of(graph,SolucionSubconjuntos::of,true);
 				else 
-					pdr = PDR.of(graph, null, null, null, true);
+					pdr = PDR.of(graph, null, true);
 				
 				Optional<GraphPath<SubconjuntosVertex, SubconjuntosEdge>> gp = pdr.search();
 				List<SubconjuntosEdge> le = lev;

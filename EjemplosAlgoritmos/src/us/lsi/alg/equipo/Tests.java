@@ -40,9 +40,9 @@ public class Tests {
 	
 	private static void testPDR(EGraph<EquipoVertex, EquipoEdge> grafo) {
 		System.out.println("======================== PDR ======================== ");
-		GraphPath<EquipoVertex, EquipoEdge> gp = GreedyOnGraph.random(grafo).path();
+//		GraphPath<EquipoVertex, EquipoEdge> gp = GreedyOnGraph.random(grafo).path();
 		PDR<EquipoVertex, EquipoEdge, ?> alg_pdr = 
-				PDR.of(grafo,null,gp.getWeight(),gp,false);
+				PDR.of(grafo,null,false);
 		
 		Optional<GraphPath<EquipoVertex, EquipoEdge>> p = alg_pdr.search();
 		System.out.println(EquipoVertex.getSolucion(p.get()));

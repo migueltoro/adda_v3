@@ -51,7 +51,7 @@ public class TestPD {
 
 			// Algoritmo PD
 			PDR<VertexContenedores, EdgeContenedores, ?> pdr = 
-					PDR.ofGreedy(graph);
+					PDR.of(graph);
 
 
 			Optional<GraphPath<VertexContenedores, EdgeContenedores>> gp = pdr.search();

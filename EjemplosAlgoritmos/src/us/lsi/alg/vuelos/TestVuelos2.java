@@ -65,7 +65,7 @@ public class TestVuelos2 {
 		System.out.printf("Tiempo de Recorrido = %.2f\n",btp.getWeight());
 		System.out.println("__________________");
 		System.out.println("PDR");
-		PDR<VirtualVertexMG<String, Vuelo>, VirtualEdgeMG<String, Vuelo>, Object> pd = PDR.of(gv,null,null,null,true);
+		PDR<VirtualVertexMG<String, Vuelo>, VirtualEdgeMG<String, Vuelo>, Object> pd = PDR.of(gv,null,true);
 		
 		GraphPath<String, Vuelo> pdp = 
 				EGraph.pathMG(pd.search().orElse(null),graph);

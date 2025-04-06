@@ -31,7 +31,7 @@ public class TestPD {
 		path = alg_voraz.isSolution(path)? path: null;
 
 		PDR<AlumnosVertex,AlumnosEdge,SolucionAlumnos> alg_pdr = path==null? PDR.of(graph):
-			PDR.of(graph, null, path.getWeight(), path, true);
+			PDR.of(graph, null, true);
 		
 		var res = alg_pdr.search().orElse(null);
 		var outGraph = alg_pdr.outGraph();

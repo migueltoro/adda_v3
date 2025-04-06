@@ -38,8 +38,7 @@ public class TestPDR {
 		PDR<PackVertex, PackEdge,?> ms = PDR.of(
 				graph,
 				null,
-				(double) nc,
-				path,false);	
+				false);	
 		
 		ms.search();
 		System.out.println(String.format("Volumen contenedor = %d,Numero de Objetos = %d",

@@ -14,7 +14,7 @@ import us.lsi.colors.GraphColors;
 import us.lsi.colors.GraphColors.Color;
 import us.lsi.colors.GraphColors.Style;
 import us.lsi.graphs.alg.GreedyOnGraph;
-import us.lsi.graphs.alg.PDRBounded;
+import us.lsi.graphs.alg.PDRB;
 import us.lsi.graphs.virtual.EGraph;
 import us.lsi.graphs.virtual.EGraph.Type;
 import us.lsi.mochila.datos.DatosMochila;
@@ -43,8 +43,8 @@ public class TestPDRBoundedMochila {
 		
 		System.out.println("1 = "+bv);
 		
-		PDRBounded<MochilaVertex, MochilaEdge, SolucionMochila> ms = 
-				PDRBounded.of(graph,null,bv,path,true);
+		PDRB<MochilaVertex, MochilaEdge, SolucionMochila> ms = 
+				PDRB.of(graph,null,bv,path,true);
 		
 		
 		Optional<GraphPath<MochilaVertex, MochilaEdge>>  sp = ms.search();

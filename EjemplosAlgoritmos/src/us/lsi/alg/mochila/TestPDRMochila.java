@@ -46,7 +46,7 @@ public class TestPDRMochila {
 		System.out.println("1 = "+bv);
 		
 		PDR<MochilaVertex, MochilaEdge, SolucionMochila> ms = 
-				PDR.of(graph,null,bv,path,true);
+				PDR.of(graph,null,true);
 		
 		
 		Optional<GraphPath<MochilaVertex, MochilaEdge>>  sp = ms.search();
@@ -54,8 +54,8 @@ public class TestPDRMochila {
 		SolucionMochila s = MochilaVertex.getSolucion(s1);
 		System.out.println(s);
 		
-		Predicate<MochilaVertex> pv = v->ms.optimalPath().get().getVertexList().contains(v);
-		Predicate<MochilaEdge> pe= e->ms.optimalPath().get().getEdgeList().contains(e);
+		Predicate<MochilaVertex> pv = v->s1.getVertexList().contains(v);
+		Predicate<MochilaEdge> pe= e->s1.getEdgeList().contains(e);
 		
 		GraphColors.toDot(ms.outGraph,"ficheros/MochilaPDRGraph.gv",
 				v->String.format("(%d,%d)",v.index(),v.capacidadRestante()),

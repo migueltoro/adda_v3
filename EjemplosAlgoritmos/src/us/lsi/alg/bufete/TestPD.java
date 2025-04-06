@@ -50,7 +50,7 @@ public class TestPD {
 			PDR<BufeteVertex, BufeteEdge, SolucionBufete> pdr = 
 					PDR.of(graph,
 					SolucionBufete::of,
-					bv,path,false);
+					false);
 
 			Optional<GraphPath<BufeteVertex, BufeteEdge>> gp_pdr = pdr.search(); // getEdgeList();
 			if (gp_pdr.isPresent()) {

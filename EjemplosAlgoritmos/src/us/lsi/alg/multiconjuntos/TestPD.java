@@ -54,10 +54,10 @@ public class TestPD {
 			System.out.println("Voraz = "+r.getWeight()+"  == "+SolucionMulticonjunto.of(r));
 			
 			PDR<MulticonjuntoVertex, MulticonjuntoEdge, ?> pdr = PDR
-					.of(graph, null,null, null, true);
+					.of(graph, null, true);
 
 			if (rr.isSolution(r)) {
-				pdr = PDR.of(graph, null,r.getWeight(), r, true);
+				pdr = PDR.of(graph, null, true);
 			}
 			
 			
