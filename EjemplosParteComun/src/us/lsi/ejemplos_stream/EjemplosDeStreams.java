@@ -27,6 +27,7 @@ import us.lsi.streams.Stream2;
 * @author Miguel Toro
 */
 
+
 public class EjemplosDeStreams {
 
 	/**
