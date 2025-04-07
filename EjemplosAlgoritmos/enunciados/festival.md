@@ -31,4 +31,4 @@ $\sum_i x_{ij} \leq A_j, j \in [0,m)$
 
 $\sum_j x_{ij}  \geq Q_i, i \in [0,n)$
 
-$int x_{ij},  i \in [0,n), j  \n [0,m)$
+$int \ x_{ij},  i \in [0,n),\ j \in [0,m)$
