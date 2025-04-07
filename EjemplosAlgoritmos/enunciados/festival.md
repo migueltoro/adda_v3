@@ -10,7 +10,7 @@ Datos de entrada:
 
 Variables de decisión:
 
-- <i>$x_{ij}</i>​: cantidad de entradas del tipo <i>i</i> asignadas al área <i>j</i>. 
+- <i>$x_{ij}</i>​: cantidad de entradas del tipo <i>i</i> asignadas al área <i>j$</i>. 
 
 Restricciones:
 
@@ -26,6 +26,9 @@ $\min \sum_i \sum_j C_{ij} x_{ij}$
 Modelo AG: cromosoma Range linealizado
 
 $\min \sum_i \sum_j C_{ij} x_{ij}$
+
 $\sum_i x_{ij} \leq A_j, j \in [0,m)$
+
 $\sum_j x_{ij}  \geq Q_i, i \in [0,n)$
+
 $int x_{ij},  i \in [0,n), j  \n [0,m)$
