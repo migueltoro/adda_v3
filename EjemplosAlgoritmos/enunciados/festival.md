@@ -25,10 +25,7 @@ $\min \sum_i \sum_j C_{ij} x_{ij}$
 
 Modelo AG: cromosoma Range linealizado
 
-$\min \sum_i \sum_j C_{ij} x_{ij}$
-
-$\sum_i x_{ij} \leq A_j, j \in [0,m)$
-
-$\sum_j x_{ij}  \geq Q_i, i \in [0,n)$
-
+$\min \sum_i \sum_j C_{ij} x_{ij}$  
+$\sum_i x_{ij} \leq A_j, j \in [0,m)$  
+$\sum_j x_{ij}  \geq Q_i, i \in [0,n)$  
 $int \ x_{ij},  i \in [0,n),\ j \in [0,m)$
