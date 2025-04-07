@@ -1,0 +1,10 @@
+//AREAS
+A0: aforo_maximo=100;
+A1: aforo_maximo=30;
+A2: aforo_maximo=30;
+A3: aforo_maximo=50;
+
+//TIPOS DE ENTRADA Id_entrada -> cuota_minima=integer; coste_asignacion=(área:coste) T0:General, T1:VIP, T2:Premium
+T0 -> cuota_minima=100; coste_asignacion=(0:5),(1:15),(2:15),(3:18);
+T1 -> cuota_minima=20; coste_asignacion=(0:65),(1:65),(2:30),(3:30);
+T2 -> cuota_minima=10; coste_asignacion=(0:60),(1:50),(2:50),(3:40);
