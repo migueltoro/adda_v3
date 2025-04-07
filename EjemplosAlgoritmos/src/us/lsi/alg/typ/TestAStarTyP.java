@@ -37,7 +37,7 @@ public class TestAStarTyP {
 		Double bv = pp.getWeight();
 		System.out.println(bv);
 		
-		
+		Long p1 = System.nanoTime();
 		AStar<TyPVertex,SimpleEdgeAction<TyPVertex, Integer>,SolucionTyP> ms = AStar.ofGreedy(graph);
 		
 //		ms.stream().forEach(v->System.out.println(v));
@@ -45,8 +45,10 @@ public class TestAStarTyP {
 		Optional<GraphPath<TyPVertex, SimpleEdgeAction<TyPVertex, Integer>>> path = ms.search();
 //		List<MochilaEdge> edges = path.getEdgeList();
 //		System.out.println(path);
+		Long p2 = System.nanoTime();
 		SolucionTyP s = SolucionTyP.of(path.get());
 		System.out.println(s);
+		System.out.println(p2-p1);
 		
 		GraphColors.toDot(ms.outGraph(),"ficheros/TyPAStar.gv",
 				v->String.format("(%d,%.1f)",v.index(),v.maxCarga()),

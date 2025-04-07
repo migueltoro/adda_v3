@@ -35,12 +35,14 @@ public class TestBTTyP {
 		Double bv = path.getWeight();
 		System.out.println(bv);
 		
-		BT<TyPVertex, SimpleEdgeAction<TyPVertex, Integer>, SolucionTyP> ms = BT.ofGreedy(
-						graph);		
+		Long p1 = System.nanoTime();
+		BT<TyPVertex, SimpleEdgeAction<TyPVertex, Integer>, SolucionTyP> ms = BT.ofGreedy(graph);		
 		
 		Optional<GraphPath<TyPVertex, SimpleEdgeAction<TyPVertex, Integer>>> gp = ms.search();
-
+		Long p2 = System.nanoTime();
+		
 		System.out.println(SolucionTyP.of(gp.get()));
+		System.out.println(p2-p1);
 		
 //		GraphPath<TyPVertex, SimpleEdgeAction<TyPVertex, Integer>> sp = ms.optimalPath().get();
 //		GraphColors.toDot(ms.outGraph(),"ficheros/TyPBT.gv",
