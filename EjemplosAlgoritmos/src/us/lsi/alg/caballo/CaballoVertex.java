@@ -2,6 +2,8 @@ package us.lsi.alg.caballo;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import us.lsi.common.IntPair;
 import us.lsi.graphs.virtual.VirtualVertex;
 
 public record CaballoVertex(Integer row, Integer col) 
@@ -19,14 +21,14 @@ public record CaballoVertex(Integer row, Integer col)
 		return new CaballoVertex(0, 0);
 	}
     
-    public static Integer n = 4;
+    public static Integer n = 6; // tamaño del tablero de ajedrez, 7x7;
 
     @Override
     public List<CaballoAction> actions() {
         List<CaballoAction> moves = new ArrayList<>();
         for (CaballoAction move : CaballoAction.values()) {
             CaballoVertex nextPos = move.move(this);
-            if (isValidPosition(nextPos)) {
+            if (nextPos.isValid()) {
                 moves.add(move);
             }
         }
@@ -45,18 +47,13 @@ public record CaballoVertex(Integer row, Integer col)
     }
 
     @Override
-    public Boolean goal() {
-        return false; // No specific goal, we want to visit all positions
+    public Boolean isValid() {
+        return this.row >= 0 && this.row < CaballoVertex.n && this.col >= 0 && this.col < CaballoVertex.n;
     }
-
-    @Override
-    public Boolean goalHasSolution() {
-        return true; // Not used in this context
-    }
-
-    private boolean isValidPosition(CaballoVertex pos) {
-        return pos.row >= 0 && pos.row < 8 && pos.col >= 0 && pos.col < 8;
-    }
+    
+	public IntPair position() {
+		return IntPair.of(row, col);
+	}
 
     @Override
     public String toString() {

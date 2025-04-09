@@ -45,9 +45,8 @@ public class CaballoBT {
 	
 	public static void main(String[] args) {
 		CaballoBT.of().btm(CaballoVertex.initial0());
-		System.out.println(CaballoBT.solution.vertices());
-		System.out.println(CaballoBT.solution.order());
 		System.out.println(CaballoBT.solution);
+		System.out.println(CaballoBT.solution.position(1, 1));
 	}
 
 }

@@ -54,7 +54,7 @@ public class CaballoState {
 		}
   
 		public static void main(String[] args) {
-			CaballoState st = CaballoState.of(CaballoVertex.initial0());
+			CaballoState st = CaballoState.of(CaballoVertex.initial(2,2));
 			System.out.println(st.vertices());
 			st.forward(CaballoAction.DOWN_RIGHT);
 			System.out.println(st.vertices());
