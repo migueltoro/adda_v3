@@ -24,13 +24,17 @@ import us.lsi.graphs.virtual.EGraph.Type;
 import us.lsi.path.EGraphPath;
 
 public class BT<V,E,S> {
+	
+	public static <V, E, S> BT<V, E, S> ofGreedy(EGraph<V, E> graph){
+		return BT.ofGreedy(graph, false);
+	}
 
 	public static <V, E, S> BT<V, E, S> ofGreedy(
-			EGraph<V, E> graph) {
+			EGraph<V, E> graph,Boolean withGraph) {
 		GreedyOnGraph<V, E> ga = GreedyOnGraph.of(graph);
 		Optional<GraphPath<V, E>> gp = ga.search();
 		if(gp.isPresent()) return BT.of(graph,null,gp.get().getWeight(),gp.get(),false);
-		else return BT.of(graph, null, null, null, false);
+		else return BT.of(graph, null, null, null, withGraph);
 	}
 	
 	public static <V, E, S> BT<V, E, S> of(

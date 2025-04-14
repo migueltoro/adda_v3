@@ -9,13 +9,13 @@ import org.jgrapht.GraphPath;
 
 import us.lsi.colors.GraphColors;
 import us.lsi.colors.GraphColors.Color;
-import us.lsi.graphs.alg.PDR;
+import us.lsi.graphs.alg.PDRB;
 import us.lsi.graphs.alg.GreedyOnGraph;
 import us.lsi.graphs.virtual.EGraph;
 import us.lsi.graphs.virtual.EGraph.Type;
 import us.lsi.path.EGraphPath.PathType;
 
-public class TestPD {
+public class TestPD3 {
 
 	public static void main(String[] args) {
 
@@ -54,8 +54,8 @@ public class TestPD {
 			
 			System.out.println("Voraz = "+r.getWeight()+"  == "+SolucionMulticonjunto.of(r));
 			
-			PDR<MulticonjuntoVertex, MulticonjuntoEdge, ?> pdr = PDR.of(graph,null,true);
-						
+			PDRB<MulticonjuntoVertex, MulticonjuntoEdge, ?> pdr = PDRB.ofGreedy(graph,true);
+			
 			Optional<GraphPath<MulticonjuntoVertex, MulticonjuntoEdge>> gp = pdr.search();
 			
 			SolucionMulticonjunto s_pdr = null;
@@ -68,17 +68,17 @@ public class TestPD {
 
 			} 
 			
-			
 			System.out.println(s_pdr);
 			
 			
-			GraphColors.toDot(pdr.outGraph, "ficheros_generados/p4/ejemplo1/multiconjuntosPDRGraph.gv", 
-					v -> String.format("(%d,%d)", v.indice(), v.sumaRestante()),
-					e -> e.action().toString(), 
+			GraphColors.toDot(pdr.outGraph, "ficheros_generados/p4/ejemplo1/multiconjuntosPDRGraph.gv",
+					v -> String.format("(%d,%d)", v.indice(), v.sumaRestante()), e -> e.action().toString(),
 					v -> GraphColors.colorIf(Color.red, v.goal()),
-					e -> GraphColors.colorIf(Color.red, gp.isPresent()?gp.get().getEdgeList().contains(e):false));
+					e -> GraphColors.colorIf(Color.red, gp.isPresent() ? gp.get().getEdgeList().contains(e) : false));
 
 		}
 	}
 }
+
+
 

@@ -26,10 +26,14 @@ import org.jgrapht.graph.SimpleDirectedGraph;
 public class PDRB<V, E, S> {
 	
 	public static <V, E, S> PDRB<V, E, S> ofGreedy(EGraph<V, E> graph) {
+		return PDRB.ofGreedy(graph,false);
+	}
+	
+	public static <V, E, S> PDRB<V, E, S> ofGreedy(EGraph<V, E> graph,Boolean withGraph) {
 		GreedyOnGraph<V, E> ga = GreedyOnGraph.of(graph);
 		Optional<GraphPath<V, E>> gp = ga.search();
-		if(gp.isPresent()) return PDRB.of(graph,null,gp.get().getWeight(),gp.get(),false);
-		else return PDRB.of(graph,null,null,null,false);
+		if(gp.isPresent()) return PDRB.of(graph,null,gp.get().getWeight(),gp.get(),withGraph);
+		else return PDRB.of(graph,null,null,null,withGraph);
 	}
 	
 	public static <V, E, S> PDRB<V, E, S> of(EGraph<V, E> graph) {
