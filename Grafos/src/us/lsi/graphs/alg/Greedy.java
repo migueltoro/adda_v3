@@ -8,6 +8,7 @@ import java.util.stream.Stream;
 
 import us.lsi.streams.Stream2;
 
+
 public class Greedy<E> implements  Iterator<E>, Iterable<E> {
 	
 	public static <E> Greedy<E> of(E start, UnaryOperator<E> next, Predicate<E> goal) {
