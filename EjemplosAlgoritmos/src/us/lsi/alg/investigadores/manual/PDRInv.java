@@ -29,7 +29,6 @@ public static record Spm(Integer a,Integer weight) implements Comparable<Spm> {
 		return new PDRInv();
 	}
 	
-	private Integer maxValue;
 	private SolucionInv solucion;
 	private InvVertex start;
 	private Map<InvVertex,Spm> memory;
@@ -43,10 +42,8 @@ public static record Spm(Integer a,Integer weight) implements Comparable<Spm> {
 		return time;
 	}
 	
-	public void  pdr(InvVertex vertex,Integer maxValue, SolucionInv s) {
+	public void  pdr(InvVertex vertex) {
 		this.time = System.nanoTime();
-		this.maxValue = maxValue;
-		this.solucion = s;
 		this.start = vertex;
 		this.memory = new HashMap<>();
 		pdr(start,memory);
@@ -64,25 +61,17 @@ public static record Spm(Integer a,Integer weight) implements Comparable<Spm> {
 			else
 				r = null;
 			memory.put(vertex, r);
-			Integer accumulateValue = vertex.fo();
-			if (this.maxValue == null || accumulateValue < this.maxValue)
-				this.maxValue = accumulateValue;
 		} else {
 			List<Spm> soluciones = new ArrayList<>();
 			for (Integer a : vertex.actions()) {
-				Integer cota = vertex.neighbor(a).fo();
-				if (this.maxValue != null && cota <= this.maxValue)
-					continue;
 				Spm s = pdr(vertex.neighbor(a), memory);
 				if (s != null) {
 					Spm sp = Spm.of(a, s.weight());
 					soluciones.add(sp);
 				}
 			}
-			if (!soluciones.isEmpty()) {
-				r = soluciones.stream().min(Comparator.naturalOrder()).orElse(null);
-				memory.put(vertex, r);
-			}
+			r = soluciones.stream().min(Comparator.naturalOrder()).orElse(null);
+			memory.put(vertex, r);
 		}
 		return r;
 	}
@@ -108,7 +97,7 @@ public static record Spm(Integer a,Integer weight) implements Comparable<Spm> {
 		
 		SolucionInv sv = GreedyInv.solucionVoraz(InvVertex.first());
 		System.out.println(sv);
-		a.pdr(InvVertex.first(),sv.fo(),sv);
+		a.pdr(InvVertex.first());
 		System.out.println("PDR = "+ a.solucion());
 		System.out.println(a.time());
 //		a.pdr(InvVertex.first(),null,null);

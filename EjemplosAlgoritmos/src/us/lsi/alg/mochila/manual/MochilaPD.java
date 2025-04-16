@@ -29,7 +29,6 @@ public class MochilaPD {
 		return new MochilaPD();
 	}
 	
-	private Integer maxValue;
 	private MochilaVertexI start;
 	private Map<MochilaVertexI,Spm> memory;
 	private SolucionMochila solucion;
@@ -43,11 +42,9 @@ public class MochilaPD {
 		return time;
 	}
 	
-	public SolucionMochila pd(Integer initialCapacity, Integer maxValue, SolucionMochila s) {
+	public SolucionMochila pd(Integer initialCapacity) {
 		this.time = System.nanoTime();
-		this.maxValue = maxValue;
 		this.start = MochilaVertexI.of(0,initialCapacity);
-		this.solucion = s;
 		this.memory = new HashMap<>();
 		pd(start,0,memory);
 		SolucionMochila r = this.solucion();
@@ -62,22 +59,17 @@ public class MochilaPD {
 		} else if(vertex.index() == DatosMochila.n) {
 			r = Spm.of(null,0);
 			memory.put(vertex,r);
-			if(accumulateValue > this.maxValue) this.maxValue = accumulateValue;
 		} else {
 			List<Spm> soluciones = new ArrayList<>();
-			for(Integer a:vertex.actions()) {	
-				Double cota = accumulateValue + Heuristica.cota(vertex,a);
-				if(cota <= this.maxValue) continue;				
-				Spm s = pd(vertex.neighbor(a),accumulateValue+a*DatosMochila.getValor(vertex.index()),memory);
-				if(s!=null) {
-					Spm sp = Spm.of(a,s.weight()+a*DatosMochila.getValor(vertex.index()));
+			for (Integer a : vertex.actions()) {
+				Spm s = pd(vertex.neighbor(a), accumulateValue + a * DatosMochila.getValor(vertex.index()), memory);
+				if (s != null) {
+					Spm sp = Spm.of(a, s.weight() + a * DatosMochila.getValor(vertex.index()));
 					soluciones.add(sp);
 				}
 			}
-			if (!soluciones.isEmpty()) {
-				r = soluciones.stream().max(Comparator.naturalOrder()).orElse(null);
-				memory.put(vertex, r);
-			}
+			r = soluciones.stream().max(Comparator.naturalOrder()).orElse(null);
+			memory.put(vertex, r);
 		}
 		return r;
 	}
@@ -101,10 +93,9 @@ public class MochilaPD {
 		DatosMochila.capacidadInicial = 78;
 		MochilaVertexI v1 = MochilaVertexI.of(0, DatosMochila.capacidadInicial);
 		SolucionMochila s = Heuristica.solucionVoraz(v1);	
+		System.out.println("Voraz " + "=== "+  s);	
 		MochilaPD a = MochilaPD.of();
-		a.pd(DatosMochila.capacidadInicial,Integer.MIN_VALUE,null);	
-		System.out.println(a.time + " === "+  a.solucion());	
-		a.pd(78,s.valor(),s);	
+		a.pd(DatosMochila.capacidadInicial);	
 		System.out.println(a.time + " === "+  a.solucion());	
 	}
 

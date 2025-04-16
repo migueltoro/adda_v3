@@ -3,18 +3,18 @@ package us.lsi.alg.cursos.manual;
 import java.util.ArrayList;
 import java.util.List;
 
-import us.lsi.alg.cursos.CursosVertexI;
+import us.lsi.alg.cursos.CursosVertex;
 import us.lsi.alg.cursos.DatosCursos;
 
 public class StateCursos {
 	
-	private CursosVertexI vertice;
+	private CursosVertex vertice;
 	private Double valorAcumulado;
 	private List<Integer> acciones;
-	private List<CursosVertexI> vertices;
+	private List<CursosVertex> vertices;
 
-	private StateCursos(CursosVertexI vertice, Double valorAcumulado, List<Integer> acciones,
-			List<CursosVertexI> vertices) {
+	private StateCursos(CursosVertex vertice, Double valorAcumulado, List<Integer> acciones,
+			List<CursosVertex> vertices) {
 		super();
 		this.vertice = vertice;
 		this.valorAcumulado = valorAcumulado;
@@ -22,15 +22,15 @@ public class StateCursos {
 		this.vertices = vertices;
 	}
 
-	public static StateCursos of(CursosVertexI vertex) {
-		List<CursosVertexI> vt = new ArrayList<>();
+	public static StateCursos of(CursosVertex vertex) {
+		List<CursosVertex> vt = new ArrayList<>();
 		vt.add(vertex);
 		return new StateCursos(vertex, 0., new ArrayList<>(), vt);
 	}
 
 	void forward(Integer a) {
 		this.acciones.add(a);
-		CursosVertexI vcn = this.vertice().neighbor(a);
+		CursosVertex vcn = this.vertice().neighbor(a);
 		this.vertices.add(vcn);
 		this.valorAcumulado = this.valorAcumulado() + a*DatosCursos.getCoste(this.vertice.index());
 		this.vertice = vcn;
@@ -43,7 +43,7 @@ public class StateCursos {
 		this.valorAcumulado = this.valorAcumulado() - a*DatosCursos.getCoste(this.vertice.index());
 	}
 
-	public CursosVertexI vertice() {
+	public CursosVertex vertice() {
 		return vertice;
 	}
 

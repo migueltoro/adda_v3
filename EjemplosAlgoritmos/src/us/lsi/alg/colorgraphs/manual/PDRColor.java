@@ -28,7 +28,7 @@ public class PDRColor {
 		return new PDRColor();
 	}
 	
-	private Integer minValue;
+
 	private SolucionColor solucion;
 	private ColorVertex start;
 	private Map<ColorVertex,Spm> memory;
@@ -42,10 +42,9 @@ public class PDRColor {
 		return time;
 	}
 	
-	public void  pdr(ColorVertex vertex,Integer minValue, SolucionColor s) {
+	public void  pdr(ColorVertex vertex) {
 		this.time = System.nanoTime();
-		this.minValue = minValue;
-		this.solucion = s;
+//		this.solucion = s;
 		this.start = vertex;
 		this.memory = new HashMap<>();
 		pdr(start,memory);
@@ -59,23 +58,17 @@ public class PDRColor {
 		} else if(vertex.index() == DatosColor.n) {
 			r = Spm.of(null,vertex.nc());
 			memory.put(vertex,r);
-			Integer accumulateValue = vertex.nc();
-			if(this.minValue == null || accumulateValue > this.minValue) this.minValue = accumulateValue;
 		} else {
 			List<Spm> soluciones = new ArrayList<>();
-			for(Integer a:vertex.actions()) {	
-				Integer cota = vertex.neighbor(a).nc();
-				if(this.minValue!= null && cota >= this.minValue) continue;				
-				Spm s = pdr(vertex.neighbor(a),memory);
-				if(s!=null) {
-					Spm sp = Spm.of(a,s.weight());
+			for (Integer a : vertex.actions()) {
+				Spm s = pdr(vertex.neighbor(a), memory);
+				if (s != null) {
+					Spm sp = Spm.of(a, s.weight());
 					soluciones.add(sp);
 				}
 			}
-			if(!soluciones.isEmpty()) {
-				r = soluciones.stream().min(Comparator.naturalOrder()).orElse(null);
-			 	memory.put(vertex,r);
-			}
+			r = soluciones.stream().min(Comparator.naturalOrder()).orElse(null);
+			memory.put(vertex, r);
 		}
 		return r;
 	}
@@ -95,16 +88,16 @@ public class PDRColor {
 
 	public static void main(String[] args) {
 		
-		DatosColor.data(4,"ficheros/andalucia.txt");
+		DatosColor.data(4,"ficheros/andalucia/andalucia.txt");
 		
 		PDRColor a = PDRColor.of();
 		
 		SolucionColor sv = GreedyColor.solucionVoraz(ColorVertex.first());
 		
-		a.pdr(ColorVertex.first(),sv.nc(),sv);
-		System.out.println(a.time());
-		a.pdr(ColorVertex.first(),null,null);
-		System.out.println(a.time());
+		System.out.println("Voraz = "+ sv);
+		
+		a.pdr(ColorVertex.first());
+		
 		System.out.println("PDR = "+ a.solucion());
 	}
 
