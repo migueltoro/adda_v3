@@ -27,7 +27,6 @@ public class TestBTTyP {
 				.vertexWeight(v->v.maxCarga())
 				.heuristic(Heuristica::heuristic)
 				.build();
-				
 			
 		GreedyOnGraph<TyPVertex, SimpleEdgeAction<TyPVertex,Integer>> rr = GreedyOnGraph.of(graph);
 		
