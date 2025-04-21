@@ -16,8 +16,7 @@ public class TestBT {
 		System.out.println(m);
 		Ciudad c1 = m.ciudad("Sevilla");
 		Ciudad c2 = m.ciudad("Malaga");
-		GraphPath<Ciudad, Carretera> pbt = 
-				Backtracking.backtracking(c1,x->x.equals(c2),m,(x,y)->0.);
+		GraphPath<Ciudad, Carretera> pbt = Backtracking.backtracking(c1,x->x.equals(c2),m,x->0.);
 		System.out.println("Weight = "+pbt.weight());
 		System.out.println("MinPath "+pbt.vertices());
 	}

@@ -3,10 +3,13 @@ package us.lsi.graphs.manual.recorridos;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.function.BiFunction;
+import java.util.Set;
 import java.util.function.Predicate;
+
+import us.lsi.common.TriFunction;
 import us.lsi.graphs.manual.GraphPath;
 import us.lsi.graphs.manual.VirtualGraph;
 
@@ -42,49 +45,49 @@ public class DynamicProgramming<V, E> {
 		}	
 	}
 	
-	public static <V, E> GraphPath<V, E> dynamicProgrammingR(V start, Predicate<V> end, VirtualGraph<V, E> graph,
-			BiFunction<GlobalValues<V, E>,V, Double> heuristica) {
+	public static <V, E> GraphPath<V, E> dynamicProgrammingR(V start, Predicate<V> end, 
+			VirtualGraph<V, E> graph,
+			TriFunction<V,Predicate<V>,V, Double> heuristica) {
 		return dynamicProgrammingR(start, end, graph, heuristica, (x,y)->x.compareTo(y));
 	}
 	
-	public static <V, E> GraphPath<V, E> dynamicProgrammingR(V start, Predicate<V> end, 
-			VirtualGraph<V, E> graph,
-			BiFunction<GlobalValues<V, E>,V, Double> heuristica, Comparator<Double> cmp) {
+	public static <V, E> GraphPath<V, E> dynamicProgrammingR(V start, Predicate<V> goal, 
+			VirtualGraph<V, E> graph,TriFunction<V,Predicate<V>,V, Double> heuristica, 
+			Comparator<Double> cmp) {
 		Sp.comp = cmp;
-		State<V, E> state = State.of(start, 0.);
-		GlobalValues<V, E> global = GlobalValues.of(cmp,end,graph,heuristica);
-		Map<V,Sp<E>> memory = new HashMap<>();;
-		dynamicProgrammingR(state,global,memory);
+		Map<V,Sp<E>> memory = new HashMap<>();
+		Set<V> path = new HashSet<>();
+		path.add(start);
+		dynamicProgrammingR(start,goal,graph,heuristica,cmp,memory,path);
 		return path(memory,start,graph);
 	}
 
-	private static <V, E> Sp<E> dynamicProgrammingR(State<V, E> state, GlobalValues<V, E> global,Map<V, Sp<E>> memory) {
-		V actualVertex = state.vertex();
+	private static <V, E> Sp<E> dynamicProgrammingR(V actualVertex, Predicate<V> goal, 
+			VirtualGraph<V, E> graph,
+			TriFunction<V,Predicate<V>,V, Double> heuristica, Comparator<Double> cmp,
+			Map<V, Sp<E>> memory,Set<V> path) {
 		Sp<E> r = null;
-		if (global.end.test(actualVertex)) {
-			global.update(state.path(), state.accValue());
+		if (goal.test(actualVertex)) {
 			r = Sp.of(null, 0.);
 			memory.put(actualVertex, r);
 		} else if (memory.containsKey(actualVertex)) {
 			r = memory.get(actualVertex);
 		} else {
 			List<Sp<E>> spChildren = new ArrayList<>();
-			for (V v : global.graph.neighbors(state.vertex())) {
-				E edge = global.graph.edge(actualVertex, v);
-				Double edgeWeight = global.graph.edgeWeight(actualVertex, v);
-				if (state.contains(v) || global.filter(v, state.accValue(), edgeWeight, global.bestValue)) continue;
-				state.add(v, edge, edgeWeight);
-				Sp<E> spc = dynamicProgrammingR(state, global, memory);
-				state.remove();
+			for (V v : graph.neighbors(actualVertex)) {
+				if (path.contains(v)) continue;
+				Double edgeWeight = graph.edgeWeight(actualVertex, v);
+				path.add(v);
+				Sp<E> spc = dynamicProgrammingR(v,goal,graph,heuristica,cmp, memory,path);
+				path.remove(v);
+				E edge = graph.edge(actualVertex, v);
 				if (spc != null) {
 					Sp<E> sp = Sp.of(edge, spc.weight() + edgeWeight);
 					spChildren.add(sp);
 				}
 			}
-			if (!spChildren.isEmpty()) {
-				r = spChildren.stream().min(Comparator.naturalOrder()).get();
-				memory.put(actualVertex, r);
-			}
+			r = spChildren.stream().min(Comparator.naturalOrder()).orElse(null);
+			memory.put(actualVertex, r);
 		}
 		return r;
 	}

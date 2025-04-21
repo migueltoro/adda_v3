@@ -2,40 +2,46 @@ package us.lsi.graphs.manual.recorridos;
 
 
 import java.util.Comparator;
-import java.util.function.BiFunction;
+import java.util.function.Function;
 import java.util.function.Predicate;
-
 import us.lsi.graphs.manual.GraphPath;
 import us.lsi.graphs.manual.VirtualGraph;
 
 public class Backtracking {
 	
-	public static <V, E> GraphPath<V, E> backtracking(V start, Predicate<V> end, VirtualGraph<V, E> graph,
-			BiFunction<GlobalValues<V, E>,V, Double> heuristica) {
-		return backtracking(start, end, graph, heuristica, (x,y)->x.compareTo(y));
+	public static <V, E> GraphPath<V, E> backtracking(V start, Predicate<V> goal, 
+			VirtualGraph<V, E> graph,
+			Function<V, Double> heuristica) {
+		return backtracking(start,goal,graph,heuristica,(x,y)->x.compareTo(y));
 	}
 	
-	public static <V, E> GraphPath<V, E> backtracking(V start, Predicate<V> end, VirtualGraph<V, E> graph,
-			BiFunction<GlobalValues<V, E>,V, Double> heuristica, Comparator<Double> cmp) {
+	public static <V, E> GraphPath<V, E> backtracking(V start, 
+			Predicate<V> goal, VirtualGraph<V, E> graph,
+			Function<V, Double> heuristica,Comparator<Double> cmp) {
 		State<V, E> state = State.of(start, 0.);
-		GlobalValues<V, E> global = GlobalValues.of(cmp,end,graph,heuristica);
-		backtracking(state, global);
-		return global.bestPath;
+		state.goal = goal;
+		state.graph = graph;
+		state.heuristica = heuristica;
+		state.cmp = cmp;
+		backtracking(state);
+		return state.bestPath;
 	}
 
-	private static <V, E> void backtracking(State<V, E> state, GlobalValues<V, E> global) {
+	private static <V, E> void backtracking(State<V, E> state) {
 		V actualVertex = state.vertex();		
-		if (global.end.test(actualVertex)) {
-			global.update(state.path(),state.accValue());			
+		if (state.goal.test(actualVertex)) {	
+			state.update();
 		} 
-		else for (V v : global.graph.neighbors(state.vertex())) {
-			E edge = global.graph.edge(actualVertex, v);
-			Double value = global.graph.edgeWeight(actualVertex, v);
-			if (state.contains(v) || global.filter(v, state.accValue(), value, global.bestValue)) continue;
+		else for (V v : state.graph.neighbors(state.vertex())) {
+			E edge = state.graph.edge(actualVertex, v);
+			Double value = state.graph.edgeWeight(actualVertex, v);
+			if (state.contains(v) || state.filter(v, value)) continue;
 			state.add(v, edge, value);
-			backtracking(state, global);
+			backtracking(state);
 			state.remove();
 		}
 	}
+	
+	
 
 }

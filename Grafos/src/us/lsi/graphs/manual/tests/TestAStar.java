@@ -21,7 +21,6 @@ public class TestAStar {
 		System.out.println("AStar = "+roa.path());
 		System.out.println(roa.pathFromOrigin(c2));
 		System.out.println(roa.pathWeight(c2));	
-
 	}
 
 }

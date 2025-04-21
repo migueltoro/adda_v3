@@ -17,7 +17,7 @@ public class TestPDR {
 		Ciudad c1 = m.ciudad("Sevilla");
 		Ciudad c2 = m.ciudad("Malaga");
 		GraphPath<Ciudad, Carretera> pbt = 
-				DynamicProgramming.dynamicProgrammingR(c1,x->x.equals(c2),m,(x,y)->0.);
+				DynamicProgramming.dynamicProgrammingR(c1,x->x.equals(c2),m,(x,y,z)->0.);	
 		System.out.println("Weight = "+pbt.weight());
 		System.out.println("MinPath "+pbt.vertices());
 	}

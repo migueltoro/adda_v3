@@ -1,11 +1,15 @@
 package us.lsi.graphs.manual.recorridos;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.function.Function;
+import java.util.function.Predicate;
 
 import us.lsi.graphs.manual.GraphPath;
+import us.lsi.graphs.manual.VirtualGraph;
 
 public class State<V, E> {
 
@@ -17,7 +21,15 @@ public class State<V, E> {
 	private Set<V> vertexSet;
 	private List<E> edges;
 	private List<Double> values;
-	private Double accValue;
+	public Double accValue;
+	public Double bestValue;
+	public GraphPath<V,E> bestPath = null;
+	public Comparator<Double> cmp;
+	public Predicate<V> goal;
+	public VirtualGraph<V, E> graph;
+	public Function<V, Double> heuristica;
+	public V endVertex = null;
+	
 
 	private State(V vertex, Double value) {
 		super();
@@ -75,6 +87,22 @@ public class State<V, E> {
 	public GraphPath<V, E> path() {
 		return GraphPath.of(this.vertices, this.edges, this.accValue());
 	}
+	
+	public void update() {
+		Double acumValue = this.accValue();
+		if (this.bestValue ==null || this.cmp.compare(acumValue, this.bestValue) < 0) {
+			this.bestValue = acumValue;
+			this.bestPath = this.path();
+		}
+	}
+	
+	public Boolean filter(V v, Double value) {
+		Boolean r = false;
+		Double acumValue = this.accValue();
+		Double weight = acumValue+value+this.heuristica.apply(v);
+		if(this.bestValue != null && this.cmp.compare(weight, this.bestValue) >= 0 ) r = true;
+		return r;
+	}	
 
 }
 
