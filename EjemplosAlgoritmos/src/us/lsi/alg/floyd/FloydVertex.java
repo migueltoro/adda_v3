@@ -32,7 +32,7 @@ public record FloydVertex(Integer i,Integer j,Integer k)
 	
 	@Override
 	public Boolean isValid() {
-		return 0 <= i && i < n && 0 <= j && j < n && 0<= k && j <= n;
+		return 0 <= i && i < n && 0 <= j && j < n && 0<= k && k <= n;
 	}
 	@Override
 	public List<Boolean> actions() {
