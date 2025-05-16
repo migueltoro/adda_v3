@@ -1,73 +1,40 @@
-# Mochila
-
-El problema de la Mochila parte de una lista de objetos L de tamaño. Cada objeto $ob_i$ de la lista es de la forma $ob_i= (w_i, v_i, m_i)$ dónde  $w_i, v_i, m_i$ son, respectivamente, su peso, su valor unitario y el número de unidades disponibles. La mochila tiene una capacidad $C$.  El problema busca ubicar en la mochila el máximo número unidades de cada objeto, teniendo en cuenta las disponibles, que quepan en la mochila para que el valor de estos sea máximo. 
-
-## Datos
-
-- $w_i$: peso unitario del objeto $i$
-- $v_i$: valor unitario del objeto $i$
-- $m_i$: número de unidades disponibles del objeto $i$
-- $C$: capacidad de la mochila
-- $n$: número de objetos
-
 ## Modelo
 
 $$
 
-\begin{equation}
 f\left(i,j,k\right) =\begin{cases}
 (\bot ,w\left(i,j\right)), & k = n. (i,j)\in g \\
 \bot , & k = n. (i,j)\notin g \\
 \min_{a\in A(i,j,k)\vert g\neq \bot }g\left(i,j,k,a\right), & k<n \\
-\end{cases}
-\end{equation}
+\end{cases} $$
 
-$$
 
-$$
 
-\begin{equation}
-g\left(i,j,k,a\right) =\begin{cases}
+$$ g\left(i,j,k,a\right) =\begin{cases}
 \bot , & f_{w}\left(i,j,k+1\right) = \bot \\
 (N,f_{w}\left(i,j,k+1\right)), & a = F \\
 \bot , & f_{w}\left(i,k,k+1\right) = \bot \vee f_{w}\left(k,j,k+1\right
 (Y,f_{w}\left(i,k,k+1\right)+f_{w}\left(k,j,k+1\right)), & a = T \\
-\end{cases}
-\end{equation}
+\end{cases} $$
 
-$$
-
-$$
-
-\begin{equation}
-A\left(i,j,k\right) =\begin{cases}
+$$ A\left(i,j,k\right) =\begin{cases}
 [F], & i = k\vee j = k \\
 [T,F], & ¬(i = k\vee j = k) \\
-\end{cases}
-\end{equation}
-$$
+\end{cases} $$
 
-$$
-
-\begin{equation}
-s\left(i,j,k\right) =\begin{cases}
+$$ s\left(i,j,k\right) =\begin{cases}
 (i,j), & f_{a}\left(i,j,k\right) = \bot \\
 s(i,j,k+1), & f_{a}\left(i,j,k\right) = F \\
 s\left(i,k,k+1\right)+s\left(k,j,k+1\right), & f_{a}\left(i,j,k\right) =
-\end{cases}
-\end{equation}
-$$
+\end{cases} $$
 
 $$
-
-\begin{equation}
 s\left(i,j,k\right) =
 \begin{cases}(i,j),& f_{a}\left(i,j,k\right) = \bot \\ s(i,j,k+1), & f_{a}\left(i,j,k\right) = \
 s\left(i,k,k+1\right)+s\left(k,j,k+1\right),&f_{a}\left(i,j,k\right) =
 \end
-{cases}
-\end{equation}
-$$
+{cases} $$
+
 ## Grafo
 
 ### Propiedades del vértice
