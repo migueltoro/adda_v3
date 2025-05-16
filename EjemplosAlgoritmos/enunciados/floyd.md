@@ -3,8 +3,8 @@
 $$
 
 f\left(i,j,k\right) =\begin{cases}
-(\bot ,w\left(i,j\right)), & k = n. (i,j)\in g \\
-\bot , & k = n. (i,j)\notin g \\
+(\bot,w\left(i,j\right)), & k = n, (i,j) \in g \\
+\bot, & k = n,  (i,j) \notin g \\
 \min_{a\in A(i,j,k)\vert g\neq \bot }g\left(i,j,k,a\right), & k<n \\
 \end{cases} $$
 
