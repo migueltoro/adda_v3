@@ -23,8 +23,8 @@ $$
 $$
 \begin{equation}
 A\left(i,j,k\right) =\begin{cases}
-[F], & i = k\vee j = k \\
-[T,F], & \not(i = k\vee j = k) \\
+[F], & i = k \vee j = k \\
+[T,F], & \not \left(i = k \vee j = k\right) \\
 \end{cases}
 \end{equation}
 $$
