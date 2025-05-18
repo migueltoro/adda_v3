@@ -1,19 +1,10 @@
-$$
-\begin{equation}
-f\left(i,j,k\right) = \begin{cases}
-(\bot, w\left(i,j\right)), & k = n, (i,j) \in g \\
-\bot, & k = n,  (i,j) \notin g  \\
-\min_{a \in A(i,j,k)} g\left(i,j,k,a\right), & k<n \\
-\end{cases}
-\end{equation}
-$$
 
 $$
 \begin{equation}
 f\left(i,j,k\right) = \begin{cases}
 (\bot, w\left(i,j\right)), & k = n, (i,j) \in g \\
 \bot, & k = n,  (i,j) \notin g  \\
-\min_{a \in A(i,j,k)} g\left(i,j,k,a\right), & k<n \\
+\min_{a \in A(i,j,k)} g\left(i,j,k,a\right), & k \lt n \\
 \end{cases}
 \end{equation}
 $$
