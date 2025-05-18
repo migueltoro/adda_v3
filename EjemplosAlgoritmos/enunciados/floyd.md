@@ -13,7 +13,7 @@ $$
 g\left(i,j,k,a\right) =\begin{cases}
 \bot , & f_{w}\left(i,j,k+1\right) = \bot \\
 (F,f_{w}\left(i,j,k+1\right)), & a = F \\
-\bot , & f_{w}\left(i,k,k+1\right) = \bot \vee f_{w}\left(k,j,k+1\right
+\bot , & f_{w}\left(i,k,k+1\right) = \bot \vee f_{w}\left(k,j,k+1\right = \bot \\
 (T,f_{w}\left(i,k,k+1\right)+f_{w}\left(k,j,k+1\right)), & a = T \\
 \end{cases}
 \end{equation}
