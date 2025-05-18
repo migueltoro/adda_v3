@@ -1,19 +1,19 @@
 $$
 \begin{equation}
-f\left(i,j,k\right) =\begin{cases}
+f\left(i,j,k\right) = \begin{cases}
 (\bot, w\left(i,j\right)), & k = n, (i,j) \in g \\
 \bot, & k = n,  (i,j) \notin g  \\
-\min_{a\in A(i,j,k)\vert g\neq \bot }g\left(i,j,k,a\right), & k<n \\
+\min_{a \in A(i,j,k)} g\left(i,j,k,a\right), & k<n \\
 \end{cases}
 \end{equation}
 $$
 
 $$
 \begin{equation}
-g\left(i,j,k,a\right) =\begin{cases}
+g\left(i,j,k,a\right) = \begin{cases}
 \bot , & f_{w}\left(i,j,k+1\right) = \bot \\
 (F,f_{w}\left(i,j,k+1\right)), & a = F \\
-\bot , & f_{w}\left(i,k,k+1\right) = \bot \vee f_{w}\left(k,j,k+1\right = \bot \\
+\bot , & f_{w}\left(i,k,k+1\right) = \bot \vee f_{w}\left(k,j,k+1\right) = \bot \\
 (T,f_{w}\left(i,k,k+1\right)+f_{w}\left(k,j,k+1\right)), & a = T \\
 \end{cases}
 \end{equation}
