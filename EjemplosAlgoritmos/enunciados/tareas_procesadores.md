@@ -34,9 +34,42 @@ $$int\ x_i,\ i\in [0,n-1] $$
 
 ### Propiedades del vértice del grafo
 
-- $index$: _Integer_, básica
-- $cargas$: List\<Double\> de tamaño $m$, cargas de los procesadores, básica
+- $i$: _Integer_, básica
+- $c$: List\<Double\> de tamaño $m$, cargas de los procesadores, básica
 - $cm = \max\limits_{j:[0,m-1]} cargas[j]$ : _Double_, derivada, carga del procesador más cargado
 - $nMin = \underset{j:[0,m-1]}{argmin} \ cargas[j]$: _Integer_, derivada, procesador menos cargado
 
+- Problema inicial $(0,[0,…,0]_m)$
+
+## Algoritmo PDR Last
+
+$$
+\begin{equation}
+f\left(i,c\right) = \begin{cases}
+(\bot, cm(c)), & i = n \\
+\min_{a \in A(i,c)} g\left(i,c,a\right), & i \lt n \\
+\end{cases}
+\end{equation}
+$$
+
+$$
+\begin{equation}
+g\left(i,ca,a\right) = (a,f_{w}\left(i+1, c+(a,c[a]+d_i)\right))
+\end{equation}
+$$
+
+$$
+\begin{equation}
+A\left(i,c\right) = [0,…,m-1]
+\end{equation}
+$$
+
+$$
+\begin{equation}
+s\left(i,cr\right) =\begin{cases}
+[], & i = n \\
+f_a(i,c)+s(i+1,c+(i,f_a(i,c))), & i \lt n \\
+\end{cases}
+\end{equation}
+$$
 

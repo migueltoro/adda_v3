@@ -43,11 +43,37 @@ $$ int  \ x_i,   i \in [0,n-1] $$
 - $nc$: Integer, número de colores ya asignados, derivada, $nc = ca.size()$.
 - $cv$: IntegerSet, colores asignados a los vecinos de $i$ que ya tienen color, derivada. 
 	$$cv =  S_{k : N(i) \cap cav.keys()} \ cav.get(k) $$
+- $tc$: todos los colores disponibles, compartida.
 
 
+## Algoritmo PDR Last
 
+$$
+\begin{equation}
+f\left(i,ca\right) = \begin{cases}
+(\bot, nc(ca)), & i = n \\
+\min_{a \in A(i,cr)} g\left(i,ca,a\right), & i \lt n \\
+\end{cases}
+\end{equation}
+$$
 
+$$
+\begin{equation}
+g\left(i,ca,a\right) = (a,f_{w}\left(i+1, ca+(i,a)\right))
+\end{equation}
+$$
 
+$$
+\begin{equation}
+A\left(i,ca\right) = tc-cv(ca)
+\end{equation}
+$$
 
-
-
+$$
+\begin{equation}
+s\left(i,cr\right) =\begin{cases}
+[], & i = n \\
+f_a(i,ca)+s(i+1,ca+(i,f_a(i,ca))), & i \lt n \\
+\end{cases}
+\end{equation}
+$$
