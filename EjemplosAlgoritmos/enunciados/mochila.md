@@ -42,13 +42,13 @@ $$
 
 $$
 \begin{equation}
-g\left(i,cr,a\right) = (a,f_{w}\left(i+1, cr-a*w_i\right)+a*v_i)
+g\left(i,cr,a\right) = (a,f_{w}\left(i+1, cr-a w_i\right)+a v_i)
 \end{equation}
 $$
 
 $$
 \begin{equation}
-A\left(i,cr\right) = [min(m_i,cr/w_i ),…,0]
+A\left(i,cr\right) = [min(m_i,cr/w_i),…,0]
 \end{equation}
 $$
 
@@ -56,7 +56,7 @@ $$
 \begin{equation}
 s\left(i,cr\right) =\begin{cases}
 {}, & i = n \\
-s(i+1,cr-f_a(i,cr)*w_i )+(o_i,f_a (i,cr)), & i \lt n \\
+s(i+1,cr-f_a(i,cr) w_i )+(o_i,f_a (i,cr)), & i \lt n \\
 \end{cases}
 \end{equation}
 $$

@@ -44,7 +44,7 @@ $$
 
 $$
 \begin{equation}
-g\left(i,vr,a\right) = (a,f_{w}\left(i+1, vr-a*v_i\right)+a*w_i)
+g\left(i,vr,a\right) = (a,f_{w}\left(i+1, vr-a v_i\right)+a w_i)
 \end{equation}
 $$
 
@@ -58,7 +58,7 @@ $$
 \begin{equation}
 s\left(i,cr\right) =\begin{cases}
 {}, & i = n \\
-s(i+1,vr-f_a(i,vr)*v_i )+(M_i,f_a(i,vr)), & i \lt n \\
+s(i+1,vr-f_a(i,vr) v_i )+(M_i,f_a(i,vr)), & i \lt n \\
 \end{cases}
 \end{equation}
 $$

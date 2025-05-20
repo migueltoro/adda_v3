@@ -33,8 +33,8 @@ $$
 \begin{equation}
 s\left(i,j\right) =\begin{cases}
 lt(m_i), & j-i = 1 \\
-bt(*,m-i,m_{i+1}, & j-i = 2 \\
-bt(*,s(i,f_a(i,j),s(f_a(i,j),j)), & j-i \gt 2 \\
+bt(\*,m_i,m_{i+1}, & j-i = 2 \\
+bt(\*,s(i,f_a(i,j),s(f_a(i,j),j)), & j-i \gt 2 \\
 \end{cases}
 \end{equation}
 $$
